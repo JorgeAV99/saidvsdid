@@ -1,5 +1,5 @@
 name: saidvsdid
-description: What your coding agent did with the tests, in one PR comment. Deleted, skipped, focused or weakened tests and test configuration changes.
+description: 'What your coding agent did with the tests, in one PR comment: deleted, skipped or weakened tests.'
 branding:
   icon: check-square
   color: orange
