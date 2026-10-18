@@ -363,6 +363,12 @@ describe('the Action', () => {
 describe('action.yml', () => {
   const yml = readFileSync(new URL('../action.yml', import.meta.url), 'utf8');
 
+  it("its description fits the Marketplace's limit (under 125 characters), quoted (it holds ': ')", () => {
+    const description = /^description: '([^'\n]*)'\n/m.exec(yml)?.[1];
+    expect(description).toBeDefined();
+    expect([...description!].length).toBeLessThan(125);
+  });
+
   it('declares the inputs, with fail-on off by default, and runs the built entry point', () => {
     expect(yml).toMatch(/fail-on:\n {4}description: .*\n {4}required: false\n {4}default: none\n/);
     expect(yml).toMatch(/comment:\n {4}description: .*\n {4}required: false\n {4}default: 'true'\n/);
