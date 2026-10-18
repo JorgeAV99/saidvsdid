@@ -48,6 +48,14 @@ From Codex's GO on the comment's rendering (scripts/check-gfm-render.mjs, GitHub
   `<g-emoji>` and `<svg>` (with its `<path>`) are allowed by name with any attribute. Check theirs too: a `<g-emoji>`
   only for the comment's own icons (its `alias` and `fallback-src`), an `<svg>` only as a heading anchor's octicon.
 
+## full-ci on every pull request, required by a ruleset (the public repository)
+
+Since the repository is public, branch protection (a ruleset) and GitHub-hosted CI cost nothing. full-ci could run on
+every pull request without the `full-ci` label, and a ruleset on `main` could require its `full-ci` check, so the
+merge rule would be enforced by GitHub instead of by `node scripts/full-ci-status.mjs`. Then update CLAUDE.md
+(*Workflow*, 6) and scripts/full-ci-status.mjs, which still say that branch protection needs a paid plan on a private
+repository, and decide what the label and the script keep doing (the up-to-date check and the scope of the run).
+
 ## The Python scope reader's hang on macOS: what is left
 
 `spawnSync python3 ETIMEDOUT` on macOS CI (PR #4, rounds 10 and 20d; main as of the commit that recorded this hang) was reproduced: under
