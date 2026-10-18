@@ -146,8 +146,6 @@ reviewer is expected to acknowledge it.
 
 ### Command line
 
-> The CLI will be published on npm; until then, use the Action.
-
 Requires Node.js 20 or later and git.
 
 ```bash
