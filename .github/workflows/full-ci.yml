@@ -1,8 +1,9 @@
 name: full-ci
 
 # The pre-merge tier (CLAUDE.md, *Merge criterion*): no pull request is merged without the `full-ci` check green on its
-# last commit (`node scripts/full-ci-status.mjs <PR>`). It runs when the `full-ci` label is added, and again on every
-# push while the label stays. monthly.yml calls it on main (`monthly: true`).
+# last commit, up to date with main (the `main` ruleset requires it; `node scripts/full-ci-status.mjs <PR>` also checks
+# that the run covered the diff against main as it is now). It runs on every pull request, on every push to it.
+# monthly.yml calls it on main (`monthly: true`).
 #
 # - The platform jobs: macOS, only what depends on macOS (the `caseInsensitiveFs` fixtures, the Python scope reader,
 #   the real file system and shells; monthly: the whole suite, every fixture against the real runners, the packed CLI); Windows, the test files that depend on Windows (the list below; monthly: the whole
@@ -19,11 +20,11 @@ name: full-ci
 # - Every checkout pins the pull request's head commit (`github.event.pull_request.head.sha`), not the temporary merge a
 #   pull_request event checks out by default: the run tests the head's tree, which is the squash's once the PR is up
 #   to date with its base (scripts/full-ci-status.mjs requires it), whatever the base was when it ran.
-# - `full-ci` is the check to read. Without the label it fails ("not requested"); adding another label skips it.
+# - `full-ci` is the check to read, and the one the ruleset requires.
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened]
   workflow_call:
     inputs:
       monthly:
@@ -35,15 +36,13 @@ permissions:
   contents: read
 
 concurrency:
-  # A literal prefix (called from monthly.yml, `github.workflow` is the caller's). A run without the label, or for
-  # another label, has its own group: it never cancels a real one.
-  group: full-ci-${{ github.event_name }}-${{ github.head_ref || github.ref }}-${{ (github.event_name != 'pull_request' || (contains(github.event.pull_request.labels.*.name, 'full-ci') && (github.event.action != 'labeled' || github.event.label.name == 'full-ci'))) && 'run' || 'noop' }}
+  # A literal prefix (called from monthly.yml, `github.workflow` is the caller's).
+  group: full-ci-${{ github.event_name }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
   paths:
     name: full-ci (paths)
-    if: github.event_name != 'pull_request' || (contains(github.event.pull_request.labels.*.name, 'full-ci') && (github.event.action != 'labeled' || github.event.label.name == 'full-ci'))
     runs-on: ubuntu-latest
     outputs:
       platform: ${{ steps.platform.outputs.run }}
@@ -87,7 +86,7 @@ jobs:
 
   docs-only:
     # Documentation only: the tests that read it (docs/rules.md, docs/evidence.md, the README, the privacy test…) are
-    # in the Linux suite; ci.yml skips such a change (paths-ignore).
+    # in the Linux suite.
     name: test (docs only, ubuntu, node 22)
     needs: paths
     if: needs.paths.outputs.platform == 'false'
@@ -416,18 +415,16 @@ jobs:
         run: npx tsx scripts/guarantee-matrix.ts --verify shard-reports --shards 8 --mode full
 
   full-ci:
-    # The one check to read before a merge. Green only when the run was requested (the label, or a call from
-    # monthly.yml), the paths answered, and every job those answers require succeeded; any other result fails it.
+    # The one check to read before a merge, required by the `main` ruleset. Green only when the paths answered, and
+    # every job those answers require succeeded; any other result fails it.
     name: full-ci
     needs: [paths, docs-only, node, python-versions, windows, runner-evidence-windows, macos, guarantee-shard, guarantee-full]
-    # Adding another label to a labelled pull request starts a run that does nothing: it leaves no `full-ci` result.
-    if: always() && !(github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name != 'full-ci')
+    if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Requested, and every required job succeeded
+      - name: Every required job succeeded
         shell: bash
         env:
-          REQUESTED: ${{ github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'full-ci') }}
           PATHS: ${{ needs.paths.result }}
           PLATFORM: ${{ needs.paths.outputs.platform }}
           MATRIX: ${{ needs.paths.outputs.matrix }}
@@ -442,11 +439,7 @@ jobs:
             guarantee-shard=${{ needs.guarantee-shard.result }}
             guarantee-full=${{ needs.guarantee-full.result }}
         run: |
-          echo "requested: $REQUESTED; paths: $PATHS (platform: '$PLATFORM', matrix: '$MATRIX', evidence: '$EVIDENCE'); $RESULTS"
-          if [ "$REQUESTED" != "true" ]; then
-            echo "::error::full-ci not requested: add the full-ci label when the pull request is ready (CLAUDE.md, Merge criterion)"
-            exit 1
-          fi
+          echo "paths: $PATHS (platform: '$PLATFORM', matrix: '$MATRIX', evidence: '$EVIDENCE'); $RESULTS"
           test "$PATHS" = "success"
           # platform=false (documentation only): docs-only must succeed; anything else, every platform job, and Windows'
           # fixtures against the real runners unless evidence=false. The matrix, unless matrix=false. An answer other

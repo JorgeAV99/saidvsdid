@@ -14,6 +14,7 @@ import { renderText } from '../src/report/text.js';
 
 const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
 const ci = readFileSync(new URL('../.github/workflows/ci.yml', import.meta.url), 'utf8');
+const example = readFileSync(new URL('../.github/workflows/example.yml', import.meta.url), 'utf8');
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { repository: { url: string } };
 
 /** The README's text between `<!-- example:NAME -->` and `<!-- /example:NAME -->`. */
@@ -70,10 +71,18 @@ describe("the README's workflow and the CI's dogfood step", () => {
     expect(workflow).not.toMatch(/fail-on|secrets\./);
   });
 
-  it('the CI: the same Action from this checkout, blocking on FAIL or worse, without its fixtures', () => {
+  it('the CI: the same Action from this checkout, blocking on FAIL or worse, without its fixtures and its example', () => {
     expect(ci).toMatch(/    permissions:\n      contents: read\n      pull-requests: write\n/);
     expect(ci).toContain('      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n');
-    expect(ci).toContain("      - name: Check this PR\n        if: github.event_name == 'pull_request' && (success() || failure())\n        uses: ./\n        with:\n          fail-on: fail\n          exclude: fixtures/**\n");
+    expect(ci).toContain("      - name: Check this PR\n        if: github.event_name == 'pull_request' && github.head_ref != 'example/weakened-tests' && (success() || failure())\n        uses: ./\n        with:\n          fail-on: fail\n          exclude: |\n            fixtures/**\n            examples/**\n");
+  });
+
+  it('the example pull request: the published Action with its default, on that branch alone', () => {
+    expect(example).toContain("    if: github.head_ref == 'example/weakened-tests' && github.event.pull_request.head.repo.full_name == github.repository\n");
+    expect(example).toContain('permissions:\n  contents: read\n  pull-requests: write\n');
+    expect(example).toContain('      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n');
+    expect(example.endsWith(`      - uses: ${repo}@v0\n`)).toBe(true);
+    expect(example).not.toMatch(/fail-on|exclude|secrets\./);
   });
 
   it('how to block is the input the Action reads', () => {
