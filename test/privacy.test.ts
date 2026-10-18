@@ -17,8 +17,27 @@ function versionedFiles(): string[] {
   return [...new Set(out.split('\0').filter(Boolean))].sort();
 }
 
-/** Binary files, by a closed list of extensions (the tree-sitter grammars): every other file is text and is read. */
-const BINARY = /\.wasm$/i;
+/**
+ * Binary files, by a closed list of extensions (the tree-sitter grammars, the README's screenshot): every other file is
+ * text and is read. A PNG's pixels cannot be read here (whoever adds one looks at it); its chunks are checked below.
+ */
+const BINARY = /\.(wasm|png)$/i;
+
+/** The chunks a PNG may hold: image data only, no text (tEXt, zTXt, iTXt), EXIF (eXIf) or any other metadata. */
+const PNG_CHUNKS = new Set(['IHDR', 'PLTE', 'IDAT', 'IEND']);
+
+/** A PNG's chunk types in order, or null when it is not a well-formed PNG. */
+function pngChunks(buf: Buffer): string[] | null {
+  if (!buf.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return null;
+  const types: string[] = [];
+  let i = 8;
+  while (i + 12 <= buf.length) {
+    const length = buf.readUInt32BE(i);
+    types.push(buf.toString('latin1', i + 4, i + 8));
+    i += 12 + length;
+  }
+  return i === buf.length && types.at(-1) === 'IEND' ? types : null;
+}
 
 /** Every versioned file but the binaries, as text: a NUL byte does not make a file binary (it is a finding). */
 function texts(): Array<{ path: string; text: string }> {
@@ -82,6 +101,16 @@ describe('privacy of every versioned file', () => {
 
   it('no text file holds a NUL byte (a scanner must not take it for a binary and skip it)', () => {
     expect(files.filter((f) => f.text.includes(String.fromCharCode(0))).map((f) => f.path)).toEqual([]);
+  });
+
+  it('a PNG holds image data only: no text, EXIF or other metadata chunk', () => {
+    const found = versionedFiles()
+      .filter((path) => /\.png$/i.test(path))
+      .filter((path) => {
+        const chunks = pngChunks(readFileSync(join(ROOT, path)));
+        return chunks === null || chunks.some((c) => !PNG_CHUNKS.has(c));
+      });
+    expect(found).toEqual([]);
   });
 
   it('no file holds an account, organisation or device id, or a token', () => {

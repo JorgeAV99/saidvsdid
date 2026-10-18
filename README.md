@@ -2,6 +2,11 @@
 
 **What your coding agent did with the tests, in one comment.**
 
+**[See a live example →](https://github.com/JorgeAV99/saidvsdid/pull/5)**: a pull request that weakens the tests of
+[`examples/demo`](examples/demo/) on purpose (it is never merged), and the comment the Action left on it:
+
+[![The comment saidvsdid's Action left on the example pull request](docs/img/comment.png)](https://github.com/JorgeAV99/saidvsdid/pull/5)
+
 For whoever reviews pull requests written by coding agents. A suite can turn
 green because the code was fixed, or because a test was deleted, skipped,
 focused away, asserted less, or left out by a configuration change. saidvsdid
