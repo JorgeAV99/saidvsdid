@@ -1,15 +1,15 @@
 name: CI
 
-# The fast tier: every push to a pull request, Linux only. The pre-merge tier is .github/workflows/full-ci.yml (the
-# `full-ci` label); the monthly one, .github/workflows/monthly.yml. No CI runs on a push to main: what a pull request
-# brings into main passed full-ci on exactly that tree (CLAUDE.md), and a commit made directly on main is documentation.
+# The fast tier: every push to a pull request, Linux only. The pre-merge tier is .github/workflows/full-ci.yml; the
+# monthly one, .github/workflows/monthly.yml. The `main` ruleset requires both checks, so neither filters paths: a
+# required check must exist for every pull request. No CI runs on a push to main: what a pull request brings into main
+# passed both on exactly that tree (CLAUDE.md), and the ruleset lets nothing else reach main.
 #
 # One job, so the runner's two CPUs are shared rather than billed twice: the fixtures against the real runners run in
 # the background while the test suite runs, and each step's result is checked (a failure in one does not hide another).
 
 on:
   pull_request:
-    paths-ignore: ['docs/**', '*.md', 'LICENSE']
 
 permissions:
   contents: read
@@ -99,9 +99,13 @@ jobs:
       # FAIL, UNVERIFIABLE and ERROR block (`fail-on: fail`); WARN is for a human, reviewed on the PR. The README's
       # workflow example is this step with the Action's published name and its default, which blocks nothing
       # (test/readme-ci.test.ts). A pull request from a fork gets a read-only token: no comment, the summary only.
+      # examples/** is the demo that the example pull request weakens (.github/workflows/example.yml, which comments
+      # there instead of this step: one comment per pull request).
       - name: Check this PR
-        if: github.event_name == 'pull_request' && (success() || failure())
+        if: github.event_name == 'pull_request' && github.head_ref != 'example/weakened-tests' && (success() || failure())
         uses: ./
         with:
           fail-on: fail
-          exclude: fixtures/**
+          exclude: |
+            fixtures/**
+            examples/**

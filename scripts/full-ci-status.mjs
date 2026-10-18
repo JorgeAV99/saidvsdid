@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// May a pull request be merged? The merge criterion (CLAUDE.md) asks this before every merge; GitHub does not enforce
-// it here (branch protection needs a paid plan on a private repository).
+// May a pull request be merged? The merge criterion (CLAUDE.md) asks this before every merge. The `main` ruleset makes
+// GitHub enforce most of it (the CI and full-ci checks green on the head, the branch up to date with main); this script
+// also checks the third condition below, which no ruleset can express, and prints the merge command.
 //
 //   node scripts/full-ci-status.mjs <PR>    # exit 0 and the merge command if so; exit 1 and why not otherwise
 //
@@ -9,8 +10,7 @@
 //   behind it, GitHub's comparison). Then the squash merge writes exactly the head's tree. Otherwise: rebase on the
 //   base (or merge it in), push, and pass full-ci again on the new last commit;
 // - `full-ci` green on the pull request's last commit: a run of .github/workflows/full-ci.yml on exactly that commit
-//   whose job `full-ci` concluded `success` (a run without the label fails that job, a run for another label skips it,
-//   a cancelled or unfinished one has no success: none of them counts);
+//   whose job `full-ci` concluded `success` (a cancelled or unfinished one has no success: it does not count);
 // - that run covered the diff against the base as it is now: the scope is read again here, with the workflow's own
 //   filter (scripts/guarantee-matrix-paths.mjs, failing closed) on `origin/<base>...<head>`, and the run must have run
 //   the guarantee matrix if the diff needs it, the platform jobs if it is not documentation alone, and Windows' fixtures
@@ -61,11 +61,11 @@ export function mergeVerdict({ sha, runs, behindBy, base, scope }) {
   if (scope === null || typeof scope !== 'object' || typeof scope.matrix !== 'boolean' || typeof scope.platform !== 'boolean' || typeof scope.evidence !== 'boolean') {
     return { ok: false, run: null, why: `could not read the scope of the pull request's diff against ${base}` };
   }
-  if (!passingRun(sha, runs)) return { ok: false, run: null, why: `no full-ci run passed on its last commit ${sha}: add the full-ci label when the PR is ready, and wait for it` };
+  if (!passingRun(sha, runs)) return { ok: false, run: null, why: `no full-ci run passed on its last commit ${sha}: wait for the run that every push starts, or re-run it if it failed` };
   const run = passingRun(sha, runs, scope);
   if (!run) {
     const needs = [scope.matrix ? `the guarantee matrix ("${REQUIRED_JOBS.matrix}")` : null, scope.platform ? `the platform jobs ("${REQUIRED_JOBS.platform}")` : null, scope.evidence ? `the fixtures against the real runners on Windows ("${REQUIRED_JOBS.evidence}")` : null].filter(Boolean).join(' and ');
-    return { ok: false, run: null, why: `full-ci passed on ${sha}, but no passing run ran ${needs}, which its diff against ${base} requires now (was the pull request retargeted?): run full-ci again (remove the full-ci label and add it)` };
+    return { ok: false, run: null, why: `full-ci passed on ${sha}, but no passing run ran ${needs}, which its diff against ${base} requires now (was the pull request retargeted?): run full-ci again (re-run its workflow on the last commit, or push)` };
   }
   return { ok: true, run, why: `full-ci passed on its last commit ${sha}, which is up to date with ${base}, and ran what its diff requires (matrix: ${scope.matrix}, platform: ${scope.platform}, evidence: ${scope.evidence})` };
 }

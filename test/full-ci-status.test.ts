@@ -16,12 +16,12 @@ describe('full-ci on the last commit', () => {
     expect(passingRun(HEAD, [run(1, HEAD, [['full-ci (paths)', 'success'], ['full-ci', 'success']])])?.id).toBe(1);
   });
 
-  it('a later run for another label (skipped) does not hide an earlier pass, and is no pass itself', () => {
+  it('a later run whose full-ci job was skipped does not hide an earlier pass, and is no pass itself', () => {
     expect(passingRun(HEAD, [run(2, HEAD, [['full-ci', 'skipped']]), run(1, HEAD, [['full-ci', 'success']])])?.id).toBe(1);
     expect(passingRun(HEAD, [run(2, HEAD, [['full-ci', 'skipped']])])).toBeNull();
   });
 
-  it('fails without the label, on another commit, while running, or with only other jobs green', () => {
+  it('fails with full-ci failed, on another commit, while running, or with only other jobs green', () => {
     expect(passingRun(HEAD, [run(1, HEAD, [['full-ci', 'failure']])])).toBeNull();
     expect(passingRun(HEAD, [run(1, OLD, [['full-ci', 'success']])])).toBeNull();
     expect(passingRun(HEAD, [run(1, HEAD, [['full-ci', null]])])).toBeNull();

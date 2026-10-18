@@ -332,9 +332,12 @@
 5. Before merging a milestone, every item marked "backlog" in the external
    (Codex) reviews or in Claude's summaries is in `docs/backlog.md`.
 6. **No PR is merged without `full-ci` green on its last commit, and that
-   commit up to date with `main`.** Add the `full-ci` label only when the PR is
-   ready (Codex with no NO-GO pending), not in every round; it runs
-   `.github/workflows/full-ci.yml` again on every push while the label stays:
+   commit up to date with `main`.** GitHub enforces it: a ruleset on `main`
+   requires the checks `full-ci` and `test, fixtures vs. real runners, Python
+   3.9/3.13, dogfood (ubuntu, node 22)` (ci.yml) on the PR's head, the branch
+   up to date with `main` before merging, and allows no force-push and no
+   deletion. `.github/workflows/full-ci.yml` runs on every push to every PR, no
+   label needed:
    macOS (what depends on it), Windows (the test files that depend on Windows,
    listed in the workflow, and every fixture against the real runners when the
    PR touches anything the recorder reads), Node 20 and 24, Python 3.10–3.12,
@@ -353,11 +356,13 @@
    `main`, the squash writes exactly the tree `full-ci` tested.
    Merge right after the check, one PR at a time, with the command it prints
    (`gh pr merge <PR> --squash --match-head-commit <sha>`), which fails if a
-   commit was pushed after the check. GitHub does not enforce this here (branch
-   protection needs a paid plan on a private repository): the rule does.
-7. **No CI runs on a push to `main`.** What a PR brings in passed `full-ci` on
-   exactly that tree (6). Commits made directly on `main` are documentation
-   only, and run no CI.
+   commit was pushed after the check. The ruleset cannot see the third
+   condition (a run that covers the diff against `main` as it is now): the
+   script is still the check before every merge.
+7. **No CI runs on a push to `main`, and nothing reaches `main` but a PR.**
+   What a PR brings in passed `full-ci` on exactly that tree (6); the ruleset's
+   required checks reject a direct push, so documentation goes through a PR
+   too.
 8. **Monthly on `main`** (`.github/workflows/monthly.yml`: the first Sunday of
    the month, only if `main` changed since the last monthly run that ran; by
    hand with `workflow_dispatch`, for example before publishing a version). It
