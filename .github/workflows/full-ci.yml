@@ -1,4 +1,5 @@
 name: full-ci
+# (Probe: the first full-ci run in the public repository; this pull request is closed, not merged.)
 
 # The pre-merge tier (CLAUDE.md, *Merge criterion*): no pull request is merged without the `full-ci` check green on its
 # last commit (`node scripts/full-ci-status.mjs <PR>`). It runs when the `full-ci` label is added, and again on every
