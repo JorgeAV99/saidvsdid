@@ -1,0 +1,15 @@
+{
+  "description": "Control of the contagion net's data rule: `\"skip\"` here is data — a constant, a table of cases, a default, a comparison. `KIND` and `CASES` hold the string, but a function is not a container: `status_of` and `first` are lambdas whose defaults hold it, computed when they run, so they hold no string, and no new callee holds `KIND` or `CASES` (`first()[\"status\"] == KIND` compares a call's result; it calls nothing by them): the new calls `status_of()` and `first()` are not uses of the vocabulary, no finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

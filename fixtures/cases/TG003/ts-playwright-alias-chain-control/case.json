@@ -1,0 +1,15 @@
+{
+  "description": "Control of ts-playwright-fail-alias-chain: the same chain on `test.info`, outside the vocabulary: a new `mark();` is no use, OK. The runner: 'X' passes on both sides.",
+  "kind": "negative",
+  "runner": "playwright",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"case.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"case.test.mjs\",\"X\",1]": "passed"
+    }
+  }
+}

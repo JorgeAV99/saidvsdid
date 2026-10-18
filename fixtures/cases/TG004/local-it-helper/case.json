@@ -1,0 +1,17 @@
+{
+  "description": "From the Codex review of the commit that never silenced a runner shape and made a FAIL need a certain, immutable binding (a false FAIL on main): the test's assertion moves into a local helper that happens to be called `it`. A name of the test API is the runner's only through a static import: here `it` is the file's function, which may assert, so TG004 warns (assertions may live in it), never FAIL. The real runner passes, and would fail if the sum were wrong.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "test/a.test.ts", "line": 8, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

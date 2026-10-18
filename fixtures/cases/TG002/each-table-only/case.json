@@ -1,0 +1,19 @@
+{
+  "description": "Review 3, acceptance 3: describe.each([it]) → describe.each([it.only]). The focus marker is a table value, used indirectly: at least WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "tests/each.test.ts", "test": null, "line": 3 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/each.test.ts\",\"group 0 > inner\",1]": "passed",
+      "[\"tests/each.test.ts\",\"outside\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/each.test.ts\",\"group 0 > inner\",1]": "passed",
+      "[\"tests/each.test.ts\",\"outside\",1]": "skipped"
+    }
+  }
+}

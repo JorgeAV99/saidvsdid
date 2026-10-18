@@ -1,0 +1,17 @@
+{
+  "description": "The module rebinds `pytest` before the test to an object whose `raises` checks nothing (`contextlib.suppress`: the base passes although nothing is raised). The removed `pytest.raises(...)` may not have been an assertion: TG004 WARN, never FAIL. The real runner passes on both sides.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "test_a.py", "line": 10, "test": "test_divides_by_zero" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_divides_by_zero\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_divides_by_zero\",1]": "passed"
+    }
+  }
+}

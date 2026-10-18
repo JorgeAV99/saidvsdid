@@ -1,0 +1,17 @@
+{
+  "description": "`getattr(pytest, \"skip\")(\"x\")`: the callee is read whole, the arguments of the call it holds included, and it holds the string `\"skip\"`, a member's name in the vocabulary: a use, at least a WARN that it may skip `test_adds` (coverage before). The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

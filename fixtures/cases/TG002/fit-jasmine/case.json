@@ -1,0 +1,16 @@
+{
+  "description": "Jest-style `fit()` from jest's globals (no import): a global is never certainly the runner's, so TG002 warns that it may focus the test, never FAIL (the real runner would focus it).",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "warn",
+        "file": "spec/cart.spec.js",
+        "line": 4,
+        "test": "cart > sums totals"
+      }
+    ]
+  }
+}

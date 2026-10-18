@@ -1,0 +1,17 @@
+{
+  "description": "Contagion through a string: `omit = getattr(pytest, \"skip\")` holds a string literal exactly equal to a token of the vocabulary, so `omit` is marked, and head adds `omit(\"x\")`: at least a WARN that it may skip `test_adds`. A name built at run time (`\"sk\" + \"ip\"`) is coverage, not a guarantee. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

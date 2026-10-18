@@ -1,0 +1,33 @@
+{
+  "description": "Round 20d, control: the same `afterEach` with its rejection handled, under a `test.fails` whose body passes: no unhandled error, recorded from Vitest's own signal (passed → xpassed).",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"service\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"service\",1]": "xpassed"
+    }
+  }
+}

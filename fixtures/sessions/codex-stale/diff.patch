@@ -1,0 +1,14 @@
+diff --git a/src/toytext/__init__.py b/src/toytext/__init__.py
+index a725249..495964e 100644
+--- a/src/toytext/__init__.py
++++ b/src/toytext/__init__.py
+@@ -3,7 +3,8 @@ def word_count(text):
+ 
+ 
+ def initials(name):
+-    return "".join(part[0].upper() for part in name.split())
++    parts = name.split()
++    return "".join(part[0].upper() for part in parts)
+ 
+ 
+ def truncate(text, width):

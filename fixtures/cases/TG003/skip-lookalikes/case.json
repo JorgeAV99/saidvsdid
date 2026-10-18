@@ -1,0 +1,5 @@
+{
+  "description": "'skip' in comments, strings, test names and unrelated APIs (a fixture named skip_db) is not a skip.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

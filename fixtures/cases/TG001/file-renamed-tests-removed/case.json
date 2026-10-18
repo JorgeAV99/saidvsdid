@@ -1,0 +1,18 @@
+{
+  "description": "Git sees `tests/test_a.py` renamed to `tests/checks_a.py`, a name pytest does not collect, with its test functions renamed to `check_*`: the file is kept in head's tree under another name and declares no test. TG001 says so (`Removes all 2 test declarations from tests/test_a.py (file kept, renamed to tests/checks_a.py)`), a WARN, not `Deletes the test file`. The real runner no longer runs either test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "tests/test_a.py", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_a.py\",\"test_double\",1]": "passed",
+      "[\"tests/test_a.py\",\"test_zero\",1]": "passed"
+    },
+    "head": {
+
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 1: `test.only('X')` after a `return` in the describe's callback: playwright never registers X and runs `S > live` on both sides. A describe whose callback returns (or throws) declares nothing canonically (F3): WARN.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "a.spec.mjs", "line": 6, "test": "S > X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"S > live\",1]": "passed"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"S > live\",1]": "passed"
+    }
+  }
+}

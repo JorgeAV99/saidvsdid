@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that added the exhaustive binding map and normalised aliases: the two `namespace Suite` blocks merge, so the second block sees the first block's `export const test`; `test.skip` there is that helper, not vitest's import. TG003 warns that it may skip 'adds', never FAIL. Compilers disagree here: the real runner (vitest, which compiles with esbuild) reads `test` as vitest's import and skips the test.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 11, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "description": "Control: `pytest.param(..., marks=pytest.mark.skip)` in a parametrize row is a keyword argument, not a write to pytest nor a binding of its name; `@pytest.mark.skip` added to `test_adds` is pytest's skip: a FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 9,
+        "test": "test_adds",
+        "ids": [
+          [
+            "test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_positive[1]\",1]": "passed",
+      "[\"test_a.py\",\"test_positive[2]\",1]": "skipped"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped",
+      "[\"test_a.py\",\"test_positive[1]\",1]": "passed",
+      "[\"test_a.py\",\"test_positive[2]\",1]": "skipped"
+    }
+  }
+}

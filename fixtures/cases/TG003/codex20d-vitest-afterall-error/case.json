@@ -1,0 +1,25 @@
+{
+  "description": "Round 20d: an `afterAll` that throws, in a file whose `test.fails` body passes: Vitest reports the module's error, owned by no test, while the test reports its own outcome. Refused.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "vitest: an error outside any test"
+}

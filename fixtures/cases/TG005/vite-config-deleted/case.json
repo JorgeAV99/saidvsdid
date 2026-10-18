@@ -1,0 +1,19 @@
+{
+  "description": "N9: vite.config.ts deleted (vitest is a dependency), with its `test.exclude` of test/b.test.ts: vitest runs b again. TG005 does not read vite configs and no test is lost; a deleted watched file is a change whichever way the selection moves: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "selectionChanges": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vite.config.ts", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed",
+      "[\"test/b.test.ts\",\"b > runs\",1]": "passed"
+    }
+  }
+}

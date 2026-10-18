@@ -1,0 +1,28 @@
+{
+  "description": "Round 20b, control: a file with `test.extend` and no `fails` is recorded as usual — a passing and a failing test using the fixture; head skips the passing one (passed → skipped).",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "a"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a\",1]": "passed",
+      "[\"test/a.test.ts\",\"b\",1]": "failed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a\",1]": "skipped",
+      "[\"test/a.test.ts\",\"b\",1]": "failed"
+    }
+  }
+}

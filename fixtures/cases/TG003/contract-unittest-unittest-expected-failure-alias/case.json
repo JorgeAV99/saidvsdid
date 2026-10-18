@@ -1,0 +1,21 @@
+{
+  "description": "The silence guarantee (docs/rules.md), unittest, a simple alias: head decorates test 'adds' with `@unittest.expectedFailure`, through `later = unittest.expectedFailure`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 3, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 10, "test": "TestA::test_adds" },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 11, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "xpassed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    }
+  }
+}

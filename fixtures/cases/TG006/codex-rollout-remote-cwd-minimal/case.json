@@ -1,0 +1,19 @@
+{
+  "description": "Eighth review, R5 (rollout, minimal reproduction): `npm test` fails in the repository; a second `npm test` passes in a command whose recorded cwd is `file://review-host/share/other` (a URI with another host). An undecodable cwd is unknown, never the session's: the passing run is unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

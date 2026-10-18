@@ -1,0 +1,17 @@
+{
+  "description": "Third review, Spanish: \"Podemos fusionar en cuanto todos los tests pasan.\" Possible, WARN.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

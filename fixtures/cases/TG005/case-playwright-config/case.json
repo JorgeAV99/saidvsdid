@@ -1,0 +1,16 @@
+{
+  "description": "Playwright.Config.ts created: playwright.config.ts on a case-insensitive file system. WARN.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "Playwright.Config.ts",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

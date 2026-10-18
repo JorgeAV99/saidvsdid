@@ -1,0 +1,17 @@
+{
+  "description": "The class body binds a class attribute `pytest`. Python's scoping makes the method's `pytest.skip()` the module's import, but the rule is about the whole file (round 5): a name that any symbol table other than the module's binds is not certain anywhere, so TG003 warns that the test may be skipped, never FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 8, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

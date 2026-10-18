@@ -1,0 +1,3 @@
+{"type":"session_meta","payload":{"id":"r","cwd":"file:///<REPO>"}}
+{"type":"event_msg","payload":{"type":"item_completed","item":{"type":"McpToolCall","id":"r","server":"toy","tool":"run_tests","readOnlyHint":true,"status":"completed","result":{"content":[{"type":"text","text":"\n> test\n> vitest run\n\n\n RUN  v4.1.11 <REPO>\n\n ✓ test/a.test.js (1 test) 2ms\n\n Test Files  1 passed (1)\n      Tests  1 passed (1)\n   Start at  00:11:32\n   Duration  156ms (transform 13ms, setup 0ms, import 25ms, tests 2ms, environment 0ms)\n\nhello\n\n"}]}}}}
+{"type":"event_msg","payload":{"type":"item_completed","item":{"type":"AgentMessage","id":"m","content":[{"type":"Text","text":"All tests pass."}],"phase":"final_answer"}}}

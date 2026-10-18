@@ -1,0 +1,17 @@
+{
+  "description": "Exact lexical scope: Python reads identifiers NFKC-normalised, so `pyteſt` (with U+017F, a long s) is the name `pytest`, and the module rebinds its `pytest` import with it. `pytest.skip()` in the body is the module's own object, not pytest's: TG003 warns that it may skip `test_adds`, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 9, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

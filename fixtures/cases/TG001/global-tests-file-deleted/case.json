@@ -1,0 +1,18 @@
+{
+  "description": "A test file declared with jest's globals (no import) is deleted. A global is never certainly the runner's: TG001 warns that the file may have held 1 test, never FAIL (here the real runner did run it at base; a static import makes it a FAIL, see namespace-runner-deleted).",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "a.test.js", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"adds\",1]": "passed",
+      "[\"b.test.js\",\"subtracts\",1]": "passed"
+    },
+    "head": {
+      "[\"b.test.js\",\"subtracts\",1]": "passed"
+    }
+  }
+}

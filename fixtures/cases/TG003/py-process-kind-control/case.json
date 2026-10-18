@@ -1,0 +1,15 @@
+{
+  "description": "Control of the round-7c use rule: `kind = \"skip\"` holds a string of the vocabulary, but `procesar(kind)` passes it as an argument of the call: the final arguments of a call never count, only its callee (`procesar`). No finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

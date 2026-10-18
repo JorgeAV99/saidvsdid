@@ -1,0 +1,32 @@
+{
+  "description": "Case D: `it['skip'](...)` is `it.skip(...)`, and `it` is a static import of vitest. TG003 FAIL; the real runner skips the test. On main the subscript hid both the marker and the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 3,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

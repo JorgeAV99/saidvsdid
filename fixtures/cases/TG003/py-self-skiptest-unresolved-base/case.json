@@ -1,0 +1,17 @@
+{
+  "description": "Case B (a false FAIL on main): the test's base class is imported from another module (support.py), where it overrides `skipTest` with a no-op. A base that cannot be resolved in the file: TG003 warns that `self.skipTest()` may skip `TestA::test_adds`, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Case B: the module rebinds `unittest` after the test class. The class was already built on unittest's TestCase, so the real runner does skip the test; but the contract does not order rebindings: a name the module rebinds anywhere, before or after the use, is not certain. TG003 WARN (\"may skip\"), never FAIL.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

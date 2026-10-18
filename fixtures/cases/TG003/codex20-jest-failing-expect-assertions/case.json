@@ -1,0 +1,25 @@
+{
+  "description": "Round 20, Codex variant: `test.failing` with `expect.assertions(1)` and an operation that throws before the assertion: the body fails as expected and Jest adds the assertion count's failure (`status: failed`). Not Jest's signal of a passing body: refused.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.test.js",
+        "line": 3,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "jest: an expected failure with another failure in the same test"
+}

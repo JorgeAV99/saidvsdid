@@ -1,0 +1,19 @@
+{
+  "description": "Near 2c (rollout): `npm test` exit 1 whose recorded output is stdout then stderr — the failures come after the summary, so the summary is not the last block (real output). WARN.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

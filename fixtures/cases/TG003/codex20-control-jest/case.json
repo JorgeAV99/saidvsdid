@@ -1,0 +1,33 @@
+{
+  "description": "Round 20, control: a `test.failing` whose body passes, with an `afterEach` that passes: Jest's own signal (its message alone, `Failing test passed even though it was supposed to fail…`) is recorded xpassed.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.test.js",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"service\",1]": "passed"
+    },
+    "head": {
+      "[\"a.test.js\",\"service\",1]": "xpassed"
+    }
+  }
+}

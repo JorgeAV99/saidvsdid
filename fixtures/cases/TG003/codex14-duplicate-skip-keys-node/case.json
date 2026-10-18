@@ -1,0 +1,18 @@
+{
+  "description": "Round 14, Codex 3: `{ skip: true, skip: false }` in node:test: Node runs X. Not canonical: WARN.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 4, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 4, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    }
+  }
+}

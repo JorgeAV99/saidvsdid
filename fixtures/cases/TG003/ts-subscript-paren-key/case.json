@@ -1,0 +1,32 @@
+{
+  "description": "Review of the commit that gave Python its files' bytes (PEP 263) and read mangled and context aliases: `it[('skip')]` is `it.skip` (a literal key in parentheses: one normalisation reads every key), and `it` is vitest's by a static import: head certainly adds `it.skip` to 'adds', a FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 3,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

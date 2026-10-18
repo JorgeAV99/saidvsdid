@@ -1,0 +1,19 @@
+{
+  "description": "N9: conftest.py deleted, with its `collect_ignore`: test_b.py is collected again. A deleted watched file is a change, whichever way the selection moves: WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "selectionChanges": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "conftest.py", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_a\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_a\",1]": "passed",
+      "[\"test_b.py\",\"test_b\",1]": "passed"
+    }
+  }
+}

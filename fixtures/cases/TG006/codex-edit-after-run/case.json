@@ -1,0 +1,17 @@
+{
+  "description": "codex-stale with \"All 6 tests pass.\" on its own line: a Codex file_change (certain) comes after the last run.",
+  "kind": "positive",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

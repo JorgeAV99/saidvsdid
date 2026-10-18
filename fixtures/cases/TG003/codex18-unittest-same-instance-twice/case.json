@@ -1,0 +1,7 @@
+{
+  "description": "Round 18, fail closed: `load_tests` adds one test object twice, so unittest runs it twice and its two outcomes arrive on one object. The recorder cannot tell them apart: `unrecordable: repeated executions of one test object`.",
+  "kind": "negative",
+  "runner": "unittest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "unrecordable": "repeated executions of one test object"
+}

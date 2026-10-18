@@ -1,0 +1,5 @@
+{
+  "description": "A vitest project gains a `resolve.alias`: module resolution, not which tests are selected (its root, name and include are unchanged), so nothing is reported.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

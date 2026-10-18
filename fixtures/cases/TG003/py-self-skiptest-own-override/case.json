@@ -1,0 +1,17 @@
+{
+  "description": "Case B (a false FAIL on main): the test's own class overrides `skipTest` with a method that does nothing. TG003 warns that `self.skipTest()` may skip `TestA::test_adds`, never FAIL, never silence. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 9, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    }
+  }
+}

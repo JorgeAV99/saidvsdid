@@ -1,0 +1,32 @@
+{
+  "description": "Case D: `ctx['\\u0073kip']()` (an escaped literal subscript) is `ctx.skip()` on the context parameter of a test declared with vitest's statically imported `it`. TG003 FAIL; the real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 4,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

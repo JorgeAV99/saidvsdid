@@ -1,0 +1,27 @@
+{
+  "description": "N4 of the Codex review of the commit that allowed neither a FAIL nor a silence without certainty: `JEST.CONFIG.CJS` turns `injectGlobals` off and a setup file installs the project's own `it` (its `skip` still runs the test). A global is never certain, whatever the configuration says: TG003 warns that `it.skip` may skip `adds`, never FAIL. The real runner (Windows, macOS) runs the test.",
+  "kind": "hard-legit",
+  "runner": "jest",
+  "caseInsensitiveFs": true,
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "a.test.js",
+        "line": 1,
+        "test": "adds"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"a.test.js\",\"adds\",1]": "passed"
+    }
+  }
+}

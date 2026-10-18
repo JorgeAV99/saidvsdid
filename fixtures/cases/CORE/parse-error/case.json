@@ -1,0 +1,7 @@
+{
+  "description": "Review #4: a test file with a syntax error at head. Extraction may be incomplete, so the verdict is UNVERIFIABLE (exit 3), never PASS.",
+  "kind": "positive",
+  "expect": { "verdict": "UNVERIFIABLE", "findings": [], "unverifiable": [
+    { "file": "tests/slug.test.ts", "side": "head" }
+  ] }
+}

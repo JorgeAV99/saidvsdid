@@ -1,0 +1,7 @@
+{
+  "description": "Review 2, case 3 (Python): a module-level prepare() calling pytest.skip() and a harmless local prepare() inside the test. WARN at most, not FAIL.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 7 }
+  ] }
+}

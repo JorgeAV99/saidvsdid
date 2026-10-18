@@ -1,0 +1,19 @@
+{
+  "description": "Only --passWithNoTests is added to the test script. No test stops running (the runner agrees), but an empty selection would now pass: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": 6 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    }
+  }
+}

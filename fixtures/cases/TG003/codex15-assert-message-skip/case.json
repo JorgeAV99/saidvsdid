@@ -1,0 +1,17 @@
+{
+  "description": "Round 15, Codex 2: `assert True, pytest.skip(\"why\")`: the message is never evaluated, pytest passes. The statement is not exactly the call (F2): WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Codex verification of the commit that scoped package.json to its scripts and test-runner keys (1): both package.json files start with a BOM (npm accepts it) and the delegated script `t` changes to `vitest run tests/unit`: tests/api stops running (the runner agrees). JSON.parse rejected both sides and read them as {} (PASS); a file whose sections cannot be located with certainty falls back to any byte change → WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api/api.test.ts\",\"adds in api\",1]": "passed",
+      "[\"tests/unit/math.test.ts\",\"adds in unit\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/unit/math.test.ts\",\"adds in unit\",1]": "passed"
+    }
+  }
+}

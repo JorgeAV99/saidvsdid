@@ -1,0 +1,17 @@
+{
+  "description": "\"Next steps:\\n- Add regression tests.\": a plan, not something done. A possible claim, never a FAIL: WARN.",
+  "kind": "hard-legit",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

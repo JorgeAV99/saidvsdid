@@ -1,0 +1,17 @@
+{
+  "description": "The new test has no assertions, under the canonical claim \"I added a regression test.\" alone on its line. WARN.",
+  "kind": "positive",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "test/stats.test.ts",
+        "line": 15,
+        "test": "median > averages the two middle values of an even-length list"
+      }
+    ]
+  }
+}

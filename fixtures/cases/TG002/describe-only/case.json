@@ -1,0 +1,22 @@
+{
+  "description": "A Playwright test.describe.only focuses a whole group; reported once for the marker, listing the tests.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "fail",
+        "file": "e2e/login.spec.ts",
+        "line": 3,
+        "test": null,
+        "ids": [
+          [
+            "home loads",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

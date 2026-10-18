@@ -1,0 +1,20 @@
+{
+  "description": "Round 17, Codex (not blocking, conservative): `@pytest.mark.xfail` on a parametrised test one of whose cases is already an xfail (`pytest.param(…, marks=pytest.mark.xfail)`): `test_x[1]` becomes an expected failure (passed → xpassed), `test_x[2]` was one already. A case's own marks are another effect on the same test (F6): WARN, recoverable (docs/known-limitations.md).",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_x" },
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x[1]\",1]": "passed",
+      "[\"test_a.py\",\"test_x[2]\",1]": "xfailed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x[1]\",1]": "xpassed",
+      "[\"test_a.py\",\"test_x[2]\",1]": "xfailed"
+    }
+  }
+}

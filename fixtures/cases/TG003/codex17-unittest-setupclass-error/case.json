@@ -1,0 +1,17 @@
+{
+  "description": "Round 17, An error that is not a `SkipTest` in `setUpClass`: unittest reports one error on its `_ErrorHolder` and runs none of the class's tests. The recorder records each test method of the class as failed, never skipped (a failing setup is outside the third assumption, and nothing here is a marker).",
+  "kind": "negative",
+  "runner": "unittest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_y\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestX::test_y\",1]": "failed"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Codex case 2 (a false FAIL on the commit that made lexical scope exact): inside `namespace Suite`, `export import test = Helpers.api` declares `test` again, so `test.skip` there is the project's helper, not vitest's import. TG003 warns that it may skip 'adds', never FAIL; the real runner runs it.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 11, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

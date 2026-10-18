@@ -1,0 +1,17 @@
+{
+  "description": "pytest.ini sets xfail_strict = true, so dropping strict=True from an xfail changes nothing: the bare xfail inherits strictness (the runner reports the XPASS as a failure on both sides).",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    },
+    "head": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    }
+  }
+}

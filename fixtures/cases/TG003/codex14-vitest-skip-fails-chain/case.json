@@ -1,0 +1,18 @@
+{
+  "description": "Round 14, Codex 11: `test.skip.fails`: Vitest reports X skipped. One effect per test: `skip` is a FAIL (`not-run`), `fails` a WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": "X" },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "skipped"
+    }
+  }
+}

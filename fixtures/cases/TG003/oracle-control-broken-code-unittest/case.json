@@ -1,0 +1,18 @@
+{
+  "description": "Negative control of the runner-evidence oracle (unittest): head breaks the code under test and leaves the test alone. The real runner reports 'adds' passed at base and failed at head, a bare failure without its expected-failure signal, which must not count as evidence of a FAIL that makes a test an expected failure (fixtures/oracle.ts). No test changed: OK.",
+  "kind": "negative",
+  "runner": "unittest",
+  "oracleControl": "expected-failure",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    }
+  }
+}

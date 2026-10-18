@@ -1,0 +1,19 @@
+{
+  "description": "Near 2c: the same failing run, but an earlier call is a `cd` (to the root, even): no call may have moved the shell. WARN.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "description": "An exclude pattern is added for a directory of JSON test data. It excludes no test file (the runner agrees), but an added exclusion is still reviewed: WARN, not FAIL.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": 5 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    }
+  }
+}

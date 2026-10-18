@@ -1,0 +1,17 @@
+{
+  "description": "`from unittest import skipIf as print` shadows the builtin `print`, which Python falls back to wherever the module's own binding is not yet made (a use before the import). A name that is also a builtin is not certainly the import at every occurrence, so `@print(True, \"x\")` is a WARN (it may skip), not a FAIL (round 5: the rule is about the whole file). The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

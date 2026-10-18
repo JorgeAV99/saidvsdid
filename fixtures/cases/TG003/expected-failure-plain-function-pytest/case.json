@@ -1,0 +1,19 @@
+{
+  "description": "Round 13: `@unittest.expectedFailure` on a plain function, collected by pytest. The decorator is unittest's, and it makes an expected failure only of a method of a `unittest.TestCase`: pytest runs the function as any other test (the real runner: passed at head). WARN, never FAIL.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    }
+  }
+}

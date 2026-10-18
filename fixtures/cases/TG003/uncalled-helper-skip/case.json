@@ -1,0 +1,8 @@
+{
+  "description": "Helpers containing test.skip() that are never called: attribution is uncertain, so WARN (not FAIL, not PASS).",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 5 },
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 9 }
+  ] }
+}

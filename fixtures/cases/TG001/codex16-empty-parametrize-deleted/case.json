@@ -1,0 +1,18 @@
+{
+  "description": "Round 16, Codex 4: the deleted file's only test is parametrised with an empty list: pytest skipped it at base. WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test_a.py", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x[NOTSET]\",1]": "skipped",
+      "[\"test_live.py\",\"test_live\",1]": "passed"
+    },
+    "head": {
+      "[\"test_live.py\",\"test_live\",1]": "passed"
+    }
+  }
+}

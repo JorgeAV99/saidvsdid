@@ -1,0 +1,25 @@
+{
+  "description": "Round 20d: Codex's case in Jest, with a second test file: an `afterEach` that leaves a `Promise.reject` unawaited under `test.failing`. In workers, Jest reports that file failed to run and loses its test; the recorder runs Jest in band, where the rejection ends the run with no report. Refused.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.test.js",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "jest: no report"
+}

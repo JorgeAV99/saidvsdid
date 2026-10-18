@@ -1,0 +1,21 @@
+{
+  "description": "Round 19, control: reconciliation with Jest's own summary passes on a normal run — a passing, a failing and a skipped test; head adds a canonical skip to the passing one (passed → skipped).",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "a.test.js", "line": 3, "test": "a", "ids": [["a",1]] }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"a\",1]": "passed",
+      "[\"a.test.js\",\"b\",1]": "failed",
+      "[\"a.test.js\",\"c\",1]": "skipped"
+    },
+    "head": {
+      "[\"a.test.js\",\"a\",1]": "skipped",
+      "[\"a.test.js\",\"b\",1]": "failed",
+      "[\"a.test.js\",\"c\",1]": "skipped"
+    }
+  }
+}

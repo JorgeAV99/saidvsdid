@@ -1,0 +1,5 @@
+{
+  "description": "The .only was already there at base; head only edits the test body. Not new, so not flagged.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

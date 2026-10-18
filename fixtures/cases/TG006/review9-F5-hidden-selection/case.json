@@ -1,0 +1,20 @@
+{
+  "description": "Ninth review, F5: `python -m pytest` green with a selection hidden in the environment (PYTEST_ADDOPTS inherited). Output proves no pass: INFO consistent_unverified, never PASS.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "claude",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

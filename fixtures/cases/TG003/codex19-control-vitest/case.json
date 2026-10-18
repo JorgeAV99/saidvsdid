@@ -1,0 +1,21 @@
+{
+  "description": "Round 19, control: reconciliation with Vitest's own summary passes on a normal run — a passing, a failing and a skipped test; head adds a canonical skip to the passing one (passed → skipped).",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "test/a.test.ts", "line": 3, "test": "a", "ids": [["a",1]] }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a\",1]": "passed",
+      "[\"test/a.test.ts\",\"b\",1]": "failed",
+      "[\"test/a.test.ts\",\"c\",1]": "skipped"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a\",1]": "skipped",
+      "[\"test/a.test.ts\",\"b\",1]": "failed",
+      "[\"test/a.test.ts\",\"c\",1]": "skipped"
+    }
+  }
+}

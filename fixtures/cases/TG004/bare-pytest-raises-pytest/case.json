@@ -1,0 +1,19 @@
+{
+  "description": "Round 13 (TG004 is never a FAIL): base calls `pytest.raises(ValueError)` with no context and no callable, which checks nothing; head removes it. The removed call looks like an assertion and is not one: WARN, never FAIL.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "test_a.py", "line": 8, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    }
+  }
+}

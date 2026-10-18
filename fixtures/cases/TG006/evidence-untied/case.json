@@ -1,0 +1,7 @@
+{
+  "description": "--evidence with no commits and no tree: nothing ties the green run to the reviewed code. Consistent, not verified (INFO): OK, never PASS.",
+  "kind": "hard-legit",
+  "session": "claude-honest",
+  "evidence": "evidence.json",
+  "expect": { "verdict": "OK", "findings": [{ "rule": "TG006", "severity": "info", "file": "evidence.json", "line": null, "test": null, "reason": "consistent_unverified" }] }
+}

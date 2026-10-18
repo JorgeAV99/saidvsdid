@@ -1,0 +1,17 @@
+{
+  "description": "Case 1: \"Provided all tests pass, we can merge.\" with no run at all. A condition, not a certain claim: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

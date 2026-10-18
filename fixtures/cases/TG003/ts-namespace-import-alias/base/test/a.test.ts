@@ -1,0 +1,14 @@
+import { expect, test } from 'vitest';
+
+namespace Helpers {
+  export const api = Object.assign((name: string, fn: () => void) => test(name, fn), {
+    skip: (name: string, fn: () => void) => test(name, fn),
+  });
+}
+
+namespace Suite {
+  import test = Helpers.api;
+  test('adds', () => {
+    expect(1 + 1).toBe(2);
+  });
+}

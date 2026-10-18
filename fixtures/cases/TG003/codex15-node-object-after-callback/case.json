@@ -1,0 +1,18 @@
+{
+  "description": "Round 15, Codex 6: `test('X', fn, { skip: true })`: node:test ignores an object after the callback (passed → passed). Options only where the runner documents them (F3): WARN.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 4, "test": "X" },
+    { "rule": "TG005", "severity": "warn", "file": "test/a.test.mjs", "line": 4, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    }
+  }
+}

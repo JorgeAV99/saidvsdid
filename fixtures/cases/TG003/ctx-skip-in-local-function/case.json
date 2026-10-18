@@ -1,0 +1,30 @@
+{
+  "description": "Review 2, case 1: ctx.skip() inside a function declared in the test body, and inside an object method. Attribution is uncertain: WARN, never PASS. Since round 7, the contagion net also names the test where the object's method is called: `guard` is bound to a value that holds `skip`, so `guard.stop()` may skip 'strips accents'.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "tests/slug.test.ts",
+        "line": 11,
+        "test": null
+      },
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "tests/slug.test.ts",
+        "line": 18,
+        "test": null
+      },
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "tests/slug.test.ts",
+        "line": 19,
+        "test": "slugify > strips accents"
+      }
+    ]
+  }
+}

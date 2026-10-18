@@ -1,0 +1,18 @@
+{
+  "description": "Negative control of the runner-evidence oracle (vitest): head breaks the code under test and leaves the test alone. The real runner reports 'adds' passed at base and failed at head, a bare failure without its expected-failure signal, which must not count as evidence of a FAIL that makes a test an expected failure (fixtures/oracle.ts). No test changed: OK.",
+  "kind": "negative",
+  "runner": "vitest",
+  "oracleControl": "expected-failure",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "failed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    }
+  }
+}

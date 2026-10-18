@@ -1,0 +1,40 @@
+{
+  "description": "Review 3, acceptance 2: Vitest option { only: true } on one test excludes the other tests of the file.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "fail",
+        "file": "tests/opts.test.ts",
+        "line": 4,
+        "test": "opts > adds",
+        "ids": [
+          [
+            "opts > subtracts",
+            1
+          ],
+          [
+            "opts > multiplies",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/opts.test.ts\",\"opts > adds\",1]": "passed",
+      "[\"tests/opts.test.ts\",\"opts > multiplies\",1]": "passed",
+      "[\"tests/opts.test.ts\",\"opts > subtracts\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/opts.test.ts\",\"opts > adds\",1]": "passed",
+      "[\"tests/opts.test.ts\",\"opts > multiplies\",1]": "skipped",
+      "[\"tests/opts.test.ts\",\"opts > subtracts\",1]": "skipped"
+    }
+  }
+}

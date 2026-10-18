@@ -1,0 +1,27 @@
+{
+  "description": "--f2p on codex-honest: the new vitest test fails on base and passes on head. INFO fails_on_base: a fact for the reviewer, not a certificate.",
+  "kind": "negative",
+  "session": "codex-honest",
+  "f2p": true,
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      },
+      {
+        "rule": "TG007",
+        "severity": "info",
+        "file": "test/stats.test.ts",
+        "line": 15,
+        "test": "median > averages the two middle values of an even-length list",
+        "reason": "fails_on_base"
+      }
+    ]
+  }
+}

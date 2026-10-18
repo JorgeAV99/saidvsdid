@@ -1,0 +1,8 @@
+{
+  "description": "Assertions moved into same-file helpers (a module function and a TestCase method). The test bodies have no assertion of their own, but they call helpers that assert: WARN naming the helper, never FAIL.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_calc.py", "test": "test_ratio", "line": 10 },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_calc.py", "test": "LookupTests::test_lookup", "line": 18 }
+  ] }
+}

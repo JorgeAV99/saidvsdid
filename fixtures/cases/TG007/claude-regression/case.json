@@ -1,0 +1,26 @@
+{
+  "description": "Real Claude Code session: two regression tests added; the run was piped through tail, and its summary (8 passed) backs the suite claim. TG007 finds the tests.",
+  "kind": "hard-legit",
+  "session": "claude-regression",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      },
+      {
+        "rule": "TG007",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "not_run"
+      }
+    ]
+  }
+}

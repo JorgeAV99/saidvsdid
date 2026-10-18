@@ -1,0 +1,18 @@
+{
+  "description": "Round 19, Codex 1, variant: `pytest.exit(…, returncode=0)`: the same interruption with exit 0. Refused.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "test_a.py",
+        "line": 4,
+        "test": "test_service"
+      }
+    ]
+  },
+  "unrecordable": "pytest: the session was interrupted"
+}

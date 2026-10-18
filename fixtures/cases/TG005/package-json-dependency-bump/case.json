@@ -1,0 +1,17 @@
+{
+  "description": "Only a devDependency version changes in package.json; scripts and the test-runner keys are identical: not a test-config change, no finding.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api/api.test.ts\",\"adds in api\",1]": "passed",
+      "[\"tests/unit/math.test.ts\",\"adds in unit\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/api/api.test.ts\",\"adds in api\",1]": "passed",
+      "[\"tests/unit/math.test.ts\",\"adds in unit\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "description": "Round 16, Codex 2: `pytest.skip()` in a generator test: pytest does not run a generator's body as a test. A generator's markers are WARN. Round 19: the recorder refuses it — the collection error stops pytest's session on both sides (exit 2, an interrupted session). The evidence it held ({} on both sides) was right that no test ran.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_x" }
+  ] },
+  "unrecordable": "pytest: the session was interrupted"
+}

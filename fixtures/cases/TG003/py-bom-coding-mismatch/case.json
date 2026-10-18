@@ -1,0 +1,8 @@
+{
+  "description": "Review of the commit that replaced the hand-written scope resolver with the languages' own tooling: a UTF-8 BOM followed by `# coding: latin-1` is a contradiction Python refuses (SyntaxError: encoding problem; pytest cannot import the module, so no runner evidence can be recorded). saidvsdid does not analyse such a file: one file-level WARN, and the added `@pytest.mark.skip` is a WARN, never FAIL.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": null, "test": null, "reason": "scope_unavailable" },
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_adds" }
+  ] }
+}

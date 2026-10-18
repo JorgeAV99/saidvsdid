@@ -1,0 +1,17 @@
+{
+  "description": "Case B: the module rebinds `unittest` before the test class, so `unittest.TestCase` is the module's own class, whose `skipTest` does nothing. A base whose name the module rebinds cannot be resolved with certainty: TG003 warns that `self.skipTest()` may skip `TestA::test_adds`, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 16, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    }
+  }
+}

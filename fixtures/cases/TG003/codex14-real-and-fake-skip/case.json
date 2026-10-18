@@ -1,0 +1,41 @@
+{
+  "description": "Round 14, Codex 9: `test_real` passed → skipped, `test_fake` passed → passed (its skip is after `return`). The FAIL of `test_real` is credited by its own status; `test_fake`'s skip is not canonical: WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 5,
+        "test": "test_real",
+        "ids": [
+          [
+            "test_real",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test_a.py",
+        "line": 10,
+        "test": "test_fake"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_fake\",1]": "passed",
+      "[\"test_a.py\",\"test_real\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_fake\",1]": "passed",
+      "[\"test_a.py\",\"test_real\",1]": "skipped"
+    }
+  }
+}

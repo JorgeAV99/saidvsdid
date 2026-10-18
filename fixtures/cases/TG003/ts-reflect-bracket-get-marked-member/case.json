@@ -1,0 +1,17 @@
+{
+  "description": "Codex P1 with the callee by a literal subscript: head adds `Reflect['get'](box, 'omit')();`.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "case.test.mjs", "line": 6, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"case.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"case.test.mjs\",\"X\",1]": "skipped"
+    }
+  }
+}

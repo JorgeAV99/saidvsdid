@@ -1,0 +1,7 @@
+{
+  "description": "Review #4 (Python): a pytest file with a syntax error at head is UNVERIFIABLE.",
+  "kind": "positive",
+  "expect": { "verdict": "UNVERIFIABLE", "findings": [], "unverifiable": [
+    { "file": "tests/test_io.py", "side": "head" }
+  ] }
+}

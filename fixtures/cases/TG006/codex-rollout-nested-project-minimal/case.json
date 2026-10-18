@@ -1,0 +1,19 @@
+{
+  "description": "Eighth review, end-to-end oracle (rollout, minimal reproduction of what test/e2e-real.test.ts found): `npm test` fails at the repository root; `cd sub1 && npm test` then passes — sub1 is a nested project with its own package.json, so that run is its suite, not the repository's. Which project and which tests a run from a subdirectory runs depends on the runner's configuration lookup, which is not modelled: only a run from the repository's root proves the whole suite. WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

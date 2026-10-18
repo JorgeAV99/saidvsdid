@@ -1,0 +1,18 @@
+{
+  "description": "The file is kept in head's tree but loses every test declaration (only a helper is left): TG001 says so, `Removes all 2 test declarations from tests/test_a.py (file kept)`, a WARN, not `Deletes the test file`. The real runner no longer runs either test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "tests/test_a.py", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_a.py\",\"test_double\",1]": "passed",
+      "[\"tests/test_a.py\",\"test_zero\",1]": "passed"
+    },
+    "head": {
+
+    }
+  }
+}

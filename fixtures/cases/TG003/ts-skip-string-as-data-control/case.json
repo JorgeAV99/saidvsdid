@@ -1,0 +1,15 @@
+{
+  "description": "Control of the contagion net's data rule in JS: `'skip'` here is data — a constant, a table of cases, a parameter's default, a comparison, an argument. Functions are not containers (`statusOf`, `first` hold no string), and a normal call is an opaque frontier (round 7d): `kind` in `expect(statusOf(kind)).toBe(…)` and `expect(first().status === kind).toBe(…)` is an argument of a call, never part of a callee. No finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

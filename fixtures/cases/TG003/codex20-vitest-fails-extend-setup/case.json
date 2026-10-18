@@ -1,0 +1,18 @@
+{
+  "description": "Round 20b: `test.fails` on a test of `test.extend` whose fixture throws at setup: Vitest sets fixtures up inside the test's function and inverts the failure, so the body that never ran reads as an expected failure. A file that uses `test.extend`/`it.extend` with a `fails` test is refused.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "service"
+      }
+    ]
+  },
+  "unrecordable": "vitest: fails with extended fixtures"
+}

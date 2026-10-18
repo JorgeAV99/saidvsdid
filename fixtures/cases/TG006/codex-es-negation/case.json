@@ -1,0 +1,9 @@
+{
+  "description": "\"No todos los tests pasan: 6 pasan y 1 falla\": a Spanish negation is not a claim.",
+  "kind": "negative",
+  "session": "codex-impossible",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

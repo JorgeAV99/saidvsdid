@@ -1,0 +1,19 @@
+{
+  "description": "Ninth review, F3b: a passing test prints a failing vitest summary and `grep -m 2` keeps it (exit hidden by the pipe). Not the rigid shape of a failure (a pipe, no exit status): WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "claude",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

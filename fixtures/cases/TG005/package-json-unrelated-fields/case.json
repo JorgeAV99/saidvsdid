@@ -1,0 +1,5 @@
+{
+  "description": "package.json changes only the version, a script that does not run tests and a dependency: nothing that affects the tests, so TG005 and the config net say nothing.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

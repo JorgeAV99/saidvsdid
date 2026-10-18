@@ -1,0 +1,7 @@
+{
+  "description": "Codex review (a3): the test script gains `--retry=2e0` (2 retries, written as a float). The script reader does not take it as a number; the config safety net must not let it pass.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": null }
+  ] }
+}

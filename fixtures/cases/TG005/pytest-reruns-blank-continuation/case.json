@@ -1,0 +1,7 @@
+{
+  "description": "Codex round 3: `--reruns=2` is added as an addopts continuation after a blank line. The INI reader drops it; any content change in a runner config that TG005 did not report must warn.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": null }
+  ] }
+}

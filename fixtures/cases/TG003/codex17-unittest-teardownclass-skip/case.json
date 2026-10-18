@@ -1,0 +1,17 @@
+{
+  "description": "Round 17, review: `raise unittest.SkipTest` in `tearDownClass`, after the class's tests ran: unittest reports a skip on its `_ErrorHolder`. The tests ran: their status is kept (passed), never turned into skipped.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 7, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    }
+  }
+}

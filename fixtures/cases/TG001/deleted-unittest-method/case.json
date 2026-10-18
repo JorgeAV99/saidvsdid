@@ -1,0 +1,7 @@
+{
+  "description": "A unittest method is removed from a TestCase class.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "tests/test_cache.py", "test": "CacheTests::test_eviction", "line": 12 }
+  ] }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Round 14, Codex A: `@unittest.skip` on the class, not on the test method: the runner skips the test, but a decorator is canonical only directly on the test function. WARN (\"may skip\").",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 4, "test": "TestA::test_adds" },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 6, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

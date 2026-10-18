@@ -1,0 +1,43 @@
+{
+  "description": "Round 15, Codex 10a: the focus of file a beside a skip added in file c: the change of C is evidence for the skip of C alone, never for the focus of a (WARN, F8).",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/c.test.ts",
+        "line": 3,
+        "test": "C",
+        "ids": [
+          [
+            "C",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG002",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 3,
+        "test": "A"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"A\",1]": "passed",
+      "[\"test/a.test.ts\",\"B\",1]": "skipped",
+      "[\"test/c.test.ts\",\"C\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"A\",1]": "passed",
+      "[\"test/a.test.ts\",\"B\",1]": "skipped",
+      "[\"test/c.test.ts\",\"C\",1]": "skipped"
+    }
+  }
+}

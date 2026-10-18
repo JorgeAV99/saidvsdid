@@ -1,0 +1,9 @@
+{
+  "description": "Timeouts inflated at least 3x: a test's third argument (5 s → 30 s), vi.setConfig({ testTimeout }) at file level (default 5 s → 60 s) and testTimeout in vitest.config.ts (5 s → 20 s).",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "tests/api.test.ts", "test": null, "line": 3 },
+    { "rule": "TG005", "severity": "warn", "file": "tests/api.test.ts", "test": "api > adds negatives", "line": 12 },
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": 5 }
+  ] }
+}

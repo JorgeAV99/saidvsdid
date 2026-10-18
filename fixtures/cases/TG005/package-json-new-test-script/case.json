@@ -1,0 +1,5 @@
+{
+  "description": "package.json adds a new `test:smoke` script and changes nothing else: a new script loses no test, so nothing is reported.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

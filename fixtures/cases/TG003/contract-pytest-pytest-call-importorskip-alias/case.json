@@ -1,0 +1,19 @@
+{
+  "description": "The silence guarantee (docs/rules.md), pytest, a simple alias: head calls `pytest.importorskip(\"saidvsdid_no_such_module\")` in test 'adds', through `later = pytest.importorskip`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 11, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    }
+  }
+}

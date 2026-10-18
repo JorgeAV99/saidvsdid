@@ -1,0 +1,10 @@
+{
+  "description": "skipif(False), skipUnless(True), xfail(False) and pytest.skip() under `if False:` disable nothing, but a new marker is never PASS: WARN.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 8 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 15 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 16 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 19 }
+  ] }
+}

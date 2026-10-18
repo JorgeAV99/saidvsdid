@@ -1,0 +1,10 @@
+{
+  "description": "Codex review of the noise round (NO-GO): one test is removed from a kept file and `formatDate`, the function it tested, moves unchanged from src/utils.ts to src/date.ts. The same WARN as without the move, with the context that the local code it used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      { "rule": "TG001", "severity": "warn", "file": "test/utils.test.ts", "line": 4, "test": "formats a date" }
+    ]
+  }
+}

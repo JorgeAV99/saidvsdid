@@ -1,0 +1,7 @@
+{
+  "description": "Codex verification of the commit that made TG005's scope reductions always WARN (1): `config.test.retry = [].length` becomes `[,].length` (0 → 1 retry). The elision comma looked like a trailing comma to the normalisation; any byte change in a runner config TG005 did not report must warn.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": null }
+  ] }
+}

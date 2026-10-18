@@ -1,0 +1,7 @@
+{
+  "description": "Review 2, case 5: test/example.ts (a helper in a test directory, no tests) has syntax errors. Still UNVERIFIABLE: parse errors are checked before a file is dismissed as a helper.",
+  "kind": "positive",
+  "expect": { "verdict": "UNVERIFIABLE", "findings": [], "unverifiable": [
+    { "file": "test/example.ts", "side": "head" }
+  ] }
+}

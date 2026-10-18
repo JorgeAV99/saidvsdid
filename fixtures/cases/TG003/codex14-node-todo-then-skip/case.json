@@ -1,0 +1,18 @@
+{
+  "description": "Round 14, Codex 11: `t.todo(); t.skip()` in node:test: Node reports X skipped. One effect per test: `t.skip()` is a FAIL (`not-run`), `t.todo()` a WARN.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 5, "test": "X" },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 6, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"X\",1]": "skipped"
+    }
+  }
+}

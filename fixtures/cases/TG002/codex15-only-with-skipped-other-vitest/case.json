@@ -1,0 +1,19 @@
+{
+  "description": "Round 15, Codex 9: `test.only('A')` beside `test.skip('B')`: vitest keeps A passed and B skipped. B was already skipped at base: no loss (F8), WARN naming no test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": "A" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"A\",1]": "passed",
+      "[\"test/a.test.ts\",\"B\",1]": "skipped"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"A\",1]": "passed",
+      "[\"test/a.test.ts\",\"B\",1]": "skipped"
+    }
+  }
+}

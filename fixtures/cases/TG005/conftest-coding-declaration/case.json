@@ -1,0 +1,19 @@
+{
+  "description": "Codex verification of the commit that made TG005's scope reductions always WARN (3): conftest.py changes `# coding: latin-1` to `# coding: utf-8`. The declaration changes how the file is decoded, and with it collect_ignore: pytest stops collecting tests/test_io.py (the runner agrees). Treated as a comment, it was hidden.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "conftest.py", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed",
+      "[\"tests/test_other.py\",\"test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_other.py\",\"test_other\",1]": "passed"
+    }
+  }
+}

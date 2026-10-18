@@ -1,0 +1,9 @@
+{"type":"session_meta","payload":{"id":"review","cwd":"<REPO>"}}
+{"type":"response_item","payload":{"type":"custom_tool_call","name":"exec","call_id":"format","input":""}}
+{"type":"event_msg","payload":{"type":"item_completed","item":{"type":"FileChange","id":"format","changes":{"test/a.test.js":{"type":"update","unified_diff":"","move_path":null}},"status":"completed"}}}
+{"type":"response_item","payload":{"type":"custom_tool_call_output","call_id":"format","output":""}}
+{"type":"response_item","payload":{"type":"custom_tool_call","name":"exec","call_id":"run","input":""}}
+{"type":"event_msg","payload":{"type":"item_completed","item":{"type":"CommandExecution","id":"run","command":["npm","test"],"cwd":"<REPO>","status":"completed","exit_code":0,"aggregated_output":"Test Files  1 passed (1)\nTests  2 passed (2)\n"}}}
+{"type":"response_item","payload":{"type":"custom_tool_call_output","call_id":"run","output":""}}
+{"type":"event_msg","payload":{"type":"item_completed","item":{"type":"AgentMessage","id":"claim","content":[{"type":"Text","text":"All tests pass."}],"phase":"final_answer"}}}
+{"type":"response_item","payload":{"type":"function_call","name":"spawn_agent","arguments":"{\"task_name\":\"edit\",\"message\":\"Remove test b from test/a.test.js\"}","call_id":"subagent"}}

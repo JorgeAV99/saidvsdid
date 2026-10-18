@@ -1,0 +1,18 @@
+{
+  "description": "Outside the assumption (mutation): the module calls `pytest.__setattr__('skip', …)`, so `pytest.skip()` in the body skips nothing. As a courtesy, an evident direct write on the imported name makes the rule warn (`may skip`), with no guarantee; the real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "outsideAssumption": {"reason":"mutation","note":"the module calls `pytest.__setattr__('skip', …)`"},
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

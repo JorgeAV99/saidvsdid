@@ -1,0 +1,17 @@
+{
+  "description": "Round 17, Codex 3: `raise unittest.SkipTest` in `setUpClass`: `Ran 0 tests, OK (skipped=1)`, reported on unittest's `_ErrorHolder`. The recorder finds the class and records each of its test methods (the loader's) as skipped, and never raises.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 7, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "skipped"
+    }
+  }
+}

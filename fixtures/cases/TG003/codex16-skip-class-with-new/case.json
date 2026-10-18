@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 3: `@pytest.mark.skip` on a method of a pytest class with `__new__`: pytest does not collect the class. WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 8, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+
+    },
+    "head": {
+
+    }
+  }
+}

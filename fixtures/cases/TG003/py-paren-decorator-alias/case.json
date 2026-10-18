@@ -1,0 +1,17 @@
+{
+  "description": "Codex case 4 (a silence on the commit that made lexical scope exact): `@(omit)` is `@omit` in parentheses, and `omit = pytest.mark.skip` is a one-step alias whose definition does not change. The new use is at least a WARN; the real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

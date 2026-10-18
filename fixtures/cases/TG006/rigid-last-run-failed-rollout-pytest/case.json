@@ -1,0 +1,19 @@
+{
+  "description": "Codex rollout: `python -m pytest -q 2>&1` recorded at the root with exit 1, its last line pytest's summary with a failure (real output). (Once the shape of a rigid FAIL.) WARN \"last visible test run failed\".",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

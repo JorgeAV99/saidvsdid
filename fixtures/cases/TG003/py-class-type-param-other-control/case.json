@@ -1,0 +1,33 @@
+{
+  "description": "Control for the type-parameter case: `class TestA[T]:` binds `T`, not `pytest`, so `pytest.skip()` in the method is the module's import: a FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "minPython": "3.12",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 6,
+        "test": "TestA::test_adds",
+        "ids": [
+          [
+            "TestA::test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

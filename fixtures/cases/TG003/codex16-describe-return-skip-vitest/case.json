@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 1: `test.skip('X')` after a `return` in the describe's callback: Vitest never registers X. Not F3: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 6, "test": "S > X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"S > live\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"S > live\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Control of the round-7 rule: an imported runner name that starts with `__` (`from pytest import skip as __omit__`) is never certain, whatever the file does with it: Python binds and mangles such names on its own (`__class__`, `__classdict__`, `__type_params__`, `__x` in a class), today and in versions to come. TG003 warns that `__omit__(\"x\")` may skip `test_adds`, never FAIL. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "description": "The PR deletes a feature: the test file and the only local module it imports (src/gate.ts) are deleted together. The diff cannot tell that the code is not elsewhere (a rename, a move), so the deletion is the same FAIL as without the module change (Codex review of the noise round); the message adds, as context, that the local code the tests used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG001",
+        "severity": "fail",
+        "file": "test/gate.test.ts",
+        "line": null,
+        "test": null,
+        "ids": [
+          [
+            "gate > unlocks with a stored email",
+            1
+          ],
+          [
+            "gate > stays locked without one",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

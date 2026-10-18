@@ -1,0 +1,22 @@
+{
+  "description": "Round 17, Codex 1, variant: both subtests skipped. Two children with their own identities (`(x=1)`, `(x=2)`), no collision; the test's body ran, so the test is not recorded as skipped.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 8, "test": "TestX::test_x" },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 5, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x (x=2)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_x (x=2)\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    }
+  }
+}

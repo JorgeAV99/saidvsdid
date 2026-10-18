@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review, N1 (rollout): the same subshell `cd` in a CommandExecution: outside the grammar, unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

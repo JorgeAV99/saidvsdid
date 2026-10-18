@@ -1,0 +1,21 @@
+{
+  "description": "Round 19, control: reconciliation with Playwright's own summary passes on a normal run — a passing, a failing and a skipped test; head adds a canonical skip to the passing one (passed → skipped).",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "a.spec.mjs", "line": 3, "test": "a", "ids": [["a",1]] }
+  ] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"a\",1]": "passed",
+      "[\"a.spec.mjs\",\"b\",1]": "failed",
+      "[\"a.spec.mjs\",\"c\",1]": "skipped"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"a\",1]": "skipped",
+      "[\"a.spec.mjs\",\"b\",1]": "failed",
+      "[\"a.spec.mjs\",\"c\",1]": "skipped"
+    }
+  }
+}

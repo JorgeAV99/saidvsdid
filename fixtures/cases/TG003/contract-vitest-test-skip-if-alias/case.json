@@ -1,0 +1,20 @@
+{
+  "description": "The silence guarantee (docs/rules.md), vitest, a simple alias: head declares test 'adds' with `test.skipIf`, through `const later = test.skipIf`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test/a.test.ts", "line": 7, "test": "adds" },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 9, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    },
+    "head": {
+
+    }
+  }
+}

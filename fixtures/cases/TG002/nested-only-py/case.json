@@ -1,0 +1,7 @@
+{
+  "description": "Review #2 (Python): a class already marked only gets a new @pytest.mark.only on one method. A new focus marker, but no test is excluded (pytest-only runs every marked test): WARN, not FAIL.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "tests/test_io.py", "test": "TestIO::test_roundtrip", "line": 9 }
+  ] }
+}

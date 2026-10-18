@@ -1,0 +1,10 @@
+{
+  "description": "Codex review of the noise round (NO-GO): the test file is deleted and `computeTax` moves, edited, to src/billing/tax.ts (too different for git's rename detection). The function exists at head with the same name in another path: the same FAIL, with the context that the local code the test used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      { "rule": "TG001", "severity": "fail", "file": "test/tax.test.ts", "line": null, "test": null, "ids": [["computes tax", 1]] }
+    ]
+  }
+}

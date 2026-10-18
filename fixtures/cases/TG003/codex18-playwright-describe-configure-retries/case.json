@@ -1,0 +1,9 @@
+{
+  "description": "Round 18, Codex 2: `test.describe.configure({ retries: 1 })` retries the test even under `--retries=0`: at head Playwright runs X twice (passed, then failed) and reports it `flaky`. The recorder refuses it: `unrecordable: retries`.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "a.spec.mjs", "line": 5, "test": "X", "effect": "expected-failure", "ids": [["X",1]] }
+  ] },
+  "unrecordable": "retries"
+}

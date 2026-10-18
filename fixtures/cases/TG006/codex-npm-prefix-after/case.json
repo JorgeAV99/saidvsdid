@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review, N3 (Codex exec): a green `npm test`, then `npm test --prefix OTHER` fails in another package. `--prefix` is not a flag of the grammar: unplaced: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

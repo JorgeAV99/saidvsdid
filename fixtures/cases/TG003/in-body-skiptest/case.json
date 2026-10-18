@@ -1,0 +1,22 @@
+{
+  "description": "An unconditional self.skipTest() call is inserted at the top of a unittest test body.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_cache.py",
+        "line": 13,
+        "test": "CacheTests::test_eviction",
+        "ids": [
+          [
+            "CacheTests::test_eviction",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

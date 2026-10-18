@@ -1,0 +1,5 @@
+{
+  "description": "Tests are parametrized and extended; no assertion is lost or relaxed.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

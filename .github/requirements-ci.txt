@@ -1,0 +1,2 @@
+# The Python packages the CI installs (one place for the version, and the key of setup-python's pip cache).
+pytest==8.4.2

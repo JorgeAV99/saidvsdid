@@ -1,0 +1,5 @@
+{
+  "description": "A snapshot file is updated and an obsolete snapshot entry removed; the test file is untouched.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

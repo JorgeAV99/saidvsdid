@@ -1,0 +1,16 @@
+{
+  "description": "Nested-focus hardening (Playwright): a new test.describe.only inside an existing one narrows the focused group. Round 14: a focus under a describe that carries a modifier of its own is not canonical: WARN, and the message does not say which tests are left out.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "warn",
+        "file": "e2e/login.spec.ts",
+        "line": 9,
+        "test": "login > errors > rejects a bad password"
+      }
+    ]
+  }
+}

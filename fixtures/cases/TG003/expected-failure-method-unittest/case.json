@@ -1,0 +1,42 @@
+{
+  "description": "Round 13, control: `@unittest.expectedFailure` on a method of a `unittest.TestCase` subclass of the module. unittest guarantees the effect (an expected failure, an unexpected success when it passes): FAIL with the effect `expected-failure`, which the real runner shows (xpassed).",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_a.py",
+        "line": 5,
+        "test": "TestA::test_adds",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "TestA::test_adds",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "tests/test_a.py",
+        "line": 6,
+        "test": "TestA::test_adds"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "xpassed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    }
+  }
+}

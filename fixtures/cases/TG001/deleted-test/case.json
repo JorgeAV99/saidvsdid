@@ -1,0 +1,7 @@
+{
+  "description": "An existing test is deleted from a vitest file while the others stay. The file survives, so the test may have been merged elsewhere: WARN (FAIL is reserved for deleting a whole test file).",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "tests/math.test.ts", "test": "math > divides by zero throws", "line": 13 }
+  ] }
+}

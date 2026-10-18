@@ -1,0 +1,19 @@
+{
+  "description": "N8: vitest is a dependency, and vite.config.ts stops importing the shared config whose `test.exclude` left out test/b.test.ts. Neither side of vite.config.ts writes a `test` block: reading for one is interpreting. Any byte change to a vite config with vitest as a dependency is a WARN; vitest really runs b at head.",
+  "kind": "positive",
+  "runner": "vitest",
+  "selectionChanges": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vite.config.ts", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed",
+      "[\"test/b.test.ts\",\"b > runs\",1]": "passed"
+    }
+  }
+}

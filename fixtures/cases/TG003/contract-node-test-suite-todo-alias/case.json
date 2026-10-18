@@ -1,0 +1,20 @@
+{
+  "description": "The silence guarantee (docs/rules.md), node:test, a simple alias: head declares the suite of test 'adds' with `describe.todo`, through `const later = describe.todo`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 3, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 9, "test": "group > adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"group > adds\",1]": "passed",
+      "[\"test/a.test.mjs\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"group > adds\",1]": "xpassed",
+      "[\"test/a.test.mjs\",\"other\",1]": "passed"
+    }
+  }
+}

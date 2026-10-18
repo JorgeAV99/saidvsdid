@@ -1,0 +1,30 @@
+{
+  "description": "A test file declared through vitest's namespace (`import * as runner from 'vitest'`, `runner.it(...)`, a static import) is deleted: certain, TG001 FAIL. Before, `runner.it` was not read as a declaration.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG001",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": null,
+        "test": null,
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {}
+  }
+}

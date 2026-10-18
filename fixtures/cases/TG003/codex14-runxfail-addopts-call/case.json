@@ -1,0 +1,37 @@
+{
+  "description": "Round 14, Codex 6: `pytest.xfail()` with `addopts = --runxfail`: pytest runs and fails the test on both sides (no wasxfail). The form is canonical; the case is outside the documented assumption that the runner is invoked with its standard behaviour about markers.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 5,
+        "test": "test_x",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "test_x",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "outsideAssumption": {
+    "reason": "runner-invocation",
+    "note": "`--runxfail` in pytest.ini, unchanged by the diff"
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x\",1]": "failed"
+    }
+  }
+}

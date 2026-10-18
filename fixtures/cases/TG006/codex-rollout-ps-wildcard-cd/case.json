@@ -1,0 +1,17 @@
+{
+  "description": "Eighth review, R3 (rollout, pwsh): `npm.cmd test` fails at the root; then `cd 'sub[1]' && npm.cmd test` passes. PowerShell's Set-Location reads `[1]` as a wildcard even in quotes and goes to `sub1`. A path component outside the closed set of characters, and a wildcard in a PowerShell location, are unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

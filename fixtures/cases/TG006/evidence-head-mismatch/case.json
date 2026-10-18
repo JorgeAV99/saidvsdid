@@ -1,0 +1,7 @@
+{
+  "description": "--evidence whose repo.head is another commit: it backs nothing about the reviewed code. TG006 and TG007 are not evaluated (WARN with the mismatch), never PASS.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "evidence": "evidence.json",
+  "expect": { "verdict": "WARN", "findings": [{ "rule": "TG006", "severity": "warn", "file": "evidence.json", "line": null, "test": null, "reason": "evidence_mismatch" }, { "rule": "TG007", "severity": "warn", "file": "evidence.json", "line": null, "test": null, "reason": "evidence_mismatch" }], "notEvaluated": ["TG006", "TG007"] }
+}

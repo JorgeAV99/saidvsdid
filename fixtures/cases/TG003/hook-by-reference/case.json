@@ -1,0 +1,7 @@
+{
+  "description": "Review 2, case 2: `function setup() { test.skip(); }` passed by reference to test.beforeEach. Attribution is uncertain: WARN, never PASS.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 4 }
+  ] }
+}

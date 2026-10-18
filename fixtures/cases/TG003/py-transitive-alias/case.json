@@ -1,0 +1,17 @@
+{
+  "description": "Contagion to a fixed point: `later = omit`, where `omit = pytest.mark.skip`, marks `later` too (an alias of an alias, coverage before round 7), and head decorates `test_adds` with `@later`: at least a WARN that it may skip it, never silence. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

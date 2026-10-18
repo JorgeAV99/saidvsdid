@@ -1,0 +1,25 @@
+{
+  "description": "Round 19, Codex 3: `jest.retryTimes(1)` with `test.failing`: the body passes on the first attempt and fails on the second; Jest reports `invocations: 2`. Refused.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.test.js",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "jest: a test run more than once"
+}

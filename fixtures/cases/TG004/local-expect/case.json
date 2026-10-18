@@ -1,0 +1,17 @@
+{
+  "description": "The runner's `expect` is replaced by a local one that checks nothing. The test keeps its `expect(…)` calls, but `expect` is no longer a static import of a runner: TG004 warns that the test may no longer assert. Before, the same name counted as an assertion and nothing was reported.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "test/a.test.ts", "line": 6, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

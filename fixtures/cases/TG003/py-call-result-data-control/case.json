@@ -1,0 +1,15 @@
+{
+  "description": "Control of round 7d on the marking side: `GOOD` holds `\"skip\"` in a container, but `r = check(GOOD)` binds a call's result — what enters a function is behind an opaque frontier — so `r` holds nothing, and `r.get(\"ok\")` is not a use of the vocabulary: no finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

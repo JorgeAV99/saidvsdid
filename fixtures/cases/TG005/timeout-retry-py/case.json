@@ -1,0 +1,9 @@
+{
+  "description": "pytest: @pytest.mark.timeout(10) → (60), a new @pytest.mark.flaky(reruns=3) (pytest-rerunfailures) and --reruns 2 in pytest.ini's addopts.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "tests/test_io.py", "test": "test_roundtrip", "line": 6 },
+    { "rule": "TG005", "severity": "warn", "file": "tests/test_io.py", "test": "test_read", "line": 11 },
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": 2 }
+  ] }
+}

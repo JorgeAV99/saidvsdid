@@ -1,0 +1,15 @@
+{
+  "description": "Control of the contagion net: tokens are whole identifiers, never substrings. `onlyOnce` and `skipped` contain `only` and `skip` but are neither token, their bindings hold no token (`'none'` is not one), and the new calls in 'adds' are not uses of the vocabulary: no finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

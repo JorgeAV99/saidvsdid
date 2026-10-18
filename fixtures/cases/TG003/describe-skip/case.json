@@ -1,0 +1,30 @@
+{
+  "description": "describe.skip disables a whole block; reported once at the marker with every affected test.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/slug.test.ts",
+        "line": 4,
+        "test": null,
+        "ids": [
+          [
+            "slugify > lowercases",
+            1
+          ],
+          [
+            "slugify > replaces spaces",
+            1
+          ],
+          [
+            "slugify > strips accents",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

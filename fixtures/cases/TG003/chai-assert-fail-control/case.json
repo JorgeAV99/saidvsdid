@@ -1,0 +1,8 @@
+{
+  "description": "chai's `assert.fail` and `expect.fail` are assertions, not the runner's `fail`: no finding.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

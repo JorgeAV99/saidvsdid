@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review (variant): a `cd` inside a pipeline stage (its own subshell) before `npm test`: outside the grammar: unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

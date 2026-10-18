@@ -1,0 +1,17 @@
+{
+  "description": "setup.cfg's [tool:pytest] sets xfail_strict = True: dropping strict=True keeps the xfail strict.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    },
+    "head": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "description": "Only comments and whitespace change in vitest.config.ts and pytest.ini. Still a WARN on each: the safety net compares bytes, because every normalisation is a way to hide a change (an elision comma, spaces inside quotes, a coding declaration), and format-only changes to test configs are rare.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": null },
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": null }
+  ] }
+}

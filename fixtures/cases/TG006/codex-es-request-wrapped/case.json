@@ -1,0 +1,17 @@
+{
+  "description": "\"Por favor, comprueba que\\ntodos los tests pasan.\" with no run: a continued sentence, possible: WARN.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

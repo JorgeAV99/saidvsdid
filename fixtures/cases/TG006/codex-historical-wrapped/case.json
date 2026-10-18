@@ -1,0 +1,17 @@
+{
+  "description": "\"This was the result before the edit.\\nAll tests passed.\" after an edit: a temporal marker in the message makes the claim possible: WARN, not FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

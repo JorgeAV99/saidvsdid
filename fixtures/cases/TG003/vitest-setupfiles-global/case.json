@@ -1,0 +1,17 @@
+{
+  "description": "From the Codex review of the commit that compared config names without case and always watched vite configs (a false FAIL on main): vitest with `globals: false` and a setup file that installs the project's own global `it` (its `skip` still runs the test). A global is never certain: TG003 WARN, not FAIL. The real runner runs the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 1, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

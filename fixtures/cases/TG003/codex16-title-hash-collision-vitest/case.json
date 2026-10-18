@@ -1,0 +1,21 @@
+{
+  "description": "Round 16, Codex 8: two tests titled X and one titled `X#2`: the runner keeps three tests (passed, xpassed, passed). Identities are structured (file, name, ordinal), and a file with repeated titles gives WARN: which X the runner reports is not certain.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 4, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed",
+      "[\"test/a.test.ts\",\"X\",2]": "passed",
+      "[\"test/a.test.ts\",\"X#2\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed",
+      "[\"test/a.test.ts\",\"X\",2]": "xpassed",
+      "[\"test/a.test.ts\",\"X#2\",1]": "passed"
+    }
+  }
+}

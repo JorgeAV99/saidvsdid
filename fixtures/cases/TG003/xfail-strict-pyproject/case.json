@@ -1,0 +1,19 @@
+{
+  "description": "pyproject.toml sets xfail_strict = true: the bare xfail at base was strict, so an explicit strict=False relaxes it (the runner turns a failing XPASS into a passing one). Round 14: the test was already an expected failure at base (the runner reports it xpassed on both sides, XPASS(strict) at base): not a new expected failure, WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_codec.py", "line": 6, "test": "test_decode_latin1" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    },
+    "head": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    }
+  }
+}

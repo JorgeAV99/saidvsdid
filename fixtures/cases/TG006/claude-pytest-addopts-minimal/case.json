@@ -1,0 +1,19 @@
+{
+  "description": "Eighth review, R1 (Claude, minimal reproduction): `python -m pytest` fails; then `PYTEST_ADDOPTS='-k good' python -m pytest` reports \"1 passed, 1 deselected\". An environment variable outside the closed list changes what runs, and the runner's own summary shows a deselection: the run is partial and outside the grammar: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

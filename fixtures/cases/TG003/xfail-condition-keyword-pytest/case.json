@@ -1,0 +1,19 @@
+{
+  "description": "Round 13: `@pytest.mark.xfail(condition=True, reason=\"bug 3\")`: `condition=` makes the expected failure depend on a condition. An argument that restricts the effect of `xfail` gives a WARN, never a FAIL, even when its value reads as always true.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "xpassed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    }
+  }
+}

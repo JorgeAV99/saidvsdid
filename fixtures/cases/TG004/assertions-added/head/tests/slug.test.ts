@@ -1,0 +1,13 @@
+import { describe, expect, it } from 'vitest';
+import { parseTags, slugify } from '../src/slug';
+
+describe('slug', () => {
+  it('lowercases and dashes', () => {
+    expect(slugify('Hello World')).toBe('hello-world');
+    expect(slugify('  A  ')).toBe('a');
+  });
+
+  it('parses tags', () => {
+    expect(parseTags('a, b,,c')).toEqual(['a', 'b', 'c']);
+  });
+});

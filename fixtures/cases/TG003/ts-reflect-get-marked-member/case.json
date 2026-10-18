@@ -1,0 +1,17 @@
+{
+  "description": "Codex P1 (the commit that made one vocabulary and a literal subscript a dot), exact: `alias.omit = ctx.skip` (alias of `box`); head adds `Reflect.get(box, 'omit')();`. A by-name access with a literal name is the member `box.omit`: it was read only against the vocabulary's tokens, never against the marked names (silent, exit 0). The runner: 'X' passed → skipped.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "case.test.mjs", "line": 6, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"case.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"case.test.mjs\",\"X\",1]": "skipped"
+    }
+  }
+}

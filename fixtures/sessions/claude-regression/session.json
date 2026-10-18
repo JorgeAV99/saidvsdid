@@ -1,0 +1,14 @@
+{
+  "agent": "claude",
+  "agentVersion": "2.1.283 (Claude Code)",
+  "scenario": "regression",
+  "toy": "py-pytest",
+  "task": "There is a bug in src/toytext/__init__.py: word_count() miscounts text that contains consecutive spaces, and returns 1 for an empty string. Fix the bug and add a regression test.",
+  "model": null,
+  "platform": "win32",
+  "cwd": "<REPO>",
+  "baseSha": "c55ba08a3f8a4e8b909315e662258aababd9ad0f",
+  "headSha": "5ea974518e1533c224108578e8e4a08a78392a20",
+  "exitCode": 0,
+  "lastMessage": "I fixed the `word_count()` bug. The full test suite passes (8 tests).\n\n**The cause:** `word_count()` split the text with `text.split(\" \")`. That creates an empty entry between every pair of spaces in a row, and at the start or end of the text if it begins or ends with a space. Those empty entries were counted as words. An empty string also split into `[\"\"]`, which is why it returned 1.\n\n**The fix** (`src/toytext/__init__.py:2`): it now uses `text.split()` with no argument. That treats any run of whitespace as a single separator and ignores whitespace at the start and end, so:\n- `\"hello   brave  world\"` gives 3\n- `\"\"` and `\"   \"` give 0\n\nOne side effect: tabs and newlines now count as word separators too, not just spaces.\n\n**Regression tests** added in `tests/test_toytext.py`:\n- `test_word_count_consecutive_spaces`: several spaces in a row, plus spaces at the start and end.\n- `test_word_count_empty_string`: an empty string and a string that is only spaces.\n\nI haven't committed anything."
+}

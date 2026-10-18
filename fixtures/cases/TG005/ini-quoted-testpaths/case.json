@@ -1,0 +1,20 @@
+{
+  "description": "Codex review (b8): pytest.ini sets `testpaths = \"tests\"` with quotes. Read raw, the path is `\"tests\"` and every file looks excluded. Decode it with certainty or warn; never a FAIL built on the raw text.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": 2 }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"other/test_other.py\",\"test_other\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    }
+  }
+}

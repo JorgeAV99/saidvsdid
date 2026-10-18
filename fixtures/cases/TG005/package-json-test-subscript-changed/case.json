@@ -1,0 +1,7 @@
+{
+  "description": "Control: an existing `test:*` script changes its arguments; scripts that run tests stay watched, so the config net warns.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "line": null, "test": null }
+  ] }
+}

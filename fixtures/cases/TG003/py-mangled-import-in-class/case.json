@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that added the exhaustive binding map and normalised aliases: inside a class body Python mangles `__omit` to `_TestA__omit`, which is not the module's `from pytest import skip as __omit` (the call raises NameError). A name subject to mangling is never certain: TG003 warns that 'adds' may be skipped, never FAIL; the real runner runs the test (it fails with NameError).",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "failed"
+    }
+  }
+}

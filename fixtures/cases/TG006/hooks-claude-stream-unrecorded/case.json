@@ -1,0 +1,19 @@
+{
+  "description": "Real Claude Code session (stream-json without --include-hook-events): a PostToolUse hook ran `npm test` after the Edit; the stream records no hook at all. The format does not show hooks, so \"nothing ran after the edit\" is not a fact: WARN, never FAIL edited_without_activity. Final message replaced by the claim.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

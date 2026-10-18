@@ -1,0 +1,16 @@
+{
+  "description": "The only assertion, `pytest.raises(...)`, is removed; `import pytest` at module level and nothing in the module rebinds `pytest`, so the call in the test body was pytest's. TG004 is never a FAIL (round 13: a check may be written as a guard, a raise or a helper, and a bare `pytest.raises(X)` checks nothing): WARN. No runner evidence: the test passes on both sides. See py-raises-removed-rebound-before/-after for the uncertain binding.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "test_a.py",
+        "line": 4,
+        "test": "test_divides_by_zero"
+      }
+    ]
+  }
+}

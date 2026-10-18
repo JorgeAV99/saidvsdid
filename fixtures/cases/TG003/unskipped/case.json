@@ -1,0 +1,5 @@
+{
+  "description": "A previously skipped test is re-enabled: the suite grows, nothing to flag.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

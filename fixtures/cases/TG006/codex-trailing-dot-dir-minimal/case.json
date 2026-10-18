@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review, N4 (Codex exec, minimal reproduction): after the green run a patch changes `docs./guide.txt`; Windows drops the trailing dot and edits docs/guide.txt, a POSIX file system writes a new directory `docs.`. A component that is not ordinary on every OS is unplaced: an uncertain edit: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

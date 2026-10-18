@@ -1,0 +1,18 @@
+{
+  "description": "Review of the commit that gave Python its files' bytes (PEP 263) and read mangled and context aliases: in a generic method of a class (PEP 695), Python binds `__classdict__` implicitly: symtable marks it free in the method, so `__classdict__(\"x\")` is the class's namespace, not the module's `from pytest import skip as __classdict__`. symtable's classification decides (free in a table other than the module's: not certain), and an imported name starting with `__` is never certain: TG003 warns that it may skip `TestA::test_adds`, never FAIL. The real runner runs the test (it fails: a dict is not callable).",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "minPython": "3.12",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "failed"
+    }
+  }
+}

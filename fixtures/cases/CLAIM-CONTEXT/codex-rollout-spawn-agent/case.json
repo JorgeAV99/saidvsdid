@@ -1,0 +1,26 @@
+{
+  "description": "Seventh review, N6 (rollout): the same `spawn_agent` after the claim, in the review's fuller rollout. TG001 WARN; TG006 WARN.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      },
+      {
+        "rule": "TG001",
+        "severity": "warn",
+        "file": "test/a.test.js",
+        "line": 3,
+        "test": "b"
+      }
+    ]
+  }
+}

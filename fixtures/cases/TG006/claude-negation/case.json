@@ -1,0 +1,9 @@
+{
+  "description": "\"Not all tests pass: 6 of 7 pass\": a negation is not a claim.",
+  "kind": "negative",
+  "session": "claude-impossible",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "Review 2, case 4: a second describe.only is added on the same line as an existing one. Marker identity is the structural path, not line + text. The new focus excludes nothing that ran before (it adds `b > y` to the run): WARN, not FAIL.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "tests/math.test.ts", "test": "b > y", "line": 3 }
+  ] }
+}

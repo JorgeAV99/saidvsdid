@@ -1,0 +1,5 @@
+{
+  "description": "node:test has no default timeout (Infinity): `{ timeout: 120_000 }` on new tests (an existing file and a new one, as in a real agent PR) and on an existing test that had none sets a limit where there was none, so it is not raised from a default (Jest's and Vitest's 5 s are not node:test's). ESM import and CommonJS require alike.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

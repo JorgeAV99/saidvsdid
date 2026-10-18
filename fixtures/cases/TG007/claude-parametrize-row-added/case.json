@@ -1,0 +1,26 @@
+{
+  "description": "The regression test is a new row in an existing `@pytest.mark.parametrize` table.",
+  "kind": "hard-legit",
+  "session": "claude-regression",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      },
+      {
+        "rule": "TG007",
+        "severity": "info",
+        "file": "tests/test_toytext.py",
+        "line": 32,
+        "test": "test_word_count_table",
+        "reason": "not_run"
+      }
+    ]
+  }
+}

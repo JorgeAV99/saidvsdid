@@ -1,0 +1,18 @@
+{
+  "description": "Real Codex session: \"All 6 tests passed before the refactor … the test status is unverified\": the agent disclosed that the tests were not rerun after the refactor, so TG006 reports it as INFO.",
+  "kind": "negative",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "disclosed"
+      }
+    ]
+  }
+}

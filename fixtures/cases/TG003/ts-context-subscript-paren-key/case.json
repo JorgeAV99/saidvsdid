@@ -1,0 +1,32 @@
+{
+  "description": "Review of the commit that gave Python its files' bytes (PEP 263) and read mangled and context aliases, on the test context: `ctx[('skip')]()` is `ctx.skip()` on vitest's test context (the first parameter of a statically imported `it`'s callback): head certainly adds a skip to 'adds', a FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 4,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

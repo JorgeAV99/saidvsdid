@@ -1,0 +1,17 @@
+{
+  "description": "Sixth review (supersedes the fifth, 6): after the green run a patch changes `docs..srcstats.ts`. The repository has no `docs/` directory, so what `docs/..` is cannot be resolved (`..` is never resolved on the text): unplaced: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

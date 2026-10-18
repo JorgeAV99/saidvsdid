@@ -1,0 +1,29 @@
+{
+  "description": "Round 16, Codex 8: a new `X` inserted before an existing `test.fails('X')`: the expected failure is not new, only its ordinal moved. Repeated titles: WARN, and the oracle never credits them.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "X"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed",
+      "[\"test/a.test.ts\",\"X\",2]": "xfailed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed",
+      "[\"test/a.test.ts\",\"X\",2]": "passed",
+      "[\"test/a.test.ts\",\"X\",3]": "xfailed"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "description": "Sixth review, F5 (Claude, minimal reproduction): after the green run an Edit of `docs/tmp/../link/../a.js`, where `docs/link` is a symlink to `../src/nested`. Read as text it is `docs/a.js` (documentation); resolved one component at a time it crosses the symlink (POSIX: `src/a.js`). Crossing a symlink is unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "claude",
+  "cwd": "<REPO>",
+  "links": {
+    "symlinks": {
+      "docs/link": "../src/nested"
+    },
+    "submodules": [
+      "vendor/sub"
+    ]
+  },
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

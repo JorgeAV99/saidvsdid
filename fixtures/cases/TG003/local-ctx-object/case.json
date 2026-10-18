@@ -1,0 +1,28 @@
+{
+  "description": "Review 3, acceptance 5 (a false silence on main): a local `const ctx = { skip() { return 1 } }`, once shadowing the test's ctx parameter and once without one. A `ctx.skip()` whose receiver is not the test callback's context parameter is not certainly the runner's: TG003 warns that it may skip the tests, never FAIL, never silence; the two warnings have the same cause in one file, so they are one that names both tests (noise round, grouping). `expect(ctx.task.name).toBe(…)` reads `ctx` only as an argument of `expect`, behind the opaque frontier of a call: not a use (round 7d).",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "tests/ctx.test.ts",
+        "line": 8,
+        "test": null
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/ctx.test.ts\",\"ctx > has no context parameter\",1]": "passed",
+      "[\"tests/ctx.test.ts\",\"ctx > shadows the context parameter\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/ctx.test.ts\",\"ctx > has no context parameter\",1]": "passed",
+      "[\"tests/ctx.test.ts\",\"ctx > shadows the context parameter\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Outside the assumption (mutation): the module writes `pytest.mark.skip = …`, so `@pytest.mark.skip(...)` skips nothing. As a courtesy, an evident direct write on the imported name makes the rule warn (`may skip`), with no guarantee; the real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "outsideAssumption": {"reason":"mutation","note":"the module writes `pytest.mark.skip = …`"},
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

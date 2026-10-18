@@ -1,0 +1,23 @@
+{
+  "description": "Round 17, `raise unittest.SkipTest` in `setUpModule`: every test of the module is skipped (three, in two classes), the other module's test still runs. The recorder records each test of that module alone as skipped.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 5, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_y\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestY::test_z\",1]": "passed",
+      "[\"tests/test_b.py\",\"TestB::test_b\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_y\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestY::test_z\",1]": "skipped",
+      "[\"tests/test_b.py\",\"TestB::test_b\",1]": "passed"
+    }
+  }
+}

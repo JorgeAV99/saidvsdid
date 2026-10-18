@@ -1,0 +1,17 @@
+{
+  "description": "Design review: `({ skip: omit }) => { omit(); … }` destructures the test context's `skip` into `omit`, a binding whose value is a form of the vocabulary (the context is an implicit origin): calling it is at least a WARN, never certain. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 4, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

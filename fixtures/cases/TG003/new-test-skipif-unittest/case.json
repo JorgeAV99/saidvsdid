@@ -1,0 +1,16 @@
+{
+  "description": "A new unittest method is added with `@unittest.skipIf(…)`: it did not exist at base, so nothing is lost; one INFO line.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "info",
+        "file": "tests/test_settings.py",
+        "line": 9,
+        "test": "SettingsTest::test_unreadable_file_is_refused"
+      }
+    ]
+  }
+}

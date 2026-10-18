@@ -1,0 +1,19 @@
+{
+  "description": "Codex review (b4): the jest field adds /tests/slow/ to testPathIgnorePatterns, but the test script passes --testPathIgnorePatterns on the command line, which replaces the config value: the slow tests still run (the runner agrees). WARN, not FAIL.",
+  "kind": "hard-legit",
+  "runner": "jest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": 8 }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"tests/fast.test.js\",\"fast > adds quickly\",1]": "passed",
+      "[\"tests/slow/big.test.js\",\"slow > adds slowly\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/fast.test.js\",\"fast > adds quickly\",1]": "passed",
+      "[\"tests/slow/big.test.js\",\"slow > adds slowly\",1]": "passed"
+    }
+  }
+}

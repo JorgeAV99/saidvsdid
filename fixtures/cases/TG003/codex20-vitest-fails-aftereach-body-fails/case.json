@@ -1,0 +1,25 @@
+{
+  "description": "Round 20: `test.fails` whose body fails as expected while `afterEach` also throws: Vitest inverts both and reports it passed. Another failure in the same test: refused.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "vitest: an expected failure with another failure in the same test"
+}

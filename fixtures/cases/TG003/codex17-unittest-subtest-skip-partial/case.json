@@ -1,0 +1,21 @@
+{
+  "description": "Round 17, Codex 1: `self.skipTest()` inside the subtest `x=1`; the case `x=2` still runs. The recorder keeps the test's identity (`TestX::test_x`, ran: passed) and records each subtest as its own child (`TestX::test_x (x=1)` skipped, `(x=2)` passed): the oracle never credits that the test stopped running.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 9, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x (x=2)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_x (x=2)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "description": "A failing existing test is skipped with it.skip instead of being fixed.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/slug.test.ts",
+        "line": 13,
+        "test": "slugify > strips accents",
+        "ids": [
+          [
+            "slugify > strips accents",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

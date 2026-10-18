@@ -1,0 +1,5 @@
+{
+  "description": "A test body changes and no timeout, retry or runner configuration is touched: no finding.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

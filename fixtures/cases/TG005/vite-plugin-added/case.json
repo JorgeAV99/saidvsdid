@@ -1,0 +1,5 @@
+{
+  "description": "A vite config gains a plugin and a resolve alias, with the imports they need (`@vitejs/plugin-react`, `fileURLToPath`) used only inside those settings; the `test` section is unchanged. Nothing that selects tests changed: no finding.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

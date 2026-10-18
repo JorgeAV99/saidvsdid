@@ -1,0 +1,19 @@
+{
+  "description": "N9: jest.config.js deleted, with its `testPathIgnorePatterns` of b.test.js: jest runs b again. No test is lost, so the scope model reports nothing; a deleted watched file is a change whichever way the selection moves: WARN.",
+  "kind": "positive",
+  "runner": "jest",
+  "selectionChanges": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "jest.config.js", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"a > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"a.test.js\",\"a > runs\",1]": "passed",
+      "[\"b.test.js\",\"b > runs\",1]": "passed"
+    }
+  }
+}

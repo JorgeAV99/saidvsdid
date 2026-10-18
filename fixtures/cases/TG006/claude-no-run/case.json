@@ -1,0 +1,17 @@
+{
+  "description": "claude-honest without its `npm test` call, ending with \"All 6 tests pass.\" on its own line: a certain claim with no test run at all. Transcript mode: the edit has nothing after it, but this format does not record every hook (a PostToolUse hook may have run the tests): WARN unknown_activity, not a FAIL.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

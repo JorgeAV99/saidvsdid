@@ -1,0 +1,7 @@
+{
+  "description": "A describe block is split: one test moves to a new file unchanged. Info only.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [
+    { "rule": "TG001", "severity": "info", "file": "tests/div.test.ts", "test": "math > divides by zero throws", "line": 5 }
+  ] }
+}

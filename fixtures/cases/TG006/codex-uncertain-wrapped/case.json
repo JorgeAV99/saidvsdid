@@ -1,0 +1,17 @@
+{
+  "description": "\"I cannot confirm that\\nall tests pass.\" with no run: one sentence over two lines, disclosed: WARN (no run).",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

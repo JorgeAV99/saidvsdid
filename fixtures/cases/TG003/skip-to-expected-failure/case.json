@@ -1,0 +1,8 @@
+{
+  "description": "skip → it.fails and skip → xfail(strict=True): the test runs again with a checked outcome (no attributed finding), but a new expected-failure marker is still reported as WARN.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/slug.test.ts", "test": null, "line": 13 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 6 }
+  ] }
+}

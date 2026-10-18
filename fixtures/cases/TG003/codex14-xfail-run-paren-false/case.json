@@ -1,0 +1,32 @@
+{
+  "description": "Round 14, Codex 7: `xfail(run=(False))`: the value is false (read with `ast.literal_eval`), so pytest does not run the body ([NOTRUN]). FAIL with the effect `not-run`.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 4,
+        "test": "test_x",
+        "ids": [
+          [
+            "test_x",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x\",1]": "skipped"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "A test is renamed with an unchanged body: reported as info, not as a deletion.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [
+    { "rule": "TG001", "severity": "info", "file": "tests/math.test.ts", "test": "math > divides by zero throws", "line": 13 }
+  ] }
+}

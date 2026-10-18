@@ -1,0 +1,4 @@
+{"type":"item.completed","item":{"id":"format","type":"file_change","status":"completed","changes":[{"path":"test/a.test.js","kind":"update"}]}}
+{"type":"item.completed","item":{"id":"run","type":"command_execution","command":"npm test","status":"completed","aggregated_output":"Test Files  1 passed (1)\nTests  2 passed (2)\n","exit_code":0}}
+{"type":"item.completed","item":{"id":"final","type":"agent_message","text":"All tests pass."}}
+{"type":"item.completed","item":{"id":"opaque","type":"mcp_tool_call","server":"workspace","tool":"apply_edit","arguments":{"path":"test/a.test.js","remove_test":"b"},"result":{"content":[{"type":"text","text":"Test b removed."}]},"error":null,"status":"completed"}}

@@ -1,0 +1,19 @@
+{
+  "description": "The silence guarantee (docs/rules.md), playwright, a simple alias: head declares test 'adds' with `test.only`, through `const later = test.only`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "a.spec.mjs", "line": 3, "test": null },
+    { "rule": "TG002", "severity": "warn", "file": "a.spec.mjs", "line": 9, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"adds\",1]": "passed",
+      "[\"a.spec.mjs\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"adds\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "description": "Correction of the fifth review, 6: `vendor/toolkit` is a submodule; after the green run a patch changes `vendor\\toolkit\\index.js`, inside it. It cannot be placed in the repository with certainty: an uncertain edit: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-honest",
+  "links": {
+    "submodules": [
+      "vendor/toolkit"
+    ]
+  },
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

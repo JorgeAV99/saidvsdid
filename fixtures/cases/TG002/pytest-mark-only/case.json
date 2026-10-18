@@ -1,0 +1,16 @@
+{
+  "description": "@pytest.mark.only is a plugin's mark (pytest-only): it focuses a test only with the plugin, which the diff does not show, so TG002 warns that it may focus it, never FAIL (docs/rules.md, TG002: a member whose effect the base runner does not guarantee).",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "warn",
+        "file": "tests/test_io.py",
+        "line": 6,
+        "test": "test_roundtrip"
+      }
+    ]
+  }
+}

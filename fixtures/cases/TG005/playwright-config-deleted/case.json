@@ -1,0 +1,16 @@
+{
+  "description": "N9: playwright.config.ts deleted (its testDir and testMatch go with it). A deleted watched file is a change: WARN.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "playwright.config.ts",
+        "test": null,
+        "line": null
+      }
+    ]
+  }
+}

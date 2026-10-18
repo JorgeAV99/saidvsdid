@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 3 (ES): \"Todos los tests pasan.\" alone on its line, stale, with \"Revisa la redacción del README.\" in the message: possible: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "description": "A leftover .only is removed: the suite gets bigger, nothing to flag.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

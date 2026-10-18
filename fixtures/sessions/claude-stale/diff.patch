@@ -1,0 +1,17 @@
+diff --git a/src/toytext/__init__.py b/src/toytext/__init__.py
+index a725249..f61e41e 100644
+--- a/src/toytext/__init__.py
++++ b/src/toytext/__init__.py
+@@ -1,3 +1,6 @@
++ELLIPSIS = "…"
++
++
+ def word_count(text):
+     return len(text.split(" "))
+ 
+@@ -11,4 +14,4 @@ def truncate(text, width):
+         raise ValueError("width must be positive")
+     if len(text) <= width:
+         return text
+-    return text[: width - 1] + "…"
++    return text[: width - len(ELLIPSIS)] + ELLIPSIS

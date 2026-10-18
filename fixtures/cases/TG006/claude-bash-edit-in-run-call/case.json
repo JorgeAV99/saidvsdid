@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 2 (shell edit in the run's own call): `python tools/format.py && npm test` reports changing src/stats.ts. Which segment changed it is not known: the edit spans the call and overlaps the run: WARN, never PASS.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

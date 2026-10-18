@@ -1,0 +1,3 @@
+{"type":"item.completed","item":{"id":"run","type":"command_execution","command":"npm test","status":"completed","aggregated_output":"Test Files  1 passed (1)\nTests  1 passed (1)\n","exit_code":0}}
+{"type":"item.completed","item":{"id":"patch","type":"file_change","status":"completed","changes":[{"path":"DOCS/guide.txt","kind":"update"}]}}
+{"type":"item.completed","item":{"id":"final","type":"agent_message","text":"All tests pass."}}

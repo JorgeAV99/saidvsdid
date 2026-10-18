@@ -1,0 +1,15 @@
+{
+  "description": "Control of round 7e (names of Object.prototype) in TS: head adds `it.constructor`, `test.toString()` and `it.valueOf()` to a test — members every function has, not the runner's vocabulary. A name read from the analysed code is looked up only among a table's own keys, never its prototype: no marker, no finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

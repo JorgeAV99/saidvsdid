@@ -1,0 +1,34 @@
+{
+  "description": "tox.ini's [pytest] sets xfail_strict = 1: the bare xfail at base ran and was checked; run=False stops running it at all.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_codec.py",
+        "line": 6,
+        "test": "test_decode_latin1",
+        "ids": [
+          [
+            "test_decode_latin1",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "xpassed"
+    },
+    "head": {
+      "[\"tests/test_codec.py\",\"test_decode_ascii\",1]": "passed",
+      "[\"tests/test_codec.py\",\"test_decode_latin1\",1]": "skipped"
+    }
+  }
+}

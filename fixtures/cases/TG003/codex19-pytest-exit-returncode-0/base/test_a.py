@@ -1,0 +1,6 @@
+import pytest
+
+
+def test_service():
+    print("BODY EXECUTED", flush=True)
+    assert True

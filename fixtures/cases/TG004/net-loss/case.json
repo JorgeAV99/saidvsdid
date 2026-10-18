@@ -1,0 +1,7 @@
+{
+  "description": "Two of three assertions are deleted from an existing test (the ones that failed); the test still asserts something: WARN listing what was lost.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "tests/price.test.ts", "test": "price > parses amount and currency", "line": 5 }
+  ] }
+}

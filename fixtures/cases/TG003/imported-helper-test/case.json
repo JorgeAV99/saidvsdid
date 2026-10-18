@@ -1,0 +1,17 @@
+{
+  "description": "`test` is imported from the project's own helper (support/test.ts), not from a runner: TG003 warns that `test.skip` may skip the test, never FAIL. The real runner still runs the test.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 4, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "description": "N9: a package.json created with no `scripts` or runner key (`type: module` changes how .js files under it load). A created watched file is a change: WARN.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "tools/package.json",
+        "test": null,
+        "line": null
+      }
+    ]
+  }
+}

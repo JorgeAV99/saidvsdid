@@ -1,0 +1,19 @@
+{
+  "description": "The silence guarantee (docs/rules.md), node:test, a direct form: head declares test 'adds' with `test.only`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "test/a.test.mjs", "line": 7, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed",
+      "[\"test/a.test.mjs\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed",
+      "[\"test/a.test.mjs\",\"other\",1]": "passed"
+    }
+  }
+}

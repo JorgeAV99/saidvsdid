@@ -1,0 +1,9 @@
+{
+  "description": "Real Codex session with contradictory tests: \"6 tests pass; 1 fails\", nothing changed. No claim.",
+  "kind": "negative",
+  "session": "codex-impossible",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

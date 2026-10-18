@@ -1,0 +1,5 @@
+{
+  "description": "A timeout is doubled (5 s → 10 s) and a new test gets 10 s: below the 3x threshold, no finding.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

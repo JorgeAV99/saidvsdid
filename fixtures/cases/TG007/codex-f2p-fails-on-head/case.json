@@ -1,0 +1,26 @@
+{
+  "description": "--f2p: the new test fails on head as well, so fail-to-pass cannot be established. WARN f2p_inconclusive.",
+  "kind": "positive",
+  "session": "codex-honest",
+  "f2p": true,
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "test/stats.test.ts",
+        "line": null,
+        "test": null
+      },
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

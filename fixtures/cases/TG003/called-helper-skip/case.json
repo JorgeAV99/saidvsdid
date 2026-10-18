@@ -1,0 +1,9 @@
+{
+  "description": "A same-file helper with test.skip() called from an inline hook, and a test.skip() inside a forEach callback in a hook: neither sits directly in a test/describe/hook body, so WARN, not FAIL.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 4 },
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 25 },
+    { "rule": "TG001", "severity": "info", "file": "e2e/login.spec.ts", "test": "home loads", "line": 27 }
+  ] }
+}

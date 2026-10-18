@@ -1,0 +1,25 @@
+{
+  "description": "Round 20c, Codex: `test.fails` whose body records one `expect.soft` failure and fails `expect.assertions(2)`: two errors, which Vitest inverts and reports passed. An inverted status with more than one error: refused.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 3,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "vitest: an expected failure with another failure in the same test"
+}

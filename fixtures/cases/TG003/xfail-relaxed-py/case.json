@@ -1,0 +1,29 @@
+{
+  "description": "Marker-kind hardening (Python): xfail(strict=True) → non-strict xfail (an XPASS no longer fails), and @unittest.expectedFailure → @unittest.skip. Round 14: the test was already an expected failure at base, so the relaxed xfail is not a new one: WARN (the `@unittest.skip` half stays a FAIL).",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_cache.py",
+        "line": 12,
+        "test": "CacheTests::test_eviction",
+        "ids": [
+          [
+            "CacheTests::test_eviction",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "tests/test_io.py",
+        "line": 6,
+        "test": "test_roundtrip"
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "description": "CONFTEST.PY created: on a case-insensitive file system pytest finds it as conftest.py and then cannot import it under that name, so the run stops before any test (exit 4). WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "selectionChanges": true,
+  "caseInsensitiveFs": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "CONFTEST.PY", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_a\",1]": "passed",
+      "[\"test_b.py\",\"test_b\",1]": "passed"
+    },
+    "head": {
+
+    }
+  }
+}

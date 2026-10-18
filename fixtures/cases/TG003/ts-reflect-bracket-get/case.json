@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that made a string mark a name only where a member's name is read: `Reflect['get'](ctx, 'skip')()` reads the context's `skip` through `Reflect` under a subscript, which the position checks did not see. The callee's whole subtree is read — the arguments of the inner call included — and it holds the string `'skip'`, a token of the vocabulary: at least a WARN that it may skip 'adds'. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 4, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

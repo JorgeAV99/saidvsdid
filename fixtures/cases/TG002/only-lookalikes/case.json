@@ -1,0 +1,8 @@
+{
+  "description": "Playwright APIs and helpers that look like focus markers but are not: test.step, test.describe.configure, expect.soft, and a local helper named `only`. Since the noise round, a bare name spelled like a token is the vocabulary only when the file does not bind it itself or binds it to something that bears the vocabulary: the local helper `only` is the file's own function, so no finding. Names that only contain the token are not tokens either. Never a FAIL.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

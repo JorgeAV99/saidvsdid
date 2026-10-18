@@ -1,0 +1,17 @@
+{
+  "description": "\"I added a regression test.\" alone on its line (canonical: first person, past) over a diff with no test change. WARN \"final diff contains no test\" (claims are warnings, whatever their certainty).",
+  "kind": "positive",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

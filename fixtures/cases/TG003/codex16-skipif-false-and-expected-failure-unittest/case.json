@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 7: `@unittest.expectedFailure` beside `@unittest.skipIf(False, …)`: F6 counts every marker written, a false condition included. WARN.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 6, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "xfailed"
+    }
+  }
+}

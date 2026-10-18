@@ -1,0 +1,16 @@
+{
+  "description": "Control: a vite config imports a list and uses it as `test.exclude`: the test section changed, and the import is used outside any blanked setting, so it still warns.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "vite.config.ts",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

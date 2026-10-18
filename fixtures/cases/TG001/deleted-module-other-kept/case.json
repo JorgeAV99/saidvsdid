@@ -1,0 +1,10 @@
+{
+  "description": "Control: the deleted test used two local modules and only one of them is deleted; app.core and its `add` survive, so the test was not deleted with its code and TG001 is unchanged (a FAIL).",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      { "rule": "TG001", "severity": "fail", "file": "tests/test_mix.py", "line": null, "test": null, "ids": [["test_mix", 1]] }
+    ]
+  }
+}

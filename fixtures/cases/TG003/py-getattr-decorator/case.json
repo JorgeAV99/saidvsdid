@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that made names read from the input never answer from Object.prototype: `@getattr(pytest.mark, \"skip\")` — a decorator is a use read like a call, and `getattr` with a literal name is a by-name access, transparent: the decorator applies `pytest.mark.skip`. Before, the decorator's call was cut down to its callee (`getattr`) before the primitive was recognised: silence. A guaranteed form (docs/rules.md, *The silence guarantee*): at least a WARN that it may skip `test_adds`. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

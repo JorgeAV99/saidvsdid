@@ -1,0 +1,5 @@
+{
+  "description": "A package.json is created inside a test fixture directory (tests/fixtures/…): it is test data, not the project's runner configuration, so nothing is reported.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

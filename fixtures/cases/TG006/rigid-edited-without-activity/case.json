@@ -1,0 +1,19 @@
+{
+  "description": "A green run, an Edit of src/a.js, a Read, the claim: no test run visible after the edit. (Once the shape of a rigid FAIL: claims are warnings now.) WARN.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

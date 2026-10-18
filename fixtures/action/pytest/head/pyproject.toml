@@ -1,0 +1,7 @@
+[project]
+name = "demo-parser"
+version = "0.1.0"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-k 'not unicode'"

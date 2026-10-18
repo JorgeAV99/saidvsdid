@@ -1,0 +1,20 @@
+{
+  "description": "Round 13, negative control of the oracle: the test titled 'constructor' is renamed to 'builds' and every test still runs. Read with `in`, 'constructor' would look present at head with a status that is not a run, and count as a test that stopped running: the oracle must find no lost test.",
+  "kind": "negative",
+  "runner": "vitest",
+  "oracleControl": "not-run",
+  "expect": { "verdict": "OK", "findings": [
+    { "rule": "TG001", "severity": "info", "file": "test/a.test.ts", "line": 3, "test": "constructor" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"constructor\",1]": "passed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"builds\",1]": "passed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    }
+  }
+}

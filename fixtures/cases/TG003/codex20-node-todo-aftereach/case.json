@@ -1,0 +1,25 @@
+{
+  "description": "Round 20: a `todo` test whose body passes while `afterEach` throws: Node reports `hookFailed`, not a failure of the body. Already refused (round 19's check), pinned here.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.mjs",
+        "line": 6,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "node:test: a todo test that ended outside its body"
+}

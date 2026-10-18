@@ -1,0 +1,25 @@
+{
+  "description": "Round 20: `@pytest.mark.xfail` on a test whose fixture raises at setup: pytest reports the setup as xfailed, and the body never ran. Not a failure of the body: refused.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 9,
+        "test": "test_service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "test_service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "pytest: an expected failure with another failure in the same test"
+}

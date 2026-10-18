@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that replaced the hand-written scope resolver with the languages' own tooling: inside class `TestX`, Python mangles `@__omit` to `_TestX__omit`, which the module binds to `pytest.mark.skip`: an alias of the vocabulary, read through the mangling, at least a WARN (never silence). The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "TestX::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestX::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestX::test_adds\",1]": "skipped"
+    }
+  }
+}

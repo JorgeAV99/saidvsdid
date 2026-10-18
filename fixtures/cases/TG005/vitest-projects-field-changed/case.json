@@ -1,0 +1,5 @@
+{
+  "description": "vitest's `projects` field narrowed from `packages/*` to `packages/a`: the other projects' tests no longer run. Reported at the `projects` line (WARN); the config net would catch it otherwise.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [{ "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "line": 5, "test": null }] }
+}

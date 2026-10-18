@@ -1,0 +1,23 @@
+{
+  "description": "New it.todo placeholders are added. They did not exist at base, so no test that existed loses anything (noise round): an INFO line for each, not a warning.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "info",
+        "file": "tests/slug.test.ts",
+        "line": 16,
+        "test": "slugify > handles emoji"
+      },
+      {
+        "rule": "TG003",
+        "severity": "info",
+        "file": "tests/slug.test.ts",
+        "line": 17,
+        "test": "slugify > truncates long input"
+      }
+    ]
+  }
+}

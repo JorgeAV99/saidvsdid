@@ -1,0 +1,9 @@
+{
+  "description": "Python relaxations: `== x` → `is not None`, pytest.approx tolerance raised from 1e-4 to 0.5, assertEqual → assertIsNotNone.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_calc.py", "test": "test_ratio", "line": 9 },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_calc.py", "test": "test_area", "line": 13 },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_calc.py", "test": "LookupTests::test_lookup", "line": 18 }
+  ] }
+}

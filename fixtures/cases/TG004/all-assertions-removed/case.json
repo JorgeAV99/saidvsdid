@@ -1,0 +1,16 @@
+{
+  "description": "Every assertion of a test is removed; the body only calls production code (imported from src/) and builtins, which cannot assert on its behalf. TG004 is never a FAIL (round 13: a loss of checks is not provable from the diff): WARN, \"it may check less\".",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "tests/slug.test.ts",
+        "line": 5,
+        "test": "slug > lowercases and dashes"
+      }
+    ]
+  }
+}

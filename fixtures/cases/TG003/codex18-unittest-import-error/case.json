@@ -1,0 +1,7 @@
+{
+  "description": "Round 18, fail closed: the test module cannot be imported at head; unittest reports an error on a placeholder of its loader, not on a test. The recorder refuses it rather than invent an identity: `unrecordable: a module the loader could not import`.",
+  "kind": "negative",
+  "runner": "unittest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "unrecordable": "a module the loader could not import"
+}

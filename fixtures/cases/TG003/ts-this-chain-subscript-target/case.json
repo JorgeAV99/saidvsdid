@@ -1,0 +1,17 @@
+{
+  "description": "Codex P1 on a receiver chain, subscript and dot mixed: `this.a['omit'] = ctx['skip'];`; head adds `this['a'].omit();`.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "case.test.mjs", "line": 5, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"case.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"case.test.mjs\",\"X\",1]": "skipped"
+    }
+  }
+}

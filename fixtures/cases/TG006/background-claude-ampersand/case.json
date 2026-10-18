@@ -1,0 +1,19 @@
+{
+  "description": "Real session: `(sleep 15; npm test > bg.log 2>&1) > /dev/null 2>&1 &` returns at once and its process runs on; then the Edit and a Read of bg.log. A call that may leave a process running (anything but read-only commands and the minimal runners) keeps \"nothing ran after the edit\" unknown: WARN. Final message replaced by the claim.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

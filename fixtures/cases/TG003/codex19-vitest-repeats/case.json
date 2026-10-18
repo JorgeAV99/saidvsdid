@@ -1,0 +1,10 @@
+{
+  "description": "Round 19, Codex 3, variant: `{ repeats: 1 }`: Vitest runs the test twice (`repeatCount: 1`). Refused.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  },
+  "unrecordable": "vitest: a test run more than once"
+}

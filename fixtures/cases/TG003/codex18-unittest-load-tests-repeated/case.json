@@ -1,0 +1,19 @@
+{
+  "description": "Round 18, Codex 1: `load_tests` runs two instances of `TestX.test_x` (desktop, mobile); at head the mobile one is skipped. The recorder keeps each execution with its own ordinal (`TestX::test_x` 1 and 2): passed, passed at base; passed, skipped at head. A repeated identity, which the oracle never credits.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 7, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",2]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",2]": "skipped"
+    }
+  }
+}

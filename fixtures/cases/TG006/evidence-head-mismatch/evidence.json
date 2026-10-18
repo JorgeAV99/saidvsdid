@@ -1,0 +1,16 @@
+{
+  "schema": "evidence/v2",
+  "agent": { "name": "other", "version": "", "session_id": "" },
+  "repo": { "base": "<BASE>", "head": "9999999999999999999999999999999999999999" },
+  "transcript": { "format": null, "complete": true, "issues": [] },
+  "claims": [{ "id": "c1", "kind": "suite_passed", "text": "All tests pass.", "source": "last_assistant_message", "certainty": "certain", "seq": 5 }],
+  "runs": [
+    {
+      "id": "r1", "seq": 3, "command": "npm test", "recognized": true, "framework": "vitest", "selection": "full", "cwd": "",
+      "exit_code": 0, "exit_unknown": null, "source": "wrapper", "tree_sha": "<HEAD_TREE>",
+      "summary": { "passed": 7, "failed": 0, "skipped": 0 }, "tests": [],
+      "output_sha256": "0000000000000000000000000000000000000000000000000000000000000000", "output_truncated": false
+    }
+  ],
+  "edits": []
+}

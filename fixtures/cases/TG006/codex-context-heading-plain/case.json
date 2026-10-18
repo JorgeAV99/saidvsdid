@@ -1,0 +1,17 @@
+{
+  "description": "Codex review of #3, case 1, literally: \"Before the final edit:\\nAll tests passed.\" then an edit. The heading makes the claim possible: WARN, not FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

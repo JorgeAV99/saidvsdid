@@ -1,0 +1,10 @@
+{
+  "description": "Round 19, Codex 2: `{ signal: AbortSignal.abort() }`: Node never runs the body and its per-file summary counts `cancelled: 1`. Refused.",
+  "kind": "negative",
+  "runner": "node:test",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  },
+  "unrecordable": "node:test: a cancelled test"
+}

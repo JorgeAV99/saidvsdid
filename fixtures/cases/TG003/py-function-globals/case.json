@@ -1,0 +1,36 @@
+{
+  "description": "Outside the assumption (mutation by reflection): `test_adds.__globals__['pytest'] = …` replaces the module's `pytest`, so `pytest.skip()` skips nothing and the real runner runs the test. saidvsdid does not detect mutation: by the contract the code adds pytest's skip, a FAIL that rests on the assumption.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "outsideAssumption": {
+    "reason": "mutation",
+    "note": "`test_adds.__globals__['pytest'] = …` replaces the module's `pytest`"
+  },
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 7,
+        "test": "test_adds",
+        "ids": [
+          [
+            "test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

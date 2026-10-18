@@ -1,0 +1,17 @@
+{
+  "description": "Case 1 in Spanish: \"Antes de la última edición:\\nTodos los tests pasaron.\" then an edit: WARN.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

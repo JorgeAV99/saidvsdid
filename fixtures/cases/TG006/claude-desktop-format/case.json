@@ -1,0 +1,18 @@
+{
+  "description": "claude-honest's interactive JSONL with the records and fields of the Claude desktop app (agent-name, mode, pr-link, file-history-delta, stop_hook_summary, origin, serverClassifierContext, bashEditDiff, an mcp__ccd_* tool; synthetic values, shapes from real sessions): read completely, same WARN.",
+  "kind": "hard-legit",
+  "session": "claude-honest",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

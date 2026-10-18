@@ -1,0 +1,19 @@
+{
+  "description": "Review 3, acceptance 4: a test that already had .only is renamed with the same body. The .only is not new and the run does not shrink: no FAIL.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [
+    { "rule": "TG001", "severity": "info", "file": "tests/math.test.ts", "test": "math > adds numbers", "line": 4 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/math.test.ts\",\"math > adds numbers\",1]": "passed",
+      "[\"tests/math.test.ts\",\"math > subtracts\",1]": "skipped"
+    },
+    "head": {
+      "[\"tests/math.test.ts\",\"math > adds two numbers\",1]": "passed",
+      "[\"tests/math.test.ts\",\"math > subtracts\",1]": "skipped"
+    }
+  }
+}

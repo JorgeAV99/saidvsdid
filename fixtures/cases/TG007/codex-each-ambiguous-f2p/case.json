@@ -1,0 +1,26 @@
+{
+  "description": "--f2p on an `it.each` whose title has no placeholder: every row has the same id, so rows cannot be told apart. WARN f2p_inconclusive (a claim is at most a warning).",
+  "kind": "positive",
+  "session": "codex-honest",
+  "f2p": true,
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "test/stats.test.ts",
+        "line": null,
+        "test": null
+      },
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

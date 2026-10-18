@@ -1,0 +1,17 @@
+{
+  "description": "From the Codex review of the commit that never silenced a runner shape and made a FAIL need a certain, immutable binding: a local `require` that is not Node's returns the project's own `it` (its `skip` still runs the test). `it` is destructured from a `require`, a declaration of the file, never a static import: TG003 warns that `it.skip` may skip `adds`, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 10, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

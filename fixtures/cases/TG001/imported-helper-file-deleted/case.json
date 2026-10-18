@@ -1,0 +1,17 @@
+{
+  "description": "A test file whose `test` is imported from the project's helper (support/test.ts), not from a runner, is deleted. The declarations are not certainly the runner's: TG001 warns that the file may have held tests, never FAIL. The real runner did run the test at base.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test/a.test.ts", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+
+    }
+  }
+}

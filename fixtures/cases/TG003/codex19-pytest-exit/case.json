@@ -1,0 +1,18 @@
+{
+  "description": "Round 19, Codex 1: `pytest.exit()` inside the test body: the body runs, pytest stops the session (exit 2) and reports no result for the test. Reconciled with pytest's own session it is an interrupted session: refused.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "test_a.py",
+        "line": 4,
+        "test": "test_service"
+      }
+    ]
+  },
+  "unrecordable": "pytest: the session was interrupted"
+}

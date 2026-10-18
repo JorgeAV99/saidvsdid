@@ -1,0 +1,19 @@
+{
+  "description": "The same kind of session in the interactive JSONL: the PostToolUse hook that ran `npm test` is not recorded (only the Stop hook, as stop_hook_summary). This format never shows every hook: WARN, never FAIL. Final message replaced by the claim.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "description": "Round 14, Codex 8: `xfail(reason=\"[NOTRUN] …\")`: the body runs and fails, pytest reports XFAIL. The recorder reads whether the body ran from pytest's structured result, never from the reason's text: xfailed, not skipped.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 4,
+        "test": "test_x",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "test_x",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x\",1]": "xfailed"
+    }
+  }
+}

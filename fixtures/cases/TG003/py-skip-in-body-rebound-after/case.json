@@ -1,0 +1,17 @@
+{
+  "description": "`import pytest`, and the module rebinds `pytest` after the test: the body reads the module's binding when the test runs, so `pytest.skip()` is the module's own (it skips nothing). A rebinding anywhere in the module, before or after the use, makes the name uncertain: TG003 WARN, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

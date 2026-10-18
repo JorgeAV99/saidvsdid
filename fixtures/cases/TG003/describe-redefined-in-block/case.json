@@ -1,0 +1,17 @@
+{
+  "description": "`describe` is declared again in an enclosing block (`const describe = Object.assign(…)`), shadowing nothing imported but certainly not a runner import. `describe.skip` is a TG003 WARN; the real runner still runs the test.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 6, "test": "group > adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

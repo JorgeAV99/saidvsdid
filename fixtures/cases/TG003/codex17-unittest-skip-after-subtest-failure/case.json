@@ -1,0 +1,19 @@
+{
+  "description": "Round 17, Codex 2: `self.skipTest()` after a subtest that fails: `FAILED (failures=1)` at base, `FAILED (failures=1, skipped=1)` at head. A later skip never overwrites a recorded failure: failed on both sides.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 8, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    }
+  }
+}

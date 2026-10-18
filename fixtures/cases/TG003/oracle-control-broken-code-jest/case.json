@@ -1,0 +1,18 @@
+{
+  "description": "Negative control of the runner-evidence oracle (jest): head breaks the code under test and leaves the test alone. The real runner reports 'adds' passed at base and failed at head, a bare failure without its expected-failure signal, which must not count as evidence of a FAIL that makes a test an expected failure (fixtures/oracle.ts). No test changed: OK.",
+  "kind": "negative",
+  "runner": "jest",
+  "oracleControl": "expected-failure",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"adds\",1]": "passed",
+      "[\"a.test.js\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"a.test.js\",\"adds\",1]": "failed",
+      "[\"a.test.js\",\"other\",1]": "passed"
+    }
+  }
+}

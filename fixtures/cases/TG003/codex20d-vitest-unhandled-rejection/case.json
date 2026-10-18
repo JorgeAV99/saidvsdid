@@ -1,0 +1,25 @@
+{
+  "description": "Round 20d, Codex: an `afterEach` that leaves a `Promise.reject` unawaited, under a `test.fails` whose body passes. Vitest reports `Expect test to fail` and an unhandled rejection attributed to no test, exit 1. An error of the run outside any test: refused.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 5,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "vitest: unhandled errors"
+}

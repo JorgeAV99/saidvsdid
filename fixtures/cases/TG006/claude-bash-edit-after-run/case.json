@@ -1,0 +1,17 @@
+{
+  "description": "After the test run, a Bash command whose result reports (bashEditDiff.changedFiles) that it changed src/stats.ts, then \"All 6 tests pass.\": a certain edit after the last run. Eighth review: the command that changed the file, a script outside the closed list of non-executions, is also a possible run (it may have run the tests after its edit): the claim is not certainly stale: WARN.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

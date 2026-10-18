@@ -1,0 +1,18 @@
+{
+  "description": "Review of the commit that added the exhaustive binding map and normalised aliases: `class TestA[pytest]:` (PEP 695) binds `pytest` as a type parameter in an annotation scope that the class's methods see, so `pytest.skip()` in `test_adds` is the type variable's attribute, not pytest's (it raises AttributeError). TG003 warns that it may skip the test, never FAIL; the real runner runs it (it fails).",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "minPython": "3.12",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "failed"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "Review of the commit that replaced the hand-written scope resolver with the languages' own tooling: `omit ||= t.skip.bind(t)` assigns a value that contains the test context's `skip`, and `omit()` calls it: at least a WARN, never silence; the `t.skip` the definition adds is a WARN of its own. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 6, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 7, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "skipped"
+    }
+  }
+}

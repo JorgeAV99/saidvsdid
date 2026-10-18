@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 5 (Codex exec): `npm.cmd test` A starts, B starts and passes while A runs, A completes failing, then \"All tests pass.\": WARN, never PASS.",
+  "kind": "positive",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

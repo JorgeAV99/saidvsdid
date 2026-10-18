@@ -1,0 +1,17 @@
+{
+  "description": "Round 15, Codex 1: `ctx.skip()` after a failing `expect`: Vitest reports failed on both sides. Not the first statement (F2): WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 5, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "failed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "failed"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "description": "Review #3 (Python): @pytest.mark.xfail(strict=True) → @pytest.mark.skip. A strict xfail runs and fails the suite on XPASS; skip runs nothing.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_io.py",
+        "line": 6,
+        "test": "test_roundtrip",
+        "ids": [
+          [
+            "test_roundtrip",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

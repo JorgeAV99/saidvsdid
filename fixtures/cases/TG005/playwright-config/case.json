@@ -1,0 +1,8 @@
+{
+  "description": "playwright.config.ts: timeout 30 s → 120 s and retries 0 → 2.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "playwright.config.ts", "test": null, "line": 5 },
+    { "rule": "TG005", "severity": "warn", "file": "playwright.config.ts", "test": null, "line": 6 }
+  ] }
+}

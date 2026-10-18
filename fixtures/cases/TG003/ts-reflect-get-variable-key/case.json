@@ -1,0 +1,18 @@
+{
+  "description": "Contagion through a name that holds a string in JS: `const key = 'skip'` holds a string of the vocabulary, and the callee of `Reflect.get(it, key)('adds', …)` — read whole, the arguments of the call it holds included — holds `key`: head declares 'adds' through a use of the vocabulary, at least a WARN that it may skip it. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test/a.test.ts", "line": null, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 5, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

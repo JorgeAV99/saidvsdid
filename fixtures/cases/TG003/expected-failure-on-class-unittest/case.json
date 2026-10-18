@@ -1,0 +1,21 @@
+{
+  "description": "Round 13: `@unittest.expectedFailure` on a `unittest.TestCase` class, not on a method. The FAIL is kept for a method of a `TestCase` subclass alone; anywhere else it is a WARN (the real runner: both tests are unexpected successes).",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 4, "test": null },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 6, "test": "TestA::test_adds" },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 9, "test": "TestA::test_other" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "xpassed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "xpassed"
+    }
+  }
+}

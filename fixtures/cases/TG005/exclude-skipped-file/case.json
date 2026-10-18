@@ -1,0 +1,20 @@
+{
+  "description": "Codex review (b6): tests/legacy/** is excluded, but every test in it was already skipped at base (describe.skip): nothing that ran stops running (the runner agrees). WARN, not FAIL.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": 6 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed",
+      "[\"tests/legacy/old.test.ts\",\"legacy > adds zero\",1]": "skipped"
+    },
+    "head": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    }
+  }
+}

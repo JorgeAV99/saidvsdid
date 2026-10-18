@@ -1,0 +1,18 @@
+{
+  "description": "Case 2a: \"All tests passed. I did not execute them after the final edit.\" after an edit. The agent discloses the tests were not rerun: INFO, neither WARN nor FAIL.",
+  "kind": "negative",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "disclosed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that gave Python its files' bytes (PEP 263) and read mangled and context aliases, on the test context: `const { ['skip' as const]: omit } = ctx` takes the context's `skip` under a computed key with `as const`, and `omit()` calls it: at least a WARN that it may skip 'adds', never silence. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 5, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

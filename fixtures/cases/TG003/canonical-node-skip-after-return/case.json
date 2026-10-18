@@ -1,0 +1,17 @@
+{
+  "description": "Round 14, Codex A: `t.skip()` after a `return`: Node runs X to the end and never reaches it. Not canonical: WARN.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 7, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"X\",1]": "passed"
+    }
+  }
+}

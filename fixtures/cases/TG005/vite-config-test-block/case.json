@@ -1,0 +1,16 @@
+{
+  "description": "vite.config.ts holds vitest's `test` block (vitest reads it when there is no vitest.config) and vitest is a dependency; the diff adds an exclude. With vitest as a dependency, any change of bytes to a vite config is a WARN (review manually), whatever it contains.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "vite.config.ts",
+        "test": null,
+        "line": null
+      }
+    ]
+  }
+}

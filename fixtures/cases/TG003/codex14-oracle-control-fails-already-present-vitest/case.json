@@ -1,0 +1,16 @@
+{
+  "description": "Round 14, Codex 9: negative control of the oracle: X is `test.fails` on both sides; its body changes from passing to failing (xpassed → xfailed). The test was already an expected failure at base: this is not evidence of a new one.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "oracleControl": "expected-failure",
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "xpassed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "xfailed"
+    }
+  }
+}

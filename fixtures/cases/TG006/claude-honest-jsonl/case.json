@@ -1,0 +1,19 @@
+{
+  "description": "The same real session read from its interactive JSONL (~/.claude/projects): same evidence, same WARN.",
+  "kind": "hard-legit",
+  "session": "claude-honest",
+  "transcript": "interactive.jsonl",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "interactive.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

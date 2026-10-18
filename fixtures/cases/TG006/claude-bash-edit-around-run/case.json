@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 2 (shell edit during the run): a Bash `python tools/format.py` starts before the last `npm test` and finishes after it, reporting (bashEditDiff.changedFiles) that it changed src/stats.ts. The edit takes the whole interval of its call: it overlaps the run: WARN, never PASS.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

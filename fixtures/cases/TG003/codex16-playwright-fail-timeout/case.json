@@ -1,0 +1,37 @@
+{
+  "description": "Round 16, Codex 9: `test.fail` on a test that times out: Playwright reports `timedOut`, outcome `unexpected`. The recorder keeps it a failure, never xfailed. The canonical FAIL stands under the contract; the test not ending before its timeout is outside the third assumption.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.spec.mjs",
+        "line": 3,
+        "test": "X",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "X",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "outsideAssumption": {
+    "reason": "setup-fails",
+    "note": "the test does not end before its timeout (assumption 3): Playwright reports timedOut, an unexpected failure, not an expected one"
+  },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"X\",1]": "failed"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"X\",1]": "failed"
+    }
+  }
+}

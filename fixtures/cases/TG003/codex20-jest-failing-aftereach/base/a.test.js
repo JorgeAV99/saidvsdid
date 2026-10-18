@@ -1,0 +1,5 @@
+import { test, expect, afterEach } from '@jest/globals';
+
+afterEach(() => { throw new Error('cleanup failed'); });
+
+test('service', () => expect(1).toBe(2));

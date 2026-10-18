@@ -1,0 +1,17 @@
+{
+  "description": "Third review: \"We can merge as soon as all tests pass.\" with no run. A condition in the message: possible, WARN.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

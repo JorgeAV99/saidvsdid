@@ -1,0 +1,17 @@
+{
+  "description": "The same with \"Todos los tests pasan.\": a test-data file edited after the last run. WARN \"no test run visible after the last edit\".",
+  "kind": "positive",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

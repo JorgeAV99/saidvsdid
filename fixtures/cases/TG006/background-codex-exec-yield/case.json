@@ -1,0 +1,19 @@
+{
+  "description": "Real Codex session: exec_command with a 1 s yield starts a command that keeps running (its item completes after the final message, killed); then a patch and the claim. WARN. Final message replaced by the claim.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Case 3 in Spanish after a certain edit: \"Todos los tests pasan. No he vuelto a ejecutar la migración de producción.\" No disclosure about the tests; the claim is possible: WARN (edited after the last run).",
+  "kind": "positive",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

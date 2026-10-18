@@ -1,0 +1,15 @@
+{
+  "description": "Round 17, review: an error in `tearDownClass`, after the class's tests ran: unittest reports it on its `_ErrorHolder` (the recorder raised AttributeError before round 17). The tests of the class ran and the run fails: they are recorded failed, never skipped.",
+  "kind": "negative",
+  "runner": "unittest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    }
+  }
+}

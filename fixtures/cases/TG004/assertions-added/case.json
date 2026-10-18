@@ -1,0 +1,5 @@
+{
+  "description": "Assertions are added and weak matchers are strengthened (toBeTruthy → toBe, toBeDefined → toEqual).",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

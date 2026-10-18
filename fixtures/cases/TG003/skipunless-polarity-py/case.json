@@ -1,0 +1,22 @@
+{
+  "description": "Review #1 (Python): @unittest.skipUnless(True) → skipUnless(False). skipUnless skips when the condition is false.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_cache.py",
+        "line": 12,
+        "test": "CacheTests::test_eviction",
+        "ids": [
+          [
+            "CacheTests::test_eviction",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

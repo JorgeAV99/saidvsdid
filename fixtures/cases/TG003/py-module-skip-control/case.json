@@ -1,0 +1,9 @@
+{
+  "description": "Control: `pytest.skip(..., allow_module_level=True)` at module level, with `import pytest` at module level never rebound in the module: certainly pytest's, and the real runner collects nothing from the file. Round 14: a call is canonical only as a statement of the test's own body, so at module level it is a WARN (\"may skip\"). Round 19: the recorder refuses it — pytest's own summary counts the module's skip at collection (1 skipped), an outcome of no test the recorded statuses cannot hold. The evidence it held (head {}) was right that `test_adds` did not run.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 3, "test": "test_adds" }
+  ] },
+  "unrecordable": "pytest: an outcome of a collection, not of a test"
+}

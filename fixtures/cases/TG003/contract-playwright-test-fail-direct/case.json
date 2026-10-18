@@ -1,0 +1,35 @@
+{
+  "description": "The silence guarantee (docs/rules.md), playwright, a direct form: head declares test 'adds' with `test.fail`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.spec.mjs",
+        "line": 7,
+        "test": "adds",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"adds\",1]": "passed",
+      "[\"a.spec.mjs\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"adds\",1]": "xpassed",
+      "[\"a.spec.mjs\",\"other\",1]": "passed"
+    }
+  }
+}

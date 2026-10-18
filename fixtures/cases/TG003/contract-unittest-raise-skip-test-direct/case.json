@@ -1,0 +1,34 @@
+{
+  "description": "The silence guarantee (docs/rules.md), unittest, a direct form: head raises `unittest.SkipTest(\"later\")` in test 'adds'. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_a.py",
+        "line": 9,
+        "test": "TestA::test_adds",
+        "ids": [
+          [
+            "TestA::test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestA::test_other\",1]": "passed"
+    }
+  }
+}

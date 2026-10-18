@@ -1,0 +1,12 @@
+{
+  "name": "fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npm run t",
+    "t": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "4.1.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "description": "pyproject.toml's [tool.pytest.ini_options] addopts gains --deselect for test_roundtrip. V0: scope reductions are WARN, never FAIL; the finding says how many tests it likely excludes.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pyproject.toml", "test": null, "line": 5 }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed"
+    }
+  }
+}

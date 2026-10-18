@@ -1,0 +1,17 @@
+{
+  "description": "Round 18, Codex (doubtful): an error in `tearDownClass` with `test_a` under `@unittest.skip` and `test_b` run. unittest keeps `test_a` skipped; the recorder fails only the test that ran (`test_b`).",
+  "kind": "negative",
+  "runner": "unittest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_a\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_b\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_a\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_b\",1]": "failed"
+    }
+  }
+}

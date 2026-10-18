@@ -1,0 +1,20 @@
+{
+  "description": "The silence guarantee (docs/rules.md), playwright, a simple alias: head adds `test.skip()` to the body of test 'adds', through `const later = test.skip`. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "a.spec.mjs", "line": 3, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "a.spec.mjs", "line": 10, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"adds\",1]": "passed",
+      "[\"a.spec.mjs\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"adds\",1]": "skipped",
+      "[\"a.spec.mjs\",\"other\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "description": "tox.ini's [pytest] addopts gains --ignore=tests/data, a directory with sample files and no tests. Nothing that ran is excluded (the runner agrees), but an added exclusion is reviewed: WARN.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "tox.ini", "test": null, "line": 5 }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    }
+  }
+}

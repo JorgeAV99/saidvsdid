@@ -1,0 +1,17 @@
+{
+  "description": "Case B for assertions (a false FAIL on main): the class overrides `assertEqual` with a method that checks nothing (the base asserts `1 + 1 == 3` and passes). Removing that call removes no assertion of unittest's: TG004 warns that the test may no longer assert, never FAIL. The real runner passes on both sides.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "test_a.py", "line": 8, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    }
+  }
+}

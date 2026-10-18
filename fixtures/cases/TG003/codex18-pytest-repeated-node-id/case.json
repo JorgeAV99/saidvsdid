@@ -1,0 +1,7 @@
+{
+  "description": "Round 18, fail closed: `pytest --keep-duplicates test_a.py test_a.py` runs `test_a.py::test_x` twice under one node id. The recorder refuses to merge them: `unrecordable: repeated executions`.",
+  "kind": "negative",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "unrecordable": "repeated executions"
+}

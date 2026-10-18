@@ -1,0 +1,18 @@
+{
+  "description": "docs/guide.txt edited after the last run: docs/** is documentation: the run still backs the claim (INFO).",
+  "kind": "negative",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

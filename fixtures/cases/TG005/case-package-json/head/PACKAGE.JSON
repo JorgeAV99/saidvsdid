@@ -1,0 +1,10 @@
+{
+  "name": "app",
+  "private": true,
+  "scripts": {
+    "test": "vitest run test/a.test.ts"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.0"
+  }
+}

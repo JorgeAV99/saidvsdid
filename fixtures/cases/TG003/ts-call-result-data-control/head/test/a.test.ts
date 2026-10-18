@@ -1,0 +1,10 @@
+import { expect, it } from 'vitest';
+
+const GOOD = { status: 'skip', path: ['pytest', 'mark', 'skip'] };
+const check = (x: object) => ({ ...x, ok: true });
+
+it('adds', () => {
+  const r = check(GOOD);
+  expect(r.ok).toBe(true);
+  expect(1 + 1).toBe(2);
+});

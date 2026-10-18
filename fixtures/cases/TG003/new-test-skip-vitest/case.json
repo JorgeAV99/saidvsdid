@@ -1,0 +1,23 @@
+{
+  "description": "Two tests that did not exist at base are added already skipped (`it.skip`, `it.skipIf(…)`): no existing test loses anything, so they are INFO lines, not warnings.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "info",
+        "file": "test/a.test.ts",
+        "line": 7,
+        "test": "a > subtracts, once the API exists"
+      },
+      {
+        "rule": "TG003",
+        "severity": "info",
+        "file": "test/a.test.ts",
+        "line": 10,
+        "test": "a > reads a symlink"
+      }
+    ]
+  }
+}

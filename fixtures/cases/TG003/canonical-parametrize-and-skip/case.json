@@ -1,0 +1,34 @@
+{
+  "description": "Round 14, Codex A: `@pytest.mark.skip` with `@pytest.mark.parametrize`, which is not the runner's vocabulary: every other decorator of the test must be. WARN (backlog: reasoning about other decorators).",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 5,
+        "test": "test_adds",
+        "ids": [
+          [
+            "test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds[1]\",1]": "passed",
+      "[\"test_a.py\",\"test_adds[2]\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds[1]\",1]": "skipped",
+      "[\"test_a.py\",\"test_adds[2]\",1]": "skipped"
+    }
+  }
+}

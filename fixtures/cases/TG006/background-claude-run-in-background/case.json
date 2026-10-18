@@ -1,0 +1,19 @@
+{
+  "description": "Real session: `sleep 25 && npm test` with run_in_background, alive during the Edit and the claim (killed after the session). A background call lasts to the end of the trace: WARN. Final message replaced by the claim.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

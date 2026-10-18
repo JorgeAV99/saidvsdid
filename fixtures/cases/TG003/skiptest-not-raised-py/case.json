@@ -1,0 +1,17 @@
+{
+  "description": "Review 3, acceptance 6: unittest.SkipTest is constructed but never raised. Not a skip: no FAIL.",
+  "kind": "hard-legit",
+  "runner": "unittest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_cache.py\",\"CacheTests::test_eviction\",1]": "passed",
+      "[\"tests/test_cache.py\",\"CacheTests::test_get_set\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_cache.py\",\"CacheTests::test_eviction\",1]": "passed",
+      "[\"tests/test_cache.py\",\"CacheTests::test_get_set\",1]": "passed"
+    }
+  }
+}

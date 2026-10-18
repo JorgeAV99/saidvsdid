@@ -1,0 +1,19 @@
+{
+  "description": "Sixth review, F4 (Codex exec, minimal reproduction): after the green run a patch changes `DOCS/guide.txt`; the repository has `docs/guide.txt`. A case-sensitive file system creates a new file `DOCS/guide.txt`, a case-insensitive one edits the documentation: two different files, so it is unplaced: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "codex",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

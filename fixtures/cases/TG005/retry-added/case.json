@@ -1,0 +1,8 @@
+{
+  "description": "Retries are introduced: `{ retry: 3 }` on a test and `retry: 2` in vitest.config.ts. A flaky or failing test can now pass on a later attempt.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "tests/api.test.ts", "test": "api > adds small numbers", "line": 5 },
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": 5 }
+  ] }
+}

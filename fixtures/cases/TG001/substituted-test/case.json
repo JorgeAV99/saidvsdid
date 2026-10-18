@@ -1,0 +1,7 @@
+{
+  "description": "A failing, specific test is removed and a trivially passing test is added in its place. Indistinguishable from a rename with a rewrite: WARN, with similarity and assertion counts.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "src/validate.test.ts", "test": "rejects negative amounts", "line": 8 }
+  ] }
+}

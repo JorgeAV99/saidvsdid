@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 3: `@pytest.mark.skip` on a test rebound to `None` inside an `if`: pytest collects nothing on either side. The test is bound twice: WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+
+    },
+    "head": {
+
+    }
+  }
+}

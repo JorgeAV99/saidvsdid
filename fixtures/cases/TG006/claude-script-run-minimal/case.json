@@ -1,0 +1,19 @@
+{
+  "description": "Eighth review, R4 (Claude, minimal reproduction): `bash verify.sh` runs the suite (its output is a green vitest summary), then \"All tests pass.\". A call outside the closed list of non-executions is a possible run: \"no test run\" is not certain: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

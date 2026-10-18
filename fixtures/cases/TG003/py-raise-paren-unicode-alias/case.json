@@ -1,0 +1,17 @@
+{
+  "description": "Codex case 4 (a silence on the commit that made lexical scope exact): `raise (停)` raises the alias `停` of unittest's SkipTest, imported inside the test (the definition does not change), in parentheses. At least a WARN; the real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 3, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

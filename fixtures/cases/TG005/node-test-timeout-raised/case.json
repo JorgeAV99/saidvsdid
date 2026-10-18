@@ -1,0 +1,7 @@
+{
+  "description": "Control for node-test-timeout-no-default: a node:test timeout written at base (1 s) and raised to 10 s at head is still raised from that value, a WARN.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "test/sync.test.js", "test": "syncs quickly", "line": 6 }
+  ] }
+}

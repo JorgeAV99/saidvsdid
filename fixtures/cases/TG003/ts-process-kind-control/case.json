@@ -1,0 +1,15 @@
+{
+  "description": "Control of the round-7c use rule in JS: `const kind = 'skip'` holds a string of the vocabulary, but `procesar(kind)` passes it as an argument of the call: the final arguments never count, only the callee (`procesar`). No finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

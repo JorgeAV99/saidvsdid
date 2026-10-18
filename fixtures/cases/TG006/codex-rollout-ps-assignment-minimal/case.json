@@ -1,0 +1,19 @@
+{
+  "description": "Eighth review, R2 (rollout, minimal reproduction): a green `npm.cmd test`, then pwsh `CI=1 npm.cmd test`, which PowerShell does not read as an assignment: the command `CI=1` is not found, exit 1, no runner summary. Only the runner's summary proves a failure: the result is unknown: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

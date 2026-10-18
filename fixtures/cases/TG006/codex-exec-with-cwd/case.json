@@ -1,0 +1,19 @@
+{
+  "description": "Eighth review: the recorded Codex exec stream and \"All tests pass.\", checked WITH --cwd (the session ran in the repository). The stream does not record the directory each command ran in (the shell tool may use another workdir), so its runs stay unplaced even with --cwd: WARN. The rollout records it (TG006/codex-honest checks it: INFO consistent, not verified).",
+  "kind": "positive",
+  "session": "codex-honest",
+  "transcript": "transcript.jsonl",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

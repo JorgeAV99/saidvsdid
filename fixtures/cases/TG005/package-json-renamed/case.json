@@ -1,0 +1,16 @@
+{
+  "description": "N9: packages/web/package.json renamed to packages/site/package.json, identical bytes. Its sections compare equal, but which package a script and its tests belong to moved. A renamed watched file is a change: WARN.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "packages/site/package.json",
+        "test": null,
+        "line": null
+      }
+    ]
+  }
+}

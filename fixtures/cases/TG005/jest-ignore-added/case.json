@@ -1,0 +1,18 @@
+{
+  "description": "package.json's jest field adds /tests/slow/ to testPathIgnorePatterns: the slow tests that ran at base are no longer collected. V0: scope reductions are WARN, never FAIL; the finding says how many tests it likely excludes.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": 8 }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"tests/fast.test.js\",\"fast > adds quickly\",1]": "passed",
+      "[\"tests/slow/big.test.js\",\"slow > adds slowly\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/fast.test.js\",\"fast > adds quickly\",1]": "passed"
+    }
+  }
+}

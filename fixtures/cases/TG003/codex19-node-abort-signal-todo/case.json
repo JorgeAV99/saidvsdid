@@ -1,0 +1,18 @@
+{
+  "description": "Round 19, Codex 2, variant: the same with `todo: true`, which was recorded xfailed. Refused.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test/a.test.mjs",
+        "line": 3,
+        "test": "service"
+      }
+    ]
+  },
+  "unrecordable": "node:test: a cancelled test"
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Control of round 7d (a normal call is an opaque frontier): head adds an `it.each` table whose rows hold `'skip'` and `'only'` as data. The table is an argument of the call `it.each(…)`: the callee of the use `it.each([…])('upper %s', …)` is read without the arguments of the calls it holds (only by-name accesses — getattr, Reflect.get, subscripts — are transparent), and `each` is not a token: no finding. The real runner runs every row.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed",
+      "[\"test/a.test.ts\",\"upper only\",1]": "passed",
+      "[\"test/a.test.ts\",\"upper skip\",1]": "passed"
+    }
+  }
+}

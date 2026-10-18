@@ -1,0 +1,5 @@
+{
+  "description": "toEqual → toStrictEqual makes the assertion stricter, not weaker: no finding.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

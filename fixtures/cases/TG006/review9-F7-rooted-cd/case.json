@@ -1,0 +1,19 @@
+{
+  "description": "Ninth review, F7 (PowerShell): `cd '\\review\\outside-bad\\repo' && npm.cmd test` — a rooted path without a drive is on the current drive, not under the repository. A cd anywhere in the session rules out the rigid failure: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "claude",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "description": "Markers whose constant condition never skips (skipIf(false), runIf(true), test.skip(false), ctx.skip(false)) disable nothing, but a new marker is never PASS: WARN \"does not newly disable any test\".",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 4 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/slug.test.ts", "test": null, "line": 5 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/slug.test.ts", "test": null, "line": 9 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/slug.test.ts", "test": null, "line": 14 }
+  ] }
+}

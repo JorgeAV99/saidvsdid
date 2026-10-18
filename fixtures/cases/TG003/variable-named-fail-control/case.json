@@ -1,0 +1,8 @@
+{
+  "description": "A loop variable named `fail` is bound in the file to a plain value: its name is not the runner's `fail`, so nothing that holds it is a marker, and no finding.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

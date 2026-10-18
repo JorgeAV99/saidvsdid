@@ -1,0 +1,5 @@
+{
+  "description": "An inline snapshot is updated together with its input: same matcher, same number of assertions, no finding.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

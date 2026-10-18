@@ -1,0 +1,20 @@
+{
+  "description": "Ninth review, F3: a failing test prints a green vitest summary and `grep -m 2` keeps it. Output is not authenticated: INFO consistent_unverified, never PASS.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "claude",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

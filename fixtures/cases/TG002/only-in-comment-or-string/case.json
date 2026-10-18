@@ -1,0 +1,5 @@
+{
+  "description": "'.only' appears in a comment, a string and a test name, never as a focus marker. A grep would flag it; the AST does not.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

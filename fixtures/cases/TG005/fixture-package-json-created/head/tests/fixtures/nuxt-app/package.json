@@ -1,0 +1,8 @@
+{
+  "name": "nuxt-app-fixture",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "test": "vitest run"
+  }
+}

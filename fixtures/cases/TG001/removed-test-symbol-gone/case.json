@@ -1,0 +1,16 @@
+{
+  "description": "One test is removed from a kept file, and the only local symbol it used (`wanted`) no longer exists in its module at head: the same WARN as without the change to the module (Codex review of the noise round), with the context that the local code it used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG001",
+        "severity": "warn",
+        "file": "test/alerts.test.ts",
+        "line": 4,
+        "test": "wanted reads a list"
+      }
+    ]
+  }
+}

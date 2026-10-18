@@ -1,0 +1,17 @@
+{
+  "description": "\"Before the final edit:\" then \"- All 6 tests pass.\" with an edit after the run: the heading qualifies what follows, so the claim is only possible and the stale run is a WARN, not a FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

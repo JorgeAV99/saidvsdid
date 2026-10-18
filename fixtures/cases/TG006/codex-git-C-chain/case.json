@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review (variant): `git -C OTHER status --short && npm test` after a failing run: the run is in the repository and fails again, but the call is outside the closed grammar (another command before the runner): unplaced, its result unknown for this repository. WARN.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

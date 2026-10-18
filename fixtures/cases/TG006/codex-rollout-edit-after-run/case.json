@@ -1,0 +1,17 @@
+{
+  "description": "codex-stale as a rollout, with \"All 6 tests pass.\" on its own line: a FileChange comes after the last CommandExecution.",
+  "kind": "positive",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

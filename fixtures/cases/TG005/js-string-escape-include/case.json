@@ -1,0 +1,19 @@
+{
+  "description": "Codex review (b7): `include` is written with an escape, '**/*.\\u0074est.ts' (= '**/*.test.ts'). Every test still runs (the runner agrees); read raw, the pattern matches nothing and every file looks excluded. Decode it or warn; never FAIL.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    }
+  }
+}

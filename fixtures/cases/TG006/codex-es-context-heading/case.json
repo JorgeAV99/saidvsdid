@@ -1,0 +1,17 @@
+{
+  "description": "The same in Spanish: \"Antes de la última edición:\" then \"- Todos los tests pasan.\"",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

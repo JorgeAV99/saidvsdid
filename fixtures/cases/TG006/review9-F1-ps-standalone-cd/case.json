@@ -1,0 +1,20 @@
+{
+  "description": "Ninth review, F1 (Claude PowerShell): `npm.cmd test` fails, a standalone `cd` back to the repository, `npm.cmd test` green. The review ran it from a root with `[1]`, which Set-Location reads as a wildcard (test/grammar.test.ts keeps that case: a standalone PowerShell cd on a wildcard path is unplaced). In transcript mode no command output proves a pass: consistent with the evidence, not verified: INFO, never PASS nor FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "claude",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "info",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null,
+        "reason": "consistent_unverified"
+      }
+    ]
+  }
+}

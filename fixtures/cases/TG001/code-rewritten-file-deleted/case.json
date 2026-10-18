@@ -1,0 +1,10 @@
+{
+  "description": "Codex review of the noise round (NO-GO): src/price.js is rewritten as src/price.ts (`total` survives) and the node:test file that tested it is deleted. The same WARN as without the rewrite (`test` is required, not imported: not certainly the runner's), with the context that the local code it used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      { "rule": "TG001", "severity": "warn", "file": "test/price.test.js", "line": null, "test": null }
+    ]
+  }
+}

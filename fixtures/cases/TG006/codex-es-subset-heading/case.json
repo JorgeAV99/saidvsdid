@@ -1,0 +1,17 @@
+{
+  "description": "Case 3: \"Pruebas unitarias:\\n1/1 pruebas superadas.\" with no run. The heading names a subset, so the claim is partial: WARN, not FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

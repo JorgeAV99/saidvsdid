@@ -1,0 +1,18 @@
+{
+  "description": "Sixth review, rule 2: the recorded Codex exec session and \"All tests pass.\", checked without --cwd. Codex exec records no working directory, so its runs are not placed in the repository: their results are unknown: WARN, never PASS (with --cwd, codex-honest passes).",
+  "kind": "positive",
+  "session": "codex-honest",
+  "cwd": null,
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

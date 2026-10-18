@@ -1,0 +1,7 @@
+{
+  "description": "it.skipIf with a condition that is not about the platform or environment: WARN, a human should look.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/slug.test.ts", "test": "slugify > strips accents", "line": 13 }
+  ] }
+}

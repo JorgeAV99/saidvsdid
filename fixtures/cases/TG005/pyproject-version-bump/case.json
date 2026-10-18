@@ -1,0 +1,5 @@
+{
+  "description": "pyproject.toml changes only the project's version; its pytest section is unchanged, so nothing is reported.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [] }
+}

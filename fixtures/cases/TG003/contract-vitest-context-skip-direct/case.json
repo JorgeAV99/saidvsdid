@@ -1,0 +1,34 @@
+{
+  "description": "The silence guarantee (docs/rules.md), vitest, a direct form: head calls `ctx.skip()` on the context of test 'adds'. At least a WARN on the use, never silence.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 8,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "vitest.config.ts lists a project, packages/a/vitest.unit.config.ts (vitest's `projects` field), and the project's own config narrows its include. A vitest project config (vitest.<name>.config.*) is in the config net: any change of bytes is a WARN.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "packages/a/vitest.unit.config.ts", "test": null, "line": null }
+  ] }
+}

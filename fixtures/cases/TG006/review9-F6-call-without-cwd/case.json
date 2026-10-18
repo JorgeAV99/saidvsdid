@@ -1,0 +1,19 @@
+{
+  "description": "Ninth review, F6 (rollout): `npm test` fails in the repository, then a green `npm test` whose item has no `cwd`. A call whose directory the harness did not record is unknown, never the session's: unplaced: WARN.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "codex",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

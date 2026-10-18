@@ -1,0 +1,7 @@
+{
+  "description": "A module-level helper calling pytest.skip(allow_module_level=True) that is never called: WARN, not attributed to any test.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 7 }
+  ] }
+}

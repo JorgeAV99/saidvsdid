@@ -1,0 +1,25 @@
+{
+  "description": "Round 20c, Playwright: `test.fail` whose body records two `expect.soft` failures: two errors in `result.errors`, outcome `expected`. Refused.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.spec.mjs",
+        "line": 3,
+        "test": "service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "playwright: an expected failure with another failure in the same test"
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Codex P1 by a literal subscript: `const first = test['fail']; const mark = first;`; head adds `mark();`.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "case.test.mjs", "line": 5, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"case.test.mjs\",\"X\",1]": "failed"
+    },
+    "head": {
+      "[\"case.test.mjs\",\"X\",1]": "xfailed"
+    }
+  }
+}

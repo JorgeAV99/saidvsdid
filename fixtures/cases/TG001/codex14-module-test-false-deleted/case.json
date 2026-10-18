@@ -1,0 +1,17 @@
+{
+  "description": "Round 14, Codex 1: the deleted file sets `__test__ = False`, so pytest never collected `test_x` (the real runner runs exactly `test_b` on both sides). Not collectable at base by what the file shows: WARN, not FAIL.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test_a.py", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_b.py\",\"test_b\",1]": "passed"
+    },
+    "head": {
+      "[\"test_b.py\",\"test_b\",1]": "passed"
+    }
+  }
+}

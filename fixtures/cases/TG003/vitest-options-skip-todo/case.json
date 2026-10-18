@@ -1,0 +1,49 @@
+{
+  "description": "Review 3, acceptance 1: Vitest test options { skip: true } and { todo: true } on existing tests.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/opts.test.ts",
+        "line": 4,
+        "test": "opts > adds",
+        "ids": [
+          [
+            "opts > adds",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/opts.test.ts",
+        "line": 8,
+        "test": "opts > subtracts",
+        "ids": [
+          [
+            "opts > subtracts",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/opts.test.ts\",\"opts > adds\",1]": "passed",
+      "[\"tests/opts.test.ts\",\"opts > multiplies\",1]": "passed",
+      "[\"tests/opts.test.ts\",\"opts > subtracts\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/opts.test.ts\",\"opts > adds\",1]": "skipped",
+      "[\"tests/opts.test.ts\",\"opts > multiplies\",1]": "passed",
+      "[\"tests/opts.test.ts\",\"opts > subtracts\",1]": "todo"
+    }
+  }
+}

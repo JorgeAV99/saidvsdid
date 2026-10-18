@@ -1,0 +1,36 @@
+{
+  "description": "Round 13, negative control of the oracle: node:test's `test.todo` runs the body and tolerates its failure, and Node reports the test as todo (recorded as xpassed when it passes). 'adds' still runs: passed → xpassed is not evidence that it stopped running (`not-run`); it is the expected-failure signal, the effect of node:test's todo.",
+  "kind": "positive",
+  "runner": "node:test",
+  "oracleControl": "not-run",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.mjs",
+        "line": 3,
+        "test": "adds",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed",
+      "[\"test/a.test.mjs\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "xpassed",
+      "[\"test/a.test.mjs\",\"other\",1]": "passed"
+    }
+  }
+}

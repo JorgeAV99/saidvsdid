@@ -1,0 +1,18 @@
+{
+  "description": "Contagion through a string: `const key = 'skip'` holds a string literal exactly equal to a token, so `key` is marked, and head declares 'adds' with `it[key](...)`: a use whose callee holds a marked name, at least a WARN that it may skip 'adds'. A key built at run time (`'sk' + 'ip'`) is coverage. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test/a.test.ts", "line": null, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 5, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

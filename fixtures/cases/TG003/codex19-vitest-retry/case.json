@@ -1,0 +1,18 @@
+{
+  "description": "Round 19, Codex 3: `{ retry: 1 }`: Vitest runs the test twice (`retryCount: 1`). Refused.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG005",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 4,
+        "test": "service"
+      }
+    ]
+  },
+  "unrecordable": "vitest: a test run more than once"
+}

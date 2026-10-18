@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review, N2 (Claude, minimal reproduction): `npm test` fails; a separate Bash call `cd OTHER`; then `npm test` passes. Claude Code's Bash keeps its working directory between calls, so the passing run is in OTHER: unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

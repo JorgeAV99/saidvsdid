@@ -1,0 +1,19 @@
+{
+  "description": "Round 14, Codex 10: `t.runOnly(true)` in node:test: with `--test-only`, Node drops the subtests without `only`. It needs that flag: WARN.",
+  "kind": "positive",
+  "runner": "node:test",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG002", "severity": "warn", "file": "test/a.test.mjs", "line": 4, "test": "parent" }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"parent > child\",1]": "passed",
+      "[\"test/a.test.mjs\",\"parent\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"parent > child\",1]": "passed",
+      "[\"test/a.test.mjs\",\"parent\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "Codex review (a2): `config.test.retry = 2` is assigned after defineConfig and before `export default config`. The reader sees a literal object without retries; the config safety net must not let it pass.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": null }
+  ] }
+}

@@ -1,0 +1,35 @@
+{
+  "description": "Round 15, Codex 10b: two tests titled X: the first gains `absent?.(ctx.skip())` (it still passes), the second becomes `test.skip` (skipped). The recorder keeps them apart (`file::X`, `file::X#2`), and each finding is credited by its own: WARN on the first (F2), FAIL on the second.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 6,
+        "test": "X"
+      },
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 10,
+        "test": "X"
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed",
+      "[\"test/a.test.ts\",\"X\",2]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed",
+      "[\"test/a.test.ts\",\"X\",2]": "skipped"
+    }
+  }
+}

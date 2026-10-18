@@ -1,0 +1,22 @@
+{
+  "description": "A pytest file and the local module it imports (app/oauth.py, imported as app.oauth) are deleted together: the same FAIL as without the module change (Codex review of the noise round), with the context that the local code the test used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG001",
+        "severity": "fail",
+        "file": "tests/test_oauth.py",
+        "line": null,
+        "test": null,
+        "ids": [
+          [
+            "test_pair_shape",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

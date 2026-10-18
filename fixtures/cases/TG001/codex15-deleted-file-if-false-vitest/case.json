@@ -1,0 +1,17 @@
+{
+  "description": "Round 15, Codex 8: the deleted file only declared A inside `if (false)`: Vitest never collected it. Not F3: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "test/a.test.ts", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/b.test.ts\",\"B\",1]": "passed"
+    },
+    "head": {
+      "[\"test/b.test.ts\",\"B\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "description": "N9: package.json deleted, and with it the `test` script that ran only test/a.test.ts. A deleted watched file is a change: WARN (vitest really runs b at head, with no script to narrow it).",
+  "kind": "positive",
+  "runner": "vitest",
+  "selectionChanges": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed",
+      "[\"test/b.test.ts\",\"b > runs\",1]": "passed"
+    }
+  }
+}

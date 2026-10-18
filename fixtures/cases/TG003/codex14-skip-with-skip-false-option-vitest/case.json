@@ -1,0 +1,18 @@
+{
+  "description": "Round 14, Codex 3: `test.skip` with `{ skip: false }`: Vitest runs X (passed → passed). A modifier and an option of the vocabulary on one declaration are not canonical: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": null },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed"
+    }
+  }
+}

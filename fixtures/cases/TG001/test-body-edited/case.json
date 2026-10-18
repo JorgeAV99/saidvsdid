@@ -1,0 +1,5 @@
+{
+  "description": "A test body changes but the test keeps its name; not a deletion (assertion strength is TG004's job).",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

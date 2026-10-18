@@ -1,0 +1,19 @@
+{
+  "description": "Real Codex session (rollout) with hooks.json: a Stop hook ran, and the rollout records no hook at all. Codex does not record hooks, so no FAIL rests on the absence of activity: WARN. Final message replaced by the claim.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

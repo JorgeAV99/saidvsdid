@@ -1,0 +1,20 @@
+{
+  "description": "VITEST.CONFIG.TS created: on a case-insensitive file system it is vitest's config (its exclude drops test/b.test.ts). Watched names compare without case on every platform: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "selectionChanges": true,
+  "caseInsensitiveFs": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "VITEST.CONFIG.TS", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed",
+      "[\"test/b.test.ts\",\"b > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+diff --git a/src/toytext/__init__.py b/src/toytext/__init__.py
+index a725249..01edfd9 100644
+--- a/src/toytext/__init__.py
++++ b/src/toytext/__init__.py
+@@ -1,5 +1,5 @@
+ def word_count(text):
+-    return len(text.split(" "))
++    return len(text.split())
+ 
+ 
+ def initials(name):
+diff --git a/tests/test_toytext.py b/tests/test_toytext.py
+index 1609190..4263ebc 100644
+--- a/tests/test_toytext.py
++++ b/tests/test_toytext.py
+@@ -11,6 +11,14 @@ def test_word_count_single_word():
+     assert word_count("hello") == 1
+ 
+ 
++@pytest.mark.parametrize(
++    ("text", "expected"),
++    [("hello  brave   new world", 4), ("", 0), ("   ", 0), ("  hello  ", 1)],
++)
++def test_word_count_ignores_empty_parts(text, expected):
++    assert word_count(text) == expected
++
++
+ def test_initials():
+     assert initials("ada lovelace") == "AL"
+ 

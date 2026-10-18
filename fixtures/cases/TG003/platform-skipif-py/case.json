@@ -1,0 +1,8 @@
+{
+  "description": "@pytest.mark.skipif(sys.platform == 'win32') and a module-level importorskip: legitimate environment conditions, WARN (never FAIL, never PASS).",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_fs.py", "test": null, "line": 6 },
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_fs.py", "test": "test_symlink", "line": 9 }
+  ] }
+}

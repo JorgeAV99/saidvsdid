@@ -1,0 +1,16 @@
+{
+  "description": "Review #2: inside an existing describe.only, it.only on one test narrows the run from 3 tests to 1 (vitest/mocha semantics). Round 14: the `it.only` sits under a `describe.only`, a modifier on a describe around it: not canonical, WARN.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "warn",
+        "file": "tests/slug.test.ts",
+        "line": 5,
+        "test": "slugify > lowercases"
+      }
+    ]
+  }
+}

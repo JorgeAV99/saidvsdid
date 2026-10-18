@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 4: `@pytest.mark.xfail` on a test parametrised with an empty list: pytest reports `test_x[NOTSET]` skipped on both sides, never an expected failure. WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x[NOTSET]\",1]": "skipped"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x[NOTSET]\",1]": "skipped"
+    }
+  }
+}

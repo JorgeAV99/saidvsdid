@@ -1,0 +1,17 @@
+{
+  "description": "Variant of the review of the commit that made a string mark a name only where a member's name is read: `self.omit = self.skipTest` assigns unittest's `skipTest` to an attribute; an assignment marks every identifier of its target, attributes included (`self`, `omit`), so head's `self.omit(\"x\")` is a use of the vocabulary: at least a WARN that it may skip `TestA::test_adds`. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 9, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

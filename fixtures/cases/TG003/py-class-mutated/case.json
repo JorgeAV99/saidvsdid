@@ -1,0 +1,18 @@
+{
+  "description": "N5 of the Codex review of the commit that allowed neither a FAIL nor a silence without certainty: `Base(unittest.TestCase)` has its `skipTest` replaced after the class (`Base.skipTest = lambda self, reason: None`). An override of `skipTest` in the file: TG003 warns that `self.skipTest` may skip `test_adds`, never FAIL. The real runner runs the test. Outside the assumption (mutation): a write to a member of a class of the chain; the courtesy check of an evident write of the method's name makes it a WARN, with no guarantee.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "outsideAssumption": {"reason":"mutation","note":"`Base.skipTest = …` replaces the method on the test's base class"},
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 14, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    }
+  }
+}

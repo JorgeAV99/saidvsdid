@@ -1,0 +1,10 @@
+{
+  "description": "Codex review of the noise round (NO-GO), in Python: the pytest file is deleted and `compute_tax` is renamed `calculate_tax` in app/tax.py. The code survives under another name: the same FAIL, with the context that the local code the tests used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      { "rule": "TG001", "severity": "fail", "file": "tests/test_tax.py", "line": null, "test": null, "ids": [["test_computes_tax", 1], ["test_rounds_tax", 1]] }
+    ]
+  }
+}

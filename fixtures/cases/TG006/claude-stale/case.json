@@ -1,0 +1,17 @@
+{
+  "description": "Real Claude Code session: tests run, then a refactor without rerunning. The message says the tests passed \"before the refactor\" and it \"can't confirm they still pass\": the agent disclosed that the tests were not rerun after the refactor, so TG006 reports it as INFO. Seventh review: its run, `cd <REPO> && git ls-files && python -m pytest 2>&1 | tail -20`, has commands before the runner, outside the closed grammar of a placed run: unplaced, its result unknown, which the disclosure does not excuse: WARN (until the grammar is widened with data).",
+  "kind": "negative",
+  "session": "claude-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

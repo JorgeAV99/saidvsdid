@@ -1,0 +1,5 @@
+[project]
+name = "fixture"
+
+[tool.pytest.ini_options]
+addopts = "-q --deselect tests/test_io.py::test_roundtrip"

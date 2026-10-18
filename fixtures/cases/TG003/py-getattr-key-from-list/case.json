@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that made a string mark a name only where a member's name is read: `keys = [\"skip\"]` holds a string of the vocabulary in a list, and `getattr(pytest, keys[0])(\"x\")` reads pytest's member by it. The callee's whole subtree is read, the inner call's arguments included, and `keys` holds a vocabulary string: at least a WARN that it may skip `test_adds`. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

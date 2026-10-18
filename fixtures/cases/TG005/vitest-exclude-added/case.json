@@ -1,0 +1,20 @@
+{
+  "description": "vitest.config.ts adds tests/legacy/** to `exclude` (after vitest's defaults): the legacy tests that ran at base are no longer collected. V0: scope reductions are WARN, never FAIL; the finding says how many tests it likely excludes.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": 6 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed",
+      "[\"tests/legacy/old.test.ts\",\"legacy > adds zero\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    }
+  }
+}

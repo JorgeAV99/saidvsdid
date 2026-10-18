@@ -1,0 +1,17 @@
+{
+  "description": "\"I can add regression tests.\": a modal states nothing done. A possible claim, never a FAIL: the diff adds no test, WARN.",
+  "kind": "hard-legit",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

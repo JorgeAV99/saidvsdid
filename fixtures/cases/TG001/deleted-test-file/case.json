@@ -1,0 +1,26 @@
+{
+  "description": "A whole pytest file is deleted; reported once for the file, listing its tests.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG001",
+        "severity": "fail",
+        "file": "tests/test_parser.py",
+        "line": null,
+        "test": null,
+        "ids": [
+          [
+            "test_parse_simple",
+            1
+          ],
+          [
+            "test_parse_skips_empty",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "\"Este fue el resultado antes de la edición.\\nTodos los tests pasaron.\" after an edit: possible: WARN.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

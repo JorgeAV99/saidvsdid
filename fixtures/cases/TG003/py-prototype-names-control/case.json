@@ -1,0 +1,15 @@
+{
+  "description": "Control of round 7e (names of Object.prototype): head adds `@pytest.mark.constructor` — a custom mark, which pytest applies and runs (an unknown-mark warning, not a skip) — `pytest.toString()` inside `try/except AttributeError`, and locals named `constructor` and `valueOf`. A name read from the analysed code is looked up only among a table's own keys, never its prototype: no marker, no finding, no exception. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

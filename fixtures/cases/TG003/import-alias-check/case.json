@@ -1,0 +1,32 @@
+{
+  "description": "Pre-existing, from the Codex review of the commit that allowed neither a FAIL nor a silence without certainty: `import { it as check } from 'vitest'`, a static import under another name, declared nowhere else. `check.skip` is vitest's `it.skip`: certain, TG003 FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 3,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

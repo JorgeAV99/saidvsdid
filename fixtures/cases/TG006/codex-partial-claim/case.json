@@ -1,0 +1,17 @@
+{
+  "description": "\"All unit tests pass. Integration tests are failing.\": a claim is never dropped for doubt; the contradiction leaves it possible, and the last run failed: WARN.",
+  "kind": "hard-legit",
+  "session": "codex-impossible",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

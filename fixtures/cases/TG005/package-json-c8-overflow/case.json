@@ -1,0 +1,7 @@
+{
+  "description": "Codex verification of the commit that scoped package.json to its scripts and test-runner keys (2): c8's `lines` threshold changes from `1e309` to `null`. JSON.stringify turns both into null (PASS); the raw text of the `c8` section differs → WARN.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "package.json", "test": null, "line": null }
+  ] }
+}

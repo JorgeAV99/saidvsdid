@@ -1,0 +1,17 @@
+{
+  "description": "Design review: the base `Scope.unittest.TestCase` is read through the attribute `unittest` of class `Scope`, not through the module's import, so the class is not certainly a unittest.TestCase: `self.skipTest` is a WARN, never FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 10, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

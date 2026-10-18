@@ -1,0 +1,16 @@
+{
+  "description": "Three tests are removed from one file for the same reason (`Removes test …`, not certainly the runner's: `bun:test`): one WARN that counts and lists them, at the first one's line.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG001",
+        "severity": "warn",
+        "file": "test/generate.test.mjs",
+        "line": 4,
+        "test": null
+      }
+    ]
+  }
+}

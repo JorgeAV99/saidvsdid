@@ -1,0 +1,7 @@
+{
+  "description": "it.skipIf(process.platform === 'win32'): a legitimate environment-conditional skip. Not a FAIL, but a newly disabled test is reported as WARN.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/paths.test.ts", "test": "paths > resolves symlinks", "line": 10 }
+  ] }
+}

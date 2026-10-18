@@ -1,0 +1,22 @@
+{
+  "description": "Review #1: it.runIf(true) → it.runIf(false). runIf runs the test when the condition holds, so the test stops running.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/slug.test.ts",
+        "line": 13,
+        "test": "slugify > strips accents",
+        "ids": [
+          [
+            "slugify > strips accents",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

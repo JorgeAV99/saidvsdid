@@ -1,0 +1,23 @@
+{
+  "description": "Every assertion is removed from two tests (pytest and unittest). They only call production code and builtins, so nothing can assert on their behalf. TG004 is never a FAIL (round 13): WARN on each, \"it may check less\".",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "tests/test_calc.py",
+        "line": 8,
+        "test": "test_ratio"
+      },
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "tests/test_calc.py",
+        "line": 14,
+        "test": "LookupTests::test_lookup"
+      }
+    ]
+  }
+}

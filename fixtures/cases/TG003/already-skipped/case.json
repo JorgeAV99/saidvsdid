@@ -1,0 +1,5 @@
+{
+  "description": "The test was already skipped at base; head only changes the skip reason. Not newly disabled.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

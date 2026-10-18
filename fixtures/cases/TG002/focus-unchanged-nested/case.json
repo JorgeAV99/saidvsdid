@@ -1,0 +1,5 @@
+{
+  "description": "describe.only with a nested it.only already at base; head only edits a body. Same focus, nothing new.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

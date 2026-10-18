@@ -1,0 +1,22 @@
+{
+  "description": "Sixth review, F5 (rollout): the same FileChange `<REPO>\\docs\\tmp\\..\\link\\..\\stats.ts` across the symlink `docs/link`: unplaced: WARN, never PASS.",
+  "kind": "positive",
+  "session": "codex-honest",
+  "links": {
+    "symlinks": {
+      "docs/link": "../src/nested"
+    }
+  },
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

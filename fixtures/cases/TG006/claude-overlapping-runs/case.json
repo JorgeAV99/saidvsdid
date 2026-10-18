@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 5 (Claude): run A starts, run B starts and passes, A ends failing, then \"All 6 tests pass.\". Either may have run last on the same code: WARN, never PASS.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

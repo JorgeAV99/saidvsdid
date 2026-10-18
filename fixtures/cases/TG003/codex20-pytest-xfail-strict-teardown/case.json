@@ -1,0 +1,25 @@
+{
+  "description": "Round 20: `@pytest.mark.xfail(strict=True)` whose body fails as expected while a fixture's teardown raises: pytest reports the teardown as xfailed too. Another failure in the same test: refused.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 10,
+        "test": "test_service",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "test_service",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "unrecordable": "pytest: an expected failure with another failure in the same test"
+}

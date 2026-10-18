@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 1 (future evidence, rollout): the exec call of the green `npm.cmd test` is still open when the final_answer \"All tests pass.\" is recorded; the CommandExecution completes after it. In flight: WARN, never PASS.",
+  "kind": "positive",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

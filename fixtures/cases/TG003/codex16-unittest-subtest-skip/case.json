@@ -1,0 +1,18 @@
+{
+  "description": "Round 16, Codex 10: `self.skipTest()` on a test whose subtest fails: unittest reports `FAILED (failures=1)` at base and skips it at head. The recorder reads the subtests: failed → skipped, and the FAIL is credited.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "tests/test_a.py", "line": 6, "test": "TestX::test_x", "ids": [["TestX::test_x",1]] }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "skipped"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "description": "Outside the assumption (mutation through a dynamic import): `(await import('node:test')).default.skip = …` replaces the `skip` of node:test's `test`, so `test.skip(...)` runs the test, and the real runner runs it. saidvsdid does not detect mutation: by the contract the code adds node:test's skip to a static import, a FAIL that rests on the assumption.",
+  "kind": "hard-legit",
+  "runner": "node:test",
+  "outsideAssumption": {
+    "reason": "mutation",
+    "note": "`(await import('node:test')).default.skip = …` replaces node:test's `test.skip`"
+  },
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.mjs",
+        "line": 6,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed"
+    }
+  }
+}

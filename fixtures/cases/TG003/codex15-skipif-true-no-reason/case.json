@@ -1,0 +1,17 @@
+{
+  "description": "Round 15, Codex 4: `@pytest.mark.skipif(True)` without `reason`: pytest errors on it. F5 requires `skipif(True, reason=\"lit\")`: WARN.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 4, "test": "test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_x\",1]": "failed"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "description": "Vite.Config.ts created: on a case-insensitive file system vitest reads it (no vitest.config): its exclude drops test/b.test.ts. WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "selectionChanges": true,
+  "caseInsensitiveFs": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "Vite.Config.ts", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed",
+      "[\"test/b.test.ts\",\"b > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "description": "Codex review of the noise round (NO-GO): the test file is deleted and the function it tested is renamed in the same module (`computeTax` → `calculateTax`). The code survives under another name, so the deletion is the same FAIL as without the module change; the message adds, as context, that the local code the tests used changed or is gone in this PR.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      { "rule": "TG001", "severity": "fail", "file": "test/tax.test.ts", "line": null, "test": null, "ids": [["computes tax", 1], ["rounds tax", 1]] }
+    ]
+  }
+}

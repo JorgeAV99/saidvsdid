@@ -1,0 +1,22 @@
+{
+  "description": "Round 17, review: `@unittest.expectedFailure` on a test whose subtests all pass: an unexpected success (xpassed), with each subtest a passed child.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "tests/test_a.py", "line": 5, "test": "TestX::test_x", "effect": "expected-failure", "ids": [["TestX::test_x",1]] },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 6, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x (x=2)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x (x=1)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x (x=2)\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "xpassed"
+    }
+  }
+}

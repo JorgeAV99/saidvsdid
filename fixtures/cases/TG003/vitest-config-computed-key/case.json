@@ -1,0 +1,17 @@
+{
+  "description": "N4 of the Codex review of the commit that allowed neither a FAIL nor a silence without certainty: `globals: true` overridden by a computed key and a setup file installing the project's own `it`. A global is never certain, whatever the configuration says: TG003 warns that `it.skip` may skip `adds`, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 1, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

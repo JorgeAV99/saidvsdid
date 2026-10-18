@@ -1,0 +1,34 @@
+{
+  "description": "Round 13, the oracle reads statuses by own property: the test titled 'constructor' (a name every plain object inherits) goes from passed to skipped, and the oracle finds it by its own key.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test/a.test.ts",
+        "line": 3,
+        "test": "constructor",
+        "ids": [
+          [
+            "constructor",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"constructor\",1]": "passed",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"constructor\",1]": "skipped",
+      "[\"test/a.test.ts\",\"other\",1]": "passed"
+    }
+  }
+}

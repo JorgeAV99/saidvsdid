@@ -1,0 +1,20 @@
+{
+  "description": "Codex verification of the commit that made TG005's scope reductions always WARN (2): `norecursedirs = \"legacy  tests\"` becomes `\"legacy tests\"` (one space inside the quotes): the pattern now matches the `legacy tests` directory and pytest stops collecting it (the runner agrees). Collapsing spaces hid it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"legacy tests/test_old.py\",\"test_legacy\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "--evidence with the right commits, but the green run ran on base's tree (before the fix), not head's: it does not back the reviewed code. Not evaluated (WARN), never PASS.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "evidence": "evidence.json",
+  "expect": { "verdict": "WARN", "findings": [{ "rule": "TG006", "severity": "warn", "file": "evidence.json", "line": null, "test": null, "reason": "evidence_mismatch" }, { "rule": "TG007", "severity": "warn", "file": "evidence.json", "line": null, "test": null, "reason": "evidence_mismatch" }], "notEvaluated": ["TG006", "TG007"] }
+}

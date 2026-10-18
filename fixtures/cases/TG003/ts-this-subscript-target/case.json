@@ -1,0 +1,17 @@
+{
+  "description": "Codex P1 (the commit that made the silence guarantee a closed list), exact: `this['omit'] = ctx.skip;` in a method of an object literal; head adds `this['omit']();`. The target `this['omit']` bound no name (`this` and a literal key are not identifiers): silent, exit 0. Subscript ≡ dot in the target and in the use. The runner: 'X' passed → skipped.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "case.test.mjs", "line": 5, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"case.test.mjs\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"case.test.mjs\",\"X\",1]": "skipped"
+    }
+  }
+}

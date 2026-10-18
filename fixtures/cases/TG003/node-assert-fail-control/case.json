@@ -1,0 +1,8 @@
+{
+  "description": "`assert.fail(…)` of node:assert is an assertion that fails the test, not the runner's `test.fail`: no finding.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

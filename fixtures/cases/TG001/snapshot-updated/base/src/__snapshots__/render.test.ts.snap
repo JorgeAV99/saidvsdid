@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`renders a card 1`] = `"<div class=\"card\">Hi</div>"`;
+
+exports[`renders a legacy card 1`] = `"<div>Hi</div>"`;

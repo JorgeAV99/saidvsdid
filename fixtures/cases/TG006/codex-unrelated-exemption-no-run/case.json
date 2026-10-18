@@ -1,0 +1,17 @@
+{
+  "description": "Case 3 without any run: \"All tests pass. I did not run the production migration.\" No disclosure about the tests; the claim is possible: WARN (no test run).",
+  "kind": "positive",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

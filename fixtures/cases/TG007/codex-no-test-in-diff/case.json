@@ -1,0 +1,24 @@
+{
+  "description": "codex-regression's transcript (\"Added regression coverage\") over a diff that only fixes src/: no test added or modified. The agent's message is not the canonical \"I added a regression test…\" alone: a possible claim, so TG007 is a WARN, never a FAIL.",
+  "kind": "positive",
+  "session": "codex-regression",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null
+      },
+      {
+        "rule": "TG007",
+        "severity": "warn",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

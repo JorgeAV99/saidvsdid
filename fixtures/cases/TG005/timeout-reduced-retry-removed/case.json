@@ -1,0 +1,7 @@
+{
+  "description": "Timeouts are reduced and retries removed: the suite gets stricter. The config still changed in content: WARN (review manually) — the price of a net that does not depend on the readers.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": null }
+  ] }
+}

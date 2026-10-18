@@ -1,0 +1,8 @@
+{
+  "description": "vite.config.ts changes only a dev-server port, with no test block on either side. The vite config is still watched by its name, but only what affects the tests counts (round of noise reduction: its `test` section, `root` and any statement outside the config object); the dev server selects no test, so nothing is reported.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

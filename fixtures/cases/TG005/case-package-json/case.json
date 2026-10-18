@@ -1,0 +1,20 @@
+{
+  "description": "PACKAGE.JSON created with a test script that runs only test/a.test.ts: on a case-insensitive file system it is the project's package.json. Watched names compare without case: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "selectionChanges": true,
+  "caseInsensitiveFs": true,
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "PACKAGE.JSON", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed",
+      "[\"test/b.test.ts\",\"b > runs\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"a > runs\",1]": "passed"
+    }
+  }
+}

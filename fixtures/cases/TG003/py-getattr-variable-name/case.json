@@ -1,0 +1,17 @@
+{
+  "description": "Contagion through a name that holds a string: `k = \"skip\"` holds a string of the vocabulary, and the callee of `getattr(pytest, k)(\"x\")` — read whole, the arguments of the call it holds included — holds `k`: a use, at least a WARN that it may skip `test_adds`. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

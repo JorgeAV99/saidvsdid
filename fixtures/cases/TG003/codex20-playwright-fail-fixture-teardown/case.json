@@ -1,0 +1,18 @@
+{
+  "description": "Round 20: `test.fail` whose body fails as expected while a fixture's teardown throws: Playwright reports the outcome `expected` with both errors. Another failure in the same test: refused.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "a.spec.mjs",
+        "line": 5,
+        "test": "service"
+      }
+    ]
+  },
+  "unrecordable": "playwright: an expected failure with another failure in the same test"
+}

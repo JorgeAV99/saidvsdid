@@ -1,0 +1,15 @@
+{
+  "description": "Control of round 7d: `GOOD` holds `'skip'` in a container, but `r = check(GOOD)` binds a call's result — a value that enters a function is behind an opaque frontier, so `r` holds nothing — and `expect(r.ok).toBe(true)` reads `r` only as an argument of `expect`: no finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "vitest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    }
+  }
+}

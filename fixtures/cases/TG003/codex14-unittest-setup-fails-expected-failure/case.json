@@ -1,0 +1,44 @@
+{
+  "description": "Round 14, Codex 5: `@unittest.expectedFailure` on a method whose `setUp` raises: unittest reports an error on both sides, with no expected-failure signal. The form is canonical; the case is outside the documented assumption that a test's setup does not fail by itself.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_a.py",
+        "line": 8,
+        "test": "TestX::test_x",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "TestX::test_x",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "tests/test_a.py",
+        "line": 9,
+        "test": "TestX::test_x"
+      }
+    ]
+  },
+  "outsideAssumption": {
+    "reason": "setup-fails",
+    "note": "`setUp` raises on both sides: the runner never reaches the expected failure"
+  },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_x\",1]": "failed"
+    }
+  }
+}

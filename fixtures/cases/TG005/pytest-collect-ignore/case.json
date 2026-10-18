@@ -1,0 +1,20 @@
+{
+  "description": "conftest.py gains collect_ignore for tests/test_legacy.py: its tests, which ran at base, are no longer collected. V0: scope reductions are WARN, never FAIL; the finding says how many tests it likely excludes.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "conftest.py", "test": null, "line": 1 }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed",
+      "[\"tests/test_legacy.py\",\"test_legacy_latin1\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "description": "An it.todo placeholder is implemented under the same name, and another placeholder is dropped. Neither is a lost test.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [
+    { "rule": "TG001", "severity": "info", "file": "tests/queue.test.ts", "test": "queue > is fair under contention", "line": 9 }
+  ] }
+}

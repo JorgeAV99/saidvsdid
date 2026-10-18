@@ -1,0 +1,17 @@
+{
+  "description": "Codex review (b5): addopts gains -k \"not roundtrip\", but the test script runs `pytest -k read`, and the last -k wins: nothing that ran at base stops running (the runner agrees). WARN, not FAIL.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": 2 }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed"
+    }
+  }
+}

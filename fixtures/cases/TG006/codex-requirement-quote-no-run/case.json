@@ -1,0 +1,17 @@
+{
+  "description": "Case 1: a quoted requirement, \"The task says all tests must pass.\", with no run: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

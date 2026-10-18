@@ -1,0 +1,17 @@
+{
+  "description": "Variant of the review of the commit that gave Python its files' bytes (PEP 263) and read mangled and context aliases: `from pytest import skip as stop` marks `stop` (its import holds `skip`), `omit = stop.__call__` marks `omit` (its value holds a marked name), and head adds `omit(\"x\")`: at least a WARN that it may skip `test_adds`, never silence. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that made a string mark a name only where a member's name is read: `omit = pytest.skip` in the body of class `Actions` marks `omit`, and head calls it as a member, `Actions.omit(\"x\")`. Every identifier of the callee — property names included — is read against the vocabulary and the marked names: at least a WARN that it may skip `test_adds`, never silence. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 9, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

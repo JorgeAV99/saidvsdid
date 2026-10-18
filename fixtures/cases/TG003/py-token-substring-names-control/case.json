@@ -1,0 +1,15 @@
+{
+  "description": "Control of the contagion net: tokens are whole identifiers, never substrings. `skip_reason` contains `skip` but is not the token, its definition holds no token, and its new call in `test_adds` is not a use of the vocabulary: no finding. The real runner runs the test.",
+  "kind": "negative",
+  "runner": "pytest",
+  "expect": { "verdict": "OK", "findings": [] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    }
+  }
+}

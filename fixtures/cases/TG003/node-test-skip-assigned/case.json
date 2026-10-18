@@ -1,0 +1,19 @@
+{
+  "description": "Outside the assumption (mutation): the file writes `test.skip = test` on node:test's imported `test`, so `test.skip(...)` runs the test. As a courtesy, an evident direct write on the imported name makes the rule warn (`may skip`), with no guarantee; `test.skip` written as the assignment's target is itself a form of the vocabulary the census reports (line 4). The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "node:test",
+  "outsideAssumption": {"reason":"mutation","note":"the file writes `test.skip = test` on the runner's imported `test`"},
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 6, "test": "adds" },
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.mjs", "line": 4, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "node:test v22.22.0",
+    "base": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.mjs\",\"adds\",1]": "passed"
+    }
+  }
+}

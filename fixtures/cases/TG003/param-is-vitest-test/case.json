@@ -1,0 +1,17 @@
+{
+  "description": "`it` is the first parameter of a describe factory, which vitest fills with its own `test`: the real runner does skip the test. A parameter is a declaration in an enclosing scope, not a static import: TG003 warns, never silence, never FAIL.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 5, "test": "group > adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"group > adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"group > adds\",1]": "skipped"
+    }
+  }
+}

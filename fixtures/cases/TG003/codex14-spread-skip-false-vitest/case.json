@@ -1,0 +1,17 @@
+{
+  "description": "Round 14, Codex 3: `{ skip: true, ...{ skip: false } }`: Vitest runs X. A spread is not canonical: WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.js", "line": 3, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.js\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.js\",\"X\",1]": "passed"
+    }
+  }
+}

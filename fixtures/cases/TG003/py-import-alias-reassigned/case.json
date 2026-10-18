@@ -1,0 +1,17 @@
+{
+  "description": "The case of the Codex review of the commit that compared config names without case and always watched vite configs: `import pytest as runner` then `pytest = runner`. `pytest` is bound by an assignment, not by an import of pytest: `skipif(False)` → `skipif(True)` (same marker count) is a TG003 WARN, never silence. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

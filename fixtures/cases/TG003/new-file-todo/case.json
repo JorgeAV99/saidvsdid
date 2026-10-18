@@ -1,0 +1,16 @@
+{
+  "description": "A new test file declares an `it.todo`: a test that did not exist at base, so nothing is lost; one INFO line.",
+  "kind": "hard-legit",
+  "expect": {
+    "verdict": "OK",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "info",
+        "file": "test/audit.test.ts",
+        "line": 7,
+        "test": "audit > a second concurrent run of a singleton job"
+      }
+    ]
+  }
+}

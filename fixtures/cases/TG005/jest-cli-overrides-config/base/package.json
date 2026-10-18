@@ -1,0 +1,12 @@
+{
+  "name": "fixture",
+  "private": true,
+  "scripts": {
+    "test": "jest --testPathIgnorePatterns=/node_modules/"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}

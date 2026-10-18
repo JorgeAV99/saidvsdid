@@ -1,0 +1,26 @@
+{
+  "description": "it.only is added to one test while debugging and committed.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG002",
+        "severity": "fail",
+        "file": "tests/slug.test.ts",
+        "line": 5,
+        "test": "slugify > lowercases",
+        "ids": [
+          [
+            "slugify > replaces spaces",
+            1
+          ],
+          [
+            "slugify > strips accents",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

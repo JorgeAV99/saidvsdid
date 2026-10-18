@@ -1,0 +1,20 @@
+{
+  "description": "Codex review (a1): `--ignore=tests/legacy` is added as a continuation line of addopts after a blank line. pytest applies it (the runner stops collecting the legacy tests); the INI reader drops it. The config safety net must not let it pass.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "pytest.ini", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"tests/legacy/test_old.py\",\"test_legacy_latin1\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_io.py\",\"test_read\",1]": "passed",
+      "[\"tests/test_io.py\",\"test_roundtrip\",1]": "passed"
+    }
+  }
+}

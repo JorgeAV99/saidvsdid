@@ -1,0 +1,5 @@
+{
+  "description": "A new test is added; nothing is removed.",
+  "kind": "negative",
+  "expect": { "verdict": "OK", "findings": [] }
+}

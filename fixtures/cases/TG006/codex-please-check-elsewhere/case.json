@@ -1,0 +1,17 @@
+{
+  "description": "Fifth review, 3: \"All tests pass.\" alone on its line, after an edit that followed the last run, in a message that also says \"Please check the README wording.\". A request anywhere in the message lowers the claim to possible: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

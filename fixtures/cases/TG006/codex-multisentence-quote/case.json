@@ -1,0 +1,17 @@
+{
+  "description": "Third review: a quotation spanning sentences, '\"Fix the median bug. All tests pass.\" That is what the issue asks for.', with no run. The message quotes: possible, WARN.",
+  "kind": "hard-legit",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

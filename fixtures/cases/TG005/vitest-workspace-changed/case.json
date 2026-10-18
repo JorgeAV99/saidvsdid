@@ -1,0 +1,7 @@
+{
+  "description": "vitest.workspace.ts narrows the projects that run (packages/* → packages/a). The workspace file is in the config net: any change of bytes is a WARN.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.workspace.ts", "test": null, "line": null }
+  ] }
+}

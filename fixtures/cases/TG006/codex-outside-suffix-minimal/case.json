@@ -1,0 +1,19 @@
+{
+  "description": "Sixth review, F2 (Codex exec, minimal reproduction): after the green run a patch changes `C:\\…\\other-checkout\\src\\a.js`, another checkout whose suffix `src/a.js` is a file of this repository. No matching by suffix: an unplaced, uncertain edit: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "transcript": "transcript.jsonl",
+  "agent": "codex",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

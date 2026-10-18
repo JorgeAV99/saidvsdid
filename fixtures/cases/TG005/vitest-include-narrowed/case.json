@@ -1,0 +1,19 @@
+{
+  "description": "`include` narrows from every *.test.ts to tests/unit/**: tests/api.test.ts, which ran at base, is no longer collected. V0: scope reductions are WARN, never FAIL; the finding says how many tests it likely excludes.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": 5 }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed",
+      "[\"tests/unit/math.test.ts\",\"unit > adds zero\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/unit/math.test.ts\",\"unit > adds zero\",1]": "passed"
+    }
+  }
+}

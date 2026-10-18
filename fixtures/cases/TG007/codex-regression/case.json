@@ -1,0 +1,25 @@
+{
+  "description": "Real Codex session: a parametrised regression test added; the last run is `python -m pytest -q; git diff --check`, whose status is git's (TG006 WARN).",
+  "kind": "hard-legit",
+  "session": "codex-regression",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "rollout.jsonl",
+        "line": null,
+        "test": null
+      },
+      {
+        "rule": "TG007",
+        "severity": "info",
+        "file": "tests/test_toytext.py",
+        "line": 18,
+        "test": "test_word_count_ignores_empty_parts",
+        "reason": "not_run"
+      }
+    ]
+  }
+}

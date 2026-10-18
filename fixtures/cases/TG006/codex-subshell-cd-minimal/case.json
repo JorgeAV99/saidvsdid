@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review, N1 (Codex exec, minimal reproduction): `npm test` fails in the repository; then `bash -c 'cd OTHER && (true; cd REPO; true); npm test'` passes. The subshell's `cd` does not outlive it, so the second run is in the other checkout. Outside the closed grammar of a run: unplaced, its result unknown: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

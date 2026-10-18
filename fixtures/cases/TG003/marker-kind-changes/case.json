@@ -1,0 +1,29 @@
+{
+  "description": "Marker-kind hardening: Playwright `test.fail()` → `test.fixme()` (`test` statically imported from @playwright/test: FAIL) and jest `test.failing` → `test.skip` (jest's global `test`: WARN, a global is never certain). Same level, weaker verification.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "e2e/login.spec.ts",
+        "line": 10,
+        "test": "login > rejects a bad password",
+        "ids": [
+          [
+            "login > rejects a bad password",
+            1
+          ]
+        ]
+      },
+      {
+        "rule": "TG003",
+        "severity": "warn",
+        "file": "spec/cart.spec.js",
+        "line": 8,
+        "test": "cart > is empty by default"
+      }
+    ]
+  }
+}

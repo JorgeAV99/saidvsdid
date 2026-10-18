@@ -1,0 +1,22 @@
+{
+  "description": "Round 19, control: reconciliation with unittest's own summary passes on a normal run — a passing, a failing and a skipped test; head adds a canonical skip to the passing one (passed → skipped).",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "tests/test_a.py", "line": 5, "test": "TestX::test_a", "ids": [["TestX::test_a",1]] },
+    { "rule": "TG004", "severity": "warn", "file": "tests/test_a.py", "line": 6, "test": "TestX::test_a" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestX::test_a\",1]": "passed",
+      "[\"tests/test_a.py\",\"TestX::test_b\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestX::test_c\",1]": "skipped"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestX::test_a\",1]": "skipped",
+      "[\"tests/test_a.py\",\"TestX::test_b\",1]": "failed",
+      "[\"tests/test_a.py\",\"TestX::test_c\",1]": "skipped"
+    }
+  }
+}

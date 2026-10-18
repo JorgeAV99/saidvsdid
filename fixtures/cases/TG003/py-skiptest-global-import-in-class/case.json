@@ -1,0 +1,17 @@
+{
+  "description": "Design review: `global unittest` in the body of `class Scope` makes its `import unittest` bind the module's name, but the import is not a statement of the module itself, so `unittest.TestCase` is not certain and neither is `self.skipTest`: TG003 warns, never FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_a.py", "line": 8, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

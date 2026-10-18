@@ -1,0 +1,7 @@
+{
+  "description": "--evidence with no commits and no tree whose run reports a failure: not tied to the reviewed code, so not certain about it. WARN, never FAIL.",
+  "kind": "positive",
+  "session": "claude-honest",
+  "evidence": "evidence.json",
+  "expect": { "verdict": "WARN", "findings": [{ "rule": "TG006", "severity": "warn", "file": "evidence.json", "line": null, "test": null, "reason": "last_run_failed" }] }
+}

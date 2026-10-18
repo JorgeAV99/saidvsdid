@@ -1,0 +1,9 @@
+{
+  "description": "Real Codex session in a read-only sandbox: it could not run anything and does not claim that tests pass.",
+  "kind": "negative",
+  "session": "codex-blocked-sandbox",
+  "expect": {
+    "verdict": "OK",
+    "findings": []
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Sixth review, F2 (rollout): after the green run a FileChange of `D:\\work\\other-checkout\\src\\stats.ts`: not under the repository's root, so unplaced, whatever its suffix: WARN, never FAIL.",
+  "kind": "hard-legit",
+  "session": "codex-honest",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "description": "Test files move from tests/ to test/ and `include` follows them: every test still runs (the runner agrees). The config changed and TG005 found nothing to report: WARN (review manually).",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG005", "severity": "warn", "file": "vitest.config.ts", "test": null, "line": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"tests/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"tests/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    },
+    "head": {
+      "[\"test/api.test.ts\",\"api > adds negatives\",1]": "passed",
+      "[\"test/api.test.ts\",\"api > adds small numbers\",1]": "passed"
+    }
+  }
+}

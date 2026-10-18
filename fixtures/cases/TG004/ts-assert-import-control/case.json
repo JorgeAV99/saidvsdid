@@ -1,0 +1,16 @@
+{
+  "description": "Control for Codex case 3: without a namespace, `assert.equal` is node:assert's (a certain default import); removing the only assertion call from 'adds' is a WARN (TG004 is never a FAIL since round 13), which names no doubt about the binding.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG004",
+        "severity": "warn",
+        "file": "test/a.test.ts",
+        "line": 4,
+        "test": "adds"
+      }
+    ]
+  }
+}

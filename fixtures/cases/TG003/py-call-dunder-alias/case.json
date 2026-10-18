@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that gave Python its files' bytes (PEP 263) and read mangled and context aliases: `omit = pt.skip.__call__` holds pytest's `skip` behind `.__call__`, and head adds `omit(\"x\")` to `test_adds`. The binding contains the vocabulary's `skip`: `omit` is marked, and its new call is at least a WARN that it may skip the test, never silence. The real runner skips it.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 7, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

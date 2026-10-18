@@ -1,0 +1,22 @@
+{
+  "description": "A Playwright test.fixme() annotation is added inside an existing test body.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "e2e/login.spec.ts",
+        "line": 10,
+        "test": "login > rejects a bad password",
+        "ids": [
+          [
+            "login > rejects a bad password",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

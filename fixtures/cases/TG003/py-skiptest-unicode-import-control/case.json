@@ -1,0 +1,32 @@
+{
+  "description": "Control: the module-level `from unittest import SkipTest as 停` is a certain import that nothing rebinds, so `raise 停(...)` added to the body is unittest's skip: a FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 7,
+        "test": "TestA::test_adds",
+        "ids": [
+          [
+            "TestA::test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "skipped"
+    }
+  }
+}

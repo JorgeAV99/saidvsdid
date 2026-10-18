@@ -1,0 +1,7 @@
+{
+  "description": "A module-level helper that calls pytest.skip() is called from a test body: helpers are not resolved, so WARN, not FAIL.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "tests/test_io.py", "test": null, "line": 7 }
+  ] }
+}

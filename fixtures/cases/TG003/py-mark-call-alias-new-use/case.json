@@ -1,0 +1,17 @@
+{
+  "description": "Design review: `omit = pytest.mark.skip(reason=\"later\")` binds `omit` to a value that contains `pytest.mark.skip`; head decorates `test_adds` with `@omit` without touching the definition: at least a WARN. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 6, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

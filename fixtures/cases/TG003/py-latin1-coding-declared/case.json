@@ -1,0 +1,18 @@
+{
+  "description": "Review of the commit that replaced the hand-written scope resolver with the languages' own tooling: the file declares `# -*- coding: latin-1 -*-` (PEP 263) and holds a Latin-1 byte, so Python decodes it as Latin-1, not as the UTF-8 saidvsdid reads. A file whose declared encoding is not UTF-8 is not analysed: one file-level WARN, and the `@pytest.mark.skip` it adds is a WARN (it may skip), never FAIL. The real runner skips the test.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": null, "test": null, "reason": "scope_unavailable" },
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 5, "test": "test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "skipped"
+    }
+  }
+}

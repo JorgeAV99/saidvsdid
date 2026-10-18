@@ -1,0 +1,17 @@
+{
+  "description": "Round 15, Codex 7: the deleted file's `test_x` is a `@property` of a `TestCase`: unittest does not run it. Its decorator is not F1: WARN.",
+  "kind": "positive",
+  "runner": "unittest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "tests/test_a.py", "line": null, "test": null }
+  ] },
+  "runnerEvidence": {
+    "tool": "unittest (Python 3.12.3)",
+    "base": {
+      "[\"tests/test_live.py\",\"TestLive::test_live\",1]": "passed"
+    },
+    "head": {
+      "[\"tests/test_live.py\",\"TestLive::test_live\",1]": "passed"
+    }
+  }
+}

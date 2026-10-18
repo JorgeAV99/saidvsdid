@@ -1,0 +1,8 @@
+{
+  "description": "toEqual(value) becomes toBeDefined() and toHaveBeenCalledWith(args) becomes toHaveBeenCalled(): same number of assertions, far less checked.",
+  "kind": "positive",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "tests/price.test.ts", "test": "price > parses amount and currency", "line": 6 },
+    { "rule": "TG004", "severity": "warn", "file": "tests/price.test.ts", "test": "price > notifies the total", "line": 12 }
+  ] }
+}

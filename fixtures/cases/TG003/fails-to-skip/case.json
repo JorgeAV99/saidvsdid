@@ -1,0 +1,22 @@
+{
+  "description": "Review #3: it.fails → it.skip. `fails` runs the test and requires it to fail; `skip` runs nothing.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/slug.test.ts",
+        "line": 13,
+        "test": "slugify > strips accents",
+        "ids": [
+          [
+            "slugify > strips accents",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

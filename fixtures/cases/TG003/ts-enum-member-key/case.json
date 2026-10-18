@@ -1,0 +1,17 @@
+{
+  "description": "Review of the commit that made names read from the input never answer from Object.prototype, documented coverage (not the guarantee): an enum member with a literal value, `Stop = 'skip'`, then `ctx[Kind.Stop]()`. The contagion net reads, best effort, an enum member as a name bound to its value (`Stop` holds the string `'skip'`): a WARN here. The real runner skips the test.",
+  "kind": "hard-legit",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 8, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"adds\",1]": "skipped"
+    }
+  }
+}

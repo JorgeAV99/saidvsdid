@@ -1,0 +1,23 @@
+{
+  "description": "@pytest.mark.xfail turns a failing test into an expected failure, so the run stays green.",
+  "kind": "positive",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "tests/test_io.py",
+        "line": 6,
+        "test": "test_roundtrip",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "test_roundtrip",
+            1
+          ]
+        ]
+      }
+    ]
+  }
+}

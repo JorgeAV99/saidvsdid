@@ -1,0 +1,19 @@
+{
+  "description": "A Read and an Edit of documentation, no shell call, opaque tool or subagent before the claim. (Once the shape of a rigid FAIL.) WARN \"no test run visible\".",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

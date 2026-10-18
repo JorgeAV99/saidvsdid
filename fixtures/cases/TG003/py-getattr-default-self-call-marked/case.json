@@ -1,0 +1,17 @@
+{
+  "description": "Codex P1 with a default: `alias.omit = self.skipTest`; head adds `getattr(self, \"omit\", None)(\"x\")` (the three-argument getattr is the same member). The runner (pytest): passed → skipped.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_x.py", "line": 8, "test": "TestX::test_x" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_x.py\",\"TestX::test_x\",1]": "passed"
+    },
+    "head": {
+      "[\"test_x.py\",\"TestX::test_x\",1]": "skipped"
+    }
+  }
+}

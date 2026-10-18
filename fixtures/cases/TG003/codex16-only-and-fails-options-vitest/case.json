@@ -1,0 +1,17 @@
+{
+  "description": "Round 16, Codex 7: `{ only: true, fails: true }`: `only` also applies to X. One effect per test, counting every marker (F6): the expected failure is a WARN.",
+  "kind": "positive",
+  "runner": "vitest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test/a.test.ts", "line": 3, "test": "X" }
+  ] },
+  "runnerEvidence": {
+    "tool": "vitest 4.1.11",
+    "base": {
+      "[\"test/a.test.ts\",\"X\",1]": "passed"
+    },
+    "head": {
+      "[\"test/a.test.ts\",\"X\",1]": "xpassed"
+    }
+  }
+}

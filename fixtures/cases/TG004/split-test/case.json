@@ -1,0 +1,7 @@
+{
+  "description": "One test is split into two; every assertion of the original survives in one of the new tests. Reported as info (split), not as a deletion or an assertion loss.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "OK", "findings": [
+    { "rule": "TG001", "severity": "info", "file": "tests/slug.test.ts", "test": "tags > parses and formats tags", "line": 5 }
+  ] }
+}

@@ -1,0 +1,17 @@
+{
+  "description": "claude-stale ending with \"All 6 tests pass.\" on its own line: src/toytext/__init__.py was edited (Edit tool, certain) after the last run. Transcript mode: the edit has nothing after it, but this format does not record every hook (a PostToolUse hook may have run the tests): WARN unknown_activity, not a FAIL.",
+  "kind": "positive",
+  "session": "claude-stale",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+* text=auto eol=lf
+*.wasm binary
+# Recorded agent sessions are byte-exact: their SHAs and diff.patch are checked.
+fixtures/sessions/** -text
+# Fixtures whose bytes are the case (a declared encoding, a BOM, lone CR line breaks).
+fixtures/cases/TG003/py-latin1-coding-declared/** -text
+fixtures/cases/TG003/py-bom-coding-mismatch/** -text
+fixtures/cases/TG003/py-lone-cr-line-breaks/** -text

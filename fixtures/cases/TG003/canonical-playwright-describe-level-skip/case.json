@@ -1,0 +1,17 @@
+{
+  "description": "Round 14, Codex A: Playwright's `test.skip()` in a describe's body: Playwright skips the group's tests, but a call is canonical only as a statement of the test's own body. WARN.",
+  "kind": "positive",
+  "runner": "playwright",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "a.spec.mjs", "line": 4, "test": "group > adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "playwright 1.64.0",
+    "base": {
+      "[\"a.spec.mjs\",\"group > adds\",1]": "passed"
+    },
+    "head": {
+      "[\"a.spec.mjs\",\"group > adds\",1]": "skipped"
+    }
+  }
+}

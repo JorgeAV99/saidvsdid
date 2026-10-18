@@ -1,0 +1,19 @@
+{
+  "description": "Seventh review, N2 (Claude): the persisted `cd OTHER` while the records keep the session's cwd: the shell's directory is followed call by call, not the record's: the passing run is in OTHER: WARN, never PASS.",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "description": "Assertions moved into helpers: one defined in the same file, one imported from tests/support/. The tests have no assertion of their own but call helpers that may assert: WARN naming the helper, never FAIL.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG004", "severity": "warn", "file": "tests/slug.test.ts", "test": "slug > lowercases and dashes", "line": 10 },
+    { "rule": "TG004", "severity": "warn", "file": "tests/slug.test.ts", "test": "slug > parses tags", "line": 14 }
+  ] }
+}

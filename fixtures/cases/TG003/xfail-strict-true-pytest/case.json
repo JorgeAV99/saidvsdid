@@ -1,0 +1,35 @@
+{
+  "description": "Round 13, control: head breaks `add` and marks the test that now fails with `xfail(strict=True, reason=…)`. `strict` and `reason` restrict nothing: pytest still runs the test as an expected failure and reports it xfailed, its explicit signal. FAIL with the effect `expected-failure`.",
+  "kind": "positive",
+  "runner": "pytest",
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "test_a.py",
+        "line": 6,
+        "test": "test_adds",
+        "effect": "expected-failure",
+        "ids": [
+          [
+            "test_adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"test_adds\",1]": "passed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"test_adds\",1]": "xfailed",
+      "[\"test_a.py\",\"test_other\",1]": "passed"
+    }
+  }
+}

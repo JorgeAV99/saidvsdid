@@ -1,0 +1,7 @@
+{
+  "description": "Review 2, case 3: a global prepare() with test.skip() and a harmless local prepare() that shadows it inside the test. The global one cannot be attributed: WARN at most, not FAIL.",
+  "kind": "hard-legit",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "e2e/login.spec.ts", "test": null, "line": 4 }
+  ] }
+}

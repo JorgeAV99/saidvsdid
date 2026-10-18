@@ -1,0 +1,19 @@
+{
+  "description": "The last shell call is `npm test 2>&1` at the root, the harness recorded exit 1, the output is not cut and its last block is vitest's summary with a failure (real output). (Once the shape of a rigid FAIL.) WARN \"last visible test run failed\".",
+  "kind": "positive",
+  "transcript": "transcript.jsonl",
+  "agent": "auto",
+  "cwd": "<REPO>",
+  "expect": {
+    "verdict": "WARN",
+    "findings": [
+      {
+        "rule": "TG006",
+        "severity": "warn",
+        "file": "transcript.jsonl",
+        "line": null,
+        "test": null
+      }
+    ]
+  }
+}

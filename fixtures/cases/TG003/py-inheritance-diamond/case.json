@@ -1,0 +1,17 @@
+{
+  "description": "N3 of the Codex review of the commit that allowed neither a FAIL nor a silence without certainty: a diamond. `TestA(Plain, Quiet)`: `Quiet`, a base in the file, defines `skipTest` (a no-op), which the MRO finds first. Any override in the class's bases: TG003 warns that `self.skipTest` may skip `test_adds`, never FAIL. The real runner runs the test.",
+  "kind": "hard-legit",
+  "runner": "pytest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "test_a.py", "line": 19, "test": "TestA::test_adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "pytest 8.4.2",
+    "base": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    },
+    "head": {
+      "[\"test_a.py\",\"TestA::test_adds\",1]": "passed"
+    }
+  }
+}
