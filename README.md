@@ -180,9 +180,11 @@ tests, never that the tests are good.
   whose effect the runner guarantees, and checked against the real runner on
   the fixtures. [The contract](docs/rules.md#the-contract-a-fail-is-a-fact-about-the-code)
   says exactly when, and under which assumptions.
-- `WARN`: something for a human to look at. Everything that is not certain is
-  a `WARN`, never silence: a skip through a global or a helper, a deleted
-  test, a lost assertion, a configuration change.
+- `WARN`: something for a human to look at. What it reads and cannot state
+  with certainty is a `WARN`: a skip through a global, a deleted test, a lost
+  assertion, a configuration change. Known gaps (a skip through a helper
+  function, among others) are listed in
+  [docs/known-limitations.md](docs/known-limitations.md).
 - `OK`: no findings in what saidvsdid reads; nothing more.
 - `UNVERIFIABLE` / `ERROR`: the check could not be completed; never a pass.
 
