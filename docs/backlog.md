@@ -39,6 +39,15 @@ comment in a repository that uses the Action as the README says:
   line breaks escaped). The Action does not use it, but a workflow that posts its output would carry the pull
   request's text as Markdown: write it with the comment's `literal`.
 
+From Codex's GO on the comment's rendering (scripts/check-gfm-render.mjs, GitHub's `POST /markdown` as the oracle):
+
+- **The GFM oracle in the public CI.** It runs by hand today (it needs `gh` signed in). In a public repository the
+  job's `GITHUB_TOKEN` can call `POST /markdown`: run it in `ci.yml` on every change to `src/report/comment.ts` (and
+  what it calls), failing closed when the API cannot be reached.
+- **Attributes of the allowed elements.** The oracle checks which elements GitHub's HTML holds and the links' `href`;
+  `<g-emoji>` and `<svg>` (with its `<path>`) are allowed by name with any attribute. Check theirs too: a `<g-emoji>`
+  only for the comment's own icons (its `alias` and `fallback-src`), an `<svg>` only as a heading anchor's octicon.
+
 ## The Python scope reader's hang on macOS: what is left
 
 `spawnSync python3 ETIMEDOUT` on macOS CI (PR #4, rounds 10 and 20d; main as of the commit that recorded this hang) was reproduced: under
