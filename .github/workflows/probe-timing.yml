@@ -31,6 +31,6 @@ jobs:
           comment: 'false'
       - name: saidvsdid of the pull request 8 (after)
         if: matrix.variant == 'after'
-        uses: JorgeAV99/saidvsdid@64ca0f9638c1bce346fd88697c9f5dbb9bbb8034 # v0.1.0
+        uses: JorgeAV99/saidvsdid@eb826dac6c93126b5e0b31b0e061aa2fe88e077c # v0.1.0
         with:
           comment: 'false'
