@@ -326,7 +326,7 @@
 2. Fixtures (`fixtures/cases/<RULE>/<case>/{base,head,case.json}`) → failing
    output → fix → `npm run typecheck && npm test && npm run build`.
 3. Open a PR; the fast CI (`.github/workflows/ci.yml`, Linux: the suite, the
-   fixtures against the real runners, Python 3.9 and 3.13, the dogfood) runs on
+   fixtures against the real runners, Python 3.11 and 3.15, the dogfood) runs on
    every push to it and must be green.
 4. External review with Codex on the PR; findings are fixed or moved to the
    backlog with a reason.
@@ -335,13 +335,13 @@
 6. **No PR is merged without `full-ci` green on its last commit, and that
    commit up to date with `main`.** GitHub enforces it: a ruleset on `main`
    requires the checks `full-ci` and `test, fixtures vs. real runners, Python
-   3.9/3.13, dogfood (ubuntu, node 22)` (ci.yml) on the PR's head, the branch
+   3.11/3.15, dogfood (ubuntu, node 22)` (ci.yml) on the PR's head, the branch
    up to date with `main` before merging, and allows no force-push and no
    deletion. `.github/workflows/full-ci.yml` runs on every push to every PR, no
    label needed:
    macOS (what depends on it), Windows (the test files that depend on Windows,
    listed in the workflow, and every fixture against the real runners when the
-   PR touches anything the recorder reads), Node 20 and 24, Python 3.10–3.12,
+   PR touches anything the recorder reads), Node 20 and 24, Python 3.11–3.15,
    and the full guarantee matrix when the PR may change what it reads (the
    path filters fail closed: an unknown path runs the job). Before merging, `node
    scripts/full-ci-status.mjs <PR>` must pass: `main` an ancestor of the PR's
@@ -372,7 +372,7 @@
    runs only what depends on the platform: on macOS and on Windows the whole
    suite, every fixture against the real runners and the packed CLI (all that
    each system ran on every push before the tiers), Node 20 and 24, Python
-   3.10–3.12, and the long e2e sessions on the three systems. Not the guarantee matrix: it is deterministic on the code and
+   3.11–3.15, and the long e2e sessions on the three systems. Not the guarantee matrix: it is deterministic on the code and
    passed in `full-ci` before the merge.
 
 ## Process
