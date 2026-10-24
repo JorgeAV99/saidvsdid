@@ -1,0 +1,36 @@
+name: probe-timing
+
+# A probe, never merged: the Action's step time before (v0.1.0, the composite action that builds the CLI with
+# `npm ci` and `tsc` on every job) and after (the JavaScript action of #8, a versioned bundle), on the diff of the
+# example pull request (#5), three times each on GitHub's ubuntu-latest. comment: false for both (no comment).
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  timing:
+    name: ${{ matrix.variant }} (${{ matrix.run }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [before, after]
+        run: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - name: saidvsdid v0.1.0 (before)
+        if: matrix.variant == 'before'
+        uses: JorgeAV99/saidvsdid@0632652478edc7a8e02cde641a3b17f62fc131fe # v0.1.0
+        with:
+          comment: 'false'
+      - name: saidvsdid of the pull request 8 (after)
+        if: matrix.variant == 'after'
+        uses: JorgeAV99/saidvsdid@64ca0f9638c1bce346fd88697c9f5dbb9bbb8034 # v0.1.0
+        with:
+          comment: 'false'
