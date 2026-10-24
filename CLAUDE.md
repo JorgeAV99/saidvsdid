@@ -103,8 +103,9 @@
   source, a file's base and head in the same call and judged together on
   answers taken once per analysis, which the parser receives as values (one
   side unread → both read as unread: one WARN, no FAIL), cached by content; the file's bytes, decoded by Python itself (PEP
-  263), under `-X utf8`, stdin, stdout and stderr files, never pipes; 3.9–3.13, each run in CI, recorded
-  in the report; no interpreter, another version, a file it does not compile, a
+  263), under `-X utf8`, stdin, stdout and stderr files, never pipes; the versions python.org supports
+  (3.11–3.15 today), each run in CI, recorded in the report; a newer one runs as any other (no upper
+  bound; recorded as untested); no interpreter, an older version, a self-check that fails, a file it does not compile, a
   declared encoding other than UTF-8 or a BOM against the declaration, a reply
   out of protocol, a lone CR line break (`lone_cr`, not analysed) → one
   file-level WARN, never silence, never an exception): the rule is about the whole file — a runner name is certain only if

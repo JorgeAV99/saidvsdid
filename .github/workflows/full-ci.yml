@@ -7,7 +7,8 @@ name: full-ci
 #
 # - The platform jobs: macOS, only what depends on macOS (the `caseInsensitiveFs` fixtures, the Python scope reader,
 #   the real file system and shells; monthly: the whole suite, every fixture against the real runners, the packed CLI); Windows, the test files that depend on Windows (the list below; monthly: the whole
-#   suite) and every fixture against the real runners; Node 20 and 24; the Python scope reader on 3.10–3.12.
+#   suite) and every fixture against the real runners; Node 20 and 24; the Python scope reader on every supported
+#   version (3.11–3.15). The interpreter of every other job is the newest supported one, 3.15 (ci.yml says why).
 # - The guarantee matrix (8 shards, failing closed), only when the pull request may change what it reads; never monthly.
 # - No `paths-ignore` here: the check must exist for every pull request. The paths job (scripts/guarantee-matrix-paths.mjs,
 #   fails closed: an unknown path runs everything) decides three times. `platform`: a pull request that only touches
@@ -102,7 +103,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
       - run: python -m pip install -r .github/requirements-ci.txt
@@ -130,7 +131,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
       - run: python -m pip install -r .github/requirements-ci.txt
@@ -149,13 +150,14 @@ jobs:
           npx saidvsdid explain TG001 > /dev/null
 
   python-versions:
-    # The Python scope reader on the versions between the oldest and the newest (3.9 and 3.13 run in ci.yml): the
-    # resolver's tests and every fixture with a Python file. A version that fails here leaves the supported list.
-    name: Python 3.10–3.12 scope reader
+    # The Python scope reader on every supported version (python.org's supported CPython versions; ci.yml runs the
+    # oldest and the newest on every push): the resolver's tests and every fixture with a Python file. One job, the
+    # versions in turn: scripts/full-ci-status.mjs requires it by this name.
+    name: Python 3.11–3.15 scope reader
     needs: paths
     if: needs.paths.outputs.platform != 'false'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -167,19 +169,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: |
-            3.10
             3.11
             3.12
+            3.13
+            3.14
+            3.15
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
-      - run: for v in 3.10 3.11 3.12; do "python$v" -m pip install -r .github/requirements-ci.txt; done
+      - run: for v in 3.11 3.12 3.13 3.14 3.15; do "python$v" -m pip install -r .github/requirements-ci.txt; done
       - run: npm ci
       - name: Python resolver tests and Python fixtures, on each version
         env:
           SAIDVSDID_FIXTURES: python
         run: |
           status=0
-          for v in 3.10 3.11 3.12; do
+          for v in 3.11 3.12 3.13 3.14 3.15; do
             echo "::group::Python $v"
             SAIDVSDID_PYTHON="python$v" SAIDVSDID_PYTHON_MATRIX="$v" npx vitest run test/py-exhaustive.test.ts test/py-protocol.test.ts test/py-unavailable.test.ts test/positions.test.ts test/runner-binding.test.ts test/parse.test.ts test/fixtures.test.ts || { status=1; echo "::error::Python $v scope reader failed"; }
             echo "::endgroup::"
@@ -223,7 +227,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
       - run: python -m pip install -r .github/requirements-ci.txt
@@ -274,7 +278,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
       - run: python -m pip install -r .github/requirements-ci.txt
@@ -303,7 +307,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
       - run: python -m pip install -r .github/requirements-ci.txt
@@ -371,7 +375,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
       - run: npm ci
       - name: Run the shard
         env:

@@ -122,8 +122,12 @@ a second one) and writes the same report to the job summary.
   gets a read-only token: the comment is not posted (a warning says so) and
   the report is still in the job summary.
 - Node.js 20 or later on the runner (GitHub's hosted runners have it). Python
-  3.9–3.13 reads Python files; without it, each Python file is a `WARN` and
-  nothing in it is a `FAIL`.
+  reads Python files: any CPython that python.org supports (3.11–3.15 today,
+  each tested in CI). A newer Python is used as it is: saidvsdid does not
+  refuse it, and if its reader fails on a file, that file is a `WARN`
+  (`scope_unavailable`), never `OK` and never a `FAIL`. Without Python, or
+  with one older than 3.11, each Python file is a `WARN` and nothing in it is
+  a `FAIL`.
 
 | Input | Default | |
 |---|---|---|
