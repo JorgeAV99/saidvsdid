@@ -54,14 +54,14 @@ location links to its line):
 >
 > **Verdict: FAIL** · 1 fail · 3 warn · 0 info — this check does not block the merge, whatever the verdict (`fail-on` not set).
 >
-> <sub>saidvsdid 0.1.0 · base `d2025824aa4f` → head `5b530048dd1f` · FAIL: a fact about the code, checkable by reading it · WARN: for a human to look at · `npx saidvsdid explain <RULE>` says what each rule catches and what it does not</sub>
+> <sub>saidvsdid 0.2.0 · base `d2025824aa4f` → head `5b530048dd1f` · FAIL: a fact about the code, checkable by reading it · WARN: for a human to look at · `npx saidvsdid explain <RULE>` says what each rule catches and what it does not</sub>
 <!-- /example:comment -->
 
 The same pull request from the command line:
 
 <!-- example:cli -->
 ```text
-saidvsdid 0.1.0 — base d2025824aa4f → head 5b530048dd1f
+saidvsdid 0.2.0 — base d2025824aa4f → head 5b530048dd1f
 rules: TG001, TG002, TG003, TG004, TG005 · test files analysed: 1
 not evaluated: TG006 (experimental) — no transcript or evidence (--transcript, --evidence)
 not evaluated: TG007 (experimental) — no transcript or evidence (--transcript, --evidence)
