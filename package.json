@@ -10,6 +10,7 @@
   },
   "files": [
     "dist",
+    "!dist/action",
     "python",
     "grammars",
     "README.md",
@@ -48,6 +49,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "build:action": "node scripts/build-action.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "fixtures": "tsx fixtures/build.ts",
@@ -65,9 +67,11 @@
     "@types/node": "^20.19.0",
     "@types/picomatch": "4.0.3",
     "commonmark": "0.31.2",
+    "esbuild": "0.28.2",
     "jest": "30.5.2",
     "picomatch": "4.0.7",
     "tsx": "^4.23.15",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "yaml": "2.9.1"
   }
 }

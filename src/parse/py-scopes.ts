@@ -15,11 +15,11 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { ASSETS } from '../assets.js';
 import { ownRecord } from '../util/names.js';
 
-// The script ships with the package (package.json "files"): python/ at its root, two levels above
-// src/parse/ (tests) and dist/parse/ (published), like the grammars.
-const SCRIPT = fileURLToPath(new URL('../../python/saidvsdid_scopes.py', import.meta.url));
+// The script ships with the package (package.json "files"): python/ at its root (src/assets.ts), like the grammars.
+const SCRIPT = fileURLToPath(new URL('python/saidvsdid_scopes.py', ASSETS));
 const PROTOCOL = 6;
 /**
  * How the files of a run are handed to the interpreter, and how long a call may take (measured; docs/rules.md, *Python*).

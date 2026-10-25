@@ -1,0 +1,13 @@
+# Keeps the pinned versions current: every external action is pinned by its full commit SHA with the release it is as a
+# comment (`uses: actions/checkout@<sha> # v4.4.0`; test/pinned-actions.test.ts), and Dependabot updates the SHA and the
+# comment together. `/` covers .github/workflows and the root action.yml; npm, the root package.json and its lockfile.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
