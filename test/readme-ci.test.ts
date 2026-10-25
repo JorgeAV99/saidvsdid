@@ -1,7 +1,7 @@
 // The README shows what the tool prints and what this repository runs: its example comment and CLI output are the
 // renderings of fixtures/action/demo, its workflow is the Action with its default (it blocks nothing), and the CI's
 // dogfood step is the same Action, from this checkout, blocking on FAIL or worse.
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -97,5 +97,30 @@ describe("the README's workflow and the CI's dogfood step", () => {
 
   it('how to block is the input the Action reads', () => {
     expect(readme).toContain(`${ours!}        with:\n          fail-on: fail   # or: warn\n`);
+  });
+});
+
+// The README's pins are the ones this repository runs: Dependabot updates the workflows' SHAs and release comments, not
+// the README, so every `uses:` of the README must be, exactly (SHA and comment), the pin the workflows hold for that
+// action, and the workflows must agree on it. A Dependabot pull request that fails here gets the README's update on its
+// branch (CLAUDE.md, Workflow, 9).
+describe("the README's `uses:` are the workflows' pins", () => {
+  const WORKFLOWS = fileURLToPath(new URL('../.github/workflows/', import.meta.url));
+  /** Every `uses: owner/repo@ref # comment` of a text: the action, and the line's value from the action on. */
+  const pins = (text: string): Array<{ action: string; pin: string }> =>
+    [...text.matchAll(/^\s*-?\s*uses:\s*(\S+?)@(\S+)(.*)$/gm)].map((m) => ({ action: m[1]!, pin: `${m[1]}@${m[2]}${m[3]!.trimEnd()}` }));
+  const workflowPins = readdirSync(WORKFLOWS)
+    .filter((f) => /\.ya?ml$/.test(f))
+    .flatMap((f) => pins(readFileSync(join(WORKFLOWS, f), 'utf8')).filter((p) => !p.action.startsWith('./')));
+  const readmePins = pins(readme);
+
+  it('the README has its pins (actions/checkout and the Action)', () => {
+    expect(readmePins.map((p) => p.action)).toContain('actions/checkout');
+    expect(readmePins.length).toBeGreaterThan(1);
+  });
+
+  it.each(readmePins.map((p) => [p.action, p.pin]))('%s: %s', (action, pin) => {
+    const held = [...new Set(workflowPins.filter((p) => p.action === action).map((p) => p.pin))];
+    expect(held, `the workflows' pins of ${action}`).toEqual([pin]);
   });
 });
