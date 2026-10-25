@@ -374,6 +374,20 @@
    each system ran on every push before the tiers), Node 20 and 24, Python
    3.11–3.15, and the long e2e sessions on the three systems. Not the guarantee matrix: it is deterministic on the code and
    passed in `full-ci` before the merge.
+9. **Dependabot** (`.github/dependabot.yml`). A Dependabot pull request that
+   touches only CI workflows (`.github/**`) or development dependencies
+   (`devDependencies`) is merged without asking when `ci` and `full-ci` are
+   green on its last commit, up to date with `main` (`node
+   scripts/full-ci-status.mjs <PR>`, as in 6), and the test of pins by SHA
+   (`test/pinned-actions.test.ts`, in the suite) passes; one at a time,
+   rebased on `main` before each (`@dependabot rebase`). One that touches
+   anything that goes into the npm package or `dist/action/` — a runtime
+   dependency (`dependencies`: typescript, `web-tree-sitter`), the grammars —
+   needs a notice to the owner (Jorge) and a new version: until it is
+   published, it is listed in `docs/unreleased.md`. When it changes what the
+   Action's bundle is built from, `dist/action/` is rebuilt and committed on
+   its branch (`npm run build:action`): `check-dist` rejects a stale bundle,
+   and it says nothing about the rest of the package.
 
 ## Process
 
