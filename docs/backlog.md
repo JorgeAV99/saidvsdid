@@ -52,6 +52,10 @@ From Codex's GO on the comment's rendering (scripts/check-gfm-render.mjs, GitHub
 - **Attributes of the allowed elements.** The oracle checks which elements GitHub's HTML holds and the links' `href`;
   `<g-emoji>` and `<svg>` (with its `<path>`) are allowed by name with any attribute. Check theirs too: a `<g-emoji>`
   only for the comment's own icons (its `alias` and `fallback-src`), an `<svg>` only as a heading anchor's octicon.
+- **Each case's verdict, asserted** (Codex, review of the PR that made the oracle run the bundle; already so on main).
+  The oracle prints each case's verdict but does not check it: a case whose comment is an analysis error (a grammar
+  missing from the bundle, say) would render inert and pass without the hostile names in it. Give each case its
+  expected verdict and the findings it must show, and fail otherwise.
 
 ## The Python scope reader's hang on macOS: what is left
 
