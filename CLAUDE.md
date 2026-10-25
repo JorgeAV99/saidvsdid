@@ -383,9 +383,11 @@
    rebased on `main` before each (`@dependabot rebase`). One that touches
    anything that goes into the npm package or `dist/action/` — a runtime
    dependency (`dependencies`: typescript, `web-tree-sitter`), the grammars —
-   needs `dist/action/` rebuilt on its branch (`npm run build:action`;
-   `check-dist` fails otherwise), a notice to the owner (Jorge), and a new
-   version: until it is published, it is listed in `docs/unreleased.md`.
+   needs a notice to the owner (Jorge) and a new version: until it is
+   published, it is listed in `docs/unreleased.md`. When it changes what the
+   Action's bundle is built from, `dist/action/` is rebuilt and committed on
+   its branch (`npm run build:action`): `check-dist` rejects a stale bundle,
+   and it says nothing about the rest of the package.
 
 ## Process
 
