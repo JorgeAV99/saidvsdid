@@ -27,4 +27,4 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
-      - uses: JorgeAV99/saidvsdid@0632652478edc7a8e02cde641a3b17f62fc131fe # v0.1.0
+      - uses: JorgeAV99/saidvsdid@6e184a8ff14a5bcc607f4b3440055a56d54435c5 # v0.2.0
