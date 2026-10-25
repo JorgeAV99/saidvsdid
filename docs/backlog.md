@@ -20,9 +20,6 @@ From the PR that read the versions python.org supports (3.11–3.15, no upper bo
 
 From the PR that added `action.yml` (src/action/, test/action.test.ts). Deliberately not in it:
 
-- **No build at run time.** The Action runs `npm ci` and `npm run build` in its own checkout on every job (dev
-  dependencies included: the build needs `@types/node`). Once the package is on npm, or with `dist/` committed on
-  release tags, it can run the built CLI directly; measure the job's time first.
 - **Two runs at once can post two comments.** Each run lists the comments and then creates one; the README's
   workflow has a `concurrency` group per pull request, which avoids it. Without one, the next run updates the
   oldest and leaves the other.
@@ -38,13 +35,8 @@ From the security review of the Action before the Marketplace (PR #12, after the
 in the comment only as code). None of them is a way to run code, raise permissions, leak the token or abuse the
 comment in a repository that uses the Action as the README says:
 
-- **A narrower install.** `npm ci` installs every dev dependency (Playwright, Jest, Vitest… pinned by the lockfile,
-  with `--ignore-scripts`) to run `tsc`; installing only what the build needs, or the item above, shrinks what is
-  fetched on every job.
 - **`persist-credentials: false`** in the README's checkout: saidvsdid needs no credentials in `.git/config`, and
   nothing it runs reads them; defence in depth for workflows that add steps after it.
-- **Pinning by commit.** The README says `@v0`, a tag that moves; recommend a full commit SHA for those who pin
-  their actions.
 - **`pull_request_target`.** The Action reads any event with a `pull_request` and does not run the pull request's
   code, but on that event the comment would be posted for forks too: say in the job (a warning) that the event is
   not the README's, or refuse it.
