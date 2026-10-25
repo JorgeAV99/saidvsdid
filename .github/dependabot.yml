@@ -5,7 +5,8 @@
 # Each ecosystem's minor and patch updates come together, in one pull request a week. A major update of an action comes
 # alone, in a pull request of its own (its runtime or its inputs may change: reviewed one by one). npm's major updates
 # are not proposed (typescript, vitest, @types/node… change what the analyser and the suite read: a change of its own,
-# decided by hand). Security updates are not grouped and not ignored: one pull request each, as GitHub opens them.
+# decided by hand). Security updates are neither grouped nor ignored by this file (its groups and ignore rules are for
+# version updates); the repository's settings decide whether GitHub groups them.
 version: 2
 updates:
   - package-ecosystem: github-actions
