@@ -2,9 +2,10 @@
 // verdict, and the report records that it is not tested (`tool.scopes.python_untested`). The interpreter here is a
 // tested one; what this file replaces is only what the report is told about it.
 import { describe, expect, it, vi } from 'vitest';
+import type * as PyScopes from '../src/parse/py-scopes.js';
 
 vi.mock('../src/parse/py-scopes.js', async (original) => {
-  const real = await original<typeof import('../src/parse/py-scopes.js')>();
+  const real = await original<typeof PyScopes>();
   return {
     ...real,
     pythonRuntimeIfStarted: () => {
