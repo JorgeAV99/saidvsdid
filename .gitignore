@@ -11,3 +11,5 @@ bench/results/
 fixtures/.runner/
 __pycache__/
 test-results/
+# Codex's local review folders (.review-release/, .review-pr11/, …): never versioned.
+/.review-*/
