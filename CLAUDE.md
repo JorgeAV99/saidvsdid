@@ -387,7 +387,14 @@
    published, it is listed in `docs/unreleased.md`. When it changes what the
    Action's bundle is built from, `dist/action/` is rebuilt and committed on
    its branch (`npm run build:action`): `check-dist` rejects a stale bundle,
-   and it says nothing about the rest of the package.
+   and it says nothing about the rest of the package. A Dependabot pull
+   request that fails only on `check-dist`, or only on the README's pins
+   (`test/readme-ci.test.ts`: every `uses:` of the README is exactly, SHA and
+   comment, the workflows' pin of that action), gets from the agent the
+   commit that regenerates `dist/action/` or updates the README's pins, on
+   the pull request's own branch; then the rule above applies as to any other
+   (green `ci` and `full-ci` on that last commit, and the notice and version
+   when it reaches the package).
 
 ## Process
 
