@@ -55,7 +55,7 @@ describe('the PR is up to date with its base: the squash is the tree full-ci tes
 // current base: the run that passed must have run what that diff requires.
 describe('the run that passed covers the scope of the diff against the current base', () => {
   const MATRIX = 'guarantee matrix (full)';
-  const PLATFORM = 'Python 3.10–3.12 scope reader';
+  const PLATFORM = 'Python 3.11–3.15 scope reader';
   const EVIDENCE = 'fixtures vs. real runners (windows)';
   const withMatrix = [run(1, HEAD, [['full-ci', 'success'], [PLATFORM, 'success'], [MATRIX, 'success']])];
   const withoutMatrix = [run(1, HEAD, [['full-ci', 'success'], [PLATFORM, 'success'], [MATRIX, 'skipped']])];

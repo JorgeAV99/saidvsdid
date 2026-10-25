@@ -3,6 +3,19 @@
 Work that is deliberately out of scope for the milestone that found it. Each
 item says where it came from. Nothing here is implemented.
 
+## Python versions: what is left
+
+From the PR that read the versions python.org supports (3.11–3.15, no upper bound) and its Codex design review:
+
+- **Lazy imports (Python 3.15, PEP 810).** `lazy import pytest` is read by Python, but tree-sitter-python 0.25.0 (its
+  newest release) has no `lazy` keyword: the file has syntax errors for the tree and its comparison is UNVERIFIABLE
+  (`TG003/py315-lazy-import-unverifiable`). When the grammar parses them, read a module-level lazy import of a runner
+  as the import it is (the name is bound once, to the module, loaded at its first use), with a fixture and the real
+  runner's evidence.
+- **Interpolations of a t-string that read the vocabulary** (`t"{pytest.mark.skip}"`) are WARNs of the census of
+  markers, as any other read of them (`TG003/py314-tstring-interpolation-control`). Telling a read from a call inside an
+  interpolation needs data from real pull requests first.
+
 ## The GitHub Action: what is left
 
 From the PR that added `action.yml` (src/action/, test/action.test.ts). Deliberately not in it:

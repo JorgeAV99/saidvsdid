@@ -7,7 +7,7 @@ name: monthly
 # this run repeats only what depends on the platform, where a new runner image, Node, Python, git or shell can change a
 # result:
 # - full-ci.yml with `monthly: true`: macOS and Windows (each: the whole suite, every fixture against the real runners,
-#   the packed CLI), Node 20 and 24, Python 3.10–3.12: everything the platforms ran on every push before the tiers; not
+#   the packed CLI), Node 20 and 24, Python 3.11–3.15: everything the platforms ran on every push before the tiers; not
 #   the guarantee matrix, which is deterministic on the code and passed
 #   in full-ci before the merge;
 # - test/e2e-real.test.ts in long mode on the three systems with a new seed: random sessions run for real in each
@@ -103,7 +103,7 @@ jobs:
           cache: npm
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.15'
           cache: pip
           cache-dependency-path: .github/requirements-ci.txt
       - run: python -m pip install -r .github/requirements-ci.txt
