@@ -220904,6 +220904,13 @@ function tail(path2) {
     closeSync(fd);
   }
 }
+function runtimeOf(reply, command, env2) {
+  if (reply.supported) return { known: true, command, version: reply.python, tested: reply.tested };
+  if (olderThanMinimum(reply.python)) {
+    return { known: false, why: `Python ${reply.python} (${command}) is older than ${MINIMUM.join(".")}, the oldest saidvsdid reads`, version: reply.python, remedy: pythonRemedy(env2) };
+  }
+  return { known: false, why: reply.why ?? `Python ${reply.python} is not supported`, version: reply.python };
+}
 function pythonRuntime() {
   if (runtime) return runtime;
   const env2 = process.env["SAIDVSDID_PYTHON"];
@@ -220915,10 +220922,7 @@ function pythonRuntime() {
       tried.push(`${command}: ${reply.error}`);
       continue;
     }
-    if (reply.supported) runtime = { known: true, command, version: reply.python, tested: reply.tested };
-    else if (olderThanMinimum(reply.python)) {
-      runtime = { known: false, why: `Python ${reply.python} (${command}) is older than ${MINIMUM.join(".")}, the oldest saidvsdid reads`, version: reply.python, remedy: pythonRemedy(env2) };
-    } else runtime = { known: false, why: reply.why ?? `Python ${reply.python} is not supported`, version: reply.python };
+    runtime = runtimeOf(reply, command, env2);
     return runtime;
   }
   runtime = { known: false, why: `no Python interpreter runs the scope reader (${tried.join("; ")})`, version: null, remedy: pythonRemedy(env2) };
@@ -225983,6 +225987,7 @@ var ACTIONS_BOT = "github-actions[bot]";
 function actionEnv(env2) {
   return ownRecord(Object.assign({}, env2, { INPUT_FAIL_ON: env2["INPUT_FAIL-ON"], GITHUB_TOKEN: env2["INPUT_GITHUB-TOKEN"] }));
 }
+var ANALYSED_EVENTS = /* @__PURE__ */ new Set(["pull_request", "pull_request_target"]);
 var InputError = class extends Error {
 };
 function parseFailOn(value2) {
@@ -226114,13 +226119,23 @@ async function runAction(deps) {
     log(`::error::saidvsdid: ${message2}`);
     return { verdict: "ERROR", exitCode: 1, body: "", commentUrl: null };
   }
+  const eventName = env2["GITHUB_EVENT_NAME"];
+  if (eventName && !ANALYSED_EVENTS.has(eventName)) {
+    const summary2 = env2["GITHUB_STEP_SUMMARY"];
+    if (summary2) appendFileSync(summary2, `saidvsdid runs on pull_request events; nothing to check here (event: ${literal2(eventName)}).
+`);
+    const output2 = env2["GITHUB_OUTPUT"];
+    if (output2) appendFileSync(output2, "verdict=SKIPPED\nexit-code=\ncomment-url=\n");
+    log(`::notice::saidvsdid runs on pull_request events; nothing to check here (event: ${eventName})`);
+    return { verdict: "SKIPPED", exitCode: 0, body: "", commentUrl: null };
+  }
   let event = null;
   try {
     event = JSON.parse(readFileSync4(env2["GITHUB_EVENT_PATH"] ?? "", "utf8"));
   } catch {
     event = null;
   }
-  const pr = pullRequestOf(event, env2["GITHUB_REPOSITORY"]);
+  const pr = eventName ? pullRequestOf(event, env2["GITHUB_REPOSITORY"]) : "no GITHUB_EVENT_NAME: saidvsdid runs as a step of a GitHub Actions workflow";
   const { verdict, body: body2 } = typeof pr === "string" ? { verdict: "ERROR", body: renderErrorComment(pr, failOn) } : await analyse(env2, pr, failOn, exclude);
   const summary = env2["GITHUB_STEP_SUMMARY"];
   if (summary) appendFileSync(summary, body2.slice(COMMENT_MARKER.length + 1));

@@ -33,8 +33,16 @@ export interface ActionDeps {
   log: (line: string) => void;
 }
 
+/**
+ * The events the Action analyses: a pull request's own (`pull_request_target` runs in the base's context with the same
+ * payload). Any other event is SKIPPED: decided by the event's name, never by the payload's shape (a review event
+ * carries a `pull_request` too, and an unreadable payload of a pull request event is an ERROR, not a skip).
+ */
+export const ANALYSED_EVENTS: ReadonlySet<string> = new Set(['pull_request', 'pull_request_target']);
+
 export interface ActionResult {
-  verdict: Verdict;
+  /** SKIPPED: an event that is not a pull request's; an output of the Action only, never a report's verdict (no exit code). */
+  verdict: Verdict | 'SKIPPED';
   /** The check's own exit status: 1 when `fail-on` asks for it, else 0. */
   exitCode: number;
   body: string;
@@ -213,13 +221,25 @@ export async function runAction(deps: ActionDeps): Promise<ActionResult> {
     return { verdict: 'ERROR', exitCode: 1, body: '', commentUrl: null };
   }
 
+  // Which event, before anything is read: an event that is not a pull request's has nothing to check, and the check
+  // stays green whatever `fail-on` says (it gates verdicts, and there is none).
+  const eventName = env['GITHUB_EVENT_NAME'];
+  if (eventName && !ANALYSED_EVENTS.has(eventName)) {
+    const summary = env['GITHUB_STEP_SUMMARY'];
+    if (summary) appendFileSync(summary, `saidvsdid runs on pull_request events; nothing to check here (event: ${literal(eventName)}).\n`);
+    const output = env['GITHUB_OUTPUT'];
+    if (output) appendFileSync(output, 'verdict=SKIPPED\nexit-code=\ncomment-url=\n');
+    log(`::notice::saidvsdid runs on pull_request events; nothing to check here (event: ${eventName})`);
+    return { verdict: 'SKIPPED', exitCode: 0, body: '', commentUrl: null };
+  }
+
   let event: unknown = null;
   try {
     event = JSON.parse(readFileSync(env['GITHUB_EVENT_PATH'] ?? '', 'utf8'));
   } catch {
     event = null;
   }
-  const pr = pullRequestOf(event, env['GITHUB_REPOSITORY']);
+  const pr = eventName ? pullRequestOf(event, env['GITHUB_REPOSITORY']) : 'no GITHUB_EVENT_NAME: saidvsdid runs as a step of a GitHub Actions workflow';
   const { verdict, body } = typeof pr === 'string' ? { verdict: 'ERROR' as const, body: renderErrorComment(pr, failOn) } : await analyse(env, pr, failOn, exclude);
 
   const summary = env['GITHUB_STEP_SUMMARY'];
