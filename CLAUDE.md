@@ -344,7 +344,8 @@
 3. Open a PR; the fast CI (`.github/workflows/ci.yml`, Linux: the suite, the
    fixtures against the real runners, Python 3.11 and 3.15, the dogfood) runs on
    every push to it and must be green.
-4. External review with Codex on the PR; findings are fixed or moved to the
+4. External review with Codex on the PR, when the PR changes what a verdict
+   can be (Process, *Codex reviews*); findings are fixed or moved to the
    backlog with a reason.
 5. Before merging a milestone, every item marked "backlog" in the external
    (Codex) reviews or in Claude's summaries is in `docs/backlog.md`.
@@ -417,6 +418,12 @@
 - **Design review before implementing.** Every rule that decides a FAIL or a
   silence is first described in one paragraph, and Codex attacks it before any
   code is written.
+- **Codex reviews.** Codex reviews only changes that can change a verdict: a
+  rule, a reader, the attribution, the contract, the oracle or the recorder,
+  what the CLI or the Action reports. Never documentation, CI or Dependabot:
+  Codex is not launched for those. At most 2 rounds per PR (a design review
+  and a code review count alike) without asking the owner: before a third,
+  tell the owner what is still open and wait for an answer.
 - **One principle per task.** Small changes, nothing done "while at it".
 - **Proportional verification.** Focused tests while iterating; one full
   battery plus the CI at the end.
