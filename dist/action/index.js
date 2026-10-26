@@ -218906,7 +218906,11 @@ function treeOf(repo, commit) {
   return git(repo, ["rev-parse", "--verify", "--quiet", "--end-of-options", `${commit}^{tree}`]).trim();
 }
 function repoRoot(repo) {
-  return git(repo, ["rev-parse", "--show-toplevel"]).trim();
+  try {
+    return git(repo, ["rev-parse", "--show-toplevel"]).trim();
+  } catch {
+    throw new GitError(`${repo} is not inside a git repository: run saidvsdid in a clone, or pass --repo <dir>`);
+  }
 }
 function changedFiles2(repo, base, head) {
   const out2 = git(repo, ["diff", "--no-ext-diff", "--name-status", "-z", "-M", base, head, "--"]);
@@ -223227,7 +223231,8 @@ async function configNet(configs, tg005Files) {
       side: c.headPath === null ? "base" : "head",
       line: null,
       test: null,
-      message: `Test runner config changed; review manually${why || ": the analyzer did not report anything specific about it"}${detail}`
+      // What the file is, when nothing more specific was found: it decides which tests run, and how much saidvsdid read of it.
+      message: `Test runner config changed; review manually${why || (/(?:^|\/)conftest\.py$/i.test(path2) ? ": `conftest.py` can change which tests run and how (hooks, fixtures, marks), and saidvsdid does not analyse it" : ": saidvsdid found no specific change in the settings it reads, and the file decides which tests run")}${detail}`
     });
   }
   return findings;
