@@ -296,7 +296,14 @@
   with nothing above INFO, exit 0; there is no PASS. Without a transcript or
   evidence, TG006/TG007 are `not_evaluated`, never among the rules that found
   nothing. "Never PASS" in a guarantee means never exit 0. TG006/TG007 are
-  marked experimental in the docs and the output.
+  marked experimental in the docs and the output. An OK says what it covers
+  (docs/rules.md, *Coverage*): "no issues found" only when every changed test
+  file was analysed; otherwise the files read in part or not at all are listed
+  before any finding, and with none detected it says that (src/coverage.ts;
+  coverage never changes a verdict or an exit code). `SKIPPED` is the Action's
+  output on an event that is not a pull request's, decided by the event's name;
+  never a verdict, never an ERROR, never a failed check. `check --base` compares
+  the merge base of base and head, as the Action does (`selectBase`).
 - **Evidence about other code is not evaluated.** `--evidence` whose base,
   head or any run's `tree_sha` is not the reviewed one: TG006/TG007 not
   evaluated (WARN `evidence_mismatch`), no claim context. Matching evidence is
