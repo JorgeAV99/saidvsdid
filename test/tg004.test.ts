@@ -132,7 +132,7 @@ it('x', () => { make(); });`,
       `const make = () => ({ a: 1 });
 it('x', () => { make(); });`,
     );
-    expect(findings).toEqual([expect.stringMatching(/^warn TG004 x: Removes the only assertion call .*; it may check less \(`it` is a global, not imported from a runner\)$/)]);
+    expect(findings).toEqual([expect.stringMatching(/^warn TG004 x: Removes the only assertion call .*; it may check less \(`it` is a global, and no Jest invocation saidvsdid can read runs this file\)$/)]);
   });
 
   it('a test that becomes a body-less todo is left to TG003', async () => {

@@ -105,7 +105,7 @@ function configDoubt(props: Map<string, ConfigValue>, where: string): string | n
  * `key` identifies the invocation and configuration, so that the caller can require the same on both sides.
  */
 export function jestGlobalsFor(path: string, read: (p: string) => string | null, files: readonly string[] | null): JestGlobals {
-  if (files === null) return { certified: false, why: "the repository's files are not listed, so its configuration is not certain" };
+  if (files === null) return { certified: false, why: 'no Jest invocation saidvsdid can read runs this file' };
   // Names compare without case, as Jest and npm find them on Windows and macOS (`JEST.CONFIG.CJS` is Jest's file there):
   // a file whose name is one of these in another case is never certified.
   const byDir = new Map<string, Map<string, string>>();

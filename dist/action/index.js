@@ -219193,7 +219193,7 @@ function configDoubt(props, where) {
   return null;
 }
 function jestGlobalsFor(path2, read, files) {
-  if (files === null) return { certified: false, why: "the repository's files are not listed, so its configuration is not certain" };
+  if (files === null) return { certified: false, why: "no Jest invocation saidvsdid can read runs this file" };
   const byDir = /* @__PURE__ */ new Map();
   for (const f of files) {
     const at = f.lastIndexOf("/");
