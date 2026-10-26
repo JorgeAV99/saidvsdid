@@ -112,7 +112,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: JorgeAV99/saidvsdid@6e184a8ff14a5bcc607f4b3440055a56d54435c5 # v0.2.0
+      - uses: JorgeAV99/saidvsdid@4435bfdd2782a42bfe85ad6028eb8a595485ff48 # v0.3.0
 ```
 <!-- /example:workflow -->
 
@@ -172,7 +172,7 @@ empty when `SKIPPED`) and `comment-url`.
 ### Make it block
 
 ```yaml
-      - uses: JorgeAV99/saidvsdid@6e184a8ff14a5bcc607f4b3440055a56d54435c5 # v0.2.0
+      - uses: JorgeAV99/saidvsdid@4435bfdd2782a42bfe85ad6028eb8a595485ff48 # v0.3.0
         with:
           fail-on: fail   # or: warn
 ```
