@@ -1,0 +1,18 @@
+{
+  "description": "Jest's globals (docs/rules.md, *Jest's globals*): an imported `test` inside a global `describe`, the file deleted: the global's certainty is TG002's and TG003's only, so the deletion stays a WARN.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG001", "severity": "warn", "file": "a.test.js" }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"g > adds\",1]": "passed",
+      "[\"keep.test.js\",\"kept\",1]": "passed"
+    },
+    "head": {
+      "[\"keep.test.js\",\"kept\",1]": "passed"
+    }
+  }
+}

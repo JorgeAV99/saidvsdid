@@ -2455,9 +2455,9 @@ var require_typescript = __commonJS({
         }
         return false;
       }
-      function indexOfAnyCharCode(text, charCodes, start2) {
-        for (let i2 = start2 ?? 0; i2 < text.length; i2++) {
-          if (contains(charCodes, text.charCodeAt(i2))) {
+      function indexOfAnyCharCode(text2, charCodes, start2) {
+        for (let i2 = start2 ?? 0; i2 < text2.length; i2++) {
+          if (contains(charCodes, text2.charCodeAt(i2))) {
             return i2;
           }
         }
@@ -3369,8 +3369,8 @@ var require_typescript = __commonJS({
       function toArray(value2) {
         return isArray(value2) ? value2 : [value2];
       }
-      function isString(text) {
-        return typeof text === "string";
+      function isString(text2) {
+        return typeof text2 === "string";
       }
       function isNumber(x) {
         return typeof x === "number";
@@ -4030,8 +4030,8 @@ Node ${formatSyntaxKind(node.kind)} was unexpected.`,
           } else if (hasProperty(func2, "name")) {
             return func2.name;
           } else {
-            const text = Function.prototype.toString.call(func2);
-            const match = /^function\s+([\w$]+)\s*\(/.exec(text);
+            const text2 = Function.prototype.toString.call(func2);
+            const match = /^function\s+([\w$]+)\s*\(/.exec(text2);
             return match ? match[1] : "";
           }
         }
@@ -4353,12 +4353,12 @@ Node ${formatSyntaxKind(node.kind)} was unexpected.`,
             },
             __debugTypeToString: {
               value() {
-                let text = weakTypeTextMap.get(this);
-                if (text === void 0) {
-                  text = this.checker.typeToString(this);
-                  weakTypeTextMap.set(this, text);
+                let text2 = weakTypeTextMap.get(this);
+                if (text2 === void 0) {
+                  text2 = this.checker.typeToString(this);
+                  weakTypeTextMap.set(this, text2);
                 }
-                return text;
+                return text2;
               }
             }
           });
@@ -4424,14 +4424,14 @@ Node ${formatSyntaxKind(node.kind)} was unexpected.`,
                 __debugGetText: {
                   value(includeTrivia) {
                     if (nodeIsSynthesized(this)) return "";
-                    let text = weakNodeTextMap.get(this);
-                    if (text === void 0) {
+                    let text2 = weakNodeTextMap.get(this);
+                    if (text2 === void 0) {
                       const parseNode = getParseTreeNode(this);
                       const sourceFile = parseNode && getSourceFileOfNode(parseNode);
-                      text = sourceFile ? getSourceTextOfNodeFromSourceFile(sourceFile, parseNode, includeTrivia) : "";
-                      weakNodeTextMap.set(this, text);
+                      text2 = sourceFile ? getSourceTextOfNodeFromSourceFile(sourceFile, parseNode, includeTrivia) : "";
+                      weakNodeTextMap.set(this, text2);
                     }
-                    return text;
+                    return text2;
                   }
                 }
               });
@@ -4687,9 +4687,9 @@ m2: ${this.mapper2.__debugToString().split("\n").join("\n    ")}`;
             );
           }
           function renderFlowNode(flowNode2, circular) {
-            let text = getHeader2(flowNode2.flags);
+            let text2 = getHeader2(flowNode2.flags);
             if (circular) {
-              text = `${text}#${getDebugFlowNodeId(flowNode2)}`;
+              text2 = `${text2}#${getDebugFlowNodeId(flowNode2)}`;
             }
             if (isFlowSwitchClause(flowNode2)) {
               const clauses = [];
@@ -4702,13 +4702,13 @@ m2: ${this.mapper2.__debugToString().split("\n").join("\n    ")}`;
                   clauses.push(getNodeText(clause.expression));
                 }
               }
-              text += ` (${clauses.join(", ")})`;
+              text2 += ` (${clauses.join(", ")})`;
             } else if (hasNode(flowNode2)) {
               if (flowNode2.node) {
-                text += ` (${getNodeText(flowNode2.node)})`;
+                text2 += ` (${getNodeText(flowNode2.node)})`;
               }
             }
-            return circular === "circularity" ? `Circular(${text})` : text;
+            return circular === "circularity" ? `Circular(${text2})` : text2;
           }
           function renderGraph() {
             const columnCount = columnWidths.length;
@@ -4774,8 +4774,8 @@ m2: ${this.mapper2.__debugToString().split("\n").join("\n    ")}`;
             return `
 ${lanes.join("\n")}
 `;
-            function writeLane(lane, text) {
-              lanes[lane] += text;
+            function writeLane(lane, text2) {
+              lanes[lane] += text2;
             }
           }
           function getBoxCharacter(connector) {
@@ -4853,8 +4853,8 @@ ${lanes.join("\n")}
           this.prerelease = prereleaseArray;
           this.build = buildArray;
         }
-        static tryParse(text) {
-          const result = tryParseComponents(text);
+        static tryParse(text2) {
+          const result = tryParseComponents(text2);
           if (!result) return void 0;
           const { major, minor, patch, prerelease, build: build2 } = result;
           return new _Version2(major, minor, patch, prerelease, build2);
@@ -4895,8 +4895,8 @@ ${lanes.join("\n")}
       };
       _Version.zero = new _Version(0, 0, 0, ["0"]);
       var Version = _Version;
-      function tryParseComponents(text) {
-        const match = versionRegExp.exec(text);
+      function tryParseComponents(text2) {
+        const match = versionRegExp.exec(text2);
         if (!match) return void 0;
         const [, major, minor = "0", patch = "0", prerelease = "", build2 = ""] = match;
         if (prerelease && !prereleaseRegExp.test(prerelease)) return void 0;
@@ -4935,8 +4935,8 @@ ${lanes.join("\n")}
         constructor(spec) {
           this._alternatives = spec ? Debug.checkDefined(parseRange(spec), "Invalid range spec.") : emptyArray;
         }
-        static tryParse(text) {
-          const sets = parseRange(text);
+        static tryParse(text2) {
+          const sets = parseRange(text2);
           if (sets) {
             const range2 = new _VersionRange("");
             range2._alternatives = sets;
@@ -4961,9 +4961,9 @@ ${lanes.join("\n")}
       var partialRegExp = /^([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:\.([x*0]|[1-9]\d*)(?:-([a-z0-9-.]+))?(?:\+([a-z0-9-.]+))?)?)?$/i;
       var hyphenRegExp = /^\s*([a-z0-9-+.*]+)\s+-\s+([a-z0-9-+.*]+)\s*$/i;
       var rangeRegExp = /^([~^<>=]|<=|>=)?\s*([a-z0-9-+.*]+)$/i;
-      function parseRange(text) {
+      function parseRange(text2) {
         const alternatives = [];
-        for (let range2 of text.trim().split(logicalOrRegExp)) {
+        for (let range2 of text2.trim().split(logicalOrRegExp)) {
           if (!range2) continue;
           const comparators = [];
           range2 = range2.trim();
@@ -4980,8 +4980,8 @@ ${lanes.join("\n")}
         }
         return alternatives;
       }
-      function parsePartial(text) {
-        const match = partialRegExp.exec(text);
+      function parsePartial(text2) {
+        const match = partialRegExp.exec(text2);
         if (!match) return void 0;
         const [, major, minor = "*", patch = "*", prerelease, build2] = match;
         const version2 = new Version(
@@ -5008,8 +5008,8 @@ ${lanes.join("\n")}
         }
         return true;
       }
-      function parseComparator(operator, text, comparators) {
-        const result = parsePartial(text);
+      function parseComparator(operator, text2, comparators) {
+        const result = parsePartial(text2);
         if (!result) return false;
         const { version: version2, major, minor, patch } = result;
         if (!isWildcard(major)) {
@@ -12009,16 +12009,16 @@ ${lanes.join("\n")}
       function characterCodeToRegularExpressionFlag(ch) {
         return charCodeToRegExpFlag.get(ch);
       }
-      function computeLineStarts(text) {
+      function computeLineStarts(text2) {
         const result = [];
         let pos = 0;
         let lineStart = 0;
-        while (pos < text.length) {
-          const ch = text.charCodeAt(pos);
+        while (pos < text2.length) {
+          const ch = text2.charCodeAt(pos);
           pos++;
           switch (ch) {
             case 13:
-              if (text.charCodeAt(pos) === 10) {
+              if (text2.charCodeAt(pos) === 10) {
                 pos++;
               }
             // falls through
@@ -12114,8 +12114,8 @@ ${lanes.join("\n")}
       function isOctalDigit(ch) {
         return ch >= 48 && ch <= 55;
       }
-      function couldStartTrivia(text, pos) {
-        const ch = text.charCodeAt(pos);
+      function couldStartTrivia(text2, pos) {
+        const ch = text2.charCodeAt(pos);
         switch (ch) {
           case 13:
           case 10:
@@ -12137,16 +12137,16 @@ ${lanes.join("\n")}
             return ch > 127;
         }
       }
-      function skipTrivia(text, pos, stopAfterLineBreak, stopAtComments, inJSDoc) {
+      function skipTrivia(text2, pos, stopAfterLineBreak, stopAtComments, inJSDoc) {
         if (positionIsSynthesized(pos)) {
           return pos;
         }
         let canConsumeStar = false;
         while (true) {
-          const ch = text.charCodeAt(pos);
+          const ch = text2.charCodeAt(pos);
           switch (ch) {
             case 13:
-              if (text.charCodeAt(pos + 1) === 10) {
+              if (text2.charCodeAt(pos + 1) === 10) {
                 pos++;
               }
             // falls through
@@ -12167,10 +12167,10 @@ ${lanes.join("\n")}
               if (stopAtComments) {
                 break;
               }
-              if (text.charCodeAt(pos + 1) === 47) {
+              if (text2.charCodeAt(pos + 1) === 47) {
                 pos += 2;
-                while (pos < text.length) {
-                  if (isLineBreak(text.charCodeAt(pos))) {
+                while (pos < text2.length) {
+                  if (isLineBreak(text2.charCodeAt(pos))) {
                     break;
                   }
                   pos++;
@@ -12178,10 +12178,10 @@ ${lanes.join("\n")}
                 canConsumeStar = false;
                 continue;
               }
-              if (text.charCodeAt(pos + 1) === 42) {
+              if (text2.charCodeAt(pos + 1) === 42) {
                 pos += 2;
-                while (pos < text.length) {
-                  if (text.charCodeAt(pos) === 42 && text.charCodeAt(pos + 1) === 47) {
+                while (pos < text2.length) {
+                  if (text2.charCodeAt(pos) === 42 && text2.charCodeAt(pos + 1) === 47) {
                     pos += 2;
                     break;
                   }
@@ -12195,15 +12195,15 @@ ${lanes.join("\n")}
             case 124:
             case 61:
             case 62:
-              if (isConflictMarkerTrivia(text, pos)) {
-                pos = scanConflictMarkerTrivia(text, pos);
+              if (isConflictMarkerTrivia(text2, pos)) {
+                pos = scanConflictMarkerTrivia(text2, pos);
                 canConsumeStar = false;
                 continue;
               }
               break;
             case 35:
-              if (pos === 0 && isShebangTrivia(text, pos)) {
-                pos = scanShebangTrivia(text, pos);
+              if (pos === 0 && isShebangTrivia(text2, pos)) {
+                pos = scanShebangTrivia(text2, pos);
                 canConsumeStar = false;
                 continue;
               }
@@ -12226,29 +12226,29 @@ ${lanes.join("\n")}
         }
       }
       var mergeConflictMarkerLength = "<<<<<<<".length;
-      function isConflictMarkerTrivia(text, pos) {
+      function isConflictMarkerTrivia(text2, pos) {
         Debug.assert(pos >= 0);
-        if (pos === 0 || isLineBreak(text.charCodeAt(pos - 1))) {
-          const ch = text.charCodeAt(pos);
-          if (pos + mergeConflictMarkerLength < text.length) {
+        if (pos === 0 || isLineBreak(text2.charCodeAt(pos - 1))) {
+          const ch = text2.charCodeAt(pos);
+          if (pos + mergeConflictMarkerLength < text2.length) {
             for (let i2 = 0; i2 < mergeConflictMarkerLength; i2++) {
-              if (text.charCodeAt(pos + i2) !== ch) {
+              if (text2.charCodeAt(pos + i2) !== ch) {
                 return false;
               }
             }
-            return ch === 61 || text.charCodeAt(pos + mergeConflictMarkerLength) === 32;
+            return ch === 61 || text2.charCodeAt(pos + mergeConflictMarkerLength) === 32;
           }
         }
         return false;
       }
-      function scanConflictMarkerTrivia(text, pos, error2) {
+      function scanConflictMarkerTrivia(text2, pos, error2) {
         if (error2) {
           error2(Diagnostics.Merge_conflict_marker_encountered, pos, mergeConflictMarkerLength);
         }
-        const ch = text.charCodeAt(pos);
-        const len = text.length;
+        const ch = text2.charCodeAt(pos);
+        const len = text2.length;
         if (ch === 60 || ch === 62) {
-          while (pos < len && !isLineBreak(text.charCodeAt(pos))) {
+          while (pos < len && !isLineBreak(text2.charCodeAt(pos))) {
             pos++;
           }
         } else {
@@ -12257,8 +12257,8 @@ ${lanes.join("\n")}
             /* equals */
           );
           while (pos < len) {
-            const currentChar = text.charCodeAt(pos);
-            if ((currentChar === 61 || currentChar === 62) && currentChar !== ch && isConflictMarkerTrivia(text, pos)) {
+            const currentChar = text2.charCodeAt(pos);
+            if ((currentChar === 61 || currentChar === 62) && currentChar !== ch && isConflictMarkerTrivia(text2, pos)) {
               break;
             }
             pos++;
@@ -12267,16 +12267,16 @@ ${lanes.join("\n")}
         return pos;
       }
       var shebangTriviaRegex = /^#!.*/;
-      function isShebangTrivia(text, pos) {
+      function isShebangTrivia(text2, pos) {
         Debug.assert(pos === 0);
-        return shebangTriviaRegex.test(text);
+        return shebangTriviaRegex.test(text2);
       }
-      function scanShebangTrivia(text, pos) {
-        const shebang = shebangTriviaRegex.exec(text)[0];
+      function scanShebangTrivia(text2, pos) {
+        const shebang = shebangTriviaRegex.exec(text2)[0];
         pos = pos + shebang.length;
         return pos;
       }
-      function iterateCommentRanges(reduce, text, pos, trailing, cb, state, initial) {
+      function iterateCommentRanges(reduce, text2, pos, trailing, cb, state, initial) {
         let pendingPos;
         let pendingEnd;
         let pendingKind;
@@ -12286,17 +12286,17 @@ ${lanes.join("\n")}
         let accumulator = initial;
         if (pos === 0) {
           collecting = true;
-          const shebang = getShebang(text);
+          const shebang = getShebang(text2);
           if (shebang) {
             pos = shebang.length;
           }
         }
         scan:
-          while (pos >= 0 && pos < text.length) {
-            const ch = text.charCodeAt(pos);
+          while (pos >= 0 && pos < text2.length) {
+            const ch = text2.charCodeAt(pos);
             switch (ch) {
               case 13:
-                if (text.charCodeAt(pos + 1) === 10) {
+                if (text2.charCodeAt(pos + 1) === 10) {
                   pos++;
                 }
               // falls through
@@ -12317,23 +12317,23 @@ ${lanes.join("\n")}
                 pos++;
                 continue;
               case 47:
-                const nextChar = text.charCodeAt(pos + 1);
+                const nextChar = text2.charCodeAt(pos + 1);
                 let hasTrailingNewLine = false;
                 if (nextChar === 47 || nextChar === 42) {
                   const kind = nextChar === 47 ? 2 : 3;
                   const startPos = pos;
                   pos += 2;
                   if (nextChar === 47) {
-                    while (pos < text.length) {
-                      if (isLineBreak(text.charCodeAt(pos))) {
+                    while (pos < text2.length) {
+                      if (isLineBreak(text2.charCodeAt(pos))) {
                         hasTrailingNewLine = true;
                         break;
                       }
                       pos++;
                     }
                   } else {
-                    while (pos < text.length) {
-                      if (text.charCodeAt(pos) === 42 && text.charCodeAt(pos + 1) === 47) {
+                    while (pos < text2.length) {
+                      if (text2.charCodeAt(pos) === 42 && text2.charCodeAt(pos + 1) === 47) {
                         pos += 2;
                         break;
                       }
@@ -12372,11 +12372,11 @@ ${lanes.join("\n")}
         }
         return accumulator;
       }
-      function forEachLeadingCommentRange(text, pos, cb, state) {
+      function forEachLeadingCommentRange(text2, pos, cb, state) {
         return iterateCommentRanges(
           /*reduce*/
           false,
-          text,
+          text2,
           pos,
           /*trailing*/
           false,
@@ -12384,11 +12384,11 @@ ${lanes.join("\n")}
           state
         );
       }
-      function forEachTrailingCommentRange(text, pos, cb, state) {
+      function forEachTrailingCommentRange(text2, pos, cb, state) {
         return iterateCommentRanges(
           /*reduce*/
           false,
-          text,
+          text2,
           pos,
           /*trailing*/
           true,
@@ -12396,11 +12396,11 @@ ${lanes.join("\n")}
           state
         );
       }
-      function reduceEachLeadingCommentRange(text, pos, cb, state, initial) {
+      function reduceEachLeadingCommentRange(text2, pos, cb, state, initial) {
         return iterateCommentRanges(
           /*reduce*/
           true,
-          text,
+          text2,
           pos,
           /*trailing*/
           false,
@@ -12409,11 +12409,11 @@ ${lanes.join("\n")}
           initial
         );
       }
-      function reduceEachTrailingCommentRange(text, pos, cb, state, initial) {
+      function reduceEachTrailingCommentRange(text2, pos, cb, state, initial) {
         return iterateCommentRanges(
           /*reduce*/
           true,
-          text,
+          text2,
           pos,
           /*trailing*/
           true,
@@ -12426,9 +12426,9 @@ ${lanes.join("\n")}
         comments.push({ kind, pos, end, hasTrailingNewLine });
         return comments;
       }
-      function getLeadingCommentRanges(text, pos) {
+      function getLeadingCommentRanges(text2, pos) {
         return reduceEachLeadingCommentRange(
-          text,
+          text2,
           pos,
           appendCommentRange,
           /*state*/
@@ -12437,9 +12437,9 @@ ${lanes.join("\n")}
           void 0
         );
       }
-      function getTrailingCommentRanges(text, pos) {
+      function getTrailingCommentRanges(text2, pos) {
         return reduceEachTrailingCommentRange(
-          text,
+          text2,
           pos,
           appendCommentRange,
           /*state*/
@@ -12448,8 +12448,8 @@ ${lanes.join("\n")}
           void 0
         );
       }
-      function getShebang(text) {
-        const match = shebangTriviaRegex.exec(text);
+      function getShebang(text2) {
+        const match = shebangTriviaRegex.exec(text2);
         if (match) {
           return match[0];
         }
@@ -12474,7 +12474,7 @@ ${lanes.join("\n")}
         return true;
       }
       function createScanner(languageVersion, skipTrivia2, languageVariant = 0, textInitial, onError, start2, length2) {
-        var text = textInitial;
+        var text2 = textInitial;
         var pos;
         var end;
         var fullStartPos;
@@ -12486,7 +12486,7 @@ ${lanes.join("\n")}
         var skipJsDocLeadingAsterisks = 0;
         var scriptKind = 0;
         var jsDocParsingMode = 0;
-        setText(text, start2, length2);
+        setText(text2, start2, length2);
         var scanner2 = {
           getTokenFullStart: () => fullStartPos,
           getStartPos: () => fullStartPos,
@@ -12495,7 +12495,7 @@ ${lanes.join("\n")}
           getToken: () => token,
           getTokenStart: () => tokenStart,
           getTokenPos: () => tokenStart,
-          getTokenText: () => text.substring(tokenStart, pos),
+          getTokenText: () => text2.substring(tokenStart, pos),
           getTokenValue: () => tokenValue,
           hasUnicodeEscape: () => (tokenFlags & 1024) !== 0,
           hasExtendedUnicodeEscape: () => (tokenFlags & 8) !== 0,
@@ -12543,20 +12543,20 @@ ${lanes.join("\n")}
         if (Debug.isDebugging) {
           Object.defineProperty(scanner2, "__debugShowCurrentPositionInText", {
             get: () => {
-              const text2 = scanner2.getText();
-              return text2.slice(0, scanner2.getTokenFullStart()) + "║" + text2.slice(scanner2.getTokenFullStart());
+              const text22 = scanner2.getText();
+              return text22.slice(0, scanner2.getTokenFullStart()) + "║" + text22.slice(scanner2.getTokenFullStart());
             }
           });
         }
         return scanner2;
         function codePointUnchecked(pos2) {
-          return codePointAt(text, pos2);
+          return codePointAt(text2, pos2);
         }
         function codePointChecked(pos2) {
           return pos2 >= 0 && pos2 < end ? codePointUnchecked(pos2) : -1;
         }
         function charCodeUnchecked(pos2) {
-          return text.charCodeAt(pos2);
+          return text2.charCodeAt(pos2);
         }
         function charCodeChecked(pos2) {
           return pos2 >= 0 && pos2 < end ? charCodeUnchecked(pos2) : -1;
@@ -12581,7 +12581,7 @@ ${lanes.join("\n")}
               if (allowSeparator) {
                 allowSeparator = false;
                 isPreviousTokenSeparator = true;
-                result += text.substring(start22, pos);
+                result += text2.substring(start22, pos);
               } else {
                 tokenFlags |= 16384;
                 if (isPreviousTokenSeparator) {
@@ -12606,7 +12606,7 @@ ${lanes.join("\n")}
             tokenFlags |= 16384;
             error2(Diagnostics.Numeric_separators_are_not_allowed_here, pos - 1, 1);
           }
-          return result + text.substring(start22, pos);
+          return result + text2.substring(start22, pos);
         }
         function scanNumber() {
           let start22 = pos;
@@ -12651,7 +12651,7 @@ ${lanes.join("\n")}
             if (!finalFragment) {
               error2(Diagnostics.Digit_expected);
             } else {
-              scientificFragment = text.substring(end2, preNumericPart) + finalFragment;
+              scientificFragment = text2.substring(end2, preNumericPart) + finalFragment;
               end2 = pos;
             }
           }
@@ -12665,7 +12665,7 @@ ${lanes.join("\n")}
               result += scientificFragment;
             }
           } else {
-            result = text.substring(start22, end2);
+            result = text2.substring(start22, end2);
           }
           if (tokenFlags & 8192) {
             error2(Diagnostics.Decimals_with_leading_zeros_are_not_allowed, start22, end2 - start22);
@@ -12689,7 +12689,7 @@ ${lanes.join("\n")}
           }
           const identifierStart = pos;
           const { length: length3 } = scanIdentifierParts();
-          if (length3 === 1 && text[identifierStart] === "n") {
+          if (length3 === 1 && text2[identifierStart] === "n") {
             if (isScientific) {
               error2(Diagnostics.A_bigint_literal_cannot_use_exponential_notation, numericStart, identifierStart - numericStart + 1);
             } else {
@@ -12709,7 +12709,7 @@ ${lanes.join("\n")}
             }
             pos++;
           }
-          tokenValue = text.substring(start22, pos);
+          tokenValue = text2.substring(start22, pos);
           return isOctal;
         }
         function scanExactNumberOfHexDigits(count, canHaveSeparators) {
@@ -12775,19 +12775,19 @@ ${lanes.join("\n")}
           let start22 = pos;
           while (true) {
             if (pos >= end) {
-              result += text.substring(start22, pos);
+              result += text2.substring(start22, pos);
               tokenFlags |= 4;
               error2(Diagnostics.Unterminated_string_literal);
               break;
             }
             const ch = charCodeUnchecked(pos);
             if (ch === quote22) {
-              result += text.substring(start22, pos);
+              result += text2.substring(start22, pos);
               pos++;
               break;
             }
             if (ch === 92 && !jsxAttributeString) {
-              result += text.substring(start22, pos);
+              result += text2.substring(start22, pos);
               result += scanEscapeSequence(
                 1 | 2
                 /* ReportErrors */
@@ -12796,7 +12796,7 @@ ${lanes.join("\n")}
               continue;
             }
             if ((ch === 10 || ch === 13) && !jsxAttributeString) {
-              result += text.substring(start22, pos);
+              result += text2.substring(start22, pos);
               tokenFlags |= 4;
               error2(Diagnostics.Unterminated_string_literal);
               break;
@@ -12813,7 +12813,7 @@ ${lanes.join("\n")}
           let resultingToken;
           while (true) {
             if (pos >= end) {
-              contents += text.substring(start22, pos);
+              contents += text2.substring(start22, pos);
               tokenFlags |= 4;
               error2(Diagnostics.Unterminated_template_literal);
               resultingToken = startedWithBacktick ? 15 : 18;
@@ -12821,25 +12821,25 @@ ${lanes.join("\n")}
             }
             const currChar = charCodeUnchecked(pos);
             if (currChar === 96) {
-              contents += text.substring(start22, pos);
+              contents += text2.substring(start22, pos);
               pos++;
               resultingToken = startedWithBacktick ? 15 : 18;
               break;
             }
             if (currChar === 36 && pos + 1 < end && charCodeUnchecked(pos + 1) === 123) {
-              contents += text.substring(start22, pos);
+              contents += text2.substring(start22, pos);
               pos += 2;
               resultingToken = startedWithBacktick ? 16 : 17;
               break;
             }
             if (currChar === 92) {
-              contents += text.substring(start22, pos);
+              contents += text2.substring(start22, pos);
               contents += scanEscapeSequence(1 | (shouldEmitInvalidEscapeError ? 2 : 0));
               start22 = pos;
               continue;
             }
             if (currChar === 13) {
-              contents += text.substring(start22, pos);
+              contents += text2.substring(start22, pos);
               pos++;
               if (pos < end && charCodeUnchecked(pos) === 10) {
                 pos++;
@@ -12887,7 +12887,7 @@ ${lanes.join("\n")}
               }
               tokenFlags |= 2048;
               if (flags2 & 6) {
-                const code4 = parseInt(text.substring(start22 + 1, pos), 8);
+                const code4 = parseInt(text2.substring(start22 + 1, pos), 8);
                 if (flags2 & 4 && !(flags2 & 32) && ch !== 48) {
                   error2(Diagnostics.Octal_escape_sequences_and_backreferences_are_not_allowed_in_a_character_class_If_this_was_intended_as_an_escape_sequence_use_the_syntax_0_instead, start22, pos - start22, "\\x" + code4.toString(16).padStart(2, "0"));
                 } else {
@@ -12895,7 +12895,7 @@ ${lanes.join("\n")}
                 }
                 return String.fromCharCode(code4);
               }
-              return text.substring(start22, pos);
+              return text2.substring(start22, pos);
             case 56:
             case 57:
               tokenFlags |= 2048;
@@ -12903,11 +12903,11 @@ ${lanes.join("\n")}
                 if (flags2 & 4 && !(flags2 & 32)) {
                   error2(Diagnostics.Decimal_escape_sequences_and_backreferences_are_not_allowed_in_a_character_class, start22, pos - start22);
                 } else {
-                  error2(Diagnostics.Escape_sequence_0_is_not_allowed, start22, pos - start22, text.substring(start22, pos));
+                  error2(Diagnostics.Escape_sequence_0_is_not_allowed, start22, pos - start22, text2.substring(start22, pos));
                 }
                 return String.fromCharCode(ch);
               }
-              return text.substring(start22, pos);
+              return text2.substring(start22, pos);
             case 98:
               return "\b";
             case 116:
@@ -12942,13 +12942,13 @@ ${lanes.join("\n")}
                   if (flags2 & 6) {
                     error2(Diagnostics.Hexadecimal_digit_expected);
                   }
-                  return text.substring(start22, pos);
+                  return text2.substring(start22, pos);
                 }
               }
               tokenFlags |= 1024;
-              const escapedValue = parseInt(text.substring(start22 + 2, pos), 16);
+              const escapedValue = parseInt(text2.substring(start22 + 2, pos), 16);
               const escapedValueString = String.fromCharCode(escapedValue);
-              if (flags2 & 16 && escapedValue >= 55296 && escapedValue <= 56319 && pos + 6 < end && text.substring(pos, pos + 2) === "\\u" && charCodeUnchecked(pos + 2) !== 123) {
+              if (flags2 & 16 && escapedValue >= 55296 && escapedValue <= 56319 && pos + 6 < end && text2.substring(pos, pos + 2) === "\\u" && charCodeUnchecked(pos + 2) !== 123) {
                 const nextStart = pos;
                 let nextPos = pos + 2;
                 for (; nextPos < nextStart + 6; nextPos++) {
@@ -12956,7 +12956,7 @@ ${lanes.join("\n")}
                     return escapedValueString;
                   }
                 }
-                const nextEscapedValue = parseInt(text.substring(nextStart + 2, nextPos), 16);
+                const nextEscapedValue = parseInt(text2.substring(nextStart + 2, nextPos), 16);
                 if (nextEscapedValue >= 56320 && nextEscapedValue <= 57343) {
                   pos = nextPos;
                   return escapedValueString + String.fromCharCode(nextEscapedValue);
@@ -12970,11 +12970,11 @@ ${lanes.join("\n")}
                   if (flags2 & 6) {
                     error2(Diagnostics.Hexadecimal_digit_expected);
                   }
-                  return text.substring(start22, pos);
+                  return text2.substring(start22, pos);
                 }
               }
               tokenFlags |= 4096;
-              return String.fromCharCode(parseInt(text.substring(start22 + 2, pos), 16));
+              return String.fromCharCode(parseInt(text2.substring(start22 + 2, pos), 16));
             // when encountering a LineContinuation (i.e. a backslash and a line terminator sequence),
             // the line terminator is interpreted to be "the empty code unit sequence".
             case 13:
@@ -13030,7 +13030,7 @@ ${lanes.join("\n")}
           }
           if (isInvalidExtendedEscape) {
             tokenFlags |= 2048;
-            return text.substring(start22, pos);
+            return text2.substring(start22, pos);
           }
           tokenFlags |= 8;
           return utf16EncodeAsString(escapedValue);
@@ -13086,7 +13086,7 @@ ${lanes.join("\n")}
                 break;
               }
               tokenFlags |= 1024;
-              result += text.substring(start22, pos);
+              result += text2.substring(start22, pos);
               result += utf16EncodeAsString(ch);
               pos += 6;
               start22 = pos;
@@ -13094,7 +13094,7 @@ ${lanes.join("\n")}
               break;
             }
           }
-          result += text.substring(start22, pos);
+          result += text2.substring(start22, pos);
           return result;
         }
         function getIdentifierToken() {
@@ -13133,7 +13133,7 @@ ${lanes.join("\n")}
             if (!isDigit(ch) || ch - 48 >= base) {
               break;
             }
-            value2 += text[pos];
+            value2 += text2[pos];
             pos++;
             isPreviousTokenSeparator = false;
           }
@@ -13166,8 +13166,8 @@ ${lanes.join("\n")}
             }
             const ch = codePointUnchecked(pos);
             if (pos === 0) {
-              if (ch === 35 && isShebangTrivia(text, pos)) {
-                pos = scanShebangTrivia(text, pos);
+              if (ch === 35 && isShebangTrivia(text2, pos)) {
+                pos = scanShebangTrivia(text2, pos);
                 if (skipTrivia2) {
                   continue;
                 } else {
@@ -13321,7 +13321,7 @@ ${lanes.join("\n")}
                   }
                   commentDirectives = appendIfCommentDirective(
                     commentDirectives,
-                    text.slice(tokenStart, pos),
+                    text2.slice(tokenStart, pos),
                     commentDirectiveRegExSingleLine,
                     tokenStart
                   );
@@ -13352,7 +13352,7 @@ ${lanes.join("\n")}
                   if (isJSDoc2 && shouldParseJSDoc()) {
                     tokenFlags |= 2;
                   }
-                  commentDirectives = appendIfCommentDirective(commentDirectives, text.slice(lastLineStart, pos), commentDirectiveRegExMultiLine, lastLineStart);
+                  commentDirectives = appendIfCommentDirective(commentDirectives, text2.slice(lastLineStart, pos), commentDirectiveRegExMultiLine, lastLineStart);
                   if (!commentClosed) {
                     error2(Diagnostics.Asterisk_Slash_expected);
                   }
@@ -13430,8 +13430,8 @@ ${lanes.join("\n")}
                 pos++;
                 return token = 27;
               case 60:
-                if (isConflictMarkerTrivia(text, pos)) {
-                  pos = scanConflictMarkerTrivia(text, pos, error2);
+                if (isConflictMarkerTrivia(text2, pos)) {
+                  pos = scanConflictMarkerTrivia(text2, pos, error2);
                   if (skipTrivia2) {
                     continue;
                   } else {
@@ -13453,8 +13453,8 @@ ${lanes.join("\n")}
                 pos++;
                 return token = 30;
               case 61:
-                if (isConflictMarkerTrivia(text, pos)) {
-                  pos = scanConflictMarkerTrivia(text, pos, error2);
+                if (isConflictMarkerTrivia(text2, pos)) {
+                  pos = scanConflictMarkerTrivia(text2, pos, error2);
                   if (skipTrivia2) {
                     continue;
                   } else {
@@ -13473,8 +13473,8 @@ ${lanes.join("\n")}
                 pos++;
                 return token = 64;
               case 62:
-                if (isConflictMarkerTrivia(text, pos)) {
-                  pos = scanConflictMarkerTrivia(text, pos, error2);
+                if (isConflictMarkerTrivia(text2, pos)) {
+                  pos = scanConflictMarkerTrivia(text2, pos, error2);
                   if (skipTrivia2) {
                     continue;
                   } else {
@@ -13511,8 +13511,8 @@ ${lanes.join("\n")}
                 pos++;
                 return token = 19;
               case 124:
-                if (isConflictMarkerTrivia(text, pos)) {
-                  pos = scanConflictMarkerTrivia(text, pos, error2);
+                if (isConflictMarkerTrivia(text2, pos)) {
+                  pos = scanConflictMarkerTrivia(text2, pos, error2);
                   if (skipTrivia2) {
                     continue;
                   } else {
@@ -13559,7 +13559,7 @@ ${lanes.join("\n")}
                 pos++;
                 return token = 0;
               case 35:
-                if (pos !== 0 && text[pos + 1] === "!") {
+                if (pos !== 0 && text2[pos + 1] === "!") {
                   error2(Diagnostics.can_only_be_used_at_the_start_of_a_file, pos, 2);
                   pos++;
                   return token = 0;
@@ -13628,7 +13628,7 @@ ${lanes.join("\n")}
           if (jsDocParsingMode === 3) {
             return false;
           }
-          return jsDocSeeOrLink.test(text.slice(fullStartPos, pos));
+          return jsDocSeeOrLink.test(text2.slice(fullStartPos, pos));
         }
         function reScanInvalidIdentifier() {
           Debug.assert(token === 0, "'reScanInvalidIdentifier' should only be called when the current token is 'SyntaxKind.Unknown'.");
@@ -13651,7 +13651,7 @@ ${lanes.join("\n")}
           if (isIdentifierStart(ch, languageVersion2)) {
             pos += charSize(ch);
             while (pos < end && isIdentifierPart(ch = codePointUnchecked(pos), languageVersion2)) pos += charSize(ch);
-            tokenValue = text.substring(tokenStart, pos);
+            tokenValue = text2.substring(tokenStart, pos);
             if (ch === 92) {
               tokenValue += scanIdentifierParts();
             }
@@ -13784,7 +13784,7 @@ ${lanes.join("\n")}
                 });
               }
             }
-            tokenValue = text.substring(tokenStart, pos);
+            tokenValue = text2.substring(tokenStart, pos);
             token = 14;
           }
           return token;
@@ -14212,7 +14212,7 @@ ${lanes.join("\n")}
             }
             let start22 = pos;
             let operand;
-            switch (text.slice(pos, pos + 2)) {
+            switch (text2.slice(pos, pos + 2)) {
               // TODO: don't use slice
               case "--":
               case "&&":
@@ -14278,7 +14278,7 @@ ${lanes.join("\n")}
                     pos++;
                     error2(Diagnostics.Operators_must_not_be_mixed_within_a_character_class_Wrap_it_in_a_nested_class_instead, pos - 2, 2);
                     start22 = pos - 2;
-                    operand = text.slice(start22, pos);
+                    operand = text2.slice(start22, pos);
                     continue;
                   } else {
                     if (!operand) {
@@ -14317,20 +14317,20 @@ ${lanes.join("\n")}
                   } else {
                     error2(Diagnostics.Unexpected_0_Did_you_mean_to_escape_it_with_backslash, pos - 1, 1, String.fromCharCode(ch));
                   }
-                  operand = text.slice(start22, pos);
+                  operand = text2.slice(start22, pos);
                   continue;
               }
               if (isClassContentExit(charCodeChecked(pos))) {
                 break;
               }
               start22 = pos;
-              switch (text.slice(pos, pos + 2)) {
+              switch (text2.slice(pos, pos + 2)) {
                 // TODO: don't use slice
                 case "--":
                 case "&&":
                   error2(Diagnostics.Operators_must_not_be_mixed_within_a_character_class_Wrap_it_in_a_nested_class_instead, pos, 2);
                   pos += 2;
-                  operand = text.slice(start22, pos);
+                  operand = text2.slice(start22, pos);
                   break;
                 default:
                   operand = scanClassSetOperand();
@@ -14521,7 +14521,7 @@ ${lanes.join("\n")}
                 case 126:
                   error2(Diagnostics.A_character_class_must_not_contain_a_reserved_double_punctuator_Did_you_mean_to_escape_it_with_backslash, pos, 2);
                   pos += 2;
-                  return text.substring(pos - 2, pos);
+                  return text2.substring(pos - 2, pos);
               }
             }
             switch (ch) {
@@ -14665,7 +14665,7 @@ ${lanes.join("\n")}
           function scanSourceCharacter() {
             const size = anyUnicodeMode ? charSize(codePointChecked(pos)) : 1;
             pos += size;
-            return size > 0 ? text.substring(pos - size, pos) : "";
+            return size > 0 ? text2.substring(pos - size, pos) : "";
           }
           function scanExpectedChar(ch) {
             if (charCodeChecked(pos) === ch) {
@@ -14705,8 +14705,8 @@ ${lanes.join("\n")}
             error2(Diagnostics.This_regular_expression_flag_is_only_available_when_targeting_0_or_later, pos, size, getNameOfScriptTarget(availableFrom));
           }
         }
-        function appendIfCommentDirective(commentDirectives2, text2, commentDirectiveRegEx, lineStart) {
-          const type = getDirectiveFromComment(text2.trimStart(), commentDirectiveRegEx);
+        function appendIfCommentDirective(commentDirectives2, text22, commentDirectiveRegEx, lineStart) {
+          const type = getDirectiveFromComment(text22.trimStart(), commentDirectiveRegEx);
           if (type === void 0) {
             return commentDirectives2;
           }
@@ -14718,8 +14718,8 @@ ${lanes.join("\n")}
             }
           );
         }
-        function getDirectiveFromComment(text2, commentDirectiveRegEx) {
-          const match = commentDirectiveRegEx.exec(text2);
+        function getDirectiveFromComment(text22, commentDirectiveRegEx) {
+          const match = commentDirectiveRegEx.exec(text22);
           if (!match) {
             return void 0;
           }
@@ -14790,8 +14790,8 @@ ${lanes.join("\n")}
               break;
             }
             if (char === 60) {
-              if (isConflictMarkerTrivia(text, pos)) {
-                pos = scanConflictMarkerTrivia(text, pos, error2);
+              if (isConflictMarkerTrivia(text2, pos)) {
+                pos = scanConflictMarkerTrivia(text2, pos, error2);
                 return token = 7;
               }
               break;
@@ -14811,7 +14811,7 @@ ${lanes.join("\n")}
             }
             pos++;
           }
-          tokenValue = text.substring(fullStartPos, pos);
+          tokenValue = text2.substring(fullStartPos, pos);
           return firstNonWhitespace === -1 ? 13 : 12;
         }
         function scanJsxIdentifier() {
@@ -14869,7 +14869,7 @@ ${lanes.join("\n")}
           if (pos === tokenStart) {
             return scanJsDocToken();
           }
-          tokenValue = text.substring(tokenStart, pos);
+          tokenValue = text2.substring(tokenStart, pos);
           return token = 82;
         }
         function scanJsDocToken() {
@@ -14950,7 +14950,7 @@ ${lanes.join("\n")}
           if (isIdentifierStart(ch, languageVersion)) {
             let char = ch;
             while (pos < end && isIdentifierPart(char = codePointUnchecked(pos), languageVersion) || char === 45) pos += charSize(char);
-            tokenValue = text.substring(tokenStart, pos);
+            tokenValue = text2.substring(tokenStart, pos);
             if (char === 92) {
               tokenValue += scanIdentifierParts();
             }
@@ -14986,7 +14986,7 @@ ${lanes.join("\n")}
           const saveTokenValue = tokenValue;
           const saveTokenFlags = tokenFlags;
           const saveErrorExpectations = commentDirectives;
-          setText(text, start22, length3);
+          setText(text2, start22, length3);
           const result = callback();
           end = saveEnd;
           pos = savePos;
@@ -15013,14 +15013,14 @@ ${lanes.join("\n")}
           );
         }
         function getText2() {
-          return text;
+          return text2;
         }
         function clearCommentDirectives() {
           commentDirectives = void 0;
         }
         function setText(newText, start22, length3) {
-          text = newText || "";
-          end = length3 === void 0 ? text.length : start22 + length3;
+          text2 = newText || "";
+          end = length3 === void 0 ? text2.length : start22 + length3;
           resetTokenState(start22 || 0);
         }
         function setOnError(errorCallback) {
@@ -16660,22 +16660,22 @@ ${lanes.join("\n")}
         if (parseTreeNode && parseTreeNode.kind === 170) {
           const paramIdx = parseTreeNode.parent.parameters.indexOf(parseTreeNode);
           const previousSibling = paramIdx > 0 ? parseTreeNode.parent.parameters[paramIdx - 1] : void 0;
-          const text = sourceFile.text;
+          const text2 = sourceFile.text;
           const commentRanges = previousSibling ? concatenate(
             // to handle
             // ... parameters, /** @internal */
             // public param: string
-            getTrailingCommentRanges(text, skipTrivia(
-              text,
+            getTrailingCommentRanges(text2, skipTrivia(
+              text2,
               previousSibling.end + 1,
               /*stopAfterLineBreak*/
               false,
               /*stopAtComments*/
               true
             )),
-            getLeadingCommentRanges(text, node.pos)
-          ) : getTrailingCommentRanges(text, skipTrivia(
-            text,
+            getLeadingCommentRanges(text2, node.pos)
+          ) : getTrailingCommentRanges(text2, skipTrivia(
+            text2,
             node.pos,
             /*stopAfterLineBreak*/
             false,
@@ -16726,7 +16726,7 @@ ${lanes.join("\n")}
       var stringWriter = createSingleLineStringWriter();
       function createSingleLineStringWriter() {
         var str2 = "";
-        const writeText = (text) => str2 += text;
+        const writeText = (text2) => str2 += text2;
         return {
           getText: () => str2,
           write: writeText,
@@ -17044,15 +17044,15 @@ ${lanes.join("\n")}
       function insertStatementAfterCustomPrologue(to, statement) {
         return insertStatementAfterPrologue(to, statement, isAnyPrologueDirective);
       }
-      function isRecognizedTripleSlashComment(text, commentPos, commentEnd) {
-        if (text.charCodeAt(commentPos + 1) === 47 && commentPos + 2 < commentEnd && text.charCodeAt(commentPos + 2) === 47) {
-          const textSubStr = text.substring(commentPos, commentEnd);
+      function isRecognizedTripleSlashComment(text2, commentPos, commentEnd) {
+        if (text2.charCodeAt(commentPos + 1) === 47 && commentPos + 2 < commentEnd && text2.charCodeAt(commentPos + 2) === 47) {
+          const textSubStr = text2.substring(commentPos, commentEnd);
           return fullTripleSlashReferencePathRegEx.test(textSubStr) || fullTripleSlashAMDReferencePathRegEx.test(textSubStr) || fullTripleSlashAMDModuleRegEx.test(textSubStr) || fullTripleSlashReferenceTypeReferenceDirectiveRegEx.test(textSubStr) || fullTripleSlashLibReferenceRegEx.test(textSubStr) || defaultLibReferenceRegEx.test(textSubStr) ? true : false;
         }
         return false;
       }
-      function isPinnedComment(text, start2) {
-        return text.charCodeAt(start2 + 1) === 42 && text.charCodeAt(start2 + 2) === 33;
+      function isPinnedComment(text2, start2) {
+        return text2.charCodeAt(start2 + 1) === 42 && text2.charCodeAt(start2 + 2) === 33;
       }
       function createCommentDirectivesMap(sourceFile, commentDirectives) {
         const directivesByLine = new Map(
@@ -17144,11 +17144,11 @@ ${lanes.join("\n")}
         if (nodeIsMissing(node)) {
           return "";
         }
-        let text = sourceText.substring(includeTrivia ? node.pos : skipTrivia(sourceText, node.pos), node.end);
+        let text2 = sourceText.substring(includeTrivia ? node.pos : skipTrivia(sourceText, node.pos), node.end);
         if (isJSDocTypeExpressionOrChild(node)) {
-          text = text.split(/\r\n|\n|\r/).map((line7) => line7.replace(/^\s*\*/, "").trimStart()).join("\n");
+          text2 = text2.split(/\r\n|\n|\r/).map((line7) => line7.replace(/^\s*\*/, "").trimStart()).join("\n");
         }
-        return text;
+        return text2;
       }
       function getTextOfNode(node, includeTrivia = false) {
         return getSourceTextOfNodeFromSourceFile(getSourceFileOfNode(node), node, includeTrivia);
@@ -18298,12 +18298,12 @@ ${lanes.join("\n")}
       function getLeadingCommentRangesOfNode(node, sourceFileOfNode) {
         return node.kind !== 12 ? getLeadingCommentRanges(sourceFileOfNode.text, node.pos) : void 0;
       }
-      function getJSDocCommentRanges(node, text) {
-        const commentRanges = node.kind === 170 || node.kind === 169 || node.kind === 219 || node.kind === 220 || node.kind === 218 || node.kind === 261 || node.kind === 282 ? concatenate(getTrailingCommentRanges(text, node.pos), getLeadingCommentRanges(text, node.pos)) : getLeadingCommentRanges(text, node.pos);
+      function getJSDocCommentRanges(node, text2) {
+        const commentRanges = node.kind === 170 || node.kind === 169 || node.kind === 219 || node.kind === 220 || node.kind === 218 || node.kind === 261 || node.kind === 282 ? concatenate(getTrailingCommentRanges(text2, node.pos), getLeadingCommentRanges(text2, node.pos)) : getLeadingCommentRanges(text2, node.pos);
         return filter(
           commentRanges,
           (comment) => comment.end <= node.end && // Due to parse errors sometime empty parameter may get comments assigned to it that end up not in parameter range
-          text.charCodeAt(comment.pos + 1) === 42 && text.charCodeAt(comment.pos + 2) === 42 && text.charCodeAt(comment.pos + 3) !== 47
+          text2.charCodeAt(comment.pos + 1) === 42 && text2.charCodeAt(comment.pos + 2) === 42 && text2.charCodeAt(comment.pos + 3) !== 47
           /* slash */
         );
       }
@@ -20949,10 +20949,10 @@ ${lanes.join("\n")}
         sourceFilePath = isSourceFileInCommonSourceDirectory ? sourceFilePath.substring(commonSourceDirectory.length) : sourceFilePath;
         return combinePaths(newDirPath, sourceFilePath);
       }
-      function writeFile(host, diagnostics, fileName, text, writeByteOrderMark, sourceFiles, data) {
+      function writeFile(host, diagnostics, fileName, text2, writeByteOrderMark, sourceFiles, data) {
         host.writeFile(
           fileName,
-          text,
+          text2,
           writeByteOrderMark,
           (hostErrorMessage) => {
             diagnostics.add(createCompilerDiagnostic(Diagnostics.Could_not_write_file_0_Colon_1, fileName, hostErrorMessage));
@@ -21106,7 +21106,7 @@ ${lanes.join("\n")}
           writer.writeLine();
         }
       }
-      function emitComments(text, lineMap, writer, comments, leadingSeparator, trailingSeparator, newLine, writeComment) {
+      function emitComments(text2, lineMap, writer, comments, leadingSeparator, trailingSeparator, newLine, writeComment) {
         if (comments && comments.length > 0) {
           if (leadingSeparator) {
             writer.writeSpace(" ");
@@ -21117,7 +21117,7 @@ ${lanes.join("\n")}
               writer.writeSpace(" ");
               emitInterveningSeparator = false;
             }
-            writeComment(text, lineMap, writer, comment.pos, comment.end, newLine);
+            writeComment(text2, lineMap, writer, comment.pos, comment.end, newLine);
             if (comment.hasTrailingNewLine) {
               writer.writeLine();
             } else {
@@ -21129,15 +21129,15 @@ ${lanes.join("\n")}
           }
         }
       }
-      function emitDetachedComments(text, lineMap, writer, writeComment, node, newLine, removeComments) {
+      function emitDetachedComments(text2, lineMap, writer, writeComment, node, newLine, removeComments) {
         let leadingComments;
         let currentDetachedCommentInfo;
         if (removeComments) {
           if (node.pos === 0) {
-            leadingComments = filter(getLeadingCommentRanges(text, node.pos), isPinnedCommentLocal);
+            leadingComments = filter(getLeadingCommentRanges(text2, node.pos), isPinnedCommentLocal);
           }
         } else {
-          leadingComments = getLeadingCommentRanges(text, node.pos);
+          leadingComments = getLeadingCommentRanges(text2, node.pos);
         }
         if (leadingComments) {
           const detachedComments = [];
@@ -21155,11 +21155,11 @@ ${lanes.join("\n")}
           }
           if (detachedComments.length) {
             const lastCommentLine = getLineOfLocalPositionFromLineMap(lineMap, last(detachedComments).end);
-            const nodeLine = getLineOfLocalPositionFromLineMap(lineMap, skipTrivia(text, node.pos));
+            const nodeLine = getLineOfLocalPositionFromLineMap(lineMap, skipTrivia(text2, node.pos));
             if (nodeLine >= lastCommentLine + 2) {
               emitNewLineBeforeLeadingComments(lineMap, writer, node, leadingComments);
               emitComments(
-                text,
+                text2,
                 lineMap,
                 writer,
                 detachedComments,
@@ -21176,22 +21176,22 @@ ${lanes.join("\n")}
         }
         return currentDetachedCommentInfo;
         function isPinnedCommentLocal(comment) {
-          return isPinnedComment(text, comment.pos);
+          return isPinnedComment(text2, comment.pos);
         }
       }
-      function writeCommentRange(text, lineMap, writer, commentPos, commentEnd, newLine) {
-        if (text.charCodeAt(commentPos + 1) === 42) {
+      function writeCommentRange(text2, lineMap, writer, commentPos, commentEnd, newLine) {
+        if (text2.charCodeAt(commentPos + 1) === 42) {
           const firstCommentLineAndCharacter = computeLineAndCharacterOfPosition(lineMap, commentPos);
           const lineCount = lineMap.length;
           let firstCommentLineIndent;
           for (let pos = commentPos, currentLine = firstCommentLineAndCharacter.line; pos < commentEnd; currentLine++) {
-            const nextLineStart = currentLine + 1 === lineCount ? text.length + 1 : lineMap[currentLine + 1];
+            const nextLineStart = currentLine + 1 === lineCount ? text2.length + 1 : lineMap[currentLine + 1];
             if (pos !== commentPos) {
               if (firstCommentLineIndent === void 0) {
-                firstCommentLineIndent = calculateIndent(text, lineMap[firstCommentLineAndCharacter.line], commentPos);
+                firstCommentLineIndent = calculateIndent(text2, lineMap[firstCommentLineAndCharacter.line], commentPos);
               }
               const currentWriterIndentSpacing = writer.getIndent() * getIndentSize();
-              const spacesToEmit = currentWriterIndentSpacing - firstCommentLineIndent + calculateIndent(text, pos, nextLineStart);
+              const spacesToEmit = currentWriterIndentSpacing - firstCommentLineIndent + calculateIndent(text2, pos, nextLineStart);
               if (spacesToEmit > 0) {
                 let numberOfSingleSpacesToEmit = spacesToEmit % getIndentSize();
                 const indentSizeSpaceString = getIndentString((spacesToEmit - numberOfSingleSpacesToEmit) / getIndentSize());
@@ -21204,16 +21204,16 @@ ${lanes.join("\n")}
                 writer.rawWrite("");
               }
             }
-            writeTrimmedCurrentLine(text, commentEnd, writer, newLine, pos, nextLineStart);
+            writeTrimmedCurrentLine(text2, commentEnd, writer, newLine, pos, nextLineStart);
             pos = nextLineStart;
           }
         } else {
-          writer.writeComment(text.substring(commentPos, commentEnd));
+          writer.writeComment(text2.substring(commentPos, commentEnd));
         }
       }
-      function writeTrimmedCurrentLine(text, commentEnd, writer, newLine, pos, nextLineStart) {
+      function writeTrimmedCurrentLine(text2, commentEnd, writer, newLine, pos, nextLineStart) {
         const end = Math.min(commentEnd, nextLineStart - 1);
-        const currentLineText = text.substring(pos, end).trim();
+        const currentLineText = text2.substring(pos, end).trim();
         if (currentLineText) {
           writer.writeComment(currentLineText);
           if (end !== commentEnd) {
@@ -21223,10 +21223,10 @@ ${lanes.join("\n")}
           writer.rawWrite(newLine);
         }
       }
-      function calculateIndent(text, pos, end) {
+      function calculateIndent(text2, pos, end) {
         let currentLineIndent = 0;
-        for (; pos < end && isWhiteSpaceSingleLine(text.charCodeAt(pos)); pos++) {
-          if (text.charCodeAt(pos) === 9) {
+        for (; pos < end && isWhiteSpaceSingleLine(text2.charCodeAt(pos)); pos++) {
+          if (text2.charCodeAt(pos) === 9) {
             currentLineIndent += getIndentSize() - currentLineIndent % getIndentSize();
           } else {
             currentLineIndent++;
@@ -21688,9 +21688,9 @@ ${lanes.join("\n")}
       function readJson(path2, host) {
         return readJsonOrUndefined(path2, host) || {};
       }
-      function tryParseJson(text) {
+      function tryParseJson(text2) {
         try {
-          return JSON.parse(text);
+          return JSON.parse(text2);
         } catch {
           return void 0;
         }
@@ -22161,9 +22161,9 @@ ${lanes.join("\n")}
         this.original = void 0;
         this.emitNode = void 0;
       }
-      function SourceMapSource(fileName, text, skipTrivia2) {
+      function SourceMapSource(fileName, text2, skipTrivia2) {
         this.fileName = fileName;
-        this.text = text;
+        this.text = text2;
         this.skipTrivia = skipTrivia2 || ((pos) => pos);
       }
       var objectAllocator = {
@@ -22186,8 +22186,8 @@ ${lanes.join("\n")}
         Object.assign(objectAllocator, alloc);
         forEach(objectAllocatorPatchers, (fn) => fn(objectAllocator));
       }
-      function formatStringFromArgs(text, args3) {
-        return text.replace(/\{(\d+)\}/g, (_match, index) => "" + Debug.checkDefined(args3[+index]));
+      function formatStringFromArgs(text2, args3) {
+        return text2.replace(/\{(\d+)\}/g, (_match, index) => "" + Debug.checkDefined(args3[+index]));
       }
       var localizedDiagnosticMessages;
       function setLocalizedDiagnosticMessages(messages2) {
@@ -22206,15 +22206,15 @@ ${lanes.join("\n")}
           length2 = sourceText.length - start2;
         }
         assertDiagnosticLocation(sourceText, start2, length2);
-        let text = getLocaleSpecificMessage(message2);
+        let text2 = getLocaleSpecificMessage(message2);
         if (some(args3)) {
-          text = formatStringFromArgs(text, args3);
+          text2 = formatStringFromArgs(text2, args3);
         }
         return {
           file: void 0,
           start: start2,
           length: length2,
-          messageText: text,
+          messageText: text2,
           category: message2.category,
           code: message2.code,
           reportsUnnecessary: message2.reportsUnnecessary,
@@ -22262,15 +22262,15 @@ ${lanes.join("\n")}
       }
       function createFileDiagnostic(file, start2, length2, message2, ...args3) {
         assertDiagnosticLocation(file.text, start2, length2);
-        let text = getLocaleSpecificMessage(message2);
+        let text2 = getLocaleSpecificMessage(message2);
         if (some(args3)) {
-          text = formatStringFromArgs(text, args3);
+          text2 = formatStringFromArgs(text2, args3);
         }
         return {
           file,
           start: start2,
           length: length2,
-          messageText: text,
+          messageText: text2,
           category: message2.category,
           code: message2.code,
           reportsUnnecessary: message2.reportsUnnecessary,
@@ -22278,22 +22278,22 @@ ${lanes.join("\n")}
         };
       }
       function formatMessage(message2, ...args3) {
-        let text = getLocaleSpecificMessage(message2);
+        let text2 = getLocaleSpecificMessage(message2);
         if (some(args3)) {
-          text = formatStringFromArgs(text, args3);
+          text2 = formatStringFromArgs(text2, args3);
         }
-        return text;
+        return text2;
       }
       function createCompilerDiagnostic(message2, ...args3) {
-        let text = getLocaleSpecificMessage(message2);
+        let text2 = getLocaleSpecificMessage(message2);
         if (some(args3)) {
-          text = formatStringFromArgs(text, args3);
+          text2 = formatStringFromArgs(text2, args3);
         }
         return {
           file: void 0,
           start: void 0,
           length: void 0,
-          messageText: text,
+          messageText: text2,
           category: message2.category,
           code: message2.code,
           reportsUnnecessary: message2.reportsUnnecessary,
@@ -22312,12 +22312,12 @@ ${lanes.join("\n")}
         };
       }
       function chainDiagnosticMessages(details, message2, ...args3) {
-        let text = getLocaleSpecificMessage(message2);
+        let text2 = getLocaleSpecificMessage(message2);
         if (some(args3)) {
-          text = formatStringFromArgs(text, args3);
+          text2 = formatStringFromArgs(text2, args3);
         }
         return {
-          messageText: text,
+          messageText: text2,
           category: message2.category,
           code: message2.code,
           next: details === void 0 || Array.isArray(details) ? details : [details]
@@ -22901,8 +22901,8 @@ ${lanes.join("\n")}
         return withoutPrefix === void 0 ? void 0 : stripLeadingDirectorySeparator(withoutPrefix);
       }
       var reservedCharacterPattern = /[^\w\s/]/g;
-      function regExpEscape(text) {
-        return text.replace(reservedCharacterPattern, escapeRegExpCharacter);
+      function regExpEscape(text2) {
+        return text2.replace(reservedCharacterPattern, escapeRegExpCharacter);
       }
       function escapeRegExpCharacter(match) {
         return "\\" + match;
@@ -23261,7 +23261,7 @@ ${lanes.join("\n")}
         return ModuleSpecifierEnding2;
       })(ModuleSpecifierEnding || {});
       function usesExtensionsOnImports({ imports }, hasExtension2 = or(hasJSFileExtension, hasTSFileExtension)) {
-        return firstDefined(imports, ({ text }) => pathIsRelative(text) && !fileExtensionIsOneOf(text, extensionsNotSupportingExtensionlessResolution) ? hasExtension2(text) : void 0) || false;
+        return firstDefined(imports, ({ text: text2 }) => pathIsRelative(text2) && !fileExtensionIsOneOf(text2, extensionsNotSupportingExtensionlessResolution) ? hasExtension2(text2) : void 0) || false;
       }
       function getModuleSpecifierEndingPreference(preference, resolutionMode, compilerOptions, sourceFile) {
         const moduleResolution = getEmitModuleResolutionKind(compilerOptions);
@@ -23587,19 +23587,19 @@ ${lanes.join("\n")}
       function pseudoBigIntToString({ negative, base10Value }) {
         return (negative && base10Value !== "0" ? "-" : "") + base10Value;
       }
-      function parseBigInt(text) {
+      function parseBigInt(text2) {
         if (!isValidBigIntString(
-          text,
+          text2,
           /*roundTripOnly*/
           false
         )) {
           return void 0;
         }
-        return parseValidBigInt(text);
+        return parseValidBigInt(text2);
       }
-      function parseValidBigInt(text) {
-        const negative = text.startsWith("-");
-        const base10Value = parsePseudoBigInt(`${negative ? text.slice(1) : text}n`);
+      function parseValidBigInt(text2) {
+        const negative = text2.startsWith("-");
+        const base10Value = parsePseudoBigInt(`${negative ? text2.slice(1) : text2}n`);
         return { negative, base10Value };
       }
       function isValidBigIntString(s, roundTripOnly) {
@@ -23838,8 +23838,8 @@ ${lanes.join("\n")}
       function isFunctionExpressionOrArrowFunction(node) {
         return node.kind === 219 || node.kind === 220;
       }
-      function escapeSnippetText(text) {
-        return text.replace(/\$/g, () => "\\$");
+      function escapeSnippetText(text2) {
+        return text2.replace(/\$/g, () => "\\$");
       }
       function isNumericLiteralName(name2) {
         return (+name2).toString() === name2;
@@ -26512,13 +26512,13 @@ ${lanes.join("\n")}
           return update(updated, original);
         }
         function createNumericLiteral(value2, numericLiteralFlags = 0) {
-          const text = typeof value2 === "number" ? value2 + "" : value2;
-          Debug.assert(text.charCodeAt(0) !== 45, "Negative numbers should be created in combination with createPrefixUnaryExpression");
+          const text2 = typeof value2 === "number" ? value2 + "" : value2;
+          Debug.assert(text2.charCodeAt(0) !== 45, "Negative numbers should be created in combination with createPrefixUnaryExpression");
           const node = createBaseDeclaration(
             9
             /* NumericLiteral */
           );
-          node.text = text;
+          node.text = text2;
           node.numericLiteralFlags = numericLiteralFlags;
           if (numericLiteralFlags & 384) node.transformFlags |= 1024;
           return node;
@@ -26532,17 +26532,17 @@ ${lanes.join("\n")}
           node.transformFlags |= 32;
           return node;
         }
-        function createBaseStringLiteral(text, isSingleQuote) {
+        function createBaseStringLiteral(text2, isSingleQuote) {
           const node = createBaseDeclaration(
             11
             /* StringLiteral */
           );
-          node.text = text;
+          node.text = text2;
           node.singleQuote = isSingleQuote;
           return node;
         }
-        function createStringLiteral(text, isSingleQuote, hasExtendedUnicodeEscape) {
-          const node = createBaseStringLiteral(text, isSingleQuote);
+        function createStringLiteral(text2, isSingleQuote, hasExtendedUnicodeEscape) {
+          const node = createBaseStringLiteral(text2, isSingleQuote);
           node.hasExtendedUnicodeEscape = hasExtendedUnicodeEscape;
           if (hasExtendedUnicodeEscape) node.transformFlags |= 1024;
           return node;
@@ -26556,48 +26556,48 @@ ${lanes.join("\n")}
           node.textSourceNode = sourceNode;
           return node;
         }
-        function createRegularExpressionLiteral(text) {
+        function createRegularExpressionLiteral(text2) {
           const node = createBaseToken(
             14
             /* RegularExpressionLiteral */
           );
-          node.text = text;
+          node.text = text2;
           return node;
         }
-        function createLiteralLikeNode(kind, text) {
+        function createLiteralLikeNode(kind, text2) {
           switch (kind) {
             case 9:
               return createNumericLiteral(
-                text,
+                text2,
                 /*numericLiteralFlags*/
                 0
               );
             case 10:
-              return createBigIntLiteral(text);
+              return createBigIntLiteral(text2);
             case 11:
               return createStringLiteral(
-                text,
+                text2,
                 /*isSingleQuote*/
                 void 0
               );
             case 12:
               return createJsxText(
-                text,
+                text2,
                 /*containsOnlyTriviaWhiteSpaces*/
                 false
               );
             case 13:
               return createJsxText(
-                text,
+                text2,
                 /*containsOnlyTriviaWhiteSpaces*/
                 true
               );
             case 14:
-              return createRegularExpressionLiteral(text);
+              return createRegularExpressionLiteral(text2);
             case 15:
               return createTemplateLiteralLikeNode(
                 kind,
-                text,
+                text2,
                 /*rawText*/
                 void 0,
                 /*templateFlags*/
@@ -26616,8 +26616,8 @@ ${lanes.join("\n")}
           node.symbol = void 0;
           return node;
         }
-        function createBaseGeneratedIdentifier(text, autoGenerateFlags, prefix, suffix) {
-          const node = createBaseIdentifier(escapeLeadingUnderscores(text));
+        function createBaseGeneratedIdentifier(text2, autoGenerateFlags, prefix, suffix) {
+          const node = createBaseIdentifier(escapeLeadingUnderscores(text2));
           setIdentifierAutoGenerate(node, {
             flags: autoGenerateFlags,
             id: nextAutoGenerateId,
@@ -26627,14 +26627,14 @@ ${lanes.join("\n")}
           nextAutoGenerateId++;
           return node;
         }
-        function createIdentifier(text, originalKeywordKind, hasExtendedUnicodeEscape) {
-          if (originalKeywordKind === void 0 && text) {
-            originalKeywordKind = stringToToken(text);
+        function createIdentifier(text2, originalKeywordKind, hasExtendedUnicodeEscape) {
+          if (originalKeywordKind === void 0 && text2) {
+            originalKeywordKind = stringToToken(text2);
           }
           if (originalKeywordKind === 80) {
             originalKeywordKind = void 0;
           }
-          const node = createBaseIdentifier(escapeLeadingUnderscores(text));
+          const node = createBaseIdentifier(escapeLeadingUnderscores(text2));
           if (hasExtendedUnicodeEscape) node.flags |= 256;
           if (node.escapedText === "await") {
             node.transformFlags |= 67108864;
@@ -26665,14 +26665,14 @@ ${lanes.join("\n")}
             void 0
           );
         }
-        function createUniqueName(text, flags22 = 0, prefix, suffix) {
+        function createUniqueName(text2, flags22 = 0, prefix, suffix) {
           Debug.assert(!(flags22 & 7), "Argument out of range: flags");
           Debug.assert((flags22 & (16 | 32)) !== 32, "GeneratedIdentifierFlags.FileLevel cannot be set without also setting GeneratedIdentifierFlags.Optimistic");
-          return createBaseGeneratedIdentifier(text, 3 | flags22, prefix, suffix);
+          return createBaseGeneratedIdentifier(text2, 3 | flags22, prefix, suffix);
         }
         function getGeneratedNameForNode(node, flags22 = 0, prefix, suffix) {
           Debug.assert(!(flags22 & 7), "Argument out of range: flags");
-          const text = !node ? "" : isMemberName(node) ? formatGeneratedName(
+          const text2 = !node ? "" : isMemberName(node) ? formatGeneratedName(
             /*privateName*/
             false,
             prefix,
@@ -26681,7 +26681,7 @@ ${lanes.join("\n")}
             idText
           ) : `generated@${getNodeId(node)}`;
           if (prefix || suffix) flags22 |= 16;
-          const name2 = createBaseGeneratedIdentifier(text, 4 | flags22, prefix, suffix);
+          const name2 = createBaseGeneratedIdentifier(text2, 4 | flags22, prefix, suffix);
           name2.original = node;
           return name2;
         }
@@ -26694,12 +26694,12 @@ ${lanes.join("\n")}
           node.transformFlags |= 16777216;
           return node;
         }
-        function createPrivateIdentifier(text) {
-          if (!startsWith(text, "#")) Debug.fail("First character of private identifier must be #: " + text);
-          return createBasePrivateIdentifier(escapeLeadingUnderscores(text));
+        function createPrivateIdentifier(text2) {
+          if (!startsWith(text2, "#")) Debug.fail("First character of private identifier must be #: " + text2);
+          return createBasePrivateIdentifier(escapeLeadingUnderscores(text2));
         }
-        function createBaseGeneratedPrivateIdentifier(text, autoGenerateFlags, prefix, suffix) {
-          const node = createBasePrivateIdentifier(escapeLeadingUnderscores(text));
+        function createBaseGeneratedPrivateIdentifier(text2, autoGenerateFlags, prefix, suffix) {
+          const node = createBasePrivateIdentifier(escapeLeadingUnderscores(text2));
           setIdentifierAutoGenerate(node, {
             flags: autoGenerateFlags,
             id: nextAutoGenerateId,
@@ -26709,13 +26709,13 @@ ${lanes.join("\n")}
           nextAutoGenerateId++;
           return node;
         }
-        function createUniquePrivateName(text, prefix, suffix) {
-          if (text && !startsWith(text, "#")) Debug.fail("First character of private identifier must be #: " + text);
-          const autoGenerateFlags = 8 | (text ? 3 : 1);
-          return createBaseGeneratedPrivateIdentifier(text ?? "", autoGenerateFlags, prefix, suffix);
+        function createUniquePrivateName(text2, prefix, suffix) {
+          if (text2 && !startsWith(text2, "#")) Debug.fail("First character of private identifier must be #: " + text2);
+          const autoGenerateFlags = 8 | (text2 ? 3 : 1);
+          return createBaseGeneratedPrivateIdentifier(text2 ?? "", autoGenerateFlags, prefix, suffix);
         }
         function getGeneratedPrivateNameForNode(node, prefix, suffix) {
-          const text = isMemberName(node) ? formatGeneratedName(
+          const text2 = isMemberName(node) ? formatGeneratedName(
             /*privateName*/
             true,
             prefix,
@@ -26724,7 +26724,7 @@ ${lanes.join("\n")}
             idText
           ) : `#generated@${getNodeId(node)}`;
           const flags22 = prefix || suffix ? 16 : 0;
-          const name2 = createBaseGeneratedPrivateIdentifier(text, 4 | flags22, prefix, suffix);
+          const name2 = createBaseGeneratedPrivateIdentifier(text2, 4 | flags22, prefix, suffix);
           name2.original = node;
           return name2;
         }
@@ -28116,24 +28116,24 @@ ${lanes.join("\n")}
         function updateTemplateExpression(node, head, templateSpans) {
           return node.head !== head || node.templateSpans !== templateSpans ? update(createTemplateExpression(head, templateSpans), node) : node;
         }
-        function checkTemplateLiteralLikeNode(kind, text, rawText, templateFlags = 0) {
+        function checkTemplateLiteralLikeNode(kind, text2, rawText, templateFlags = 0) {
           Debug.assert(!(templateFlags & ~7176), "Unsupported template flags.");
           let cooked = void 0;
-          if (rawText !== void 0 && rawText !== text) {
+          if (rawText !== void 0 && rawText !== text2) {
             cooked = getCookedText(kind, rawText);
             if (typeof cooked === "object") {
               return Debug.fail("Invalid raw text");
             }
           }
-          if (text === void 0) {
+          if (text2 === void 0) {
             if (cooked === void 0) {
               return Debug.fail("Arguments 'text' and 'rawText' may not both be undefined.");
             }
-            text = cooked;
+            text2 = cooked;
           } else if (cooked !== void 0) {
-            Debug.assert(text === cooked, "Expected argument 'text' to be the normalized (i.e. 'cooked') version of argument 'rawText'.");
+            Debug.assert(text2 === cooked, "Expected argument 'text' to be the normalized (i.e. 'cooked') version of argument 'rawText'.");
           }
-          return text;
+          return text2;
         }
         function getTransformFlagsOfTemplateLiteralLike(templateFlags) {
           let transformFlags = 1024;
@@ -28142,43 +28142,43 @@ ${lanes.join("\n")}
           }
           return transformFlags;
         }
-        function createTemplateLiteralLikeToken(kind, text, rawText, templateFlags) {
+        function createTemplateLiteralLikeToken(kind, text2, rawText, templateFlags) {
           const node = createBaseToken(kind);
-          node.text = text;
+          node.text = text2;
           node.rawText = rawText;
           node.templateFlags = templateFlags & 7176;
           node.transformFlags = getTransformFlagsOfTemplateLiteralLike(node.templateFlags);
           return node;
         }
-        function createTemplateLiteralLikeDeclaration(kind, text, rawText, templateFlags) {
+        function createTemplateLiteralLikeDeclaration(kind, text2, rawText, templateFlags) {
           const node = createBaseDeclaration(kind);
-          node.text = text;
+          node.text = text2;
           node.rawText = rawText;
           node.templateFlags = templateFlags & 7176;
           node.transformFlags = getTransformFlagsOfTemplateLiteralLike(node.templateFlags);
           return node;
         }
-        function createTemplateLiteralLikeNode(kind, text, rawText, templateFlags) {
+        function createTemplateLiteralLikeNode(kind, text2, rawText, templateFlags) {
           if (kind === 15) {
-            return createTemplateLiteralLikeDeclaration(kind, text, rawText, templateFlags);
+            return createTemplateLiteralLikeDeclaration(kind, text2, rawText, templateFlags);
           }
-          return createTemplateLiteralLikeToken(kind, text, rawText, templateFlags);
+          return createTemplateLiteralLikeToken(kind, text2, rawText, templateFlags);
         }
-        function createTemplateHead(text, rawText, templateFlags) {
-          text = checkTemplateLiteralLikeNode(16, text, rawText, templateFlags);
-          return createTemplateLiteralLikeNode(16, text, rawText, templateFlags);
+        function createTemplateHead(text2, rawText, templateFlags) {
+          text2 = checkTemplateLiteralLikeNode(16, text2, rawText, templateFlags);
+          return createTemplateLiteralLikeNode(16, text2, rawText, templateFlags);
         }
-        function createTemplateMiddle(text, rawText, templateFlags) {
-          text = checkTemplateLiteralLikeNode(16, text, rawText, templateFlags);
-          return createTemplateLiteralLikeNode(17, text, rawText, templateFlags);
+        function createTemplateMiddle(text2, rawText, templateFlags) {
+          text2 = checkTemplateLiteralLikeNode(16, text2, rawText, templateFlags);
+          return createTemplateLiteralLikeNode(17, text2, rawText, templateFlags);
         }
-        function createTemplateTail(text, rawText, templateFlags) {
-          text = checkTemplateLiteralLikeNode(16, text, rawText, templateFlags);
-          return createTemplateLiteralLikeNode(18, text, rawText, templateFlags);
+        function createTemplateTail(text2, rawText, templateFlags) {
+          text2 = checkTemplateLiteralLikeNode(16, text2, rawText, templateFlags);
+          return createTemplateLiteralLikeNode(18, text2, rawText, templateFlags);
         }
-        function createNoSubstitutionTemplateLiteral(text, rawText, templateFlags) {
-          text = checkTemplateLiteralLikeNode(16, text, rawText, templateFlags);
-          return createTemplateLiteralLikeDeclaration(15, text, rawText, templateFlags);
+        function createNoSubstitutionTemplateLiteral(text2, rawText, templateFlags) {
+          text2 = checkTemplateLiteralLikeNode(16, text2, rawText, templateFlags);
+          return createTemplateLiteralLikeDeclaration(15, text2, rawText, templateFlags);
         }
         function createYieldExpression(asteriskToken, expression) {
           Debug.assert(!asteriskToken || !!expression, "A `YieldExpression` with an asteriskToken must have an expression.");
@@ -29340,41 +29340,41 @@ ${lanes.join("\n")}
         function updateJSDocMemberName(node, left, right) {
           return node.left !== left || node.right !== right ? update(createJSDocMemberName(left, right), node) : node;
         }
-        function createJSDocLink(name2, text) {
+        function createJSDocLink(name2, text2) {
           const node = createBaseNode(
             325
             /* JSDocLink */
           );
           node.name = name2;
-          node.text = text;
+          node.text = text2;
           return node;
         }
-        function updateJSDocLink(node, name2, text) {
-          return node.name !== name2 ? update(createJSDocLink(name2, text), node) : node;
+        function updateJSDocLink(node, name2, text2) {
+          return node.name !== name2 ? update(createJSDocLink(name2, text2), node) : node;
         }
-        function createJSDocLinkCode(name2, text) {
+        function createJSDocLinkCode(name2, text2) {
           const node = createBaseNode(
             326
             /* JSDocLinkCode */
           );
           node.name = name2;
-          node.text = text;
+          node.text = text2;
           return node;
         }
-        function updateJSDocLinkCode(node, name2, text) {
-          return node.name !== name2 ? update(createJSDocLinkCode(name2, text), node) : node;
+        function updateJSDocLinkCode(node, name2, text2) {
+          return node.name !== name2 ? update(createJSDocLinkCode(name2, text2), node) : node;
         }
-        function createJSDocLinkPlain(name2, text) {
+        function createJSDocLinkPlain(name2, text2) {
           const node = createBaseNode(
             327
             /* JSDocLinkPlain */
           );
           node.name = name2;
-          node.text = text;
+          node.text = text2;
           return node;
         }
-        function updateJSDocLinkPlain(node, name2, text) {
-          return node.name !== name2 ? update(createJSDocLinkPlain(name2, text), node) : node;
+        function updateJSDocLinkPlain(node, name2, text2) {
+          return node.name !== name2 ? update(createJSDocLinkPlain(name2, text2), node) : node;
         }
         function updateJSDocImplementsTag(node, tagName = getDefaultTagName(node), className, comment) {
           return node.tagName !== tagName || node.class !== className || node.comment !== comment ? update(createJSDocImplementsTag(tagName, className, comment), node) : node;
@@ -29425,16 +29425,16 @@ ${lanes.join("\n")}
         function updateJSDocImportTag(node, tagName, importClause, moduleSpecifier, attributes, comment) {
           return node.tagName !== tagName || node.comment !== comment || node.importClause !== importClause || node.moduleSpecifier !== moduleSpecifier || node.attributes !== attributes ? update(createJSDocImportTag(tagName, importClause, moduleSpecifier, attributes, comment), node) : node;
         }
-        function createJSDocText(text) {
+        function createJSDocText(text2) {
           const node = createBaseNode(
             322
             /* JSDocText */
           );
-          node.text = text;
+          node.text = text2;
           return node;
         }
-        function updateJSDocText(node, text) {
-          return node.text !== text ? update(createJSDocText(text), node) : node;
+        function updateJSDocText(node, text2) {
+          return node.text !== text2 ? update(createJSDocText(text2), node) : node;
         }
         function createJSDocComment(comment, tags) {
           const node = createBaseNode(
@@ -29522,18 +29522,18 @@ ${lanes.join("\n")}
         function updateJsxFragment(node, openingFragment, children, closingFragment) {
           return node.openingFragment !== openingFragment || node.children !== children || node.closingFragment !== closingFragment ? update(createJsxFragment(openingFragment, children, closingFragment), node) : node;
         }
-        function createJsxText(text, containsOnlyTriviaWhiteSpaces) {
+        function createJsxText(text2, containsOnlyTriviaWhiteSpaces) {
           const node = createBaseNode(
             12
             /* JsxText */
           );
-          node.text = text;
+          node.text = text2;
           node.containsOnlyTriviaWhiteSpaces = !!containsOnlyTriviaWhiteSpaces;
           node.transformFlags |= 2;
           return node;
         }
-        function updateJsxText(node, text, containsOnlyTriviaWhiteSpaces) {
-          return node.text !== text || node.containsOnlyTriviaWhiteSpaces !== containsOnlyTriviaWhiteSpaces ? update(createJsxText(text, containsOnlyTriviaWhiteSpaces), node) : node;
+        function updateJsxText(node, text2, containsOnlyTriviaWhiteSpaces) {
+          return node.text !== text2 || node.containsOnlyTriviaWhiteSpaces !== containsOnlyTriviaWhiteSpaces ? update(createJsxText(text2, containsOnlyTriviaWhiteSpaces), node) : node;
         }
         function createJsxOpeningFragment() {
           const node = createBaseNode(
@@ -30804,8 +30804,8 @@ ${lanes.join("\n")}
       };
       var factory = createNodeFactory(4, syntheticFactory);
       var SourceMapSource2;
-      function createSourceMapSource(fileName, text, skipTrivia2) {
-        return new (SourceMapSource2 || (SourceMapSource2 = objectAllocator.getSourceMapSourceConstructor()))(fileName, text, skipTrivia2);
+      function createSourceMapSource(fileName, text2, skipTrivia2) {
+        return new (SourceMapSource2 || (SourceMapSource2 = objectAllocator.getSourceMapSourceConstructor()))(fileName, text2, skipTrivia2);
       }
       function setOriginalNode(node, original) {
         if (node.original !== original) {
@@ -30975,8 +30975,8 @@ ${lanes.join("\n")}
         getOrCreateEmitNode(node).leadingComments = comments;
         return node;
       }
-      function addSyntheticLeadingComment(node, kind, text, hasTrailingNewLine) {
-        return setSyntheticLeadingComments(node, append(getSyntheticLeadingComments(node), { kind, pos: -1, end: -1, hasTrailingNewLine, text }));
+      function addSyntheticLeadingComment(node, kind, text2, hasTrailingNewLine) {
+        return setSyntheticLeadingComments(node, append(getSyntheticLeadingComments(node), { kind, pos: -1, end: -1, hasTrailingNewLine, text: text2 }));
       }
       function getSyntheticTrailingComments(node) {
         var _a;
@@ -30986,8 +30986,8 @@ ${lanes.join("\n")}
         getOrCreateEmitNode(node).trailingComments = comments;
         return node;
       }
-      function addSyntheticTrailingComment(node, kind, text, hasTrailingNewLine) {
-        return setSyntheticTrailingComments(node, append(getSyntheticTrailingComments(node), { kind, pos: -1, end: -1, hasTrailingNewLine, text }));
+      function addSyntheticTrailingComment(node, kind, text2, hasTrailingNewLine) {
+        return setSyntheticTrailingComments(node, append(getSyntheticTrailingComments(node), { kind, pos: -1, end: -1, hasTrailingNewLine, text: text2 }));
       }
       function moveSyntheticComments(node, original) {
         setSyntheticLeadingComments(node, getSyntheticLeadingComments(original));
@@ -34051,8 +34051,8 @@ ${lanes.join("\n")}
           }
         }
       }
-      function isJSDocLikeText(text, start2) {
-        return text.charCodeAt(start2 + 1) === 42 && text.charCodeAt(start2 + 2) === 42 && text.charCodeAt(start2 + 3) !== 47;
+      function isJSDocLikeText(text2, start2) {
+        return text2.charCodeAt(start2 + 1) === 42 && text2.charCodeAt(start2 + 2) === 42 && text2.charCodeAt(start2 + 3) !== 47;
       }
       function isFileProbablyExternalModule(sourceFile) {
         return forEach(sourceFile.statements, isAnExternalModuleIndicatorNode) || getImportMetaIfNecessary(sourceFile);
@@ -35186,8 +35186,8 @@ ${lanes.join("\n")}
         (_b = tracing) == null ? void 0 : _b.pop();
         return result;
       }
-      function parseIsolatedEntityName(text, languageVersion) {
-        return Parser2.parseIsolatedEntityName(text, languageVersion);
+      function parseIsolatedEntityName(text2, languageVersion) {
+        return Parser2.parseIsolatedEntityName(text2, languageVersion);
       }
       function parseJsonText(fileName, sourceText) {
         return Parser2.parseJsonText(fileName, sourceText);
@@ -36208,10 +36208,10 @@ ${lanes.join("\n")}
           ) : kind === 283 ? factory2.createMissingDeclaration() : factoryCreateToken(kind);
           return finishNode(result, pos);
         }
-        function internIdentifier(text) {
-          let identifier = identifiers.get(text);
+        function internIdentifier(text2) {
+          let identifier = identifiers.get(text2);
           if (identifier === void 0) {
-            identifiers.set(text, identifier = text);
+            identifiers.set(text2, identifier = text2);
           }
           return identifier;
         }
@@ -36220,10 +36220,10 @@ ${lanes.join("\n")}
             identifierCount++;
             const pos = scanner2.hasPrecedingJSDocLeadingAsterisks() ? scanner2.getTokenStart() : getNodePos();
             const originalKeywordKind = token();
-            const text = internIdentifier(scanner2.getTokenValue());
+            const text2 = internIdentifier(scanner2.getTokenValue());
             const hasExtendedUnicodeEscape = scanner2.hasExtendedUnicodeEscape();
             nextTokenWithoutCheck();
-            return finishNode(factoryCreateIdentifier(text, originalKeywordKind, hasExtendedUnicodeEscape), pos);
+            return finishNode(factoryCreateIdentifier(text2, originalKeywordKind, hasExtendedUnicodeEscape), pos);
           }
           if (token() === 81) {
             parseErrorAtCurrentToken(privateIdentifierDiagnosticMessage || Diagnostics.Private_identifiers_are_not_allowed_outside_class_bodies);
@@ -42110,12 +42110,12 @@ ${lanes.join("\n")}
               let state = 1;
               let margin;
               let indent3 = start2 - (content.lastIndexOf("\n", start2) + 1) + 4;
-              function pushComment(text) {
+              function pushComment(text2) {
                 if (!margin) {
                   margin = indent3;
                 }
-                comments.push(text);
-                indent3 += text.length;
+                comments.push(text2);
+                indent3 += text2.length;
               }
               nextTokenJSDoc();
               while (parseOptionalJsdoc(
@@ -42379,12 +42379,12 @@ ${lanes.join("\n")}
               let linkEnd2;
               let state = 0;
               let margin;
-              function pushComment(text) {
+              function pushComment(text2) {
                 if (!margin) {
                   margin = indent3;
                 }
-                comments2.push(text);
-                indent3 += text.length;
+                comments2.push(text2);
+                indent3 += text2.length;
               }
               if (initialMargin !== void 0) {
                 if (initialMargin !== "") {
@@ -42486,13 +42486,13 @@ ${lanes.join("\n")}
               nextTokenJSDoc();
               skipWhitespace();
               const name2 = parseJSDocLinkName();
-              const text = [];
+              const text2 = [];
               while (token() !== 20 && token() !== 4 && token() !== 1) {
-                text.push(scanner2.getTokenText());
+                text2.push(scanner2.getTokenText());
                 nextTokenJSDoc();
               }
               const create = linkType === "link" ? factory2.createJSDocLink : linkType === "linkcode" ? factory2.createJSDocLinkCode : factory2.createJSDocLinkPlain;
-              return finishNode(create(name2, text.join("")), start22, scanner2.getTokenEnd());
+              return finishNode(create(name2, text2.join("")), start22, scanner2.getTokenEnd());
             }
             function parseJSDocLinkName() {
               if (tokenIsIdentifierOrKeyword(token())) {
@@ -43093,8 +43093,8 @@ ${lanes.join("\n")}
               const start22 = scanner2.getTokenStart();
               const end2 = scanner2.getTokenEnd();
               const originalKeywordKind = token();
-              const text = internIdentifier(scanner2.getTokenValue());
-              const result2 = finishNode(factoryCreateIdentifier(text, originalKeywordKind), start22, end2);
+              const text2 = internIdentifier(scanner2.getTokenValue());
+              const result2 = finishNode(factoryCreateIdentifier(text2, originalKeywordKind), start22, end2);
               nextTokenJSDoc();
               return result2;
             }
@@ -43217,14 +43217,14 @@ ${lanes.join("\n")}
           }
           return;
           function visitNode3(node) {
-            let text = "";
+            let text2 = "";
             if (aggressiveChecks && shouldCheckNode(node)) {
-              text = oldText.substring(node.pos, node.end);
+              text2 = oldText.substring(node.pos, node.end);
             }
             unsetNodeChildren(node, origSourceFile);
             setTextRangePosEnd(node, node.pos + delta, node.end + delta);
             if (aggressiveChecks && shouldCheckNode(node)) {
-              Debug.assert(text === newText.substring(node.pos, node.end));
+              Debug.assert(text2 === newText.substring(node.pos, node.end));
             }
             forEachChild(node, visitNode3, visitArray2);
             if (hasJSDocNodes(node)) {
@@ -43629,8 +43629,8 @@ ${lanes.join("\n")}
       }
       var tripleSlashXMLCommentStartRegEx = /^\/\/\/\s*<(\S+)\s.*?\/>/m;
       var singleLinePragmaRegEx = /^\/\/\/?\s*@([^\s:]+)((?:[^\S\r\n]|:).*)?$/m;
-      function extractPragmas(pragmas, range2, text) {
-        const tripleSlash = range2.kind === 2 && tripleSlashXMLCommentStartRegEx.exec(text);
+      function extractPragmas(pragmas, range2, text2) {
+        const tripleSlash = range2.kind === 2 && tripleSlashXMLCommentStartRegEx.exec(text2);
         if (tripleSlash) {
           const name2 = tripleSlash[1].toLowerCase();
           const pragma = commentPragmas[name2];
@@ -43641,7 +43641,7 @@ ${lanes.join("\n")}
             const argument = {};
             for (const arg of pragma.args) {
               const matcher = getNamedArgRegEx(arg.name);
-              const matchResult = matcher.exec(text);
+              const matchResult = matcher.exec(text2);
               if (!matchResult && !arg.optional) {
                 return;
               } else if (matchResult) {
@@ -43664,14 +43664,14 @@ ${lanes.join("\n")}
           }
           return;
         }
-        const singleLine = range2.kind === 2 && singleLinePragmaRegEx.exec(text);
+        const singleLine = range2.kind === 2 && singleLinePragmaRegEx.exec(text2);
         if (singleLine) {
           return addPragmaForMatch(pragmas, range2, 2, singleLine);
         }
         if (range2.kind === 3) {
           const multiLinePragmaRegEx = /@(\S+)(\s+(?:\S.*)?)?$/gm;
           let multiLineMatch;
-          while (multiLineMatch = multiLinePragmaRegEx.exec(text)) {
+          while (multiLineMatch = multiLinePragmaRegEx.exec(text2)) {
             addPragmaForMatch(pragmas, range2, 4, multiLineMatch);
           }
         }
@@ -43689,10 +43689,10 @@ ${lanes.join("\n")}
         pragmas.push({ name: name2, args: { arguments: argument, range: range2 } });
         return;
       }
-      function getNamedPragmaArguments(pragma, text) {
-        if (!text) return {};
+      function getNamedPragmaArguments(pragma, text2) {
+        if (!text2) return {};
         if (!pragma.args) return {};
-        const args3 = text.trim().split(/\s+/);
+        const args3 = text2.trim().split(/\s+/);
         const argMap = {};
         for (let i2 = 0; i2 < pragma.args.length; i2++) {
           const argument = pragma.args[i2];
@@ -45448,29 +45448,29 @@ ${lanes.join("\n")}
           }
         }
         function parseResponseFile(fileName) {
-          const text = tryReadFile(fileName, readFile || ((fileName2) => sys.readFile(fileName2)));
-          if (!isString(text)) {
-            errors.push(text);
+          const text2 = tryReadFile(fileName, readFile || ((fileName2) => sys.readFile(fileName2)));
+          if (!isString(text2)) {
+            errors.push(text2);
             return;
           }
           const args3 = [];
           let pos = 0;
           while (true) {
-            while (pos < text.length && text.charCodeAt(pos) <= 32) pos++;
-            if (pos >= text.length) break;
+            while (pos < text2.length && text2.charCodeAt(pos) <= 32) pos++;
+            if (pos >= text2.length) break;
             const start2 = pos;
-            if (text.charCodeAt(start2) === 34) {
+            if (text2.charCodeAt(start2) === 34) {
               pos++;
-              while (pos < text.length && text.charCodeAt(pos) !== 34) pos++;
-              if (pos < text.length) {
-                args3.push(text.substring(start2 + 1, pos));
+              while (pos < text2.length && text2.charCodeAt(pos) !== 34) pos++;
+              if (pos < text2.length) {
+                args3.push(text2.substring(start2 + 1, pos));
                 pos++;
               } else {
                 errors.push(createCompilerDiagnostic(Diagnostics.Unterminated_quoted_string_in_response_file_0, fileName));
               }
             } else {
-              while (text.charCodeAt(pos) > 32) pos++;
-              args3.push(text.substring(start2, pos));
+              while (text2.charCodeAt(pos) > 32) pos++;
+              args3.push(text2.substring(start2, pos));
             }
           }
           parseStrings(args3);
@@ -45655,13 +45655,13 @@ ${lanes.join("\n")}
         return isString(textOrDiagnostic) ? parseJsonText(fileName, textOrDiagnostic) : { fileName, parseDiagnostics: [textOrDiagnostic] };
       }
       function tryReadFile(fileName, readFile) {
-        let text;
+        let text2;
         try {
-          text = readFile(fileName);
+          text2 = readFile(fileName);
         } catch (e) {
           return createCompilerDiagnostic(Diagnostics.Cannot_read_file_0_Colon_1, fileName, e.message);
         }
-        return text === void 0 ? createCompilerDiagnostic(Diagnostics.Cannot_read_file_0, fileName) : text;
+        return text2 === void 0 ? createCompilerDiagnostic(Diagnostics.Cannot_read_file_0, fileName) : text2;
       }
       function commandLineOptionsToMap(options) {
         return arrayToMap(options, getOptionName);
@@ -51635,10 +51635,10 @@ ${lanes.join("\n")}
             } else {
               let pattern;
               if (node.name.kind === 11) {
-                const { text } = node.name;
-                pattern = tryParsePattern(text);
+                const { text: text2 } = node.name;
+                pattern = tryParsePattern(text2);
                 if (pattern === void 0) {
-                  errorOnFirstToken(node.name, Diagnostics.Pattern_0_can_have_at_most_one_Asterisk_character, text);
+                  errorOnFirstToken(node.name, Diagnostics.Pattern_0_can_have_at_most_one_Asterisk_character, text2);
                 }
               }
               const symbol = declareSymbolAndAddToSymbolTable(
@@ -62000,14 +62000,14 @@ ${lanes.join("\n")}
             if (context.flags & 4) {
               const rawtext = result.escapedText;
               let i2 = ((_c = context.typeParameterNamesByTextNextNameCount) == null ? void 0 : _c.get(rawtext)) || 0;
-              let text = rawtext;
-              while (((_d = context.typeParameterNamesByText) == null ? void 0 : _d.has(text)) || typeParameterShadowsOtherTypeParameterInScope(text, context, type)) {
+              let text2 = rawtext;
+              while (((_d = context.typeParameterNamesByText) == null ? void 0 : _d.has(text2)) || typeParameterShadowsOtherTypeParameterInScope(text2, context, type)) {
                 i2++;
-                text = `${rawtext}_${i2}`;
+                text2 = `${rawtext}_${i2}`;
               }
-              if (text !== rawtext) {
+              if (text2 !== rawtext) {
                 const typeArguments = getIdentifierTypeArguments(result);
-                result = factory.createIdentifier(text);
+                result = factory.createIdentifier(text2);
                 setIdentifierTypeArguments(result, typeArguments);
               }
               if (context.mustCreateTypeParametersNamesLookups) {
@@ -62018,7 +62018,7 @@ ${lanes.join("\n")}
               }
               context.typeParameterNamesByTextNextNameCount.set(rawtext, i2);
               context.typeParameterNames.set(getTypeId(type), result);
-              context.typeParameterNamesByText.add(text);
+              context.typeParameterNamesByText.add(text2);
             }
             return result;
           }
@@ -65486,9 +65486,9 @@ ${lanes.join("\n")}
               objectFlags |= 512;
               return;
             }
-            const text = getPropertyNameFromType(exprType);
+            const text2 = getPropertyNameFromType(exprType);
             const flags2 = 4 | (e.initializer ? 16777216 : 0);
-            const symbol = createSymbol(flags2, text);
+            const symbol = createSymbol(flags2, text2);
             symbol.links.type = getTypeFromBindingElement(e, includePatternInType, reportErrors2);
             members.set(symbol.escapedName, symbol);
           });
@@ -69608,15 +69608,15 @@ ${lanes.join("\n")}
         }
         function getUnresolvedSymbolForEntityName(name2) {
           const identifier = name2.kind === 167 ? name2.right : name2.kind === 212 ? name2.name : name2;
-          const text = identifier.escapedText;
-          if (text) {
+          const text2 = identifier.escapedText;
+          if (text2) {
             const parentSymbol = name2.kind === 167 ? getUnresolvedSymbolForEntityName(name2.left) : name2.kind === 212 ? getUnresolvedSymbolForEntityName(name2.expression) : void 0;
-            const path2 = parentSymbol ? `${getSymbolPath(parentSymbol)}.${text}` : text;
+            const path2 = parentSymbol ? `${getSymbolPath(parentSymbol)}.${text2}` : text2;
             let result = unresolvedSymbols.get(path2);
             if (!result) {
               unresolvedSymbols.set(path2, result = createSymbol(
                 524288,
-                text,
+                text2,
                 1048576
                 /* Unresolved */
               ));
@@ -71407,14 +71407,14 @@ ${lanes.join("\n")}
           }
           const newTypes = [];
           const newTexts = [];
-          let text = texts[0];
+          let text2 = texts[0];
           if (!addSpans(texts, types)) {
             return stringType;
           }
           if (newTypes.length === 0) {
-            return getStringLiteralType(text);
+            return getStringLiteralType(text2);
           }
-          newTexts.push(text);
+          newTexts.push(text2);
           if (every(newTexts, (t) => t === "")) {
             if (every(newTypes, (t) => !!(t.flags & 4))) {
               return stringType;
@@ -71433,16 +71433,16 @@ ${lanes.join("\n")}
             for (let i2 = 0; i2 < types2.length; i2++) {
               const t = types2[i2];
               if (t.flags & (2944 | 65536 | 32768)) {
-                text += getTemplateStringForType(t) || "";
-                text += texts2[i2 + 1];
+                text2 += getTemplateStringForType(t) || "";
+                text2 += texts2[i2 + 1];
               } else if (t.flags & 134217728) {
-                text += t.texts[0];
+                text2 += t.texts[0];
                 if (!addSpans(t.texts, t.types)) return false;
-                text += texts2[i2 + 1];
+                text2 += texts2[i2 + 1];
               } else if (isGenericIndexType(t) || isPatternLiteralPlaceholderType(t)) {
                 newTypes.push(t);
-                newTexts.push(text);
-                text = texts2[i2 + 1];
+                newTexts.push(text2);
+                text2 = texts2[i2 + 1];
               } else {
                 return false;
               }
@@ -78164,8 +78164,8 @@ ${lanes.join("\n")}
           const n = +s;
           return isFinite(n) && (!roundTripOnly || "" + n === s);
         }
-        function parseBigIntLiteralType(text) {
-          return getBigIntLiteralType(parseValidBigInt(text));
+        function parseBigIntLiteralType(text2) {
+          return getBigIntLiteralType(parseValidBigInt(text2));
         }
         function isMemberOfStringMapping(source, target2) {
           if (target2.flags & 1) {
@@ -79523,8 +79523,8 @@ ${lanes.join("\n")}
           var _a;
           const nameType = getLiteralTypeFromPropertyName(name2);
           if (!isTypeUsableAsPropertyName(nameType)) return errorType;
-          const text = getPropertyNameFromType(nameType);
-          return getTypeOfPropertyOfType(type, text) || includeUndefinedInIndexSignature((_a = getApplicableIndexInfoForName(type, text)) == null ? void 0 : _a.type) || errorType;
+          const text2 = getPropertyNameFromType(nameType);
+          return getTypeOfPropertyOfType(type, text2) || includeUndefinedInIndexSignature((_a = getApplicableIndexInfoForName(type, text2)) == null ? void 0 : _a.type) || errorType;
         }
         function getTypeOfDestructuredArrayElement(type, index) {
           return everyType(type, isTupleLikeType) && getTupleElementType(type, index) || includeUndefinedInIndexSignature(checkIteratedTypeOrElementType(
@@ -79660,8 +79660,8 @@ ${lanes.join("\n")}
           }
           const witnesses = [];
           for (const clause of switchStatement.caseBlock.clauses) {
-            const text = clause.kind === 297 ? clause.expression.text : void 0;
-            witnesses.push(text && !contains(witnesses, text) ? text : void 0);
+            const text2 = clause.kind === 297 ? clause.expression.text : void 0;
+            witnesses.push(text2 && !contains(witnesses, text2) ? text2 : void 0);
           }
           return witnesses;
         }
@@ -81053,7 +81053,7 @@ ${lanes.join("\n")}
               return filterType(type, (t) => getTypeFacts(t, notEqualFacts) === notEqualFacts);
             }
             const clauseWitnesses = witnesses.slice(clauseStart, clauseEnd);
-            return getUnionType(map(clauseWitnesses, (text) => text ? narrowTypeByTypeName(type, text) : neverType));
+            return getUnionType(map(clauseWitnesses, (text2) => text2 ? narrowTypeByTypeName(type, text2) : neverType));
           }
           function narrowTypeBySwitchOnTrue(type, { switchStatement, clauseStart, clauseEnd }) {
             const defaultIndex = findIndex(
@@ -82721,8 +82721,8 @@ ${lanes.join("\n")}
           }
           const nameType = getLiteralTypeFromPropertyName(name2);
           if (isTypeUsableAsPropertyName(nameType)) {
-            const text = getPropertyNameFromType(nameType);
-            return getTypeOfPropertyOfType(parentType, text);
+            const text2 = getPropertyNameFromType(nameType);
+            return getTypeOfPropertyOfType(parentType, text2);
           }
         }
         function getContextualTypeForStaticPropertyDeclaration(declaration, contextFlags) {
@@ -87284,9 +87284,9 @@ ${lanes.join("\n")}
             } else {
               let relatedInformation;
               if (node.arguments.length === 1) {
-                const text = getSourceFileOfNode(node).text;
-                if (isLineBreak(text.charCodeAt(skipTrivia(
-                  text,
+                const text2 = getSourceFileOfNode(node).text;
+                if (isLineBreak(text2.charCodeAt(skipTrivia(
+                  text2,
                   node.expression.end,
                   /*stopAfterLineBreak*/
                   true
@@ -90119,8 +90119,8 @@ ${lanes.join("\n")}
             const name2 = property.name;
             const exprType = getLiteralTypeFromPropertyName(name2);
             if (isTypeUsableAsPropertyName(exprType)) {
-              const text = getPropertyNameFromType(exprType);
-              const prop2 = getPropertyOfType(objectLiteralType, text);
+              const text2 = getPropertyNameFromType(exprType);
+              const prop2 = getPropertyOfType(objectLiteralType, text2);
               if (prop2) {
                 markPropertyAsReferenced(prop2, property, rightIsThis);
                 checkPropertyAccessibility(
@@ -96544,8 +96544,8 @@ ${lanes.join("\n")}
           } else if (isBigIntLiteral(member.name)) {
             error2(member.name, Diagnostics.An_enum_member_cannot_have_a_numeric_name);
           } else {
-            const text = getTextOfPropertyName(member.name);
-            if (isNumericLiteralName(text) && !isInfinityOrNaNString(text)) {
+            const text2 = getTextOfPropertyName(member.name);
+            if (isNumericLiteralName(text2) && !isInfinityOrNaNString(text2)) {
               error2(member.name, Diagnostics.An_enum_member_cannot_have_a_numeric_name);
             }
           }
@@ -100201,26 +100201,26 @@ ${lanes.join("\n")}
                 case 125:
                 case 124:
                 case 123:
-                  const text = visibilityToString(modifierToFlag(modifier.kind));
+                  const text2 = visibilityToString(modifierToFlag(modifier.kind));
                   if (flags2 & 7) {
                     return grammarErrorOnNode(modifier, Diagnostics.Accessibility_modifier_already_seen);
                   } else if (flags2 & 16) {
-                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text, "override");
+                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text2, "override");
                   } else if (flags2 & 256) {
-                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text, "static");
+                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text2, "static");
                   } else if (flags2 & 512) {
-                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text, "accessor");
+                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text2, "accessor");
                   } else if (flags2 & 8) {
-                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text, "readonly");
+                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text2, "readonly");
                   } else if (flags2 & 1024) {
-                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text, "async");
+                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text2, "async");
                   } else if (node.parent.kind === 269 || node.parent.kind === 308) {
-                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_cannot_appear_on_a_module_or_namespace_element, text);
+                    return grammarErrorOnNode(modifier, Diagnostics._0_modifier_cannot_appear_on_a_module_or_namespace_element, text2);
                   } else if (flags2 & 64) {
                     if (modifier.kind === 123) {
-                      return grammarErrorOnNode(modifier, Diagnostics._0_modifier_cannot_be_used_with_1_modifier, text, "abstract");
+                      return grammarErrorOnNode(modifier, Diagnostics._0_modifier_cannot_be_used_with_1_modifier, text2, "abstract");
                     } else {
-                      return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text, "abstract");
+                      return grammarErrorOnNode(modifier, Diagnostics._0_modifier_must_precede_1_modifier, text2, "abstract");
                     }
                   } else if (isPrivateIdentifierClassElementDeclaration(node)) {
                     return grammarErrorOnNode(modifier, Diagnostics.An_accessibility_modifier_cannot_be_used_with_a_private_identifier);
@@ -103852,10 +103852,10 @@ ${lanes.join("\n")}
       var sourceMapCommentRegExpDontCareLineStart = /\/\/[@#] source[M]appingURL=(.+)\r?\n?$/;
       var sourceMapCommentRegExp = /^\/\/[@#] source[M]appingURL=(.+)\r?\n?$/;
       var whitespaceOrMapCommentRegExp = /^\s*(\/\/[@#] .*)?$/;
-      function getLineInfo(text, lineStarts) {
+      function getLineInfo(text2, lineStarts) {
         return {
           getLineCount: () => lineStarts.length,
-          getLineText: (line7) => text.substring(lineStarts[line7], lineStarts[line7 + 1])
+          getLineText: (line7) => text2.substring(lineStarts[line7], lineStarts[line7 + 1])
         };
       }
       function tryGetSourceMappingURL(lineInfo) {
@@ -103875,9 +103875,9 @@ ${lanes.join("\n")}
       function isRawSourceMap(x) {
         return x !== null && typeof x === "object" && x.version === 3 && typeof x.file === "string" && typeof x.mappings === "string" && isArray(x.sources) && every(x.sources, isString) && (x.sourceRoot === void 0 || x.sourceRoot === null || typeof x.sourceRoot === "string") && (x.sourcesContent === void 0 || x.sourcesContent === null || isArray(x.sourcesContent) && every(x.sourcesContent, isStringOrNull)) && (x.names === void 0 || x.names === null || isArray(x.names) && every(x.names, isString));
       }
-      function tryParseRawSourceMap(text) {
+      function tryParseRawSourceMap(text2) {
         try {
-          const parsed = JSON.parse(text);
+          const parsed = JSON.parse(text2);
           if (isRawSourceMap(parsed)) {
             return parsed;
           }
@@ -104365,9 +104365,9 @@ ${lanes.join("\n")}
             }
           }
         } else if (!isGeneratedIdentifier(decl.name)) {
-          const text = idText(decl.name);
-          if (!uniqueExports.get(text)) {
-            uniqueExports.set(text, true);
+          const text2 = idText(decl.name);
+          if (!uniqueExports.get(text2)) {
+            uniqueExports.set(text2, true);
             exportedNames = append(exportedNames, decl.name);
             if (isLocalName(decl.name)) {
               multiMapSparseArrayAdd(exportedBindings, getOriginalNodeId(decl), decl.name);
@@ -105466,15 +105466,15 @@ ${lanes.join("\n")}
         return template.templateFlags & 26656 ? factory2.createVoidZero() : factory2.createStringLiteral(template.text);
       }
       function getRawLiteral(factory2, node, currentSourceFile) {
-        let text = node.rawText;
-        if (text === void 0) {
+        let text2 = node.rawText;
+        if (text2 === void 0) {
           Debug.assertIsDefined(currentSourceFile, "Template literal node is missing 'rawText' and does not have a source file. Possibly bad transform.");
-          text = getSourceTextOfNodeFromSourceFile(currentSourceFile, node);
+          text2 = getSourceTextOfNodeFromSourceFile(currentSourceFile, node);
           const isLast = node.kind === 15 || node.kind === 18;
-          text = text.substring(1, text.length - (isLast ? 1 : 2));
+          text2 = text2.substring(1, text2.length - (isLast ? 1 : 2));
         }
-        text = text.replace(/\r\n?/g, "\n");
-        return setTextRange(factory2.createStringLiteral(text), node);
+        text2 = text2.replace(/\r\n?/g, "\n");
+        return setTextRange(factory2.createStringLiteral(text2), node);
       }
       var USE_NEW_TYPE_METADATA_FORMAT = false;
       function transformTypeScript(context) {
@@ -109459,8 +109459,8 @@ ${lanes.join("\n")}
           return identifier;
         }
         function createHoistedVariableForPrivateName(name2, suffix) {
-          const text = tryGetTextOfPropertyName(name2);
-          return createHoistedVariableForClass((text == null ? void 0 : text.substring(1)) ?? name2, name2, suffix);
+          const text2 = tryGetTextOfPropertyName(name2);
+          return createHoistedVariableForClass((text2 == null ? void 0 : text2.substring(1)) ?? name2, name2, suffix);
         }
         function accessPrivateIdentifier2(name2) {
           const info2 = accessPrivateIdentifier(lexicalEnvironment, name2);
@@ -116569,15 +116569,15 @@ ${lanes.join("\n")}
           const fixed = fixupWhitespaceAndDecodeEntities(node.text);
           return fixed === void 0 ? void 0 : factory2.createStringLiteral(fixed);
         }
-        function fixupWhitespaceAndDecodeEntities(text) {
+        function fixupWhitespaceAndDecodeEntities(text2) {
           let acc;
           let firstNonWhitespace = 0;
           let lastNonWhitespace = -1;
-          for (let i2 = 0; i2 < text.length; i2++) {
-            const c = text.charCodeAt(i2);
+          for (let i2 = 0; i2 < text2.length; i2++) {
+            const c = text2.charCodeAt(i2);
             if (isLineBreak(c)) {
               if (firstNonWhitespace !== -1 && lastNonWhitespace !== -1) {
-                acc = addLineOfJsxText(acc, text.substr(firstNonWhitespace, lastNonWhitespace - firstNonWhitespace + 1));
+                acc = addLineOfJsxText(acc, text2.substr(firstNonWhitespace, lastNonWhitespace - firstNonWhitespace + 1));
               }
               firstNonWhitespace = -1;
             } else if (!isWhiteSpaceSingleLine(c)) {
@@ -116587,14 +116587,14 @@ ${lanes.join("\n")}
               }
             }
           }
-          return firstNonWhitespace !== -1 ? addLineOfJsxText(acc, text.substr(firstNonWhitespace)) : acc;
+          return firstNonWhitespace !== -1 ? addLineOfJsxText(acc, text2.substr(firstNonWhitespace)) : acc;
         }
         function addLineOfJsxText(acc, trimmedLine) {
           const decoded = decodeEntities(trimmedLine);
           return acc === void 0 ? decoded : acc + " " + decoded;
         }
-        function decodeEntities(text) {
-          return text.replace(/&((#((\d+)|x([\da-fA-F]+)))|(\w+));/g, (match, _all, _number, _digits, decimal, hex, word2) => {
+        function decodeEntities(text2) {
+          return text2.replace(/&((#((\d+)|x([\da-fA-F]+)))|(\w+));/g, (match, _all, _number, _digits, decimal, hex, word2) => {
             if (decimal) {
               return utf16EncodeAsString(parseInt(decimal, 10));
             } else if (hex) {
@@ -116605,9 +116605,9 @@ ${lanes.join("\n")}
             }
           });
         }
-        function tryDecodeEntities(text) {
-          const decoded = decodeEntities(text);
-          return decoded === text ? void 0 : decoded;
+        function tryDecodeEntities(text2) {
+          const decoded = decodeEntities(text2);
+          return decoded === text2 ? void 0 : decoded;
         }
         function getTagName(node) {
           if (node.kind === 285) {
@@ -116626,8 +116626,8 @@ ${lanes.join("\n")}
         function getAttributeName(node) {
           const name2 = node.name;
           if (isIdentifier(name2)) {
-            const text = idText(name2);
-            return /^[A-Z_]\w*$/i.test(text) ? name2 : factory2.createStringLiteral(text);
+            const text2 = idText(name2);
+            return /^[A-Z_]\w*$/i.test(text2) ? name2 : factory2.createStringLiteral(text2);
           }
           return factory2.createStringLiteral(idText(name2.namespace) + ":" + idText(name2.name));
         }
@@ -122028,8 +122028,8 @@ ${lanes.join("\n")}
             name2 = variable.name;
             hoistVariableDeclaration(variable.name);
           } else {
-            const text = idText(variable.name);
-            name2 = declareLocal(text);
+            const text2 = idText(variable.name);
+            name2 = declareLocal(text2);
             if (!renamedCatchVariables) {
               renamedCatchVariables = /* @__PURE__ */ new Map();
               renamedCatchVariableDeclarations = [];
@@ -122038,7 +122038,7 @@ ${lanes.join("\n")}
                 /* Identifier */
               );
             }
-            renamedCatchVariables.set(text, true);
+            renamedCatchVariables.set(text2, true);
             renamedCatchVariableDeclarations[getOriginalNodeId(variable)] = name2;
           }
           const exception = peekBlock();
@@ -124972,12 +124972,12 @@ ${lanes.join("\n")}
           for (const externalImport of externalImports) {
             const externalModuleName = getExternalModuleNameLiteral(factory2, externalImport, currentSourceFile, host, resolver, compilerOptions);
             if (externalModuleName) {
-              const text = externalModuleName.text;
-              const groupIndex = groupIndices.get(text);
+              const text2 = externalModuleName.text;
+              const groupIndex = groupIndices.get(text2);
               if (groupIndex !== void 0) {
                 dependencyGroups[groupIndex].externalImports.push(externalImport);
               } else {
-                groupIndices.set(text, dependencyGroups.length);
+                groupIndices.set(text2, dependencyGroups.length);
                 dependencyGroups.push({
                   name: externalModuleName,
                   externalImports: [externalImport]
@@ -129925,9 +129925,9 @@ ${lanes.join("\n")}
           } else {
             writer.writeLine();
           }
-          const text = writer.getText();
+          const text2 = writer.getText();
           const data = { sourceMapUrlPos, diagnostics: transform2.diagnostics };
-          writeFile(host, emitterDiagnostics, jsFilePath, text, !!compilerOptions.emitBOM, sourceFiles, data);
+          writeFile(host, emitterDiagnostics, jsFilePath, text2, !!compilerOptions.emitBOM, sourceFiles, data);
           writer.clear();
           return !data.skippedDtsWrite;
         }
@@ -130216,9 +130216,9 @@ ${lanes.join("\n")}
           return ownWriter || (ownWriter = createTextWriter(newLine));
         }
         function endPrint() {
-          const text = ownWriter.getText();
+          const text2 = ownWriter.getText();
           ownWriter.clear();
-          return text;
+          return text2;
         }
         function print(hint, node, sourceFile) {
           if (sourceFile) {
@@ -130898,7 +130898,7 @@ ${lanes.join("\n")}
           );
         }
         function emitLiteral(node, jsxAttributeEscape) {
-          const text = getLiteralTextOfNode(
+          const text2 = getLiteralTextOfNode(
             node,
             /*sourceFile*/
             void 0,
@@ -130906,9 +130906,9 @@ ${lanes.join("\n")}
             jsxAttributeEscape
           );
           if ((printerOptions.sourceMap || printerOptions.inlineSourceMap) && (node.kind === 11 || isTemplateLiteralKind(node.kind))) {
-            writeLiteral(text);
+            writeLiteral(text2);
           } else {
-            writeStringLiteral(text);
+            writeStringLiteral(text2);
           }
         }
         function emitSnippetNode(hint, node, snippet2) {
@@ -131416,7 +131416,7 @@ ${lanes.join("\n")}
         function mayNeedDotDotForPropertyAccess(expression) {
           expression = skipPartiallyEmittedExpressions(expression);
           if (isNumericLiteral(expression)) {
-            const text = getLiteralTextOfNode(
+            const text2 = getLiteralTextOfNode(
               expression,
               /*sourceFile*/
               void 0,
@@ -131425,13 +131425,13 @@ ${lanes.join("\n")}
               /*jsxAttributeEscape*/
               false
             );
-            return !(expression.numericLiteralFlags & 448) && !text.includes(tokenToString(
+            return !(expression.numericLiteralFlags & 448) && !text2.includes(tokenToString(
               25
               /* DotToken */
-            )) && !text.includes(String.fromCharCode(
+            )) && !text2.includes(String.fromCharCode(
               69
               /* E */
-            )) && !text.includes(String.fromCharCode(
+            )) && !text2.includes(String.fromCharCode(
               101
               /* e */
             ));
@@ -132814,9 +132814,9 @@ ${lanes.join("\n")}
         function emitJSDoc(node) {
           write("/**");
           if (node.comment) {
-            const text = getTextOfJSDocComment(node.comment);
-            if (text) {
-              const lines = text.split(/\r\n?|\n/);
+            const text2 = getTextOfJSDocComment(node.comment);
+            if (text2) {
+              const lines = text2.split(/\r\n?|\n/);
               for (const line7 of lines) {
                 writeLine();
                 writeSpace();
@@ -132986,10 +132986,10 @@ ${lanes.join("\n")}
           emit(tagName);
         }
         function emitJSDocComment(comment) {
-          const text = getTextOfJSDocComment(comment);
-          if (text) {
+          const text2 = getTextOfJSDocComment(comment);
+          if (text2) {
             writeSpace();
-            write(text);
+            write(text2);
           }
         }
         function emitJSDocTypeExpression(typeExpression) {
@@ -133565,8 +133565,8 @@ ${lanes.join("\n")}
             writeLine();
           }
         }
-        function writeLines(text) {
-          const lines = text.split(/\r\n?|\n/);
+        function writeLines(text2) {
+          const lines = text2.split(/\r\n?|\n/);
           const indentation = guessIndentation(lines);
           for (const lineText of lines) {
             const line7 = indentation ? lineText.slice(indentation) : lineText;
@@ -133800,8 +133800,8 @@ ${lanes.join("\n")}
           if (node.kind === 11 && node.textSourceNode) {
             const textSourceNode = node.textSourceNode;
             if (isIdentifier(textSourceNode) || isPrivateIdentifier(textSourceNode) || isNumericLiteral(textSourceNode) || isJsxNamespacedName(textSourceNode)) {
-              const text = isNumericLiteral(textSourceNode) ? textSourceNode.text : getTextOfNode2(textSourceNode);
-              return jsxAttributeEscape ? `"${escapeJsxAttributeString(text)}"` : neverAsciiEscape || getEmitFlags(node) & 16777216 ? `"${escapeString(text)}"` : `"${escapeNonAsciiString(text)}"`;
+              const text2 = isNumericLiteral(textSourceNode) ? textSourceNode.text : getTextOfNode2(textSourceNode);
+              return jsxAttributeEscape ? `"${escapeJsxAttributeString(text2)}"` : neverAsciiEscape || getEmitFlags(node) & 16777216 ? `"${escapeString(text2)}"` : `"${escapeNonAsciiString(text2)}"`;
             } else {
               return getLiteralTextOfNode(textSourceNode, getSourceFileOfNode(textSourceNode), neverAsciiEscape, jsxAttributeEscape);
             }
@@ -134398,9 +134398,9 @@ ${lanes.join("\n")}
           }
         }
         function writeSynthesizedComment(comment) {
-          const text = formatSynthesizedComment(comment);
-          const lineMap = comment.kind === 3 ? computeLineStarts(text) : void 0;
-          writeCommentRange(text, lineMap, writer, 0, text.length, newLine);
+          const text2 = formatSynthesizedComment(comment);
+          const lineMap = comment.kind === 3 ? computeLineStarts(text2) : void 0;
+          writeCommentRange(text2, lineMap, writer, 0, text2.length, newLine);
         }
         function formatSynthesizedComment(comment) {
           return comment.kind === 3 ? `/*${comment.text}*/` : `//${comment.text}`;
@@ -134475,9 +134475,9 @@ ${lanes.join("\n")}
             emitLeadingComment(commentPos, commentEnd, kind, hasTrailingNewLine, rangePos);
           }
         }
-        function shouldWriteComment(text, pos) {
+        function shouldWriteComment(text2, pos) {
           if (printerOptions.onlyPrintJsDocStyle) {
-            return isJSDocLikeText(text, pos) || isPinnedComment(text, pos);
+            return isJSDocLikeText(text2, pos) || isPinnedComment(text2, pos);
           }
           return true;
         }
@@ -134598,10 +134598,10 @@ ${lanes.join("\n")}
             }
           }
         }
-        function emitComment(text, lineMap, writer2, commentPos, commentEnd, newLine2) {
+        function emitComment(text2, lineMap, writer2, commentPos, commentEnd, newLine2) {
           if (!currentSourceFile || !shouldWriteComment(currentSourceFile.text, commentPos)) return;
           emitPos(commentPos);
-          writeCommentRange(text, lineMap, writer2, commentPos, commentEnd, newLine2);
+          writeCommentRange(text2, lineMap, writer2, commentPos, commentEnd, newLine2);
           emitPos(commentEnd);
         }
         function isTripleSlashComment(commentPos, commentEnd) {
@@ -135317,19 +135317,19 @@ ${lanes.join("\n")}
       }
       function createGetSourceFile(readFile, setParentNodes) {
         return (fileName, languageVersionOrOptions, onError) => {
-          let text;
+          let text2;
           try {
             mark("beforeIORead");
-            text = readFile(fileName);
+            text2 = readFile(fileName);
             mark("afterIORead");
             measure("I/O Read", "beforeIORead", "afterIORead");
           } catch (e) {
             if (onError) {
               onError(e.message);
             }
-            text = "";
+            text2 = "";
           }
-          return text !== void 0 ? createSourceFile(fileName, text, languageVersionOrOptions, setParentNodes) : void 0;
+          return text2 !== void 0 ? createSourceFile(fileName, text2, languageVersionOrOptions, setParentNodes) : void 0;
         };
       }
       function createWriteFileMeasuringIO(actualWriteFile, createDirectory, directoryExists) {
@@ -135556,8 +135556,8 @@ ${lanes.join("\n")}
             return "\x1B[94m";
         }
       }
-      function formatColorAndReset(text, formatStyle) {
-        return formatStyle + text + resetEscapeSequence;
+      function formatColorAndReset(text2, formatStyle) {
+        return formatStyle + text2 + resetEscapeSequence;
       }
       function formatCodeSpan(file, start2, length2, indent3, squiggleColor, host) {
         const { line: firstLine, character: firstLineChar } = getLineAndCharacterOfPosition(file, start2);
@@ -136981,8 +136981,8 @@ ${lanes.join("\n")}
             getGlobalTypingsCacheLocation: program.getGlobalTypingsCacheLocation
           };
         }
-        function writeFile2(fileName, text, writeByteOrderMark, onError, sourceFiles, data) {
-          host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);
+        function writeFile2(fileName, text2, writeByteOrderMark, onError, sourceFiles, data) {
+          host.writeFile(fileName, text2, writeByteOrderMark, onError, sourceFiles, data);
         }
         function emitBuildInfo(writeFileCallback) {
           var _a2, _b2;
@@ -137551,8 +137551,8 @@ ${lanes.join("\n")}
         function moduleNameIsEqualTo(a, b) {
           return a.kind === 80 ? b.kind === 80 && a.escapedText === b.escapedText : b.kind === 11 && a.text === b.text;
         }
-        function createSyntheticImport(text, file) {
-          const externalHelpersModuleReference = factory.createStringLiteral(text);
+        function createSyntheticImport(text2, file) {
+          const externalHelpersModuleReference = factory.createStringLiteral(text2);
           const importDecl = factory.createImportDeclaration(
             /*modifiers*/
             void 0,
@@ -139460,8 +139460,8 @@ ${lanes.join("\n")}
         const outputFiles = [];
         const { emitSkipped, diagnostics } = program.emit(sourceFile, writeFile2, cancellationToken, emitOnlyDtsFiles, customTransformers, forceDtsEmit);
         return { outputFiles, emitSkipped, diagnostics };
-        function writeFile2(fileName, text, writeByteOrderMark) {
-          outputFiles.push({ name: fileName, writeByteOrderMark, text });
+        function writeFile2(fileName, text2, writeByteOrderMark) {
+          outputFiles.push({ name: fileName, writeByteOrderMark, text: text2 });
         }
       }
       var SignatureInfo = /* @__PURE__ */ ((SignatureInfo2) => {
@@ -139679,13 +139679,13 @@ ${lanes.join("\n")}
         function computeDtsSignature(programOfThisState, sourceFile, cancellationToken, host, onNewSignature) {
           programOfThisState.emit(
             sourceFile,
-            (fileName, text, _writeByteOrderMark, _onError, sourceFiles, data) => {
+            (fileName, text2, _writeByteOrderMark, _onError, sourceFiles, data) => {
               Debug.assert(isDeclarationFileName(fileName), `File extension for signature expected to be dts: Got:: ${fileName}`);
               onNewSignature(
                 computeSignatureWithDiagnostics(
                   programOfThisState,
                   sourceFile,
-                  text,
+                  text2,
                   host,
                   data
                 ),
@@ -140758,17 +140758,17 @@ ${lanes.join("\n")}
         }
         return { host, newProgram, oldProgram, configFileParsingDiagnostics: configFileParsingDiagnostics || emptyArray };
       }
-      function getTextHandlingSourceMapForSignature(text, data) {
-        return (data == null ? void 0 : data.sourceMapUrlPos) !== void 0 ? text.substring(0, data.sourceMapUrlPos) : text;
+      function getTextHandlingSourceMapForSignature(text2, data) {
+        return (data == null ? void 0 : data.sourceMapUrlPos) !== void 0 ? text2.substring(0, data.sourceMapUrlPos) : text2;
       }
-      function computeSignatureWithDiagnostics(program, sourceFile, text, host, data) {
+      function computeSignatureWithDiagnostics(program, sourceFile, text2, host, data) {
         var _a;
-        text = getTextHandlingSourceMapForSignature(text, data);
+        text2 = getTextHandlingSourceMapForSignature(text2, data);
         let sourceFileDirectory;
         if ((_a = data == null ? void 0 : data.diagnostics) == null ? void 0 : _a.length) {
-          text += data.diagnostics.map((diagnostic) => `${locationInfo(diagnostic)}${DiagnosticCategory[diagnostic.category]}${diagnostic.code}: ${flattenDiagnosticMessageText2(diagnostic.messageText)}`).join("\n");
+          text2 += data.diagnostics.map((diagnostic) => `${locationInfo(diagnostic)}${DiagnosticCategory[diagnostic.category]}${diagnostic.code}: ${flattenDiagnosticMessageText2(diagnostic.messageText)}`).join("\n");
         }
-        return (host.createHash ?? generateDjb2Hash)(text);
+        return (host.createHash ?? generateDjb2Hash)(text2);
         function flattenDiagnosticMessageText2(diagnostic) {
           return isString(diagnostic) ? diagnostic : diagnostic === void 0 ? "" : !diagnostic.next ? diagnostic.messageText : diagnostic.messageText + diagnostic.next.map(flattenDiagnosticMessageText2).join("\n");
         }
@@ -140782,8 +140782,8 @@ ${lanes.join("\n")}
           ))}(${diagnostic.start},${diagnostic.length})`;
         }
       }
-      function computeSignature(text, host, data) {
-        return (host.createHash ?? generateDjb2Hash)(getTextHandlingSourceMapForSignature(text, data));
+      function computeSignature(text2, host, data) {
+        return (host.createHash ?? generateDjb2Hash)(getTextHandlingSourceMapForSignature(text2, data));
       }
       function createBuilderProgram(kind, { newProgram, host, oldProgram, configFileParsingDiagnostics }) {
         let oldState = oldProgram && oldProgram.state;
@@ -140960,7 +140960,7 @@ ${lanes.join("\n")}
         function getWriteFileCallback(writeFile2, customTransformers) {
           Debug.assert(isBuilderProgramStateWithDefinedProgram(state));
           if (!getEmitDeclarations(state.compilerOptions)) return writeFile2 || maybeBind(host, host.writeFile);
-          return (fileName, text, writeByteOrderMark, onError, sourceFiles, data) => {
+          return (fileName, text2, writeByteOrderMark, onError, sourceFiles, data) => {
             var _a, _b, _c;
             if (isDeclarationFileName(fileName)) {
               if (!state.compilerOptions.outFile) {
@@ -140973,7 +140973,7 @@ ${lanes.join("\n")}
                     const signature = computeSignatureWithDiagnostics(
                       state.program,
                       file,
-                      text,
+                      text2,
                       host,
                       data
                     );
@@ -141010,12 +141010,12 @@ ${lanes.join("\n")}
                 state.outSignature = newSignature;
               }
             }
-            if (writeFile2) writeFile2(fileName, text, writeByteOrderMark, onError, sourceFiles, data);
-            else if (host.writeFile) host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);
-            else state.program.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);
+            if (writeFile2) writeFile2(fileName, text2, writeByteOrderMark, onError, sourceFiles, data);
+            else if (host.writeFile) host.writeFile(fileName, text2, writeByteOrderMark, onError, sourceFiles, data);
+            else state.program.writeFile(fileName, text2, writeByteOrderMark, onError, sourceFiles, data);
             function handleNewSignature(oldSignatureFormat, newSignature) {
               const oldSignature = !oldSignatureFormat || isString(oldSignatureFormat) ? oldSignatureFormat : oldSignatureFormat[0];
-              newSignature ?? (newSignature = computeSignature(text, host, data));
+              newSignature ?? (newSignature = computeSignature(text2, host, data));
               if (newSignature === oldSignature) {
                 if (oldSignatureFormat === oldSignature) return void 0;
                 else if (data) data.differsOnlyInMap = true;
@@ -143084,15 +143084,15 @@ ${lanes.join("\n")}
         };
         return compilerHost;
       }
-      function getSourceFileVersionAsHashFromText(host, text) {
-        if (text.match(sourceMapCommentRegExpDontCareLineStart)) {
-          let lineEnd = text.length;
+      function getSourceFileVersionAsHashFromText(host, text2) {
+        if (text2.match(sourceMapCommentRegExpDontCareLineStart)) {
+          let lineEnd = text2.length;
           let lineStart = lineEnd;
           for (let pos = lineEnd - 1; pos >= 0; pos--) {
-            const ch = text.charCodeAt(pos);
+            const ch = text2.charCodeAt(pos);
             switch (ch) {
               case 10:
-                if (pos && text.charCodeAt(pos - 1) === 13) {
+                if (pos && text2.charCodeAt(pos - 1) === 13) {
                   pos--;
                 }
               // falls through
@@ -143105,9 +143105,9 @@ ${lanes.join("\n")}
                 }
                 break;
             }
-            const line7 = text.substring(lineStart, lineEnd);
+            const line7 = text2.substring(lineStart, lineEnd);
             if (line7.match(sourceMapCommentRegExp)) {
-              text = text.substring(0, lineStart);
+              text2 = text2.substring(0, lineStart);
               break;
             } else if (!line7.match(whitespaceOrMapCommentRegExp)) {
               break;
@@ -143115,7 +143115,7 @@ ${lanes.join("\n")}
             lineEnd = lineStart;
           }
         }
-        return (host.createHash || generateDjb2Hash)(text);
+        return (host.createHash || generateDjb2Hash)(text2);
       }
       function setGetSourceFileAsHashVersioned(compilerHost) {
         const originalGetSourceFile = compilerHost.getSourceFile;
@@ -143604,8 +143604,8 @@ ${lanes.join("\n")}
           const hostSourceFile = sourceFilesCache.get(path2);
           if (!hostSourceFile) return void 0;
           if (hostSourceFile.version) return hostSourceFile.version;
-          const text = readFileWithCache(path2);
-          return text !== void 0 ? getSourceFileVersionAsHashFromText(compilerHost, text) : void 0;
+          const text2 = readFileWithCache(path2);
+          return text2 !== void 0 ? getSourceFileVersionAsHashFromText(compilerHost, text2) : void 0;
         }
         function onReleaseOldSourceFile(oldSourceFile, _oldOptions, hasSourceFileByPath) {
           const hostSourceFileInfo = sourceFilesCache.get(oldSourceFile.resolvedPath);
@@ -144585,7 +144585,7 @@ ${lanes.join("\n")}
             state.write,
             /*reportSummary*/
             void 0,
-            (name2, text, writeByteOrderMark, onError, sourceFiles, data) => {
+            (name2, text2, writeByteOrderMark, onError, sourceFiles, data) => {
               var _a2;
               const path2 = toPath2(state, name2);
               emittedOutputs.set(toPath2(state, name2), name2);
@@ -144609,7 +144609,7 @@ ${lanes.join("\n")}
               const modifiedTime = (data == null ? void 0 : data.differsOnlyInMap) ? getModifiedTime(state.host, name2) : void 0;
               (writeFileCallback || compilerHost.writeFile)(
                 name2,
-                text,
+                text2,
                 writeByteOrderMark,
                 onError,
                 sourceFiles,
@@ -145004,8 +145004,8 @@ ${lanes.join("\n")}
               if (!buildInfoVersionMap) buildInfoVersionMap = getBuildInfoFileVersionMap(incrementalBuildInfo, buildInfoPath, host);
               const resolvedInputPath = buildInfoVersionMap.roots.get(inputPath);
               version2 = buildInfoVersionMap.fileInfos.get(resolvedInputPath ?? inputPath);
-              const text = version2 ? state.readFileWithCache(resolvedInputPath ?? inputFile) : void 0;
-              currentVersion = text !== void 0 ? getSourceFileVersionAsHashFromText(host, text) : void 0;
+              const text2 = version2 ? state.readFileWithCache(resolvedInputPath ?? inputFile) : void 0;
+              currentVersion = text2 !== void 0 ? getSourceFileVersionAsHashFromText(host, text2) : void 0;
               if (version2 && version2 === currentVersion) pseudoInputUpToDate = true;
             }
             if (!version2 || version2 !== currentVersion) {
@@ -145896,7 +145896,7 @@ ${lanes.join("\n")}
       }
       function generateOptionOutput(sys2, option, rightAlignOfLeft, leftAlignOfRight) {
         var _a;
-        const text = [];
+        const text2 = [];
         const colors = createColors(sys2);
         const name2 = getDisplayNameTextOfOption(option);
         const valueCandidates = getValueCandidate(option);
@@ -145910,7 +145910,7 @@ ${lanes.join("\n")}
           if (option.description) {
             description3 = getDiagnosticText(option.description);
           }
-          text.push(...getPrettyOutput(
+          text2.push(...getPrettyOutput(
             name2,
             description3,
             rightAlignOfLeft,
@@ -145921,7 +145921,7 @@ ${lanes.join("\n")}
           ), sys2.newLine);
           if (showAdditionalInfoOutput(valueCandidates, option)) {
             if (valueCandidates) {
-              text.push(...getPrettyOutput(
+              text2.push(...getPrettyOutput(
                 valueCandidates.valueType,
                 valueCandidates.possibleValues,
                 rightAlignOfLeft,
@@ -145932,7 +145932,7 @@ ${lanes.join("\n")}
               ), sys2.newLine);
             }
             if (defaultValueDescription) {
-              text.push(...getPrettyOutput(
+              text2.push(...getPrettyOutput(
                 getDiagnosticText(Diagnostics.default_Colon),
                 defaultValueDescription,
                 rightAlignOfLeft,
@@ -145943,28 +145943,28 @@ ${lanes.join("\n")}
               ), sys2.newLine);
             }
           }
-          text.push(sys2.newLine);
+          text2.push(sys2.newLine);
         } else {
-          text.push(colors.blue(name2), sys2.newLine);
+          text2.push(colors.blue(name2), sys2.newLine);
           if (option.description) {
             const description3 = getDiagnosticText(option.description);
-            text.push(description3);
+            text2.push(description3);
           }
-          text.push(sys2.newLine);
+          text2.push(sys2.newLine);
           if (showAdditionalInfoOutput(valueCandidates, option)) {
             if (valueCandidates) {
-              text.push(`${valueCandidates.valueType} ${valueCandidates.possibleValues}`);
+              text2.push(`${valueCandidates.valueType} ${valueCandidates.possibleValues}`);
             }
             if (defaultValueDescription) {
-              if (valueCandidates) text.push(sys2.newLine);
+              if (valueCandidates) text2.push(sys2.newLine);
               const diagType = getDiagnosticText(Diagnostics.default_Colon);
-              text.push(`${diagType} ${defaultValueDescription}`);
+              text2.push(`${diagType} ${defaultValueDescription}`);
             }
-            text.push(sys2.newLine);
+            text2.push(sys2.newLine);
           }
-          text.push(sys2.newLine);
+          text2.push(sys2.newLine);
         }
-        return text;
+        return text2;
         function formatDefaultValue(defaultValue, type) {
           return defaultValue !== void 0 && typeof type === "object" ? arrayFrom(type.entries()).filter(([, value2]) => value2 === defaultValue).map(([name22]) => name22).join("/") : String(defaultValue);
         }
@@ -148553,8 +148553,8 @@ ${lanes.join("\n")}
       var ScriptSnapshot;
       ((ScriptSnapshot2) => {
         class StringScriptSnapshot {
-          constructor(text) {
-            this.text = text;
+          constructor(text2) {
+            this.text = text2;
           }
           getText(start2, end) {
             return start2 === 0 && end === this.text.length ? this.text : this.text.substring(start2, end);
@@ -148566,8 +148566,8 @@ ${lanes.join("\n")}
             return void 0;
           }
         }
-        function fromString(text) {
-          return new StringScriptSnapshot(text);
+        function fromString(text2) {
+          return new StringScriptSnapshot(text2);
         }
         ScriptSnapshot2.fromString = fromString;
       })(ScriptSnapshot || (ScriptSnapshot = {}));
@@ -150365,9 +150365,9 @@ ${lanes.join("\n")}
           void 0
         );
       }
-      function makeStringLiteral(text, quotePreference) {
+      function makeStringLiteral(text2, quotePreference) {
         return factory.createStringLiteral(
-          text,
+          text2,
           quotePreference === 0
           /* Single */
         );
@@ -150511,9 +150511,9 @@ ${lanes.join("\n")}
         }
         return void 0;
       }
-      function isTextWhiteSpaceLike(text, startPos, endPos) {
+      function isTextWhiteSpaceLike(text2, startPos, endPos) {
         for (let i2 = startPos; i2 < endPos; i2++) {
-          if (!isWhiteSpaceLike(text.charCodeAt(i2))) {
+          if (!isWhiteSpaceLike(text2.charCodeAt(i2))) {
             return false;
           }
         }
@@ -150573,8 +150573,8 @@ ${lanes.join("\n")}
         let indent3;
         let length2;
         resetWriter();
-        const unknownWrite = (text) => writeKind(
-          text,
+        const unknownWrite = (text2) => writeKind(
+          text2,
           17
           /* text */
         );
@@ -150597,48 +150597,48 @@ ${lanes.join("\n")}
             }
             return displayParts;
           },
-          writeKeyword: (text) => writeKind(
-            text,
+          writeKeyword: (text2) => writeKind(
+            text2,
             5
             /* keyword */
           ),
-          writeOperator: (text) => writeKind(
-            text,
+          writeOperator: (text2) => writeKind(
+            text2,
             12
             /* operator */
           ),
-          writePunctuation: (text) => writeKind(
-            text,
+          writePunctuation: (text2) => writeKind(
+            text2,
             15
             /* punctuation */
           ),
-          writeTrailingSemicolon: (text) => writeKind(
-            text,
+          writeTrailingSemicolon: (text2) => writeKind(
+            text2,
             15
             /* punctuation */
           ),
-          writeSpace: (text) => writeKind(
-            text,
+          writeSpace: (text2) => writeKind(
+            text2,
             16
             /* space */
           ),
-          writeStringLiteral: (text) => writeKind(
-            text,
+          writeStringLiteral: (text2) => writeKind(
+            text2,
             8
             /* stringLiteral */
           ),
-          writeParameter: (text) => writeKind(
-            text,
+          writeParameter: (text2) => writeKind(
+            text2,
             13
             /* parameterName */
           ),
-          writeProperty: (text) => writeKind(
-            text,
+          writeProperty: (text2) => writeKind(
+            text2,
             14
             /* propertyName */
           ),
-          writeLiteral: (text) => writeKind(
-            text,
+          writeLiteral: (text2) => writeKind(
+            text2,
             8
             /* stringLiteral */
           ),
@@ -150678,17 +150678,17 @@ ${lanes.join("\n")}
             lineStart = false;
           }
         }
-        function writeKind(text, kind) {
+        function writeKind(text2, kind) {
           if (length2 > absoluteMaximumLength) return;
           writeIndent();
-          length2 += text.length;
-          displayParts.push(displayPart(text, kind));
+          length2 += text2.length;
+          displayParts.push(displayPart(text2, kind));
         }
-        function writeSymbol(text, symbol) {
+        function writeSymbol(text2, symbol) {
           if (length2 > absoluteMaximumLength) return;
           writeIndent();
-          length2 += text.length;
-          displayParts.push(symbolPart(text, symbol));
+          length2 += text2.length;
+          displayParts.push(symbolPart(text2, symbol));
         }
         function writeLine() {
           if (length2 > absoluteMaximumLength) return;
@@ -150703,8 +150703,8 @@ ${lanes.join("\n")}
           length2 = 0;
         }
       }
-      function symbolPart(text, symbol) {
-        return displayPart(text, displayPartKind(symbol));
+      function symbolPart(text2, symbol) {
+        return displayPart(text2, displayPartKind(symbol));
         function displayPartKind(symbol2) {
           const flags2 = symbol2.flags;
           if (flags2 & 3) {
@@ -150726,8 +150726,8 @@ ${lanes.join("\n")}
           return 17;
         }
       }
-      function displayPart(text, kind) {
-        return { text, kind: SymbolDisplayPartKind[kind] };
+      function displayPart(text2, kind) {
+        return { text: text2, kind: SymbolDisplayPartKind[kind] };
       }
       function spacePart() {
         return displayPart(
@@ -150757,55 +150757,55 @@ ${lanes.join("\n")}
           /* operator */
         );
       }
-      function parameterNamePart(text) {
+      function parameterNamePart(text2) {
         return displayPart(
-          text,
+          text2,
           13
           /* parameterName */
         );
       }
-      function propertyNamePart(text) {
+      function propertyNamePart(text2) {
         return displayPart(
-          text,
+          text2,
           14
           /* propertyName */
         );
       }
-      function textOrKeywordPart(text) {
-        const kind = stringToToken(text);
-        return kind === void 0 ? textPart(text) : keywordPart(kind);
+      function textOrKeywordPart(text2) {
+        const kind = stringToToken(text2);
+        return kind === void 0 ? textPart(text2) : keywordPart(kind);
       }
-      function textPart(text) {
+      function textPart(text2) {
         return displayPart(
-          text,
+          text2,
           17
           /* text */
         );
       }
-      function typeAliasNamePart(text) {
+      function typeAliasNamePart(text2) {
         return displayPart(
-          text,
+          text2,
           0
           /* aliasName */
         );
       }
-      function typeParameterNamePart(text) {
+      function typeParameterNamePart(text2) {
         return displayPart(
-          text,
+          text2,
           18
           /* typeParameterName */
         );
       }
-      function linkTextPart(text) {
+      function linkTextPart(text2) {
         return displayPart(
-          text,
+          text2,
           24
           /* linkText */
         );
       }
-      function linkNamePart(text, target2) {
+      function linkNamePart(text2, target2) {
         return {
-          text,
+          text: text2,
           kind: SymbolDisplayPartKind[
             23
             /* linkName */
@@ -150816,9 +150816,9 @@ ${lanes.join("\n")}
           }
         };
       }
-      function linkPart(text) {
+      function linkPart(text2) {
         return displayPart(
-          text,
+          text2,
           22
           /* link */
         );
@@ -150836,40 +150836,40 @@ ${lanes.join("\n")}
           const targetSymbol = symbol && checker ? getSymbolTarget(symbol, checker) : void 0;
           const suffix = findLinkNameEnd(link.text);
           const name2 = getTextOfNode(link.name) + link.text.slice(0, suffix);
-          const text = skipSeparatorFromLinkText(link.text.slice(suffix));
+          const text2 = skipSeparatorFromLinkText(link.text.slice(suffix));
           const decl = (targetSymbol == null ? void 0 : targetSymbol.valueDeclaration) || ((_a = targetSymbol == null ? void 0 : targetSymbol.declarations) == null ? void 0 : _a[0]);
           if (decl) {
             parts2.push(linkNamePart(name2, decl));
-            if (text) parts2.push(linkTextPart(text));
+            if (text2) parts2.push(linkTextPart(text2));
           } else {
             const separator = suffix === 0 || link.text.charCodeAt(suffix) === 124 && name2.charCodeAt(name2.length - 1) !== 32 ? " " : "";
-            parts2.push(linkTextPart(name2 + separator + text));
+            parts2.push(linkTextPart(name2 + separator + text2));
           }
         }
         parts2.push(linkPart("}"));
         return parts2;
       }
-      function skipSeparatorFromLinkText(text) {
+      function skipSeparatorFromLinkText(text2) {
         let pos = 0;
-        if (text.charCodeAt(pos++) === 124) {
-          while (pos < text.length && text.charCodeAt(pos) === 32) pos++;
-          return text.slice(pos);
+        if (text2.charCodeAt(pos++) === 124) {
+          while (pos < text2.length && text2.charCodeAt(pos) === 32) pos++;
+          return text2.slice(pos);
         }
-        return text;
+        return text2;
       }
-      function findLinkNameEnd(text) {
-        let pos = text.indexOf("://");
+      function findLinkNameEnd(text2) {
+        let pos = text2.indexOf("://");
         if (pos === 0) {
-          while (pos < text.length && text.charCodeAt(pos) !== 124) pos++;
+          while (pos < text2.length && text2.charCodeAt(pos) !== 124) pos++;
           return pos;
         }
-        if (text.indexOf("()") === 0) return 2;
-        if (text.charAt(0) === "<") {
+        if (text2.indexOf("()") === 0) return 2;
+        if (text2.charAt(0) === "<") {
           let brackets2 = 0;
           let i2 = 0;
-          while (i2 < text.length) {
-            if (text[i2] === "<") brackets2++;
-            if (text[i2] === ">") brackets2--;
+          while (i2 < text2.length) {
+            if (text2[i2] === "<") brackets2++;
+            if (text2[i2] === ">") brackets2--;
             i2++;
             if (!brackets2) return i2;
           }
@@ -150946,33 +150946,33 @@ ${lanes.join("\n")}
       function getUniqueSymbolId(symbol, checker) {
         return getSymbolId(skipAlias(symbol, checker));
       }
-      function getFirstNonSpaceCharacterPosition(text, position) {
-        while (isWhiteSpaceLike(text.charCodeAt(position))) {
+      function getFirstNonSpaceCharacterPosition(text2, position) {
+        while (isWhiteSpaceLike(text2.charCodeAt(position))) {
           position += 1;
         }
         return position;
       }
-      function getPrecedingNonSpaceCharacterPosition(text, position) {
-        while (position > -1 && isWhiteSpaceSingleLine(text.charCodeAt(position))) {
+      function getPrecedingNonSpaceCharacterPosition(text2, position) {
+        while (position > -1 && isWhiteSpaceSingleLine(text2.charCodeAt(position))) {
           position -= 1;
         }
         return position + 1;
       }
       function copyComments(sourceNode, targetNode) {
         const sourceFile = sourceNode.getSourceFile();
-        const text = sourceFile.text;
-        if (hasLeadingLineBreak(sourceNode, text)) {
+        const text2 = sourceFile.text;
+        if (hasLeadingLineBreak(sourceNode, text2)) {
           copyLeadingComments(sourceNode, targetNode, sourceFile);
         } else {
           copyTrailingAsLeadingComments(sourceNode, targetNode, sourceFile);
         }
         copyTrailingComments(sourceNode, targetNode, sourceFile);
       }
-      function hasLeadingLineBreak(node, text) {
+      function hasLeadingLineBreak(node, text2) {
         const start2 = node.getFullStart();
         const end = node.getStart();
         for (let i2 = start2; i2 < end; i2++) {
-          if (text.charCodeAt(i2) === 10) return true;
+          if (text2.charCodeAt(i2) === 10) return true;
         }
         return false;
       }
@@ -151049,9 +151049,9 @@ ${lanes.join("\n")}
             return checker.getContextualType(node, contextFlags);
         }
       }
-      function quote2(sourceFile, preferences, text) {
+      function quote2(sourceFile, preferences, text2) {
         const quotePreference = getQuotePreference(sourceFile, preferences);
-        const quoted2 = JSON.stringify(text);
+        const quoted2 = JSON.stringify(text2);
         return quotePreference === 0 ? `'${stripQuotes(quoted2).replace(/'/g, () => "\\'").replace(/\\"/g, '"')}'` : quoted2;
       }
       function isEqualityOperatorKind(kind) {
@@ -151434,7 +151434,7 @@ ${lanes.join("\n")}
         }
       }
       function consumesNodeCoreModules(sourceFile) {
-        return some(sourceFile.imports, ({ text }) => nodeCoreModules.has(text));
+        return some(sourceFile.imports, ({ text: text2 }) => nodeCoreModules.has(text2));
       }
       function isInsideNodeModules(fileOrDirectory) {
         return contains(getPathComponents(fileOrDirectory), "node_modules");
@@ -152220,15 +152220,15 @@ ${lanes.join("\n")}
           /*skipTrivia*/
           false
         );
-        function getClassificationsForLine(text, lexState, syntacticClassifierAbsent) {
-          return convertClassificationsToResult(getEncodedLexicalClassifications(text, lexState, syntacticClassifierAbsent), text);
+        function getClassificationsForLine(text2, lexState, syntacticClassifierAbsent) {
+          return convertClassificationsToResult(getEncodedLexicalClassifications(text2, lexState, syntacticClassifierAbsent), text2);
         }
-        function getEncodedLexicalClassifications(text, lexState, syntacticClassifierAbsent) {
+        function getEncodedLexicalClassifications(text2, lexState, syntacticClassifierAbsent) {
           let token = 0;
           let lastNonTriviaToken = 0;
           const templateStack = [];
           const { prefix, pushTemplate } = getPrefixFromLexState(lexState);
-          text = prefix + text;
+          text2 = prefix + text2;
           const offset = prefix.length;
           if (pushTemplate) {
             templateStack.push(
@@ -152236,7 +152236,7 @@ ${lanes.join("\n")}
               /* TemplateHead */
             );
           }
-          scanner2.setText(text);
+          scanner2.setText(text2);
           let endOfLineState = 0;
           const spans = [];
           let angleBracketStack = 0;
@@ -152248,7 +152248,7 @@ ${lanes.join("\n")}
             }
             const end = scanner2.getTokenEnd();
             pushEncodedClassification(scanner2.getTokenStart(), end, offset, classFromKind(token), spans);
-            if (end >= text.length) {
+            if (end >= text2.length) {
               const end2 = getNewEndOfLineState(scanner2, token, lastOrUndefined(templateStack));
               if (end2 !== void 0) {
                 endOfLineState = end2;
@@ -152388,7 +152388,7 @@ ${lanes.join("\n")}
           result.push(start2 - offset, length2, classification);
         }
       }
-      function convertClassificationsToResult(classifications, text) {
+      function convertClassificationsToResult(classifications, text2) {
         const entries = [];
         const dense = classifications.spans;
         let lastEnd = 0;
@@ -152409,7 +152409,7 @@ ${lanes.join("\n")}
           entries.push({ length: length2, classification: convertClassification(type) });
           lastEnd = start2 + length2;
         }
-        const whitespaceLength = text.length - lastEnd;
+        const whitespaceLength = text2.length - lastEnd;
         if (whitespaceLength > 0) {
           entries.push({
             length: whitespaceLength,
@@ -152773,8 +152773,8 @@ ${lanes.join("\n")}
                 triviaScanner.resetTokenState(end);
                 continue;
               case 7:
-                const text = sourceFile.text;
-                const ch = text.charCodeAt(start2);
+                const text2 = sourceFile.text;
+                const ch = text2.charCodeAt(start2);
                 if (ch === 60 || ch === 62) {
                   pushClassification(
                     start2,
@@ -152788,7 +152788,7 @@ ${lanes.join("\n")}
                   ch === 124 || ch === 61
                   /* equals */
                 );
-                classifyDisabledMergeCode(text, start2, end);
+                classifyDisabledMergeCode(text2, start2, end);
                 break;
               case 6:
                 break;
@@ -152933,8 +152933,8 @@ ${lanes.join("\n")}
         function tryClassifyTripleSlashComment(start2, width) {
           const tripleSlashXMLCommentRegEx = /^(\/\/\/\s*)(<)(?:(\S+)((?:[^/]|\/[^>])*)(\/>)?)?/m;
           const attributeRegex = /(\s)(\S+)(\s*)(=)(\s*)('[^']+'|"[^"]+")/g;
-          const text = sourceFile.text.substr(start2, width);
-          const match = tripleSlashXMLCommentRegEx.exec(text);
+          const text2 = sourceFile.text.substr(start2, width);
+          const match = tripleSlashXMLCommentRegEx.exec(text2);
           if (!match) {
             return false;
           }
@@ -153024,10 +153024,10 @@ ${lanes.join("\n")}
             processElement(child);
           }
         }
-        function classifyDisabledMergeCode(text, start2, end) {
+        function classifyDisabledMergeCode(text2, start2, end) {
           let i2;
           for (i2 = start2; i2 < end; i2++) {
-            if (isLineBreak(text.charCodeAt(i2))) {
+            if (isLineBreak(text2.charCodeAt(i2))) {
               break;
             }
           }
@@ -154253,10 +154253,10 @@ ${lanes.join("\n")}
           currentCandidate++;
         }
       }
-      function createSegment(text) {
+      function createSegment(text2) {
         return {
-          totalTextChunk: createTextChunk(text),
-          subWordTextChunks: breakPatternIntoTextChunks(text)
+          totalTextChunk: createTextChunk(text2),
+          subWordTextChunks: breakPatternIntoTextChunks(text2)
         };
       }
       function isUpperCaseLetter(ch) {
@@ -154334,13 +154334,13 @@ ${lanes.join("\n")}
         }
         return result;
       }
-      function createTextChunk(text) {
-        const textLowerCase = text.toLowerCase();
+      function createTextChunk(text2) {
+        const textLowerCase = text2.toLowerCase();
         return {
-          text,
+          text: text2,
           textLowerCase,
-          isLowerCase: text === textLowerCase,
-          characterSpans: breakIntoCharacterSpans(text)
+          isLowerCase: text2 === textLowerCase,
+          characterSpans: breakIntoCharacterSpans(text2)
         };
       }
       function breakIntoCharacterSpans(identifier) {
@@ -154837,8 +154837,8 @@ ${lanes.join("\n")}
             sourceFileLike.set(path2, false);
             return void 0;
           }
-          const text = host.readFile(fileName);
-          const file = text ? createSourceFileLike(text) : false;
+          const text2 = host.readFile(fileName);
+          const file = text2 ? createSourceFileLike(text2) : false;
           sourceFileLike.set(path2, file);
           return file ? file : void 0;
         }
@@ -154892,9 +154892,9 @@ ${lanes.join("\n")}
         if (map2.sourcesContent && map2.sourcesContent.some(isString)) return void 0;
         return createDocumentPositionMapper(host, map2, mapFileName);
       }
-      function createSourceFileLike(text, lineMap) {
+      function createSourceFileLike(text2, lineMap) {
         return {
-          text,
+          text: text2,
           lineMap,
           getLineAndCharacterOfPosition(pos) {
             return computeLineAndCharacterOfPosition(getLineStarts(this), pos);
@@ -155192,13 +155192,13 @@ interface Symbol {
         const newLine = getNewLineCharacter(options);
         const compilerHost = {
           getSourceFile: (fileName) => fileName === normalizePath(inputFileName) ? sourceFile : fileName === normalizePath(barebonesLibName) ? barebonesLibSourceFile : void 0,
-          writeFile: (name2, text) => {
+          writeFile: (name2, text2) => {
             if (fileExtensionIs(name2, ".map")) {
               Debug.assertEqual(sourceMapText, void 0, "Unexpected multiple source map outputs, file:", name2);
-              sourceMapText = text;
+              sourceMapText = text2;
             } else {
               Debug.assertEqual(outputText, void 0, "Unexpected multiple outputs, file:", name2);
-              outputText = text;
+              outputText = text2;
             }
           },
           getDefaultLibFileName: () => barebonesLibName,
@@ -155984,9 +155984,9 @@ interface Symbol {
           return cleanText(getModuleName(node));
         }
         if (name2) {
-          const text = isIdentifier(name2) ? name2.text : isElementAccessExpression(name2) ? `[${nodeText(name2.argumentExpression)}]` : nodeText(name2);
-          if (text.length > 0) {
-            return cleanText(text);
+          const text2 = isIdentifier(name2) ? name2.text : isElementAccessExpression(name2) ? `[${nodeText(name2.argumentExpression)}]` : nodeText(name2);
+          if (text2.length > 0) {
+            return cleanText(text2);
           }
         }
         switch (node.kind) {
@@ -156188,9 +156188,9 @@ interface Symbol {
             return false;
         }
       }
-      function cleanText(text) {
-        text = text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
-        return text.replace(/\\?(?:\r?\n|[\r\u2028\u2029])/g, "");
+      function cleanText(text2) {
+        text2 = text2.length > maxLength ? text2.substring(0, maxLength) + "..." : text2;
+        return text2.replace(/\\?(?:\r?\n|[\r\u2028\u2029])/g, "");
       }
       var ts_refactor_exports = {};
       __export(ts_refactor_exports, {
@@ -159445,23 +159445,23 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
       }
       function concatConsecutiveString(index, nodes) {
         const indexes3 = [];
-        let text = "", rawText = "";
+        let text2 = "", rawText = "";
         while (index < nodes.length) {
           const node = nodes[index];
           if (isStringLiteralLike(node)) {
-            text += node.text;
+            text2 += node.text;
             rawText += escapeRawStringForTemplate(getTextOfNode(node).slice(1, -1));
             indexes3.push(index);
             index++;
           } else if (isTemplateExpression(node)) {
-            text += node.head.text;
+            text2 += node.head.text;
             rawText += getRawTextOfTemplate(node.head);
             break;
           } else {
             break;
           }
         }
-        return [index, text, rawText, indexes3];
+        return [index, text2, rawText, indexes3];
       }
       function nodesToTemplate({ nodes, operators }, file) {
         const copyOperatorComments = copyTrailingOperatorComments(operators, file);
@@ -159485,11 +159485,11 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
             const spans = map(currentNode.templateSpans, (span, index) => {
               copyExpressionComments(span);
               const isLastSpan = index === currentNode.templateSpans.length - 1;
-              const text = span.literal.text + (isLastSpan ? subsequentText : "");
+              const text2 = span.literal.text + (isLastSpan ? subsequentText : "");
               const rawText = getRawTextOfTemplate(span.literal) + (isLastSpan ? rawSubsequentText : "");
               return factory.createTemplateSpan(
                 span.expression,
-                isLast && isLastSpan ? factory.createTemplateTail(text, rawText) : factory.createTemplateMiddle(text, rawText)
+                isLast && isLastSpan ? factory.createTemplateTail(text2, rawText) : factory.createTemplateMiddle(text2, rawText)
               );
             });
             templateSpans.push(...spans);
@@ -162588,9 +162588,9 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         }
       };
       var SourceMapSourceObject = class {
-        constructor(fileName, text, skipTrivia2) {
+        constructor(fileName, text2, skipTrivia2) {
           this.fileName = fileName;
-          this.text = text;
+          this.text = text2;
           this.skipTrivia = skipTrivia2 || ((pos) => pos);
         }
         getLineAndCharacterOfPosition(pos) {
@@ -163809,7 +163809,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           var _a2;
           const sourceFile = syntaxTreeCache.getCurrentSourceFile(fileName);
           const textChanges2 = [];
-          const { text } = sourceFile;
+          const { text: text2 } = sourceFile;
           let hasComment = false;
           let isCommenting = insertComment || false;
           const positions = [];
@@ -163820,7 +163820,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           const openMultilineRegex = isJsx ? "\\{\\/\\*" : "\\/\\*";
           const closeMultilineRegex = isJsx ? "\\*\\/\\}" : "\\*\\/";
           while (pos <= textRange.end) {
-            const offset = text.substr(pos, openMultiline.length) === openMultiline ? openMultiline.length : 0;
+            const offset = text2.substr(pos, openMultiline.length) === openMultiline ? openMultiline.length : 0;
             const commentRange = isInComment(sourceFile, pos + offset);
             if (commentRange) {
               if (isJsx) {
@@ -163834,8 +163834,8 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
               hasComment = true;
               pos = commentRange.end + 1;
             } else {
-              const newPos = text.substring(pos, textRange.end).search(`(${openMultilineRegex})|(${closeMultilineRegex})`);
-              isCommenting = insertComment !== void 0 ? insertComment : isCommenting || !isTextWhiteSpaceLike(text, pos, newPos === -1 ? textRange.end : pos + newPos);
+              const newPos = text2.substring(pos, textRange.end).search(`(${openMultilineRegex})|(${closeMultilineRegex})`);
+              isCommenting = insertComment !== void 0 ? insertComment : isCommenting || !isTextWhiteSpaceLike(text2, pos, newPos === -1 ? textRange.end : pos + newPos);
               pos = newPos === -1 ? textRange.end + 1 : pos + newPos + closeMultiline.length;
             }
           }
@@ -163845,7 +163845,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
             }
             insertSorted(positions, textRange.end, compareValues);
             const firstPos = positions[0];
-            if (text.substr(firstPos, openMultiline.length) !== openMultiline) {
+            if (text2.substr(firstPos, openMultiline.length) !== openMultiline) {
               textChanges2.push({
                 newText: openMultiline,
                 span: {
@@ -163855,7 +163855,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
               });
             }
             for (let i2 = 1; i2 < positions.length - 1; i2++) {
-              if (text.substr(positions[i2] - closeMultiline.length, closeMultiline.length) !== closeMultiline) {
+              if (text2.substr(positions[i2] - closeMultiline.length, closeMultiline.length) !== closeMultiline) {
                 textChanges2.push({
                   newText: closeMultiline,
                   span: {
@@ -163864,7 +163864,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
                   }
                 });
               }
-              if (text.substr(positions[i2], openMultiline.length) !== openMultiline) {
+              if (text2.substr(positions[i2], openMultiline.length) !== openMultiline) {
                 textChanges2.push({
                   newText: openMultiline,
                   span: {
@@ -163886,7 +163886,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           } else {
             for (const pos2 of positions) {
               const from = pos2 - closeMultiline.length > 0 ? pos2 - closeMultiline.length : 0;
-              const offset = text.substr(from, closeMultiline.length) === closeMultiline ? closeMultiline.length : 0;
+              const offset = text2.substr(from, closeMultiline.length) === closeMultiline ? closeMultiline.length : 0;
               textChanges2.push({
                 newText: "",
                 span: {
@@ -164214,11 +164214,11 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         const nameTable2 = sourceFile.nameTable = /* @__PURE__ */ new Map();
         sourceFile.forEachChild(function walk2(node) {
           if (isIdentifier(node) && !isTagName(node) && node.escapedText || isStringOrNumericLiteralLike(node) && literalIsName(node)) {
-            const text = getEscapedTextOfIdentifierOrLiteral(node);
-            nameTable2.set(text, nameTable2.get(text) === void 0 ? node.pos : -1);
+            const text2 = getEscapedTextOfIdentifierOrLiteral(node);
+            nameTable2.set(text2, nameTable2.get(text2) === void 0 ? node.pos : -1);
           } else if (isPrivateIdentifier(node)) {
-            const text = node.escapedText;
-            nameTable2.set(text, nameTable2.get(text) === void 0 ? node.pos : -1);
+            const text2 = node.escapedText;
+            nameTable2.set(text2, nameTable2.get(text2) === void 0 ? node.pos : -1);
           }
           forEachChild(node, walk2);
           if (hasJSDocNodes(node)) {
@@ -164875,19 +164875,19 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           return { text: `${prefix}static {}`, pos, end };
         }
         const declName = isAssignedExpression(node) ? node.parent.name : Debug.checkDefined(getNameOfDeclaration(node), "Expected call hierarchy item to have a name");
-        let text = isIdentifier(declName) ? idText(declName) : isStringOrNumericLiteralLike(declName) ? declName.text : isComputedPropertyName(declName) ? isStringOrNumericLiteralLike(declName.expression) ? declName.expression.text : void 0 : void 0;
-        if (text === void 0) {
+        let text2 = isIdentifier(declName) ? idText(declName) : isStringOrNumericLiteralLike(declName) ? declName.text : isComputedPropertyName(declName) ? isStringOrNumericLiteralLike(declName.expression) ? declName.expression.text : void 0 : void 0;
+        if (text2 === void 0) {
           const typeChecker = program.getTypeChecker();
           const symbol = typeChecker.getSymbolAtLocation(declName);
           if (symbol) {
-            text = typeChecker.symbolToString(symbol, node);
+            text2 = typeChecker.symbolToString(symbol, node);
           }
         }
-        if (text === void 0) {
+        if (text2 === void 0) {
           const printer = createPrinterWithRemoveCommentsOmitTrailingSemicolon();
-          text = usingSingleLineStringWriter((writer) => printer.writeNode(4, node, node.getSourceFile(), writer));
+          text2 = usingSingleLineStringWriter((writer) => printer.writeNode(4, node, node.getSourceFile(), writer));
         }
-        return { text, pos: declName.getStart(), end: declName.getEnd() };
+        return { text: text2, pos: declName.getStart(), end: declName.getEnd() };
       }
       function getCallHierarchItemContainerName(node) {
         var _a, _b, _c, _d;
@@ -166262,22 +166262,22 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           if (isJSDocIndexSignature(node)) {
             return transformJSDocIndexSignature(node);
           }
-          let text = node.typeName.text;
+          let text2 = node.typeName.text;
           switch (node.typeName.text) {
             case "String":
             case "Boolean":
             case "Object":
             case "Number":
-              text = text.toLowerCase();
+              text2 = text2.toLowerCase();
               break;
             case "array":
             case "date":
             case "promise":
-              text = text[0].toUpperCase() + text.slice(1);
+              text2 = text2[0].toUpperCase() + text2.slice(1);
               break;
           }
-          name2 = factory.createIdentifier(text);
-          if ((text === "Array" || text === "Promise") && !node.typeArguments) {
+          name2 = factory.createIdentifier(text2);
+          if ((text2 === "Array" || text2 === "Promise") && !node.typeArguments) {
             args3 = factory.createNodeArray([factory.createTypeReferenceNode("any", emptyArray)]);
           } else {
             args3 = visitNodes2(node.typeArguments, transformJSDocType, isTypeNode);
@@ -167407,15 +167407,15 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
       function collectExportRenames(sourceFile, checker, identifiers) {
         const res = /* @__PURE__ */ new Map();
         forEachExportReference(sourceFile, (node) => {
-          const { text } = node.name;
-          if (!res.has(text) && (isIdentifierANonContextualKeyword(node.name) || checker.resolveName(
-            text,
+          const { text: text2 } = node.name;
+          if (!res.has(text2) && (isIdentifierANonContextualKeyword(node.name) || checker.resolveName(
+            text2,
             node,
             111551,
             /*excludeGlobals*/
             true
           ))) {
-            res.set(text, makeUniqueName(`_${text}`, identifiers));
+            res.set(text2, makeUniqueName(`_${text2}`, identifiers));
           }
         });
         return res;
@@ -167425,8 +167425,8 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           if (isAssignmentLhs) {
             return;
           }
-          const { text } = node.name;
-          changes.replaceNode(sourceFile, node, factory.createIdentifier(exports2.get(text) || text));
+          const { text: text2 } = node.name;
+          changes.replaceNode(sourceFile, node, factory.createIdentifier(exports2.get(text2) || text2));
         });
       }
       function forEachExportReference(sourceFile, cb) {
@@ -167592,8 +167592,8 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         return statements && [statements, false];
       }
       function convertNamedExport(sourceFile, assignment, changes, exports2) {
-        const { text } = assignment.left.name;
-        const rename = exports2.get(text);
+        const { text: text2 } = assignment.left.name;
+        const rename = exports2.get(text2);
         if (rename !== void 0) {
           const newNodes = [
             makeConst(
@@ -167606,7 +167606,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
               /*isTypeOnly*/
               false,
               rename,
-              text
+              text2
             )])
           ];
           changes.replaceNodeWithNodes(sourceFile, assignment.parent, newNodes);
@@ -172350,9 +172350,9 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
             28
             /* CommaToken */
           ));
-          const text = sourceFile.text;
+          const text2 = sourceFile.text;
           let end = implementsToken.end;
-          while (end < text.length && isWhiteSpaceSingleLine(text.charCodeAt(end))) {
+          while (end < text2.length && isWhiteSpaceSingleLine(text2.charCodeAt(end))) {
             end++;
           }
           changes.deleteRange(sourceFile, { pos: implementsToken.getStart(), end });
@@ -176054,7 +176054,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
       function createStubbedMethodBody(quotePreference) {
         return createStubbedBody(Diagnostics.Method_not_implemented.message, quotePreference);
       }
-      function createStubbedBody(text, quotePreference) {
+      function createStubbedBody(text2, quotePreference) {
         return factory.createBlock(
           [factory.createThrowStatement(
             factory.createNewExpression(
@@ -176063,7 +176063,7 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
               void 0,
               // TODO Handle auto quote preference.
               [factory.createStringLiteral(
-                text,
+                text2,
                 /*isSingleQuote*/
                 quotePreference === 0
                 /* Single */
@@ -178364,12 +178364,12 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           ...includeSymbol ? { symbol } : void 0
         };
       }
-      function generateIdentifierForArbitraryString(text, languageVersion) {
+      function generateIdentifierForArbitraryString(text2, languageVersion) {
         let needsUnderscore = false;
         let identifier = "";
         let ch;
-        for (let i2 = 0; i2 < text.length; i2 += ch !== void 0 && ch >= 65536 ? 2 : 1) {
-          ch = text.codePointAt(i2);
+        for (let i2 = 0; i2 < text2.length; i2 += ch !== void 0 && ch >= 65536 ? 2 : 1) {
+          ch = text2.codePointAt(i2);
           if (ch !== void 0 && (i2 === 0 ? isIdentifierStart(ch, languageVersion) : isIdentifierPart(ch, languageVersion))) {
             if (needsUnderscore) identifier += "_";
             identifier += String.fromCodePoint(ch);
@@ -180711,8 +180711,8 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         }
         function isDotOfNumericLiteral(contextToken2) {
           if (contextToken2.kind === 9) {
-            const text = contextToken2.getFullText();
-            return text.charAt(text.length - 1) === ".";
+            const text2 = contextToken2.getFullText();
+            return text2.charAt(text2.length - 1) === ".";
           }
           return false;
         }
@@ -181849,9 +181849,9 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           void 0
         );
       }
-      function addReplacementSpans(text, textStart, names) {
-        const span = getDirectoryFragmentTextSpan(text, textStart);
-        const wholeSpan = text.length === 0 ? void 0 : createTextSpan(textStart, text.length);
+      function addReplacementSpans(text2, textStart, names) {
+        const span = getDirectoryFragmentTextSpan(text2, textStart);
+        const wholeSpan = text2.length === 0 ? void 0 : createTextSpan(textStart, text2.length);
         return names.map(({ name: name2, kind, extension: extension2 }) => name2.includes(directorySeparator) || name2.includes(altDirectorySeparator) ? { name: name2, kind, extension: extension2, span: wholeSpan } : { name: name2, kind, extension: extension2, span });
       }
       function getStringLiteralCompletionsFromModuleNames(sourceFile, node, program, host, preferences) {
@@ -182414,8 +182414,8 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         if (!range2) {
           return void 0;
         }
-        const text = sourceFile.text.slice(range2.pos, position);
-        const match = tripleSlashDirectiveFragmentRegex.exec(text);
+        const text2 = sourceFile.text.slice(range2.pos, position);
+        const match = tripleSlashDirectiveFragmentRegex.exec(text2);
         if (!match) {
           return void 0;
         }
@@ -182500,12 +182500,12 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         }
         return result;
       }
-      function getDirectoryFragmentTextSpan(text, textStart) {
-        const index = Math.max(text.lastIndexOf(directorySeparator), text.lastIndexOf(altDirectorySeparator));
+      function getDirectoryFragmentTextSpan(text2, textStart) {
+        const index = Math.max(text2.lastIndexOf(directorySeparator), text2.lastIndexOf(altDirectorySeparator));
         const offset = index !== -1 ? index + 1 : 0;
-        const length2 = text.length - offset;
+        const length2 = text2.length - offset;
         return length2 === 0 || isIdentifierText(
-          text.substr(offset, length2),
+          text2.substr(offset, length2),
           99
           /* ESNext */
         ) ? void 0 : createTextSpan(textStart + offset, length2);
@@ -184038,12 +184038,12 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           /** @param allSearchSymbols set of additional symbols for use by `includes`. */
           createSearch(location2, symbol, comingFrom, searchOptions = {}) {
             const {
-              text = stripQuotes(symbolName(getLocalSymbolForExportDefault(symbol) || getNonModuleSymbolOfMergedModuleSymbol(symbol) || symbol)),
+              text: text2 = stripQuotes(symbolName(getLocalSymbolForExportDefault(symbol) || getNonModuleSymbolOfMergedModuleSymbol(symbol) || symbol)),
               allSearchSymbols = [symbol]
             } = searchOptions;
-            const escapedText = escapeLeadingUnderscores(text);
+            const escapedText = escapeLeadingUnderscores(text2);
             const parents = this.options.implementations && location2 ? getParentSymbolsOfPropertyAccess(location2, symbol, this.checker) : void 0;
-            return { symbol, comingFrom, text, escapedText, parents, allSearchSymbols, includes: (sym) => contains(allSearchSymbols, sym) };
+            return { symbol, comingFrom, text: text2, escapedText, parents, allSearchSymbols, includes: (sym) => contains(allSearchSymbols, sym) };
           }
           /**
            * Callback to add references for a particular searched symbol.
@@ -184288,25 +184288,25 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           if (!symbolName2 || !symbolName2.length) {
             return positions;
           }
-          const text = sourceFile.text;
-          const sourceLength = text.length;
+          const text2 = sourceFile.text;
+          const sourceLength = text2.length;
           const symbolNameLength = symbolName2.length;
-          let position = text.indexOf(symbolName2, container.pos);
+          let position = text2.indexOf(symbolName2, container.pos);
           while (position >= 0) {
             if (position > container.end) break;
             const endPosition = position + symbolNameLength;
             if ((position === 0 || !isIdentifierPart(
-              text.charCodeAt(position - 1),
+              text2.charCodeAt(position - 1),
               99
               /* Latest */
             )) && (endPosition === sourceLength || !isIdentifierPart(
-              text.charCodeAt(endPosition),
+              text2.charCodeAt(endPosition),
               99
               /* Latest */
             ))) {
               positions.push(position);
             }
-            position = text.indexOf(symbolName2, position + symbolNameLength + 1);
+            position = text2.indexOf(symbolName2, position + symbolNameLength + 1);
           }
           return positions;
         }
@@ -185749,8 +185749,8 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         function isSignatureSupportingReturnAnnotation(node) {
           return isArrowFunction(node) || isFunctionExpression(node) || isFunctionDeclaration(node) || isMethodDeclaration(node) || isGetAccessorDeclaration(node);
         }
-        function addParameterHints(text, parameter, position, isFirstVariadicArgument) {
-          let hintText = `${isFirstVariadicArgument ? "..." : ""}${text}`;
+        function addParameterHints(text2, parameter, position, isFirstVariadicArgument) {
+          let hintText = `${isFirstVariadicArgument ? "..." : ""}${text2}`;
           let displayParts;
           if (shouldUseInteractiveInlayHints(preferences)) {
             displayParts = [getNodeDisplayPart(hintText, parameter), { text: ":" }];
@@ -185775,9 +185775,9 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
             whitespaceBefore: true
           });
         }
-        function addEnumMemberValueHints(text, position) {
+        function addEnumMemberValueHints(text2, position) {
           result.push({
-            text: `= ${text}`,
+            text: `= ${text2}`,
             position,
             kind: "Enum",
             whitespaceBefore: true
@@ -186474,10 +186474,10 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
           }
           return true;
         }
-        function getNodeDisplayPart(text, node) {
+        function getNodeDisplayPart(text2, node) {
           const sourceFile = node.getSourceFile();
           return {
-            text,
+            text: text2,
             span: createTextSpanFromNode(node, sourceFile),
             file: sourceFile.fileName
           };
@@ -186838,11 +186838,11 @@ ${newComment.split("\n").map((c) => ` * ${c}`).join("\n")}
         return { newText: openComment + closeComment, caretOffset: 3 };
       }
       function getIndentationStringAtPosition(sourceFile, position) {
-        const { text } = sourceFile;
+        const { text: text2 } = sourceFile;
         const lineStart = getLineStartPositionForPosition(position, sourceFile);
         let pos = lineStart;
-        for (; pos <= position && isWhiteSpaceSingleLine(text.charCodeAt(pos)); pos++) ;
-        return text.slice(lineStart, pos);
+        for (; pos <= position && isWhiteSpaceSingleLine(text2.charCodeAt(pos)); pos++) ;
+        return text2.slice(lineStart, pos);
       }
       function parameterDocComments(parameters, isJavaScriptFile, indentationStr, newLine) {
         return parameters.map(({ name: name2, dotDotDotToken }, i2) => {
@@ -190148,9 +190148,9 @@ ${content}
         TrailingTriviaOption2[TrailingTriviaOption2["Include"] = 2] = "Include";
         return TrailingTriviaOption2;
       })(TrailingTriviaOption || {});
-      function skipWhitespacesAndLineBreaks(text, start2) {
+      function skipWhitespacesAndLineBreaks(text2, start2) {
         return skipTrivia(
-          text,
+          text2,
           start2,
           /*stopAfterLineBreak*/
           false,
@@ -190158,10 +190158,10 @@ ${content}
           true
         );
       }
-      function hasCommentsBeforeLineBreak(text, start2) {
+      function hasCommentsBeforeLineBreak(text2, start2) {
         let i2 = start2;
-        while (i2 < text.length) {
-          const ch = text.charCodeAt(i2);
+        while (i2 < text2.length) {
+          const ch = text2.charCodeAt(i2);
           if (isWhiteSpaceSingleLine(ch)) {
             i2++;
             continue;
@@ -190374,8 +190374,8 @@ ${content}
         replaceNodeWithNodes(sourceFile, oldNode, newNodes, options = useNonAdjustedPositions) {
           this.replaceRangeWithNodes(sourceFile, getAdjustedRange(sourceFile, oldNode, oldNode, options), newNodes, options);
         }
-        replaceNodeWithText(sourceFile, oldNode, text) {
-          this.replaceRangeWithText(sourceFile, getAdjustedRange(sourceFile, oldNode, oldNode, useNonAdjustedPositions), text);
+        replaceNodeWithText(sourceFile, oldNode, text2) {
+          this.replaceRangeWithText(sourceFile, getAdjustedRange(sourceFile, oldNode, oldNode, useNonAdjustedPositions), text2);
         }
         replaceNodeRangeWithNodes(sourceFile, startNode2, endNode2, newNodes, options = useNonAdjustedPositions) {
           this.replaceRangeWithNodes(sourceFile, getAdjustedRange(sourceFile, startNode2, endNode2, options), newNodes, options);
@@ -190458,8 +190458,8 @@ ${content}
           const insertAtLineStart = isValidLocationToAddComment(sourceFile, startPosition);
           const token = getTouchingToken(sourceFile, insertAtLineStart ? startPosition : position);
           const indent3 = sourceFile.text.slice(lineStartPosition, startPosition);
-          const text = `${insertAtLineStart ? "" : this.newLineCharacter}//${commentText}${this.newLineCharacter}${indent3}`;
-          this.insertText(sourceFile, token.getStart(sourceFile), text);
+          const text2 = `${insertAtLineStart ? "" : this.newLineCharacter}//${commentText}${this.newLineCharacter}${indent3}`;
+          this.insertText(sourceFile, token.getStart(sourceFile), text2);
         }
         insertJsdocCommentBefore(sourceFile, node, tag) {
           const fnStart = node.getStart(sourceFile);
@@ -190502,11 +190502,11 @@ ${content}
         filterJSDocTags(sourceFile, parent2, predicate) {
           this.replaceJSDocComment(sourceFile, parent2, filter(flatMapToMutable(parent2.jsDoc, (j) => j.tags), predicate));
         }
-        replaceRangeWithText(sourceFile, range2, text) {
-          this.changes.push({ kind: 3, sourceFile, range: range2, text });
+        replaceRangeWithText(sourceFile, range2, text2) {
+          this.changes.push({ kind: 3, sourceFile, range: range2, text: text2 });
         }
-        insertText(sourceFile, pos, text) {
-          this.replaceRangeWithText(sourceFile, createRange(pos), text);
+        insertText(sourceFile, pos, text2) {
+          this.replaceRangeWithText(sourceFile, createRange(pos), text2);
         }
         /** Prefer this over replacing a node with another that has a type annotation, as it avoids reformatting the other parts of the node. */
         tryInsertTypeAnnotation(sourceFile, node, type) {
@@ -190978,8 +190978,8 @@ ${options.prefix}` : "\n" : options.prefix
         }
         changesToText2.getTextChangesFromChanges = getTextChangesFromChanges;
         function newFileChanges(fileName, insertions, newLineCharacter, formatContext) {
-          const text = newFileChangesWorker(getScriptKindFromFileName(fileName), insertions, newLineCharacter, formatContext);
-          return { fileName, textChanges: [createTextChange(createTextSpan(0, 0), text)], isNewFile: true };
+          const text2 = newFileChangesWorker(getScriptKindFromFileName(fileName), insertions, newLineCharacter, formatContext);
+          return { fileName, textChanges: [createTextChange(createTextSpan(0, 0), text2)], isNewFile: true };
         }
         changesToText2.newFileChanges = newFileChanges;
         function newFileChangesWorker(scriptKind, insertions, newLineCharacter, formatContext) {
@@ -191010,26 +191010,26 @@ ${options.prefix}` : "\n" : options.prefix
           }
           const { options = {}, range: { pos } } = change;
           const format = (n) => getFormattedTextOfNode(n, targetSourceFile, sourceFile, pos, options, newLineCharacter, formatContext, validate);
-          const text = change.kind === 2 ? change.nodes.map((n) => removeSuffix(format(n), newLineCharacter)).join(((_a = change.options) == null ? void 0 : _a.joiner) || newLineCharacter) : format(change.node);
-          const noIndent = options.indentation !== void 0 || getLineStartPositionForPosition(pos, targetSourceFile) === pos ? text : text.replace(/^\s+/, "");
+          const text2 = change.kind === 2 ? change.nodes.map((n) => removeSuffix(format(n), newLineCharacter)).join(((_a = change.options) == null ? void 0 : _a.joiner) || newLineCharacter) : format(change.node);
+          const noIndent = options.indentation !== void 0 || getLineStartPositionForPosition(pos, targetSourceFile) === pos ? text2 : text2.replace(/^\s+/, "");
           return (options.prefix || "") + noIndent + (!options.suffix || endsWith(noIndent, options.suffix) ? "" : options.suffix);
         }
         function getFormattedTextOfNode(nodeIn, targetSourceFile, sourceFile, pos, { indentation, prefix, delta }, newLineCharacter, formatContext, validate) {
-          const { node, text } = getNonformattedText(nodeIn, targetSourceFile, newLineCharacter);
-          if (validate) validate(node, text);
+          const { node, text: text2 } = getNonformattedText(nodeIn, targetSourceFile, newLineCharacter);
+          if (validate) validate(node, text2);
           const formatOptions = getFormatCodeSettingsForWriting(formatContext, targetSourceFile);
           const initialIndentation = indentation !== void 0 ? indentation : ts_formatting_exports.SmartIndenter.getIndentation(pos, sourceFile, formatOptions, prefix === newLineCharacter || getLineStartPositionForPosition(pos, targetSourceFile) === pos);
           if (delta === void 0) {
             delta = ts_formatting_exports.SmartIndenter.shouldIndentChildNode(formatOptions, nodeIn) ? formatOptions.indentSize || 0 : 0;
           }
           const file = {
-            text,
+            text: text2,
             getLineAndCharacterOfPosition(pos2) {
               return getLineAndCharacterOfPosition(this, pos2);
             }
           };
           const changes = ts_formatting_exports.formatNodeGivenIndentation(node, file, targetSourceFile.languageVariant, initialIndentation, delta, { ...formatContext, options: formatOptions });
-          return applyChanges(text, changes);
+          return applyChanges(text2, changes);
         }
         function getNonformattedText(node, sourceFile, newLineCharacter) {
           const writer = createWriter(newLineCharacter);
@@ -191044,12 +191044,12 @@ ${options.prefix}` : "\n" : options.prefix
         }
         changesToText2.getNonformattedText = getNonformattedText;
       })(changesToText || (changesToText = {}));
-      function applyChanges(text, changes) {
+      function applyChanges(text2, changes) {
         for (let i2 = changes.length - 1; i2 >= 0; i2--) {
           const { span, newText } = changes[i2];
-          text = `${text.substring(0, span.start)}${newText}${text.substring(textSpanEnd(span))}`;
+          text2 = `${text2.substring(0, span.start)}${newText}${text2.substring(textSpanEnd(span))}`;
         }
-        return text;
+        return text2;
       }
       function isTrivia2(s) {
         return skipTrivia(s, 0) === s.length;
@@ -191294,28 +191294,28 @@ ${options.prefix}` : "\n" : options.prefix
           }
         }
         let position = 0;
-        const text = sourceFile.text;
+        const text2 = sourceFile.text;
         if (lastPrologue) {
           position = lastPrologue.end;
           advancePastLineBreak();
           return position;
         }
-        const shebang = getShebang(text);
+        const shebang = getShebang(text2);
         if (shebang !== void 0) {
           position = shebang.length;
           advancePastLineBreak();
         }
-        const ranges = getLeadingCommentRanges(text, position);
+        const ranges = getLeadingCommentRanges(text2, position);
         if (!ranges) return position;
         let lastComment;
         let firstNodeLine;
         for (const range2 of ranges) {
           if (range2.kind === 3) {
-            if (isPinnedComment(text, range2.pos)) {
+            if (isPinnedComment(text2, range2.pos)) {
               lastComment = { range: range2, pinnedOrTripleSlash: true };
               continue;
             }
-          } else if (isRecognizedTripleSlashComment(text, range2.pos, range2.end)) {
+          } else if (isRecognizedTripleSlashComment(text2, range2.pos, range2.end)) {
             lastComment = { range: range2, pinnedOrTripleSlash: true };
             continue;
           }
@@ -191338,11 +191338,11 @@ ${options.prefix}` : "\n" : options.prefix
         }
         return position;
         function advancePastLineBreak() {
-          if (position < text.length) {
-            const charCode = text.charCodeAt(position);
+          if (position < text2.length) {
+            const charCode = text2.charCodeAt(position);
             if (isLineBreak(charCode)) {
               position++;
-              if (position < text.length && charCode === 13 && text.charCodeAt(position) === 10) {
+              if (position < text2.length && charCode === 13 && text2.charCodeAt(position) === 10) {
                 position++;
               }
             }
@@ -191632,9 +191632,9 @@ ${options.prefix}` : "\n" : options.prefix
         1
         /* JSX */
       );
-      function getFormattingScanner(text, languageVariant, startPos, endPos, cb) {
+      function getFormattingScanner(text2, languageVariant, startPos, endPos, cb) {
         const scanner2 = languageVariant === 1 ? jsxScanner : standardScanner;
-        scanner2.setText(text);
+        scanner2.setText(text2);
         scanner2.resetTokenState(startPos);
         let wasNewLine = true;
         let leadingTrivia;
@@ -194722,9 +194722,9 @@ ${options.prefix}` : "\n" : options.prefix
             edits.push(createTextChangeFromStartLength(start2, len, newText));
           }
         }
-        function recordInsert(start2, text) {
-          if (text) {
-            edits.push(createTextChangeFromStartLength(start2, 0, text));
+        function recordInsert(start2, text2) {
+          if (text2) {
+            edits.push(createTextChangeFromStartLength(start2, 0, text2));
           }
         }
         function applyRuleEdits(rule2, previousRange2, previousStartLine, currentRange, currentStartLine) {
@@ -198943,9 +198943,9 @@ ${options.prefix}` : "\n" : options.prefix
           return { line: line7 + 1, offset: character + 1 };
         }
         getFileTextAndSize(tempFileName) {
-          let text;
+          let text2;
           const fileName = tempFileName || this.info.fileName;
-          const getText2 = () => text === void 0 ? text = this.host.readFile(fileName) || "" : text;
+          const getText2 = () => text2 === void 0 ? text2 = this.host.readFile(fileName) || "" : text2;
           if (!hasTSFileExtension(this.info.fileName)) {
             const fileSize = this.host.getFileSize ? this.host.getFileSize(fileName) : getText2().length;
             if (fileSize > maxFileSize) {
@@ -205898,13 +205898,13 @@ Dynamic files must always be opened with service's current directory or service 
       function formatDiagnosticToProtocol(diag2, includeFileName) {
         const start2 = diag2.file && convertToLocation(getLineAndCharacterOfPosition(diag2.file, diag2.start));
         const end = diag2.file && convertToLocation(getLineAndCharacterOfPosition(diag2.file, diag2.start + diag2.length));
-        const text = flattenDiagnosticMessageText(diag2.messageText, "\n");
+        const text2 = flattenDiagnosticMessageText(diag2.messageText, "\n");
         const { code: code4, source } = diag2;
         const category = diagnosticCategoryName(diag2);
         const common = {
           start: start2,
           end,
-          text,
+          text: text2,
           code: code4,
           category,
           reportsUnnecessary: diag2.reportsUnnecessary,
@@ -207557,10 +207557,10 @@ ${json}${newLine}`;
                 const { file, project } = this.getFileAndProject(fileRequest);
                 const scriptInfo = project.getScriptInfoForNormalizedPath(file);
                 if (scriptInfo) {
-                  const text = getSnapshotText(scriptInfo.getSnapshot());
+                  const text2 = getSnapshotText(scriptInfo.getSnapshot());
                   msg += `
 
-File text of ${fileRequest.file}:${indent2(text)}
+File text of ${fileRequest.file}:${indent2(text2)}
 `;
                 }
               } catch {
@@ -208290,12 +208290,12 @@ Project '${project.projectName}' (${ProjectKind[project.projectKind]}) ${counter
             return {
               ...hint,
               position: scriptInfo.positionToLineOffset(position),
-              displayParts: displayParts == null ? void 0 : displayParts.map(({ text, span, file: file2 }) => {
+              displayParts: displayParts == null ? void 0 : displayParts.map(({ text: text2, span, file: file2 }) => {
                 if (span) {
                   Debug.assertIsDefined(file2, "Target file should be defined together with its span.");
                   const scriptInfo2 = this.projectService.getScriptInfo(file2);
                   return {
-                    text,
+                    text: text2,
                     span: {
                       start: scriptInfo2.positionToLineOffset(span.start),
                       end: scriptInfo2.positionToLineOffset(span.start + span.length),
@@ -208303,7 +208303,7 @@ Project '${project.projectName}' (${ProjectKind[project.projectKind]}) ${counter
                     }
                   };
                 } else {
-                  return { text };
+                  return { text: text2 };
                 }
               })
             };
@@ -209705,17 +209705,17 @@ Additional information: BADCLIENT: Bad error code, ${badCode} not found in range
         const { line: line7, character } = computeLineAndCharacterOfPosition(computeLineStarts(newText), renameLocation);
         return { line: line7 + 1, offset: character + 1 };
       }
-      function applyEdits(text, textFilename, edits) {
+      function applyEdits(text2, textFilename, edits) {
         for (const { fileName, textChanges: textChanges2 } of edits) {
           if (fileName !== textFilename) {
             continue;
           }
           for (let i2 = textChanges2.length - 1; i2 >= 0; i2--) {
             const { newText, span: { start: start2, length: length2 } } = textChanges2[i2];
-            text = text.slice(0, start2) + newText + text.slice(start2 + length2);
+            text2 = text2.slice(0, start2) + newText + text2.slice(start2 + length2);
           }
         }
-        return text;
+        return text2;
       }
       function referenceEntryToReferencesResponseItem(projectService, { fileName, textSpan, contextSpan, isWriteAccess: isWriteAccess2, isDefinition }, { disableLineTextInReferences }) {
         const scriptInfo = Debug.checkDefined(projectService.getScriptInfo(fileName));
@@ -210171,17 +210171,17 @@ Additional information: BADCLIENT: Bad error code, ${badCode} not found in range
           }
           return this.buildTreeFromBottom(interiorNodes);
         }
-        static linesFromText(text) {
-          const lineMap = computeLineStarts(text);
+        static linesFromText(text2) {
+          const lineMap = computeLineStarts(text2);
           if (lineMap.length === 0) {
             return { lines: [], lineMap };
           }
           const lines = new Array(lineMap.length);
           const lc = lineMap.length - 1;
           for (let lmi = 0; lmi < lc; lmi++) {
-            lines[lmi] = text.substring(lineMap[lmi], lineMap[lmi + 1]);
+            lines[lmi] = text2.substring(lineMap[lmi], lineMap[lmi + 1]);
           }
-          const endText = text.substring(lineMap[lc]);
+          const endText = text2.substring(lineMap[lc]);
           if (endText.length > 0) {
             lines[lc] = endText;
           } else {
@@ -210453,8 +210453,8 @@ Additional information: BADCLIENT: Bad error code, ${badCode} not found in range
         }
       };
       var LineLeaf = class {
-        constructor(text) {
-          this.text = text;
+        constructor(text2) {
+          this.text = text2;
         }
         isLeaf() {
           return true;
@@ -210885,19 +210885,19 @@ function textLines(message2) {
     }
     const code4 = fenced || fenceLine;
     const quoted2 = code4 || /^\s*>/.test(raw);
-    const text = raw.replace(BLOCK_MARKER, "").trim();
-    if (!text) {
+    const text2 = raw.replace(BLOCK_MARKER, "").trim();
+    if (!text2) {
       out2.push(fenceLine ? "fence" : "blank");
       continue;
     }
     const prev = out2[out2.length - 1];
     const marker = /^\s*(?:#{1,6}\s+|[-*+]\s+|\d+[.)]\s+)/.test(raw);
     if (typeof prev === "object" && prev.code === code4 && !prev.mdHeading && !marker && prev.quoted === quoted2 && !/[.!?:]["'“”‘’»)]*$/.test(prev.text)) {
-      prev.text += ` ${text}`;
+      prev.text += ` ${text2}`;
       prev.lines++;
       continue;
     }
-    out2.push({ text, quoted: quoted2, code: code4, prefixed: raw.trim() !== text, mdHeading: /^\s*#{1,6}\s/.test(raw), lines: 1 });
+    out2.push({ text: text2, quoted: quoted2, code: code4, prefixed: raw.trim() !== text2, mdHeading: /^\s*#{1,6}\s/.test(raw), lines: 1 });
   }
   return out2;
 }
@@ -214579,11 +214579,11 @@ function parseMatchPredicate(steps, index, operator, textPredicates) {
     for (const c of captures) {
       if (c.name === captureName) nodes.push(c.node.text);
     }
-    const test = /* @__PURE__ */ __name((text, positive) => {
-      return positive ? regex.test(text) : !regex.test(text);
+    const test = /* @__PURE__ */ __name((text2, positive) => {
+      return positive ? regex.test(text2) : !regex.test(text2);
     }, "test");
     if (nodes.length === 0) return !isPositive;
-    return matchAll ? nodes.every((text) => test(text, isPositive)) : nodes.some((text) => test(text, isPositive));
+    return matchAll ? nodes.every((text2) => test(text2, isPositive)) : nodes.some((text2) => test(text2, isPositive));
   });
 }
 __name(parseMatchPredicate, "parseMatchPredicate");
@@ -214613,7 +214613,7 @@ function parseAnyOfPredicate(steps, index, operator, textPredicates) {
       if (c.name === captureName) nodes.push(c.node.text);
     }
     if (nodes.length === 0) return !isPositive;
-    return nodes.every((text) => values.includes(text)) === isPositive;
+    return nodes.every((text2) => values.includes(text2)) === isPositive;
   });
 }
 __name(parseAnyOfPredicate, "parseAnyOfPredicate");
@@ -215193,9 +215193,9 @@ function extension(path2) {
   return m ? m[0].toLowerCase() : ".ts";
 }
 function message(d) {
-  const text = import_typescript.default.flattenDiagnosticMessageText(d.messageText, " ");
-  if (!d.file || d.start === void 0) return text;
-  return `${text} (line ${d.file.getLineAndCharacterOfPosition(d.start).line + 1})`;
+  const text2 = import_typescript.default.flattenDiagnosticMessageText(d.messageText, " ");
+  if (!d.file || d.start === void 0) return text2;
+  return `${text2} (line ${d.file.getLineAndCharacterOfPosition(d.start).line + 1})`;
 }
 function tsProgram(source, path2) {
   const name2 = `/saidvsdid${extension(path2)}`;
@@ -215231,8 +215231,13 @@ function tsProgram(source, path2) {
 
 // src/parse/types.ts
 var CERTAIN = { certain: true };
+var GLOBAL = { certain: true, via: "global" };
 var uncertain = (why) => ({ certain: false, why });
-var weakest = (a, b) => a.certain ? b : a;
+var weakest = (a, b) => {
+  if (!a.certain) return a;
+  if (!b.certain) return b;
+  return a.via === "global" || b.via === "global" ? GLOBAL : a;
+};
 var CANONICAL2 = { canonical: true };
 var notCanonical = (why) => ({ canonical: false, why });
 var firstNotCanonical = (...forms) => forms.find((f) => !f.canonical) ?? CANONICAL2;
@@ -215403,6 +215408,11 @@ var ASSERTION_NAMED = nameTable("ASSERTION_NAMED", {
 });
 var ASSERTION_MODULES = set("node:assert", "assert", "node:assert/strict", "assert/strict", "sinon", "chai");
 var line = (n) => n.startPosition.row + 1;
+var JEST_GLOBAL_NAMES = (() => {
+  const api = RUNNER_API["@jest/globals"];
+  return /* @__PURE__ */ new Set([...api.tests, ...api.suites, ...api.rootMarkers, ...api.hooks]);
+})();
+var GLOBAL_OBJECTS = /* @__PURE__ */ new Set(["globalThis", "global", "window", "self"]);
 var WRITING_CALLS = /* @__PURE__ */ new Set(["Object.defineProperty", "Object.defineProperties", "Object.assign", "Object.setPrototypeOf", "Reflect.set", "Reflect.defineProperty", "Reflect.deleteProperty", "Reflect.setPrototypeOf"]);
 function rootOf(node) {
   let n = node ? unwrap(node) : null;
@@ -215462,6 +215472,17 @@ var TS_DECLARATIONS = nameTable("TS_DECLARATIONS", {
 var EXACT_ASSIGNMENTS = /* @__PURE__ */ new Set([import_typescript2.default.SyntaxKind.EqualsToken, import_typescript2.default.SyntaxKind.BarBarEqualsToken, import_typescript2.default.SyntaxKind.AmpersandAmpersandEqualsToken, import_typescript2.default.SyntaxKind.QuestionQuestionEqualsToken]);
 var isAssignmentOperator = (k) => k >= import_typescript2.default.SyntaxKind.FirstAssignment && k <= import_typescript2.default.SyntaxKind.LastAssignment;
 var kindName = (n) => import_typescript2.default.SyntaxKind[n.kind];
+function declaredAs(n) {
+  if (import_typescript2.default.isBindingElement(n)) return "by destructuring";
+  if (import_typescript2.default.isVariableDeclaration(n)) return "as a variable";
+  if (import_typescript2.default.isParameter(n)) return "as a parameter";
+  if (import_typescript2.default.isFunctionDeclaration(n) || import_typescript2.default.isFunctionExpression(n)) return "as a function";
+  if (import_typescript2.default.isClassDeclaration(n) || import_typescript2.default.isClassExpression(n)) return "as a class";
+  if (import_typescript2.default.isImportEqualsDeclaration(n)) return "by `import … = require(…)`";
+  if (import_typescript2.default.isEnumDeclaration(n)) return "as an enum";
+  if (import_typescript2.default.isModuleDeclaration(n)) return "as a namespace";
+  return `as a ${kindName(n).replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase()}`;
+}
 var isIncrement = (n) => n !== void 0 && (import_typescript2.default.isPrefixUnaryExpression(n) || import_typescript2.default.isPostfixUnaryExpression(n)) && (n.operator === import_typescript2.default.SyntaxKind.PlusPlusToken || n.operator === import_typescript2.default.SyntaxKind.MinusMinusToken);
 var indexes = /* @__PURE__ */ new WeakMap();
 function indexOf(program) {
@@ -215484,17 +215505,67 @@ function indexOf(program) {
   return index;
 }
 var TsResolver = class {
-  constructor(tree, source, path2) {
+  constructor(tree, source, path2, jestGlobals = null) {
     this.tree = tree;
+    this.jestGlobals = jestGlobals;
     this.program = tsProgram(source, path2);
     this.index = indexOf(this.program);
-    if (this.program.issue === null) this.findWrites();
+    if (this.program.issue === null) {
+      this.findWrites();
+      this.findGlobalWrites();
+    }
   }
   tree;
+  jestGlobals;
   program;
   mutated = /* @__PURE__ */ new Map();
   /** The program's identifiers and what has been asked of them (shared by every parse of the same content). */
   index;
+  /** Names the file writes as globals (`it = …`, `globalThis.it = …`), or 'all' (`Object.assign(globalThis, …)`): courtesy. */
+  globalWrites = /* @__PURE__ */ new Map();
+  globalWritesAll = null;
+  /**
+   * Writes to a global name the file makes itself (a courtesy, with no guarantee: anything else that redefines a global is
+   * mutation, outside the assumption): an assignment of any operator, an update or a destructuring whose target is a
+   * bare name the compiler binds to nothing; a member write, `delete` or by-name primitive on `globalThis`, `global`,
+   * `window` or `self` with that key; and any `Object.assign`/`defineProperties`-like call on those receivers (all names).
+   */
+  findGlobalWrites() {
+    const unbound = (n) => n.type === "identifier" && this.identifierAt(n) !== null && this.symbolAt(n) === void 0;
+    const add = (name2, at) => {
+      if (!this.globalWrites.has(name2)) this.globalWrites.set(name2, at);
+    };
+    const patternNames2 = (p, at) => {
+      for (const id of [p, ...p.descendantsOfType(["identifier", "shorthand_property_identifier_pattern"])]) {
+        if (id.type === "identifier" && unbound(id)) add(id.text, at);
+        if (id.type === "shorthand_property_identifier_pattern") add(id.text, at);
+      }
+    };
+    for (const n of this.tree.descendantsOfType(["assignment_expression", "augmented_assignment_expression", "update_expression", "unary_expression", "call_expression"])) {
+      if (n.type === "assignment_expression" || n.type === "augmented_assignment_expression" || n.type === "update_expression") {
+        const target2 = n.childForFieldName(n.type === "update_expression" ? "argument" : "left");
+        if (!target2) continue;
+        const t = unwrap(target2);
+        if (t.type === "object_pattern" || t.type === "array_pattern") patternNames2(t, n);
+        else if (unbound(t)) add(t.text, n);
+        else {
+          const m = jsMember(t);
+          if (m && m.object.type === "identifier" && GLOBAL_OBJECTS.has(jsName(m.object))) add(m.name, n);
+        }
+      } else if (n.type === "unary_expression") {
+        if (n.childForFieldName("operator")?.type !== "delete") continue;
+        const arg = n.childForFieldName("argument");
+        const m = arg ? jsMember(unwrap(arg)) : null;
+        if (m && m.object.type === "identifier" && GLOBAL_OBJECTS.has(jsName(m.object))) add(m.name, n);
+      } else {
+        const fn = n.childForFieldName("function");
+        const member = fn ? jsMember(unwrap(fn)) : null;
+        if (!member || member.object.type !== "identifier" || !WRITING_CALLS.has(`${jsName(member.object)}.${member.name}`)) continue;
+        const first = n.childForFieldName("arguments")?.namedChildren.find((c) => c.type !== "comment") ?? null;
+        if (first && unwrap(first).type === "identifier" && GLOBAL_OBJECTS.has(jsName(unwrap(first)))) this.globalWritesAll ??= n;
+      }
+    }
+  }
   /** Whether the compiler read the file's names. */
   get scopes() {
     return this.program.issue === null ? { known: true } : { known: false, why: this.program.issue };
@@ -215558,10 +215629,10 @@ var TsResolver = class {
       clause = d;
       imported = "default";
     } else {
-      return { why: `\`${name2}\` is declared at line ${at(d)} (${kindName(d)}), not imported from a runner` };
+      return { why: `\`${name2}\` is declared at line ${at(d)} ${declaredAs(d)}, not imported from a runner` };
     }
     const decl = clause.parent;
-    if (!import_typescript2.default.isImportDeclaration(decl)) return { why: `\`${name2}\` is imported by ${kindName(decl)}, not by a static import declaration` };
+    if (!import_typescript2.default.isImportDeclaration(decl)) return { why: `\`${name2}\` is imported ${declaredAs(decl)}, not by a static import declaration` };
     if (!import_typescript2.default.isStringLiteral(decl.moduleSpecifier)) return { why: `\`${name2}\` is imported from a computed module` };
     return { module: decl.moduleSpecifier.text, imported, typeOnly: typeOnly || clause.isTypeOnly, symbol };
   }
@@ -215604,8 +215675,8 @@ var TsResolver = class {
     }
     const at = this.mutated.get(imp.symbol);
     if (!at) return null;
-    const text = at.text.split("\n")[0].slice(0, 60);
-    return `the file writes to \`${name2}\`'s members (\`${text}\`, line ${line(at)}): outside the assumption, it may not be ${imp.module}'s`;
+    const text2 = at.text.split("\n")[0].slice(0, 60);
+    return `the file writes to \`${name2}\`'s members (\`${text2}\`, line ${line(at)}): outside the assumption, it may not be ${imp.module}'s`;
   }
   moduleImport(use) {
     if (this.program.issue !== null) return { why: this.program.issue };
@@ -215616,6 +215687,8 @@ var TsResolver = class {
   /** Where the identifier at the root of a callee comes from (see the header). */
   root(use) {
     const name2 = jsName(use);
+    const global2 = this.globalRoot(use, name2);
+    if (global2) return global2;
     const imp = this.moduleImport(use);
     if ("why" in imp) return { kind: "uncertain", why: imp.why };
     if (!isRunnerPackage(imp.module)) return { kind: "uncertain", why: `\`${name2}\` is imported from '${imp.module}', not from a runner` };
@@ -215625,6 +215698,21 @@ var TsResolver = class {
     if (write) return { kind: "uncertain", why: write };
     if (imp.imported === null) return { kind: "namespace", pkg: imp.module };
     return { kind: "import", pkg: imp.module, imported: imp.imported };
+  }
+  /**
+   * A name the compiler binds to nothing in the file, at an occurrence it reads (its health checked): Jest's global of
+   * that name when the file's invocation and configuration are certified (src/config/jest-globals.ts) and the file does
+   * not write that global itself; otherwise uncertain, saying which. Null when the name is bound in the file.
+   */
+  globalRoot(use, name2) {
+    if (this.program.issue !== null || use.type !== "identifier" || !this.identifierAt(use) || this.symbolAt(use) !== void 0) return null;
+    const g = this.jestGlobals;
+    if (!g) return { kind: "uncertain", why: `\`${name2}\` is a global, and no Jest invocation saidvsdid can read runs this file` };
+    if (!g.certified) return { kind: "uncertain", why: `\`${name2}\` is a global, and ${g.why}` };
+    if (!JEST_GLOBAL_NAMES.has(name2)) return { kind: "uncertain", why: `\`${name2}\` is a global, not one of Jest's` };
+    const write = this.globalWrites.get(name2) ?? this.globalWritesAll;
+    if (write) return { kind: "uncertain", why: `the file writes Jest's global \`${name2}\` (line ${line(write)}): outside the assumption, it may not be Jest's` };
+    return { kind: "import", pkg: "@jest/globals", imported: name2, via: "global" };
   }
   /** TG004: the root of an assertion (`expect` in `expect(x).toBe(1)`, `assert`, `sinon` in `sinon.assert.x`). */
   assertionRoot(use) {
@@ -216056,11 +216144,11 @@ function pyString(node) {
 }
 
 // src/config/ini.ts
-function parseIni(text) {
+function parseIni(text2) {
   const out2 = /* @__PURE__ */ new Map();
   let section = null;
   let last = null;
-  const lines = text.replace(/\r\n?/g, "\n").split("\n");
+  const lines = text2.replace(/\r\n?/g, "\n").split("\n");
   lines.forEach((raw, i2) => {
     const trimmed = raw.trim();
     if (trimmed === "" || trimmed.startsWith("#") || trimmed.startsWith(";")) {
@@ -216126,29 +216214,29 @@ function canonical2(v) {
       return `unknown:${v.text}`;
   }
 }
-function shellWords(text) {
+function shellWords(text2) {
   const out2 = [];
   let word2 = "";
   let inWord = false;
-  for (let i2 = 0; i2 < text.length; i2++) {
-    const c = text[i2];
+  for (let i2 = 0; i2 < text2.length; i2++) {
+    const c = text2[i2];
     if (c === "'") {
-      const end = text.indexOf("'", i2 + 1);
+      const end = text2.indexOf("'", i2 + 1);
       if (end === -1) return null;
-      word2 += text.slice(i2 + 1, end);
+      word2 += text2.slice(i2 + 1, end);
       inWord = true;
       i2 = end;
     } else if (c === '"') {
       let j = i2 + 1;
-      for (; j < text.length && text[j] !== '"'; j++) {
-        if (text[j] === "\\" && j + 1 < text.length && '"\\$`\n'.includes(text[j + 1])) j++;
-        word2 += text[j];
+      for (; j < text2.length && text2[j] !== '"'; j++) {
+        if (text2[j] === "\\" && j + 1 < text2.length && '"\\$`\n'.includes(text2[j + 1])) j++;
+        word2 += text2[j];
       }
-      if (j >= text.length) return null;
+      if (j >= text2.length) return null;
       inWord = true;
       i2 = j;
-    } else if (c === "\\" && i2 + 1 < text.length) {
-      word2 += text[++i2];
+    } else if (c === "\\" && i2 + 1 < text2.length) {
+      word2 += text2[++i2];
       inWord = true;
     } else if (/\s/.test(c)) {
       if (inWord) out2.push(word2);
@@ -216162,8 +216250,8 @@ function shellWords(text) {
   if (inWord) out2.push(word2);
   return out2;
 }
-function numberLiteral(text) {
-  const t = text.replace(/_/g, "").trim();
+function numberLiteral(text2) {
+  const t = text2.replace(/_/g, "").trim();
   if (!/^[+-]?(?:0[xob][0-9a-f]+|\d+(?:\.\d*)?(?:e[+-]?\d+)?|\.\d+(?:e[+-]?\d+)?)$/i.test(t)) return null;
   const v = Number(t);
   return Number.isFinite(v) ? v : null;
@@ -216274,8 +216362,8 @@ function value(c) {
   const n = numberLiteral(m[0]);
   return n === null ? null : { t: "num", v: n, line: line7 };
 }
-function tomlTable(text, name2) {
-  const src = text.replace(/\r\n?/g, "\n");
+function tomlTable(text2, name2) {
+  const src = text2.replace(/\r\n?/g, "\n");
   const header = new RegExp(`^\\[\\s*${name2.replace(/\./g, "\\s*\\.\\s*")}\\s*\\][ \\t]*(?:#.*)?$`, "m");
   const h = header.exec(src);
   if (!h) return null;
@@ -216313,17 +216401,17 @@ var PYTEST_CONFIG_FILES = ["pytest.ini", ".pytest.ini", "pyproject.toml", "tox.i
 function basename(path2) {
   return path2.slice(path2.lastIndexOf("/") + 1);
 }
-function readPytestConfig(path2, text) {
+function readPytestConfig(path2, text2) {
   const name2 = basename(path2);
   const options = /* @__PURE__ */ new Map();
   if (name2 === "pyproject.toml") {
-    const table = tomlTable(text, "tool.pytest.ini_options");
+    const table = tomlTable(text2, "tool.pytest.ini_options");
     if (!table) return null;
     for (const [k, v] of table.entries) options.set(k, { value: tomlOption(v), line: v.line });
     return { path: path2, options };
   }
   const section = name2 === "setup.cfg" ? "tool:pytest" : "pytest";
-  const ini = parseIni(text);
+  const ini = parseIni(text2);
   const entries = ini.get(section);
   if (!entries) return name2 === "pytest.ini" || name2 === ".pytest.ini" ? { path: path2, options } : null;
   for (const [k, e] of entries) options.set(k, { value: e.value, line: e.line });
@@ -216366,9 +216454,9 @@ function configCandidates(filePath) {
 }
 function pytestConfigFor(filePath, read) {
   for (const candidate of configCandidates(filePath)) {
-    const text = read(candidate);
-    if (text === null) continue;
-    const config = readPytestConfig(candidate, text);
+    const text2 = read(candidate);
+    if (text2 === null) continue;
+    const config = readPytestConfig(candidate, text2);
     if (config) return config;
   }
   return null;
@@ -216714,40 +216802,40 @@ function parseJestArgs(args3) {
 }
 
 // src/transcript/shell.ts
-function words(text, dialect = "posix") {
+function words(text2, dialect = "posix") {
   const out2 = [];
   let word2 = "";
   let inWord = false;
-  for (let i2 = 0; i2 < text.length; i2++) {
-    const c = text[i2];
+  for (let i2 = 0; i2 < text2.length; i2++) {
+    const c = text2[i2];
     if (c === "'" && dialect !== "cmd") {
       let j = i2 + 1;
-      for (; j < text.length; j++) {
-        if (text[j] === "'") {
-          if (dialect === "powershell" && text[j + 1] === "'") {
+      for (; j < text2.length; j++) {
+        if (text2[j] === "'") {
+          if (dialect === "powershell" && text2[j + 1] === "'") {
             word2 += "'";
             j++;
             continue;
           }
           break;
         }
-        word2 += text[j];
+        word2 += text2[j];
       }
-      if (j >= text.length) return null;
+      if (j >= text2.length) return null;
       inWord = true;
       i2 = j;
     } else if (c === '"') {
       let j = i2 + 1;
-      for (; j < text.length && text[j] !== '"'; j++) {
+      for (; j < text2.length && text2[j] !== '"'; j++) {
         const esc = dialect === "powershell" ? "`" : dialect === "posix" ? "\\" : null;
-        if (esc && text[j] === esc && j + 1 < text.length && (dialect === "powershell" || '"\\$`\n'.includes(text[j + 1]))) j++;
-        word2 += text[j];
+        if (esc && text2[j] === esc && j + 1 < text2.length && (dialect === "powershell" || '"\\$`\n'.includes(text2[j + 1]))) j++;
+        word2 += text2[j];
       }
-      if (j >= text.length) return null;
+      if (j >= text2.length) return null;
       inWord = true;
       i2 = j;
-    } else if (c === "\\" && dialect === "posix" && i2 + 1 < text.length) {
-      word2 += text[++i2];
+    } else if (c === "\\" && dialect === "posix" && i2 + 1 < text2.length) {
+      word2 += text2[++i2];
       inWord = true;
     } else if (/\s/.test(c)) {
       if (inWord) out2.push(word2);
@@ -216857,29 +216945,29 @@ function segments(command, dialect) {
   parts2.push({ text: current, before });
   const out2 = [];
   for (const p of parts2) {
-    const text = p.text.trim().replace(/^\(\s*/, "").replace(/\s*\)$/, "");
-    if (text === "") {
+    const text2 = p.text.trim().replace(/^\(\s*/, "").replace(/\s*\)$/, "");
+    if (text2 === "") {
       if (p.before === "&" && out2.length > 0) out2[out2.length - 1].after = "&";
       continue;
     }
     const prev = out2[out2.length - 1];
     const op = prev ? p.before : null;
     if (prev) prev.after = op;
-    out2.push({ text, before: op, after: null });
+    out2.push({ text: text2, before: op, after: null });
   }
   return out2;
 }
 var REDIRECT = /(\d|&)?>>?\s*(&\d|[^\s;&|<>]+)/g;
 var INPUT = /<\s*[^\s;&|<>]+/g;
-function masked(text) {
+function masked(text2) {
   const saved = [];
-  const out2 = text.replace(/"(?:[^"\\]|\\.)*"|'[^']*'|<[A-Z][A-Z_]*>/g, (m) => `\0${saved.push(m) - 1}\0`);
+  const out2 = text2.replace(/"(?:[^"\\]|\\.)*"|'[^']*'|<[A-Z][A-Z_]*>/g, (m) => `\0${saved.push(m) - 1}\0`);
   return { text: out2, restore: (s) => s.replace(/\u0000(\d+)\u0000/g, (_, i2) => saved[Number(i2)]) };
 }
 function redirects(segmentText) {
-  const { text, restore } = masked(segmentText);
+  const { text: text2, restore } = masked(segmentText);
   const out2 = [];
-  for (const m of text.matchAll(REDIRECT)) {
+  for (const m of text2.matchAll(REDIRECT)) {
     const target2 = restore(m[2]).replace(/^["']|["']$/g, "");
     if (target2.startsWith("&")) continue;
     out2.push({ fd: m[1] ?? "1", target: target2 });
@@ -216890,8 +216978,8 @@ function isNullDevice(target2) {
   return /^(\/dev\/(null|stdout|stderr)|nul|\$null)$/i.test(target2);
 }
 function commandWords(segmentText, dialect) {
-  const { text, restore } = masked(segmentText);
-  const w = words(restore(text.replace(REDIRECT, " ").replace(INPUT, " ")), dialect);
+  const { text: text2, restore } = masked(segmentText);
+  const w = words(restore(text2.replace(REDIRECT, " ").replace(INPUT, " ")), dialect);
   if (!w) return null;
   let i2 = 0;
   while (i2 < w.length && /^[A-Za-z_][A-Za-z0-9_]*=/.test(w[i2])) i2++;
@@ -216900,10 +216988,10 @@ function commandWords(segmentText, dialect) {
 }
 
 // src/transcript/commands.ts
-function packageScripts(text) {
-  if (text === null) return null;
+function packageScripts(text2) {
+  if (text2 === null) return null;
   try {
-    const json = JSON.parse(text.charCodeAt(0) === 65279 ? text.slice(1) : text);
+    const json = JSON.parse(text2.charCodeAt(0) === 65279 ? text2.slice(1) : text2);
     const scripts = json.scripts;
     if (scripts === void 0) return ownRecord({});
     if (typeof scripts !== "object" || scripts === null) return null;
@@ -217162,10 +217250,10 @@ function isReadonly(w) {
   return READONLY.has(p);
 }
 var POSSIBLE_TEST = /(^|[^a-z])(tests?|testing|specs?|pytest|unittest|nose2?|vitest|jest|mocha|ava|tap|tox|nox|playwright|cypress|karma|jasmine)([^a-z]|$)/i;
-function classifySegment(text, dialect, scripts) {
-  const w = commandWords(text, dialect);
-  if (!w || w.length === 0 || /\$\(|`|\$\{/.test(text.replace(/'[^']*'/g, ""))) {
-    return POSSIBLE_TEST.test(text) ? { kind: "possible_test" } : { kind: "mutating" };
+function classifySegment(text2, dialect, scripts) {
+  const w = commandWords(text2, dialect);
+  if (!w || w.length === 0 || /\$\(|`|\$\{/.test(text2.replace(/'[^']*'/g, ""))) {
+    return POSSIBLE_TEST.test(text2) ? { kind: "possible_test" } : { kind: "mutating" };
   }
   const p = programName(w[0]);
   if ((p === "cd" || p === "pushd" || p === "set-location" || p === "sl" || p === "chdir") && w.length === 2) return { kind: "cd", dir: w[1] };
@@ -217189,12 +217277,12 @@ function classifySegment(text, dialect, scripts) {
     }
     return POSSIBLE_TEST.test(inv.script) ? { kind: "possible_test" } : { kind: "mutating" };
   }
-  if (redirects(text).some((r) => !isNullDevice(r.target))) return { kind: "mutating" };
+  if (redirects(text2).some((r) => !isNullDevice(r.target))) return { kind: "mutating" };
   if (isReadonly(w)) return { kind: "readonly" };
   if (/^(rm|del|erase|rmdir|rd|mv|move|cp|copy|touch|mkdir|md|ln|chmod|chown|sed|perl|tee|truncate|dd|patch|install|unzip|tar|git|remove-item|ri|move-item|mi|copy-item|cpi|rename-item|rni|set-content|sc|add-content|ac|out-file|new-item|ni|clear-content)$/.test(p)) {
     return { kind: "mutating" };
   }
-  return POSSIBLE_TEST.test(text) ? { kind: "possible_test" } : { kind: "mutating" };
+  return POSSIBLE_TEST.test(text2) ? { kind: "possible_test" } : { kind: "mutating" };
 }
 function segmentStatus(segs, index, whole) {
   const unknown = (reason) => ({ exit: null, unknown: reason });
@@ -217301,8 +217389,8 @@ function parseSummary(rawOutput, framework) {
 
 // src/transcript/grammar.ts
 var UNSAFE_POSIX = /[$`(){}<>;*?[\]!#~\n\r]/;
-function literalOnly(text, dialect) {
-  const t = text.replace(/<[A-Z][A-Z_]*>/g, "M").replace(/(^|\s)2>&1(?=\s|$|\|)/g, "$1");
+function literalOnly(text2, dialect) {
+  const t = text2.replace(/<[A-Z][A-Z_]*>/g, "M").replace(/(^|\s)2>&1(?=\s|$|\|)/g, "$1");
   if (dialect === "powershell" && /[‘’‚‛“”„–—―]/.test(t)) return false;
   const escape2 = dialect === "posix" ? "\\" : dialect === "powershell" ? "`" : null;
   let quote2 = null;
@@ -217790,7 +217878,7 @@ var evidenceCheck = object({
 });
 
 // src/evidence/from-transcript.ts
-var sha256 = (text) => createHash2("sha256").update(text).digest("hex");
+var sha256 = (text2) => createHash2("sha256").update(text2).digest("hex");
 function evidenceFromSession(session, options = {}) {
   const paths = new Locator(options.roots ?? [], options.model);
   const sessionCwd = session.cwd.kind === "unknown" && session.cwd.why === NOT_RECORDED && options.cwd ? knownCwd(options.cwd) : session.cwd;
@@ -217977,18 +218065,18 @@ function dropEvents(events, drop) {
 var IssueLog = class {
   issues = [];
   seen = /* @__PURE__ */ new Set();
-  add(hides, text) {
-    const key3 = `${hides}\0${text}`;
+  add(hides, text2) {
+    const key3 = `${hides}\0${text2}`;
     if (this.seen.has(key3)) return;
     this.seen.add(key3);
-    this.issues.push({ hides, text });
+    this.issues.push({ hides, text: text2 });
   }
   /** Something recognised whose effects the transcript does not show. */
-  opaque(text) {
-    const key3 = `opaque\0${text}`;
+  opaque(text2) {
+    const key3 = `opaque\0${text2}`;
     if (this.seen.has(key3)) return;
     this.seen.add(key3);
-    this.issues.push({ hides: true, opaque: true, text });
+    this.issues.push({ hides: true, opaque: true, text: text2 });
   }
   keys(obj4, allowed, where) {
     if (typeof obj4 !== "object" || obj4 === null || Array.isArray(obj4)) {
@@ -218180,11 +218268,11 @@ function resultText(content) {
   if (!Array.isArray(content)) return "";
   return content.map((c) => obj(c)?.["type"] === "text" && typeof obj(c)?.["text"] === "string" ? obj(c)["text"] : "").join("\n");
 }
-function parseClaude(text) {
+function parseClaude(text2) {
   const log = new IssueLog();
   const records = [];
   const at = /* @__PURE__ */ new Map();
-  text.split("\n").forEach((line7, i2) => {
+  text2.split("\n").forEach((line7, i2) => {
     if (!line7.trim()) return;
     let rec;
     try {
@@ -218353,7 +218441,7 @@ function userBlock(b, btype, record, events, pending, log) {
   if (index === void 0) return;
   const event = events[index];
   const isError = b["is_error"] === true;
-  const text = resultText(content);
+  const text2 = resultText(content);
   if (typeof record["toolDenialKind"] === "string") {
     pending.delete(id);
     events[index] = event.kind === "edit" ? { ...event, status: "failed" } : { kind: "opaque", what: "denied tool call", ran: false };
@@ -218373,7 +218461,7 @@ function userBlock(b, btype, record, events, pending, log) {
   else if (tur !== void 0 && typeof tur !== "string") log.add(false, `shell toolUseResult: expected object or string, got ${typeof tur}`);
   let exit;
   if (isError) {
-    const m = /^(?:Error: )?Exit code (-?\d+)\b/.exec(text);
+    const m = /^(?:Error: )?Exit code (-?\d+)\b/.exec(text2);
     exit = m ? Number(m[1]) : null;
   } else {
     exit = 0;
@@ -218382,8 +218470,8 @@ function userBlock(b, btype, record, events, pending, log) {
     exit = null;
   }
   if (!isError && tur !== void 0 && !turObj) exit = null;
-  const truncated = /truncated/i.test(text) || turObj?.["persistedOutputPath"] !== void 0;
-  events[index] = { ...event, exit, output: text, truncated, ...end, ...changedFiles(turObj?.["bashEditDiff"], log) };
+  const truncated = /truncated/i.test(text2) || turObj?.["persistedOutputPath"] !== void 0;
+  events[index] = { ...event, exit, output: text2, truncated, ...end, ...changedFiles(turObj?.["bashEditDiff"], log) };
   if (pending.has(`${id}\0background`) || turObj?.["backgroundTaskId"] !== void 0) pending.set(`${id}\0open`, index);
 }
 function changedFiles(diff, log) {
@@ -218447,14 +218535,14 @@ var CHANGE_FIELDS = set3("path", "kind");
 var CHANGE_KINDS = set3("add", "delete", "update");
 var CODEX_TRUNCATED = "...(truncated)";
 var obj2 = (v) => typeof v === "object" && v !== null && !Array.isArray(v) ? v : null;
-function parseCodex(text, version = "") {
+function parseCodex(text2, version = "") {
   const log = new IssueLog();
   let sessionId = "";
   const order = [];
   const latest = /* @__PURE__ */ new Map();
   const firstLine = /* @__PURE__ */ new Map();
   const lastLine2 = /* @__PURE__ */ new Map();
-  text.split("\n").forEach((line7, i2) => {
+  text2.split("\n").forEach((line7, i2) => {
     if (!line7.trim()) return;
     let raw;
     try {
@@ -218633,8 +218721,8 @@ var CHANGE_TYPES = set3("add", "update", "delete");
 var CHANGE_FIELDS2 = set3("type", "unified_diff", "content", "move_path");
 var MESSAGE_CONTENT = set3("Text", "text");
 var obj3 = (v) => typeof v === "object" && v !== null && !Array.isArray(v) ? v : null;
-function isRollout(text) {
-  for (const line7 of text.split("\n").slice(0, 20)) {
+function isRollout(text2) {
+  for (const line7 of text2.split("\n").slice(0, 20)) {
     if (!line7.trim()) continue;
     try {
       const r = JSON.parse(line7);
@@ -218668,7 +218756,7 @@ function cwdOf(s) {
   const p = localPath(s);
   return p === null ? unknownCwd("a directory Codex wrote that is not a local path") : knownCwd(p);
 }
-function parseCodexRollout(text) {
+function parseCodexRollout(text2) {
   const log = new IssueLog();
   const events = [];
   let sessionId = "";
@@ -218680,7 +218768,7 @@ function parseCodexRollout(text) {
     const start2 = openCalls.size ? Math.min(...openCalls.values()) : turnStart;
     return start2 < events.length ? { start: start2 } : {};
   };
-  text.split("\n").forEach((line7, i2) => {
+  text2.split("\n").forEach((line7, i2) => {
     if (!line7.trim()) return;
     let raw;
     try {
@@ -218830,9 +218918,9 @@ var CODEX_EVENTS = /* @__PURE__ */ new Set([
   "turn_context"
 ]);
 var CLAUDE_RECORDS = /* @__PURE__ */ new Set(["user", "assistant", "system", "result", "summary", "queue-operation", "attachment", "file-history-snapshot"]);
-function detectAgent(text) {
+function detectAgent(text2) {
   let seen = 0;
-  for (const line7 of text.split("\n")) {
+  for (const line7 of text2.split("\n")) {
     if (!line7.trim()) continue;
     if (++seen > 50) break;
     let rec;
@@ -218848,11 +218936,334 @@ function detectAgent(text) {
   }
   return null;
 }
-function parseTranscript(text, agent = "auto", options = {}) {
-  const which = agent === "auto" ? detectAgent(text) : agent;
+function parseTranscript(text2, agent = "auto", options = {}) {
+  const which = agent === "auto" ? detectAgent(text2) : agent;
   if (which === null) throw new TranscriptError("not a Claude Code or Codex transcript (use --agent claude|codex to force one)");
-  if (which === "claude") return parseClaude(text);
-  return isRollout(text) ? parseCodexRollout(text) : parseCodex(text, options.version ?? "");
+  if (which === "claude") return parseClaude(text2);
+  return isRollout(text2) ? parseCodexRollout(text2) : parseCodex(text2, options.version ?? "");
+}
+
+// src/config/json.ts
+function parseJsonValue(text2, onDuplicate) {
+  let i2 = 0;
+  let line7 = 1;
+  const s = text2;
+  const ws = () => {
+    while (i2 < s.length && /\s/.test(s[i2])) {
+      if (s[i2] === "\n") line7++;
+      i2++;
+    }
+  };
+  const str2 = () => {
+    let j = i2 + 1;
+    while (j < s.length && s[j] !== '"') j += s[j] === "\\" ? 2 : 1;
+    const raw = s.slice(i2, j + 1);
+    i2 = j + 1;
+    return JSON.parse(raw);
+  };
+  const val = () => {
+    ws();
+    const at = line7;
+    const c = s[i2];
+    if (c === "{") {
+      i2++;
+      const props = /* @__PURE__ */ new Map();
+      ws();
+      if (s[i2] === "}") {
+        i2++;
+        return { t: "obj", props, line: at, open: false };
+      }
+      for (; ; ) {
+        ws();
+        const keyLine = line7;
+        const k = str2();
+        ws();
+        if (s[i2++] !== ":") throw new Error("expected :");
+        const v = val();
+        if (props.has(k)) onDuplicate?.(k);
+        props.set(k, { ...v, line: v.t === "obj" || v.t === "arr" ? keyLine : v.line });
+        ws();
+        if (s[i2] === ",") i2++;
+        else if (s[i2] === "}") {
+          i2++;
+          return { t: "obj", props, line: at, open: false };
+        } else throw new Error("expected , or }");
+      }
+    }
+    if (c === "[") {
+      i2++;
+      const items = [];
+      ws();
+      if (s[i2] === "]") {
+        i2++;
+        return { t: "arr", items, line: at };
+      }
+      for (; ; ) {
+        items.push(val());
+        ws();
+        if (s[i2] === ",") i2++;
+        else if (s[i2] === "]") {
+          i2++;
+          return { t: "arr", items, line: at };
+        } else throw new Error("expected , or ]");
+      }
+    }
+    if (c === '"') return { t: "str", v: str2(), line: at };
+    const m = /^(?:true|false|null|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/.exec(s.slice(i2));
+    if (!m) throw new Error("unexpected token");
+    i2 += m[0].length;
+    if (m[0] === "true" || m[0] === "false") return { t: "bool", v: m[0] === "true", line: at };
+    if (m[0] === "null") return { t: "null", line: at };
+    return { t: "num", v: Number(m[0]), line: at };
+  };
+  try {
+    const v = val();
+    ws();
+    return i2 === s.length ? v : null;
+  } catch {
+    return null;
+  }
+}
+function rawTopLevelMembers(text2) {
+  const s = text2;
+  let i2 = 0;
+  const fail = (why) => {
+    throw new Error(why);
+  };
+  const ws = () => {
+    while (i2 < s.length && (s[i2] === " " || s[i2] === "	" || s[i2] === "\n" || s[i2] === "\r")) i2++;
+  };
+  const string = () => {
+    if (s[i2] !== '"') fail(`expected a string at offset ${i2}`);
+    const start2 = ++i2;
+    while (i2 < s.length && s[i2] !== '"') {
+      const c = s.charCodeAt(i2);
+      if (c < 32) fail(`control character in a string at offset ${i2}`);
+      if (s[i2] === "\\") {
+        const e = s[i2 + 1];
+        if (e === "u") {
+          if (!/^[0-9a-fA-F]{4}$/.test(s.slice(i2 + 2, i2 + 6))) fail(`invalid \\u escape at offset ${i2}`);
+          i2 += 6;
+        } else if (e !== void 0 && '"\\/bfnrt'.includes(e)) i2 += 2;
+        else fail(`invalid escape at offset ${i2}`);
+      } else i2++;
+    }
+    if (i2 >= s.length) fail("unterminated string");
+    return s.slice(start2, i2++);
+  };
+  const value2 = () => {
+    ws();
+    const c = s[i2];
+    if (c === "{") return object2(null);
+    if (c === "[") {
+      i2++;
+      ws();
+      if (s[i2] === "]") {
+        i2++;
+        return;
+      }
+      for (; ; ) {
+        value2();
+        ws();
+        if (s[i2] === ",") i2++;
+        else if (s[i2] === "]") {
+          i2++;
+          return;
+        } else fail(`expected , or ] at offset ${i2}`);
+      }
+    }
+    if (c === '"') {
+      string();
+      return;
+    }
+    const m = /^(?:true|false|null|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/.exec(s.slice(i2));
+    if (!m) fail(`unexpected token at offset ${i2}`);
+    i2 += m[0].length;
+  };
+  const object2 = (members) => {
+    i2++;
+    const seen = /* @__PURE__ */ new Set();
+    ws();
+    if (s[i2] === "}") {
+      i2++;
+      return;
+    }
+    for (; ; ) {
+      ws();
+      const key3 = string();
+      if (key3.includes("\\")) fail(`key "${key3}" is written with escapes`);
+      if (seen.has(key3)) fail(`duplicate key "${key3}"`);
+      seen.add(key3);
+      ws();
+      if (s[i2++] !== ":") fail(`expected : at offset ${i2 - 1}`);
+      ws();
+      const start2 = i2;
+      value2();
+      members?.set(key3, s.slice(start2, i2));
+      ws();
+      if (s[i2] === ",") i2++;
+      else if (s[i2] === "}") {
+        i2++;
+        return;
+      } else fail(`expected , or } at offset ${i2}`);
+    }
+  };
+  try {
+    if (s.startsWith("\uFEFF")) fail("byte-order mark");
+    if (s.includes("�")) fail("bytes that are not valid UTF-8");
+    ws();
+    if (s[i2] !== "{") fail("the root is not an object");
+    const members = /* @__PURE__ */ new Map();
+    object2(members);
+    ws();
+    if (i2 !== s.length) fail(`content after the object at offset ${i2}`);
+    return { members };
+  } catch (err2) {
+    return { anomaly: err2.message };
+  }
+}
+
+// src/config/jest-globals.ts
+var FLAGS = /* @__PURE__ */ new Set(["--ci", "--coverage", "--runInBand", "-i", "--verbose", "--silent", "--passWithNoTests", "--detectOpenHandles", "--forceExit", "--colors", "--no-cache", "--watchAll=false"]);
+var KEYS = /* @__PURE__ */ new Set([
+  "testMatch",
+  "testRegex",
+  "testPathIgnorePatterns",
+  "roots",
+  "rootDir",
+  "testTimeout",
+  "verbose",
+  "bail",
+  "clearMocks",
+  "resetMocks",
+  "restoreMocks",
+  "collectCoverage",
+  "collectCoverageFrom",
+  "coverageDirectory",
+  "coveragePathIgnorePatterns",
+  "coverageProvider",
+  "coverageReporters",
+  "coverageThreshold",
+  "testEnvironment",
+  "injectGlobals",
+  "moduleFileExtensions",
+  "modulePathIgnorePatterns",
+  "moduleNameMapper",
+  "moduleDirectories",
+  "testURL",
+  "errorOnDeprecated",
+  "displayName",
+  "transformIgnorePatterns"
+]);
+var ENVIRONMENTS = /* @__PURE__ */ new Set(["node", "jsdom", "jest-environment-node", "jest-environment-jsdom"]);
+var JS_CONFIGS = ["js", "ts", "mjs", "cjs", "cts", "mts"].map((e) => `jest.config.${e}`);
+var join = (dir, name2) => dir === "" ? name2 : `${dir}/${name2}`;
+function objectOf(text2, what) {
+  const duplicates = [];
+  const v = parseJsonValue(text2, (k) => duplicates.push(k));
+  if (duplicates.length > 0) return { why: `${what} repeats the key ${JSON.stringify(duplicates[0])}` };
+  if (!v || v.t !== "obj" || v.open) return { why: `${what} is not a JSON object` };
+  return { props: v.props };
+}
+function text(v) {
+  switch (v.t) {
+    case "str":
+      return JSON.stringify(v.v);
+    case "num":
+      return String(v.v);
+    case "bool":
+      return String(v.v);
+    case "null":
+      return "null";
+    case "arr":
+      return `[${v.items.map(text).join(",")}]`;
+    case "obj":
+      return `{${[...v.props].map(([k, x]) => `${JSON.stringify(k)}:${text(x)}`).join(",")}}`;
+    default:
+      return "?";
+  }
+}
+function configDoubt(props, where) {
+  for (const [key3, value2] of props) {
+    if (!KEYS.has(key3)) return `${where} sets \`${key3}\`, which saidvsdid does not read as harmless to the globals`;
+    if (key3 === "injectGlobals" && !(value2.t === "bool" && value2.v === true)) return `${where} sets \`injectGlobals\` to ${text(value2)}`;
+    if (key3 === "testEnvironment" && !(value2.t === "str" && ENVIRONMENTS.has(value2.v))) return `${where} sets \`testEnvironment\` to ${text(value2)}, not one of Jest's own`;
+    if (key3 === "bail" && !(value2.t === "num" && value2.v === 0 || value2.t === "bool" && value2.v === false)) return `${where} sets \`bail\` to ${text(value2)}: a failure elsewhere can stop Jest before this file`;
+  }
+  return null;
+}
+function jestGlobalsFor(path2, read, files) {
+  if (files === null) return { certified: false, why: "no Jest invocation saidvsdid can read runs this file" };
+  const byDir = /* @__PURE__ */ new Map();
+  for (const f of files) {
+    const at = f.lastIndexOf("/");
+    const d = at === -1 ? "" : f.slice(0, at);
+    let names = byDir.get(d);
+    if (!names) byDir.set(d, names = /* @__PURE__ */ new Map());
+    names.set(f.slice(at + 1).toLowerCase(), f.slice(at + 1));
+  }
+  const named = (d, name2) => byDir.get(d)?.get(name2) ?? null;
+  const parts2 = path2.replace(/\\/g, "/").split("/").slice(0, -1);
+  let dir = null;
+  let pkgText = null;
+  for (let i2 = parts2.length; i2 >= 0 && dir === null; i2--) {
+    const d = parts2.slice(0, i2).join("/");
+    const exact = named(d, "package.json");
+    if (exact === null) continue;
+    if (exact !== "package.json") return { certified: false, why: `${join(d, exact)} is package.json in another case` };
+    const t = read(join(d, "package.json"));
+    if (t !== null) {
+      dir = d;
+      pkgText = t;
+    }
+  }
+  if (dir === null || pkgText === null) return { certified: false, why: "no package.json above the file runs Jest" };
+  const where = join(dir, "package.json");
+  const pkg2 = objectOf(pkgText, where);
+  if ("why" in pkg2) return { certified: false, why: pkg2.why };
+  const scripts = pkg2.props.get("scripts");
+  if (!scripts || scripts.t !== "obj" || scripts.open) return { certified: false, why: `${where} has no test script` };
+  for (const hook of ["pretest", "posttest"]) if (scripts.props.has(hook)) return { certified: false, why: `${where} has a \`${hook}\` script, which npm runs around jest` };
+  const test = scripts.props.get("test");
+  if (!test || test.t !== "str") return { certified: false, why: `${where} has no test script` };
+  const words2 = shellWords(test.v);
+  const command = words2 && words2[0] === "npx" ? words2.slice(1) : words2;
+  if (command && command.includes("mocha")) return { certified: false, why: "the test script runs mocha, whose globals saidvsdid cannot certify (it does not read Mocha's configuration)" };
+  if (!command || command[0] !== "jest") return { certified: false, why: `the test script (\`${test.v}\`) is not one plain jest invocation` };
+  const odd = command.slice(1).find((w) => !FLAGS.has(w));
+  if (odd !== void 0) return { certified: false, why: `the test script passes \`${odd}\` to jest, which saidvsdid does not read as harmless to the globals` };
+  const js = JS_CONFIGS.map((f) => named(dir, f)).find((f) => f !== null);
+  if (js) return { certified: false, why: `${join(dir, js)} is JavaScript, which saidvsdid never evaluates` };
+  const json = named(dir, "jest.config.json");
+  if (json !== null && json !== "jest.config.json") return { certified: false, why: `${join(dir, json)} is jest.config.json in another case` };
+  const jsonText = json === null ? null : read(join(dir, json));
+  const inPackage = pkg2.props.get("jest");
+  if (jsonText !== null && inPackage) return { certified: false, why: `${where} has a \`jest\` key and ${join(dir, "jest.config.json")} exists (Jest refuses two configurations)` };
+  let config = /* @__PURE__ */ new Map();
+  if (jsonText !== null) {
+    const o = objectOf(jsonText, join(dir, "jest.config.json"));
+    if ("why" in o) return { certified: false, why: o.why };
+    config = o.props;
+  } else if (inPackage) {
+    if (inPackage.t !== "obj" || inPackage.open) return { certified: false, why: `${where}'s \`jest\` key is not an object` };
+    config = inPackage.props;
+  }
+  const doubt = configDoubt(config, jsonText !== null ? join(dir, "jest.config.json") : `${where}'s \`jest\` key`);
+  if (doubt) return { certified: false, why: doubt };
+  return { certified: true, key: `${dir}
+${test.v}
+${jsonText !== null ? "json" : "package"}
+${text({ t: "obj", props: config, line: 0, open: false })}` };
+}
+var JEST_DOCBLOCK = /@jest-environment(?:-options)?\b/;
+function jestGlobalsOfChange(sides) {
+  if (sides.length === 0) return { certified: false, why: "no side of the file" };
+  const each = sides.map((s) => JEST_DOCBLOCK.test(s.source) ? { certified: false, why: `${s.path} names its own environment (\`@jest-environment\`)` } : jestGlobalsFor(s.path, s.read, s.files));
+  const failed = each.find((c) => !c.certified);
+  if (failed) return failed;
+  const keys = new Set(each.map((c) => c.certified ? c.key : ""));
+  if (keys.size > 1) return { certified: false, why: "the test script or the Jest configuration differs between base and head" };
+  return each[0];
 }
 
 // src/git/diff.ts
@@ -218989,8 +219400,8 @@ var ENVIRONMENT_RE = new RegExp(
 );
 var TRUE_LITERALS = /* @__PURE__ */ new Set(["true", "True", "1"]);
 var FALSE_LITERALS = /* @__PURE__ */ new Set(["false", "False", "0", "None", "null", "undefined", '""', "''"]);
-function constantValue(text) {
-  let t = text.trim();
+function constantValue(text2) {
+  let t = text2.trim();
   while (t.startsWith("(") && t.endsWith(")")) t = t.slice(1, -1).trim();
   if (t.startsWith("!")) {
     const v = constantValue(t.slice(1));
@@ -219020,12 +219431,12 @@ function classifyGuards(guards) {
   if (environment) return "environment";
   return "unconditional";
 }
-function snippet(text, max = 80) {
-  const oneLine = text.replace(/\s+/g, " ").trim();
+function snippet(text2, max = 80) {
+  const oneLine = text2.replace(/\s+/g, " ").trim();
   return oneLine.length > max ? `${oneLine.slice(0, max - 1)}…` : oneLine;
 }
-function normaliseBody(text) {
-  return text.replace(/\s+/g, " ").trim();
+function normaliseBody(text2) {
+  return text2.replace(/\s+/g, " ").trim();
 }
 
 // src/parse/positions.ts
@@ -219323,8 +219734,8 @@ function isExpectRoot(call2) {
 }
 var CHAI_WORDS = /* @__PURE__ */ new Set(["to", "be", "been", "is", "that", "which", "and", "has", "have", "with", "at", "of", "same", "but", "does", "still", "should", "not", "deep"]);
 var THROW_MATCHERS = /* @__PURE__ */ new Set(["toThrow", "toThrowError", "toThrowErrorMatchingSnapshot", "toThrowErrorMatchingInlineSnapshot"]);
-function normalise(text) {
-  return normaliseBody(text);
+function normalise(text2) {
+  return normaliseBody(text2);
 }
 function expectAssertion(root, info2) {
   const binding = rootBinding(root.childForFieldName("function"), info2);
@@ -219493,7 +219904,7 @@ function requireSpecifier(value2) {
   if (fn?.type !== "identifier" || fn.text !== "require") return null;
   return stringText(callArgs(value2)[0] ?? null);
 }
-function tsFileInfo(root, source, path2) {
+function tsFileInfo(root, source, path2, jestGlobals = null) {
   const locals = /* @__PURE__ */ new Map();
   const imports = /* @__PURE__ */ new Map();
   const addLocal = (name2, fn) => {
@@ -219534,7 +219945,7 @@ function tsFileInfo(root, source, path2) {
     const name2 = fn.childForFieldName("name");
     if (name2) addLocal(name2.text, fn);
   }
-  return { locals, imports, memo: /* @__PURE__ */ new Map(), resolver: new TsResolver(root, source, path2) };
+  return { locals, imports, memo: /* @__PURE__ */ new Map(), resolver: new TsResolver(root, source, path2, jestGlobals) };
 }
 function isSupportModule(spec) {
   if (RUNNER_PACKAGES2.has(spec)) return false;
@@ -220053,8 +220464,8 @@ var Census = class {
         const site = `${key3}#${this.next(`site\0${key3}`)}`;
         let context = node.parent?.type === "attribute" ? node.parent : node;
         if (context.parent?.type === "call" && isCallee(context)) context = context.parent;
-        const text = snippet(context.parent?.type === "decorator" ? `@${context.text}` : context.text);
-        this.byToken.set(node.id, { site: { site, kind, line: line4(node), text, attributed: false } });
+        const text2 = snippet(context.parent?.type === "decorator" ? `@${context.text}` : context.text);
+        this.byToken.set(node.id, { site: { site, kind, line: line4(node), text: text2, attributed: false } });
       }
     }
     for (const child of node.namedChildren) this.walk(child, path2);
@@ -220197,16 +220608,16 @@ var PyExtractor = class {
         const mark = markName(m.name);
         const bareFlaky = m.name.length === 1 && m.name[0] === "flaky";
         if (mark) names.push(mark);
-        const text = snippet(decorator ? `@${m.node.text}` : m.node.text);
+        const text2 = snippet(decorator ? `@${m.node.text}` : m.node.text);
         const at = m.node.startPosition.row + 1;
         if (mark === "timeout") {
           const v = m.parts ? m.parts.positional[0] ?? m.parts.keywords.get("timeout") : void 0;
-          this.knobs.push({ kind: "timeout", value: literalNumber(v), form: "mark.timeout", line: at, text, test, key: `${keyPrefix}/timeout:mark.timeout` });
+          this.knobs.push({ kind: "timeout", value: literalNumber(v), form: "mark.timeout", line: at, text: text2, test, key: `${keyPrefix}/timeout:mark.timeout` });
         } else if (mark === "flaky" || bareFlaky) {
           const reruns = m.parts?.keywords.get("reruns");
           const maxRuns = m.parts?.keywords.get("max_runs");
           const value2 = reruns ? literalNumber(reruns) : maxRuns ? (literalNumber(maxRuns) ?? 0) - 1 : bareFlaky ? 1 : null;
-          this.knobs.push({ kind: "retry", value: value2, form: "mark.flaky", line: at, text, test, key: `${keyPrefix}/retry:mark.flaky` });
+          this.knobs.push({ kind: "retry", value: value2, form: "mark.flaky", line: at, text: text2, test, key: `${keyPrefix}/retry:mark.flaky` });
         }
       }
     }
@@ -220230,9 +220641,9 @@ var PyExtractor = class {
       if (cond) guards.push(this.guardOf(cond, spec.condition === "first-negated", spec.runner));
     }
     const condition = classifyGuards(guards);
-    const text = snippet(decorator ? `@${written.text}` : written.text);
+    const text2 = snippet(decorator ? `@${written.text}` : written.text);
     if (condition === null) {
-      this.inert.push(text);
+      this.inert.push(text2);
       return [];
     }
     const last = resolved.path[resolved.path.length - 1];
@@ -220240,7 +220651,7 @@ var PyExtractor = class {
     const binding = plugin ? weakest(resolved.binding, uncertain(`\`mark.${last}\` takes effect only with ${plugin}, which the diff does not show; pytest without it runs the test`)) : resolved.binding;
     const call2 = expr.type === "call" ? expr : resolved.aliasCall ?? null;
     const form = firstNotCanonical(placed, this.markArgumentsForm(last, call2, parts2, spec));
-    return [{ kind: spec.kind, condition, checked: spec.checked(parts2, this.xfailStrict, this.truthy), line: line4(expr), site, text, scope, binding, effect: this.markEffect(spec, parts2, scope, owner), form }];
+    return [{ kind: spec.kind, condition, checked: spec.checked(parts2, this.xfailStrict, this.truthy), line: line4(expr), site, text: text2, scope, binding, effect: this.markEffect(spec, parts2, scope, owner), form }];
   }
   /** An argument's truth value as Python's `ast.literal_eval` reads it, or null when it is not a literal. */
   truthy = (arg) => this.resolver.literal(arg)?.truthy ?? null;
@@ -220718,7 +221129,7 @@ function extractPyTests(root, source, facts, xfailStrict = false) {
 import { spawnSync } from "node:child_process";
 import { closeSync, fstatSync, mkdtempSync, openSync, readFileSync, readSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { join as join2 } from "node:path";
 import { createHash as createHash3 } from "node:crypto";
 import { fileURLToPath as fileURLToPath2 } from "node:url";
 var SCRIPT = fileURLToPath2(new URL("python/saidvsdid_scopes.py", ASSETS));
@@ -220865,10 +221276,10 @@ function run2(command, files) {
 function attempt(command, files, limitMs) {
   let dir = null;
   try {
-    dir = mkdtempSync(join(tmpdir(), "saidvsdid-py-"));
-    const request2 = join(dir, "request.json");
-    const reply = join(dir, "reply.json");
-    const errors = join(dir, "stderr.txt");
+    dir = mkdtempSync(join2(tmpdir(), "saidvsdid-py-"));
+    const request2 = join2(dir, "request.json");
+    const reply = join2(dir, "reply.json");
+    const errors = join2(dir, "stderr.txt");
     writeFileSync(request2, JSON.stringify({ files: files.map((f) => ({ id: f.id, source: Buffer.from(f.source).toString("base64") })) }), "utf8");
     const fds = [];
     let r;
@@ -221061,9 +221472,9 @@ function guardsBetween2(node, stop2) {
   return guards.reverse();
 }
 var isApiName = (n) => Boolean(ROOT_MARKERS[n]) || TEST_ROOTS.has(n) || SUITE_ROOTS.has(n);
-function exported(pkg2, name2) {
+function exported(pkg2, name2, via) {
   const api = RUNNER_API[pkg2];
-  return api.tests.has(name2) || api.suites.has(name2) || api.rootMarkers.has(name2) ? { pkg: pkg2, binding: CERTAIN } : { pkg: null, binding: uncertain(`${pkg2} does not export \`${name2}\``) };
+  return api.tests.has(name2) || api.suites.has(name2) || api.rootMarkers.has(name2) ? { pkg: pkg2, binding: via === "global" ? GLOBAL : CERTAIN } : { pkg: null, binding: uncertain(`${pkg2} does not export \`${name2}\``) };
 }
 function vocabularyForm(node) {
   const n = unwrap(node);
@@ -221114,7 +221525,7 @@ function apiRoot(segs, resolver, followAlias = true) {
     }
   }
   const b = resolver.root(first.node);
-  if (b.kind === "import" && isApiName(b.imported)) return { name: b.imported, node: first.node, rest: segs.slice(1), ...exported(b.pkg, b.imported) };
+  if (b.kind === "import" && isApiName(b.imported)) return { name: b.imported, node: first.node, rest: segs.slice(1), ...exported(b.pkg, b.imported, b.via) };
   if (b.kind === "namespace" && second && isApiName(second.name)) return { name: second.name, node: second.node, rest: segs.slice(2), ...exported(b.pkg, second.name) };
   const why = b.kind === "uncertain" ? b.why : b.kind === "import" ? `\`${first.name}\` is ${b.pkg}'s \`${b.imported}\`` : `\`${first.name}\` is ${b.pkg}'s namespace`;
   if (b.kind !== "namespace" && isApiName(first.name)) return { name: first.name, node: first.node, rest: segs.slice(1), pkg: null, binding: uncertain(why) };
@@ -221528,10 +221939,10 @@ var Extractor = class {
     const n = this.next(`path\0${parent}/${segment}`);
     return `${parent}/${segment}${n > 0 ? `#${n}` : ""}`;
   }
-  record(path2, form, kind, at, text, attributed) {
+  record(path2, form, kind, at, text2, attributed) {
     const key3 = `${path2}/${form}`;
     const site = `${key3}#${this.next(`site\0${key3}`)}`;
-    this.sites.push({ site, kind, line: line5(at), text, attributed });
+    this.sites.push({ site, kind, line: line5(at), text: text2, attributed });
     return site;
   }
   visit(node, scope) {
@@ -221580,9 +221991,9 @@ var Extractor = class {
     }
     for (const child of node.namedChildren) this.visit(child, scope);
   }
-  addKnob(scope, test, kind, value2, form, at, text) {
+  addKnob(scope, test, kind, value2, form, at, text2) {
     const key3 = `${scope.path}/${kind}:${form}`;
-    this.knobs.push({ knob: { kind, value: value2, form, line: line5(at), text: snippet(text), key: `${key3}#${this.next(`knob\0${key3}`)}` }, test });
+    this.knobs.push({ knob: { kind, value: value2, form, line: line5(at), text: snippet(text2), key: `${key3}#${this.next(`knob\0${key3}`)}` }, test });
   }
   /** jest.setTimeout, vi.setConfig({ testTimeout }), test.setTimeout, test.slow(), jest.retryTimes, describe.configure, this.timeout/retries. */
   callKnobs(call2, scope) {
@@ -221609,19 +222020,19 @@ var Extractor = class {
     }
   }
   annotate(node, ann, scope) {
-    const text = snippet(node.text);
+    const text2 = snippet(node.text);
     const callee = node.childForFieldName("function");
     const form = chain(callee)?.map((s) => s.name).join(".") ?? snippet(callee.text, 40);
-    const site = this.record(scope.path, form, ann.kind, node, text, scope.certain);
+    const site = this.record(scope.path, form, ann.kind, node, text2, scope.certain);
     if (!scope.certain) {
       this.visitArgs(node, scope);
       return;
     }
     const condition = classifyGuards([...guardsBetween2(node, scope.boundary), ...ann.guards]);
-    if (condition === null) (scope.test ?? scope.suite).inert.push(text);
+    if (condition === null) (scope.test ?? scope.suite).inert.push(text2);
     if (condition !== null) {
       const form2 = scope.test && scope.boundary && scope.ctx?.fn.id === scope.boundary.id ? firstNotCanonical(scope.test.form, tsFirstStatementForm(node, scope.boundary, ann)) : notCanonical(scope.ctx ? "it is in a hook, not in the test's body" : `it is in ${scope.suite.name === null ? "the file" : "a describe's body"}, not in a test's body`);
-      (scope.test ?? scope.suite).markers.push({ kind: ann.kind, condition, checked: ann.checked, line: line5(node), site, text, scope: scopeKind(scope), binding: weakest(scope.binding, ann.binding), effect: markerEffect(ann.pkg, ann.kind), form: form2 });
+      (scope.test ?? scope.suite).markers.push({ kind: ann.kind, condition, checked: ann.checked, line: line5(node), site, text: text2, scope: scopeKind(scope), binding: weakest(scope.binding, ann.binding), effect: markerEffect(ann.pkg, ann.kind), form: form2 });
     }
     this.visitArgs(node, scope);
   }
@@ -221720,9 +222131,9 @@ function flatten(suite, path2, inherited, out2, names, params = [], inheritedIne
     }
   }
 }
-function extractTsTests(root, source, path2) {
+function extractTsTests(root, source, path2, jestGlobals = null) {
   const file = { type: "suite", name: null, binding: CERTAIN, markers: [], children: [], params: "", form: exitForm(root), inert: [] };
-  const info2 = tsFileInfo(root, source, path2);
+  const info2 = tsFileInfo(root, source, path2, jestGlobals);
   const extractor = new Extractor(info2, info2.resolver);
   extractor.visit(root, { suite: file, test: null, ctx: null, boundary: null, certain: true, path: "", binding: CERTAIN });
   const tests = [];
@@ -221773,7 +222184,7 @@ async function parseTestFile(path2, source, options = {}) {
       const { tests: tests2, markerSites: markerSites2, knobs: knobs2, scopes: scopes2 } = extractPyTests(tree.rootNode, source, options.pyFacts ?? pythonFacts(bytes), options.xfailStrict ?? false);
       return { path: path2, language, tests: tests2, markerSites: markerSites2, knobs: knobs2, playwright: false, nodeTest: false, parseErrors, scopes: scopes2, notAnalysed: null };
     }
-    const { tests, markerSites, knobs, playwright, nodeTest, scopes } = extractTsTests(tree.rootNode, source, path2);
+    const { tests, markerSites, knobs, playwright, nodeTest, scopes } = extractTsTests(tree.rootNode, source, path2, options.jestGlobals ?? null);
     return { path: path2, language, tests, markerSites, knobs, playwright, nodeTest, parseErrors, scopes, notAnalysed: null };
   } finally {
     tree.delete();
@@ -222575,186 +222986,6 @@ async function contagionNet(files, rules, covered) {
   return findings;
 }
 
-// src/config/json.ts
-function parseJsonValue(text, onDuplicate) {
-  let i2 = 0;
-  let line7 = 1;
-  const s = text;
-  const ws = () => {
-    while (i2 < s.length && /\s/.test(s[i2])) {
-      if (s[i2] === "\n") line7++;
-      i2++;
-    }
-  };
-  const str2 = () => {
-    let j = i2 + 1;
-    while (j < s.length && s[j] !== '"') j += s[j] === "\\" ? 2 : 1;
-    const raw = s.slice(i2, j + 1);
-    i2 = j + 1;
-    return JSON.parse(raw);
-  };
-  const val = () => {
-    ws();
-    const at = line7;
-    const c = s[i2];
-    if (c === "{") {
-      i2++;
-      const props = /* @__PURE__ */ new Map();
-      ws();
-      if (s[i2] === "}") {
-        i2++;
-        return { t: "obj", props, line: at, open: false };
-      }
-      for (; ; ) {
-        ws();
-        const keyLine = line7;
-        const k = str2();
-        ws();
-        if (s[i2++] !== ":") throw new Error("expected :");
-        const v = val();
-        if (props.has(k)) onDuplicate?.(k);
-        props.set(k, { ...v, line: v.t === "obj" || v.t === "arr" ? keyLine : v.line });
-        ws();
-        if (s[i2] === ",") i2++;
-        else if (s[i2] === "}") {
-          i2++;
-          return { t: "obj", props, line: at, open: false };
-        } else throw new Error("expected , or }");
-      }
-    }
-    if (c === "[") {
-      i2++;
-      const items = [];
-      ws();
-      if (s[i2] === "]") {
-        i2++;
-        return { t: "arr", items, line: at };
-      }
-      for (; ; ) {
-        items.push(val());
-        ws();
-        if (s[i2] === ",") i2++;
-        else if (s[i2] === "]") {
-          i2++;
-          return { t: "arr", items, line: at };
-        } else throw new Error("expected , or ]");
-      }
-    }
-    if (c === '"') return { t: "str", v: str2(), line: at };
-    const m = /^(?:true|false|null|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)/.exec(s.slice(i2));
-    if (!m) throw new Error("unexpected token");
-    i2 += m[0].length;
-    if (m[0] === "true" || m[0] === "false") return { t: "bool", v: m[0] === "true", line: at };
-    if (m[0] === "null") return { t: "null", line: at };
-    return { t: "num", v: Number(m[0]), line: at };
-  };
-  try {
-    const v = val();
-    ws();
-    return i2 === s.length ? v : null;
-  } catch {
-    return null;
-  }
-}
-function rawTopLevelMembers(text) {
-  const s = text;
-  let i2 = 0;
-  const fail = (why) => {
-    throw new Error(why);
-  };
-  const ws = () => {
-    while (i2 < s.length && (s[i2] === " " || s[i2] === "	" || s[i2] === "\n" || s[i2] === "\r")) i2++;
-  };
-  const string = () => {
-    if (s[i2] !== '"') fail(`expected a string at offset ${i2}`);
-    const start2 = ++i2;
-    while (i2 < s.length && s[i2] !== '"') {
-      const c = s.charCodeAt(i2);
-      if (c < 32) fail(`control character in a string at offset ${i2}`);
-      if (s[i2] === "\\") {
-        const e = s[i2 + 1];
-        if (e === "u") {
-          if (!/^[0-9a-fA-F]{4}$/.test(s.slice(i2 + 2, i2 + 6))) fail(`invalid \\u escape at offset ${i2}`);
-          i2 += 6;
-        } else if (e !== void 0 && '"\\/bfnrt'.includes(e)) i2 += 2;
-        else fail(`invalid escape at offset ${i2}`);
-      } else i2++;
-    }
-    if (i2 >= s.length) fail("unterminated string");
-    return s.slice(start2, i2++);
-  };
-  const value2 = () => {
-    ws();
-    const c = s[i2];
-    if (c === "{") return object2(null);
-    if (c === "[") {
-      i2++;
-      ws();
-      if (s[i2] === "]") {
-        i2++;
-        return;
-      }
-      for (; ; ) {
-        value2();
-        ws();
-        if (s[i2] === ",") i2++;
-        else if (s[i2] === "]") {
-          i2++;
-          return;
-        } else fail(`expected , or ] at offset ${i2}`);
-      }
-    }
-    if (c === '"') {
-      string();
-      return;
-    }
-    const m = /^(?:true|false|null|-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?)/.exec(s.slice(i2));
-    if (!m) fail(`unexpected token at offset ${i2}`);
-    i2 += m[0].length;
-  };
-  const object2 = (members) => {
-    i2++;
-    const seen = /* @__PURE__ */ new Set();
-    ws();
-    if (s[i2] === "}") {
-      i2++;
-      return;
-    }
-    for (; ; ) {
-      ws();
-      const key3 = string();
-      if (key3.includes("\\")) fail(`key "${key3}" is written with escapes`);
-      if (seen.has(key3)) fail(`duplicate key "${key3}"`);
-      seen.add(key3);
-      ws();
-      if (s[i2++] !== ":") fail(`expected : at offset ${i2 - 1}`);
-      ws();
-      const start2 = i2;
-      value2();
-      members?.set(key3, s.slice(start2, i2));
-      ws();
-      if (s[i2] === ",") i2++;
-      else if (s[i2] === "}") {
-        i2++;
-        return;
-      } else fail(`expected , or } at offset ${i2}`);
-    }
-  };
-  try {
-    if (s.startsWith("\uFEFF")) fail("byte-order mark");
-    if (s.includes("�")) fail("bytes that are not valid UTF-8");
-    ws();
-    if (s[i2] !== "{") fail("the root is not an object");
-    const members = /* @__PURE__ */ new Map();
-    object2(members);
-    ws();
-    if (i2 !== s.length) fail(`content after the object at offset ${i2}`);
-    return { members };
-  } catch (err2) {
-    return { anomaly: err2.message };
-  }
-}
-
 // src/config/testscope.ts
 function inFixtureDir(path2) {
   const dir = path2.includes("/") ? path2.slice(0, path2.lastIndexOf("/")) : "";
@@ -222768,7 +222999,7 @@ function watchedSection(file) {
   if (b === "tox.ini") return (n) => n === "pytest" || n === "tox" || n === "tox:tox" || /^testenv(?::.*)?$/.test(n) || /^coverage:/.test(n);
   return null;
 }
-function testSections(file, text) {
+function testSections(file, text2) {
   const watched = watchedSection(file);
   if (!watched) return null;
   const toml = basename3(file) === "pyproject.toml";
@@ -222776,7 +223007,7 @@ function testSections(file, text) {
   let current = "";
   let keep = false;
   let root = [];
-  for (const line7 of text.replace(/^﻿/, "").split(/\r?\n/)) {
+  for (const line7 of text2.replace(/^﻿/, "").split(/\r?\n/)) {
     const header = /^\s*\[\[?\s*([^\]]+?)\s*\]\]?\s*(?:[#;].*)?$/.exec(line7);
     if (header) {
       current = header[1].replace(/["']/g, "");
@@ -222805,10 +223036,10 @@ function projectsView(v) {
 // src/rules/net.ts
 var VITE_LIKE = /^(?:vitest|vite)(?:\.[\w-]+)?\.config\.[cm]?[jt]s$/i;
 var NOT_TEST_SETTINGS = /* @__PURE__ */ new Set(["resolve", "define", "plugins", "server", "preview", "build", "css", "esbuild", "optimizeDeps", "ssr", "worker", "json", "assetsInclude", "publicDir", "base", "cacheDir", "envPrefix", "envDir", "appType", "clearScreen", "logLevel"]);
-async function viteTestText(path2, text) {
+async function viteTestText(path2, text2) {
   const language = languageForPath(path2);
   if (!language || language === "python") return null;
-  const tree = (await getParser(language)).parse(text);
+  const tree = (await getParser(language)).parse(text2);
   if (!tree) return null;
   try {
     if (tree.rootNode.hasError) return null;
@@ -222867,20 +223098,20 @@ async function viteTestText(path2, text) {
       let at = from;
       for (const [a, b] of [...blank].sort((x, y) => x[0] - y[0])) {
         if (b <= at || a >= to) continue;
-        s += text.slice(at, Math.max(at, a));
+        s += text2.slice(at, Math.max(at, a));
         at = Math.max(at, b);
       }
-      return s + text.slice(at, to);
+      return s + text2.slice(at, to);
     };
     const imports = tree.rootNode.namedChildren.filter((s) => s.type === "import_statement");
     for (const imp of imports) {
       const names = imp.descendantsOfType(["identifier"]).filter((id) => id.parent?.type === "import_clause" || id.parent?.type === "namespace_import" || id.parent?.type === "import_specifier" && (id.parent.childForFieldName("alias") ?? id.parent.childForFieldName("name"))?.id === id.id).map((id) => id.text);
       if (names.length === 0) continue;
-      const rest = kept(0, imp.startIndex) + kept(imp.endIndex, text.length);
+      const rest = kept(0, imp.startIndex) + kept(imp.endIndex, text2.length);
       if (names.every((n) => !new RegExp(`(?<![\\w$])${n.replace(/\$/g, "\\$")}(?![\\w$])`).test(rest))) blank.push([imp.startIndex, imp.endIndex]);
     }
     blank.sort((a, b) => b[0] - a[0]);
-    let out2 = text;
+    let out2 = text2;
     for (const [from, to] of blank) out2 = `${out2.slice(0, from)}\0${out2.slice(to)}`;
     return out2.replace(/\s*\u0000\s*,?/g, "");
   } finally {
@@ -223014,9 +223245,9 @@ async function markerCode(path2, source) {
     }
     if (lang === "python") {
       for (const id of tree.rootNode.descendantsOfType("identifier")) {
-        const text = id.text.normalize("NFKC");
-        if (text === id.text) continue;
-        units2[id.startIndex] = text;
+        const text2 = id.text.normalize("NFKC");
+        if (text2 === id.text) continue;
+        units2[id.startIndex] = text2;
         for (let i2 = id.startIndex + 1; i2 < id.endIndex; i2++) units2[i2] = "";
       }
     }
@@ -223149,12 +223380,12 @@ async function configText(path2, source) {
   return source.split(/\r?\n/).filter((l) => !/^\s*[#;]/.test(l)).join("\n");
 }
 async function countConfigTokens(path2, source) {
-  const text = await configText(path2, source);
-  return Object.fromEntries(CONFIG_VOCABULARY.map(([token, re]) => [token, text.match(re)?.length ?? 0]));
+  const text2 = await configText(path2, source);
+  return Object.fromEntries(CONFIG_VOCABULARY.map(([token, re]) => [token, text2.match(re)?.length ?? 0]));
 }
 var PACKAGE_JSON_WATCHED = ["scripts", "jest", "vitest", "mocha", "ava", "c8", "nyc"];
 function testScripts(scripts) {
-  const text = (k) => {
+  const text2 = (k) => {
     const raw = scripts.get(k) ?? "";
     try {
       const v = JSON.parse(raw);
@@ -223167,7 +223398,7 @@ function testScripts(scripts) {
   for (let grew = true; grew; ) {
     grew = false;
     for (const k of [...out2]) {
-      const words2 = new Set(text(k).split(/[\s&|;()'"=]+/).flatMap((w) => [w, w.replace(/^[\w-]+:/, "")]));
+      const words2 = new Set(text2(k).split(/[\s&|;()'"=]+/).flatMap((w) => [w, w.replace(/^[\w-]+:/, "")]));
       for (const name2 of scripts.keys()) {
         if (out2.has(name2)) continue;
         if (words2.has(name2) || name2 === `pre${k}` || name2 === `post${k}`) {
@@ -223341,19 +223572,19 @@ function stillThere(ctx, module2, name2) {
   const change = ctx.allChanges.find((c) => c.basePath === module2);
   const headPath = change ? change.headPath : module2;
   if (headPath === null) return false;
-  const text = ctx.repo.read("head", headPath);
-  if (text === null) return false;
+  const text2 = ctx.repo.read("head", headPath);
+  if (text2 === null) return false;
   if (name2 === "*") return true;
   const n = name2.replace(/[$]/g, "\\$");
   if (module2.endsWith(".py")) {
-    if (/^\s*from\s+\S+\s+import\s+\*/m.test(text)) return true;
-    return new RegExp(`^(?:(?:async\\s+)?def|class)\\s+${n}\\b|^${n}\\s*(?::[^=]*)?=|^\\s*(?:from\\s+\\S+\\s+)?import\\s+.*\\b${n}\\b`, "m").test(text);
+    if (/^\s*from\s+\S+\s+import\s+\*/m.test(text2)) return true;
+    return new RegExp(`^(?:(?:async\\s+)?def|class)\\s+${n}\\b|^${n}\\s*(?::[^=]*)?=|^\\s*(?:from\\s+\\S+\\s+)?import\\s+.*\\b${n}\\b`, "m").test(text2);
   }
-  if (/^\s*export\s+\*/m.test(text) || /module\.exports\s*=\s*(?!\{)/.test(text)) return true;
-  if (name2 === "default") return /\bexport\s+default\b|module\.exports\s*=/.test(text);
+  if (/^\s*export\s+\*/m.test(text2) || /module\.exports\s*=\s*(?!\{)/.test(text2)) return true;
+  if (name2 === "default") return /\bexport\s+default\b|module\.exports\s*=/.test(text2);
   return new RegExp(
     `\\bexport\\s+(?:declare\\s+)?(?:default\\s+)?(?:async\\s+)?(?:function\\*?|const|let|var|class|enum|interface|type|abstract\\s+class)\\s+${n}\\b|\\bexport\\s*\\{[^}]*\\b${n}\\b[^}]*\\}|\\bexports\\.${n}\\b|module\\.exports\\s*=\\s*\\{[^}]*\\b${n}\\b`
-  ).test(text);
+  ).test(text2);
 }
 function localCodeChanged(ctx, file, test, cache3) {
   let imports = cache3.get(file);
@@ -223377,7 +223608,7 @@ function localCodeChanged(ctx, file, test, cache3) {
 // src/rules/TG001.ts
 function severityFor(test, wholeFile) {
   if (test.body === "" && disablingMarkers(test).some((m) => m.kind === "todo")) return "info";
-  return wholeFile && hiddenLevel(test) < 3 && test.binding.certain && test.declaration.canonical ? "fail" : "warn";
+  return wholeFile && hiddenLevel(test) < 3 && test.binding.certain && test.binding.via !== "global" && test.declaration.canonical ? "fail" : "warn";
 }
 function declarationDoubt(refs) {
   const r = refs.find((x) => hiddenLevel(x.test) < 3 && x.test.binding.certain && !x.test.declaration.canonical);
@@ -223716,6 +223947,7 @@ var TG003 = {
   run(ctx) {
     const groups = new SiteGroups();
     const possiblyHiddenAtBase = /* @__PURE__ */ new Map();
+    const ranAtBase2 = runningAtBase(ctx);
     for (const ht of headTests(ctx)) {
       const base = ht.base;
       const otherThan = (m) => disablingMarkers(ht.test).find((o) => o !== m && o.site !== m.site);
@@ -223733,7 +223965,7 @@ var TG003 = {
           continue;
         }
         const certain = marker.binding.certain && ht.test.binding.certain && base !== null && base.binding.certain;
-        const why = !marker.form.canonical ? marker.form.why : ht.baseSameName > 1 ? `the file declared ${ht.baseSameName} tests named ${JSON.stringify(base.name)} at base, so which one the runner reported is not certain` : !marker.effect.known ? marker.effect.why : marker.effect.effect === "expected-failure" && otherThan(marker) ? `\`${otherThan(marker).text}\` also applies to it, and the runner decides which of the two takes effect` : marker.effect.effect === "expected-failure" && wasExpected ? `the test was already an expected failure at base (\`${wasExpected.text}\`)` : null;
+        const why = !marker.form.canonical ? marker.form.why : base !== null && !ranAtBase2.has(base) ? "another test of the file is focused at base, so it may not have run" : ht.baseSameName > 1 ? `the file declared ${ht.baseSameName} tests named ${JSON.stringify(base.name)} at base, so which one the runner reported is not certain` : !marker.effect.known ? marker.effect.why : marker.effect.effect === "expected-failure" && otherThan(marker) ? `\`${otherThan(marker).text}\` also applies to it, and the runner decides which of the two takes effect` : marker.effect.effect === "expected-failure" && wasExpected ? `the test was already an expected failure at base (\`${wasExpected.text}\`)` : null;
         const severity = marker.condition === "unconditional" && certain && why === null ? "fail" : "warn";
         groups.add(ht.file, marker, severity, ht, why);
       }
@@ -223906,8 +224138,8 @@ function tolerance(a) {
   if (rel === null) return { rel: 0, abs };
   return { rel, abs: abs ?? 1e-12 };
 }
-function code2(text) {
-  const t = text.length > 70 ? `${text.slice(0, 69)}…` : text;
+function code2(text2) {
+  const t = text2.length > 70 ? `${text2.slice(0, 69)}…` : text2;
   return `\`${t}\``;
 }
 function multisetMinus(a, b) {
@@ -224369,7 +224601,7 @@ var JEST_TEST_MATCH = ["**/__tests__/**/*.?([mc])[jt]s?(x)", "**/?(*.)+(spec|tes
 var JEST_IGNORE = ["/node_modules/"];
 var PY_FILES = ["test_*.py", "*_test.py"];
 var PY_NORECURSE = ["*.egg", ".*", "_darcs", "build", "CVS", "dist", "node_modules", "venv", "{arch}"];
-var join2 = (dir, rel) => dir ? `${dir}/${rel}` : rel;
+var join3 = (dir, rel) => dir ? `${dir}/${rel}` : rel;
 function below(dir, path2) {
   if (!dir) return path2;
   return path2.startsWith(`${dir}/`) ? path2.slice(dir.length + 1) : null;
@@ -224381,16 +224613,16 @@ function normalisePath(p) {
 }
 async function jsConfig(view2, dir, names) {
   for (const name2 of names) {
-    const path2 = join2(dir, name2);
-    const text = view2.read(path2);
-    if (text === null) continue;
-    return { path: path2, value: name2.endsWith(".json") ? parseJsonValue(text) ?? { t: "unknown", text: "invalid JSON", line: 1 } : await readJsConfig(path2, text) };
+    const path2 = join3(dir, name2);
+    const text2 = view2.read(path2);
+    if (text2 === null) continue;
+    return { path: path2, value: name2.endsWith(".json") ? parseJsonValue(text2) ?? { t: "unknown", text: "invalid JSON", line: 1 } : await readJsConfig(path2, text2) };
   }
   return null;
 }
 function packageJson(view2, dir) {
-  const text = view2.read(join2(dir, "package.json"));
-  return text === null ? null : parseJsonValue(text) ?? { t: "unknown", text: "invalid JSON", line: 1 };
+  const text2 = view2.read(join3(dir, "package.json"));
+  return text2 === null ? null : parseJsonValue(text2) ?? { t: "unknown", text: "invalid JSON", line: 1 };
 }
 function scriptInvocation2(pkg2, runner) {
   const script = prop(prop(pkg2, "scripts"), "test");
@@ -224425,7 +224657,7 @@ async function vitestSelection(view2, dir) {
     }
   }
   const args3 = scriptInvocation2(packageJson(view2, dir), "vitest");
-  if (args3 === "opaque") return uncertain2(`${join2(dir, "package.json")}: the test script runs vitest in a way we cannot read`);
+  if (args3 === "opaque") return uncertain2(`${join3(dir, "package.json")}: the test script runs vitest in a way we cannot read`);
   const cli = parseVitestArgs(args3 ?? []);
   if (cli.opaque.length > 0) return uncertain2(`the test script passes ${cli.opaque.map((o) => `\`${o}\``).join(", ")} to vitest`);
   if (cli.exclude.length > 0 && config && prop(prop(config.value, "test"), "exclude")) {
@@ -224449,7 +224681,7 @@ async function jestConfig(view2, dir) {
   const own = await jsConfig(view2, dir, JEST_CONFIGS);
   if (own) return own;
   const jest = prop(packageJson(view2, dir), "jest");
-  return jest ? { path: join2(dir, "package.json"), value: jest } : null;
+  return jest ? { path: join3(dir, "package.json"), value: jest } : null;
 }
 var ROOT_SENTINEL = "/\0rootDir";
 async function jestSelection(view2, dir) {
@@ -224486,7 +224718,7 @@ async function jestSelection(view2, dir) {
     }
   }
   const args3 = scriptInvocation2(packageJson(view2, dir), "jest");
-  if (args3 === "opaque") return uncertain2(`${join2(dir, "package.json")}: the test script runs jest in a way we cannot read`);
+  if (args3 === "opaque") return uncertain2(`${join3(dir, "package.json")}: the test script runs jest in a way we cannot read`);
   const cli = parseJestArgs(args3 ?? []);
   if (cli.opaque.length > 0) return uncertain2(`the test script passes ${cli.opaque.map((o) => `\`${o}\``).join(", ")} to jest (matched against absolute paths)`);
   if (cli.ignore.length > 0 && config && prop(config.value, "testPathIgnorePatterns")) {
@@ -224521,15 +224753,15 @@ async function jestSelection(view2, dir) {
 }
 function pytestConfigAt(view2, dir) {
   for (const name2 of PYTEST_CONFIG_FILES) {
-    const text = view2.read(join2(dir, name2));
-    if (text === null) continue;
-    const config = readPytestConfig(join2(dir, name2), text);
+    const text2 = view2.read(join3(dir, name2));
+    if (text2 === null) continue;
+    const config = readPytestConfig(join3(dir, name2), text2);
     if (config) return config;
   }
   return null;
 }
-function parseK(text) {
-  const tokens3 = text.match(/\(|\)|[^\s()]+/g) ?? [];
+function parseK(text2) {
+  const tokens3 = text2.match(/\(|\)|[^\s()]+/g) ?? [];
   let i2 = 0;
   const expr = () => {
     let l = andExpr();
@@ -224635,7 +224867,7 @@ async function pytestSelection(view2, rootdir) {
     const c = await readConftest(f, view2.read(f) ?? "");
     if (c.collectIgnore === null || c.collectIgnoreGlob === null) return uncertain2(`${f}: collect_ignore is computed in a way we cannot read`);
     const cdir = rel.includes("/") ? rel.slice(0, rel.lastIndexOf("/")) : "";
-    conftests.push({ dir: cdir, ignore: c.collectIgnore.map((p) => normalisePath(join2(cdir, p))), globs: c.collectIgnoreGlob.map((g) => fnmatchRegExp(join2(cdir, g))) });
+    conftests.push({ dir: cdir, ignore: c.collectIgnore.map((p) => normalisePath(join3(cdir, p))), globs: c.collectIgnoreGlob.map((g) => fnmatchRegExp(join3(cdir, g))) });
   }
   const anyConftest = conftests.length > 0;
   const files = /* @__PURE__ */ new Set();
@@ -224699,11 +224931,11 @@ function numKnob(runner, kind, key3, label, v, fallback, unit) {
   return [{ runner, kind, key: key3, label, value: v.t === "num" ? v.v : null, text: v.t === "unknown" ? v.text : canonical2(v), fallback, unit, line: v.line }];
 }
 var EMPTY = { t: "obj", props: /* @__PURE__ */ new Map(), line: 1, open: false };
-async function factsOf(path2, text) {
+async function factsOf(path2, text2) {
   const out2 = { facts: [], knobs: [] };
   const b = basename4(path2);
   if (VITEST_CONFIGS.includes(b)) {
-    const config2 = text === null ? EMPTY : await readJsConfig(path2, text);
+    const config2 = text2 === null ? EMPTY : await readJsConfig(path2, text2);
     if (config2.t !== "obj") {
       out2.facts.push({ runner: "vitest", type: "include", key: `unreadable:${canonical2(config2)}`, label: "the configuration (not a literal object)", line: config2.line });
       return out2;
@@ -224722,13 +224954,13 @@ async function factsOf(path2, text) {
     return out2;
   }
   if (JEST_CONFIGS.includes(b)) {
-    const config2 = text === null ? EMPTY : b.endsWith(".json") ? parseJsonValue(text) ?? { t: "unknown", text: "invalid JSON", line: 1 } : await readJsConfig(path2, text);
+    const config2 = text2 === null ? EMPTY : b.endsWith(".json") ? parseJsonValue(text2) ?? { t: "unknown", text: "invalid JSON", line: 1 } : await readJsConfig(path2, text2);
     out2.facts.push(...jestFacts(config2));
     out2.knobs.push(...numKnob("jest", "timeout", "testTimeout", "`testTimeout`", prop(config2, "testTimeout"), 5e3, "ms"));
     return out2;
   }
   if (PLAYWRIGHT_CONFIGS.includes(b)) {
-    const config2 = text === null ? EMPTY : await readJsConfig(path2, text);
+    const config2 = text2 === null ? EMPTY : await readJsConfig(path2, text2);
     for (const key3 of ["testDir", "testMatch", "testIgnore", "grep", "grepInvert", "projects"]) {
       const v = prop(config2, key3);
       if (v) out2.facts.push({ runner: "playwright", type: "exclude", key: `${key3}=${canonical2(v)}`, label: `\`${key3}\``, line: v.line });
@@ -224738,7 +224970,7 @@ async function factsOf(path2, text) {
     return out2;
   }
   if (b === "package.json") {
-    const pkg2 = text === null ? EMPTY : parseJsonValue(text);
+    const pkg2 = text2 === null ? EMPTY : parseJsonValue(text2);
     if (!pkg2) return out2;
     out2.facts.push(...jestFacts(prop(pkg2, "jest") ?? EMPTY));
     const jestField = prop(pkg2, "jest");
@@ -224771,15 +225003,15 @@ async function factsOf(path2, text) {
     return out2;
   }
   if (b === "conftest.py") {
-    if (text === null) return out2;
-    const c = await readConftest(path2, text);
+    if (text2 === null) return out2;
+    const c = await readConftest(path2, text2);
     for (const [key3, list] of [["collect_ignore", c.collectIgnore], ["collect_ignore_glob", c.collectIgnoreGlob]]) {
       if (list === null) out2.facts.push({ runner: "pytest", type: "exclude", key: `${key3}:unreadable`, label: `\`${key3}\` (computed)`, line: c.line });
       else for (const item2 of list) out2.facts.push({ runner: "pytest", type: "exclude", key: `${key3}:${item2}`, label: `\`${key3}\` entry \`${item2}\``, line: c.line });
     }
     return out2;
   }
-  const config = text === null ? null : readPytestConfig(path2, text);
+  const config = text2 === null ? null : readPytestConfig(path2, text2);
   if (!config) return out2;
   const addopts = config.options.get("addopts");
   if (addopts) {
@@ -224849,12 +225081,12 @@ async function select(runner, v, dir) {
   return { certain: false, reason: "Playwright test selection is not evaluated" };
 }
 function inUseAtBase(runner, base, dir) {
-  const pkgText = base.read(join2(dir, "package.json"));
+  const pkgText = base.read(join3(dir, "package.json"));
   const mentions = pkgText !== null && new RegExp(`\\b${runner}\\b`).test(pkgText);
-  if (runner === "vitest") return mentions || VITEST_CONFIGS.some((n) => base.read(join2(dir, n)) !== null);
-  if (runner === "jest") return mentions || JEST_CONFIGS.some((n) => base.read(join2(dir, n)) !== null);
+  if (runner === "vitest") return mentions || VITEST_CONFIGS.some((n) => base.read(join3(dir, n)) !== null);
+  if (runner === "jest") return mentions || JEST_CONFIGS.some((n) => base.read(join3(dir, n)) !== null);
   if (runner === "pytest") return pytestConfigAt(base, dir) !== null || base.files.some((f) => below(dir, f) !== null && basename4(f) === "conftest.py");
-  return mentions || PLAYWRIGHT_CONFIGS.some((n) => base.read(join2(dir, n)) !== null);
+  return mentions || PLAYWRIGHT_CONFIGS.some((n) => base.read(join3(dir, n)) !== null);
 }
 function pytestRoot(path2, head, base) {
   if (basename4(path2) !== "conftest.py") return dirname2(path2);
@@ -225117,31 +225349,31 @@ function worlds(ev, c, model) {
   const editProblem = (e, l, doubt, optional) => {
     const inFlight = !finished(e);
     if (e.certainty === "certain" && e.path !== null && relevance(e) === "code") {
-      const text2 = !optional ? `no test run visible after the last edit: ${code3(e.path)} was edited after ${describeRun(l)}` : inFlight ? `${code3(e.path)} was being edited when the claim was made` : `${code3(e.path)} was edited while the last visible test run ${code3(l.command)} was running (not certainly before or after it)`;
-      return { text: text2, reason: "edited_after_last_run", fatal: true, stale: true, doubt };
+      const text3 = !optional ? `no test run visible after the last edit: ${code3(e.path)} was edited after ${describeRun(l)}` : inFlight ? `${code3(e.path)} was being edited when the claim was made` : `${code3(e.path)} was edited while the last visible test run ${code3(l.command)} was running (not certainly before or after it)`;
+      return { text: text3, reason: "edited_after_last_run", fatal: true, stale: true, doubt };
     }
     if (e.certainty === "certain" && e.path !== null) {
       const where = `${code3(e.path)} (outside the repository, or not placed in it with certainty: a symlink, a submodule, a ".." above it)`;
-      const text2 = inFlight ? `${where} was being edited when the claim was made` : optional ? `${where} was edited while the last visible test run ${code3(l.command)} was running` : `${where} was edited after the last visible test run`;
-      return { text: text2, reason: "unplaced_edit", fatal: false, stale: true, doubt };
+      const text3 = inFlight ? `${where} was being edited when the claim was made` : optional ? `${where} was edited while the last visible test run ${code3(l.command)} was running` : `${where} was edited after the last visible test run`;
+      return { text: text3, reason: "unplaced_edit", fatal: false, stale: true, doubt };
     }
     const what = code3(e.command ?? e.path ?? "?");
-    const text = inFlight ? `${what}, still running when the claim was made, may have changed files` : `${what} after the last visible test run may have changed files`;
-    return { text, reason: "uncertain_edit", fatal: false, stale: true, doubt };
+    const text2 = inFlight ? `${what}, still running when the claim was made, may have changed files` : `${what} after the last visible test run may have changed files`;
+    return { text: text2, reason: "uncertain_edit", fatal: false, stale: true, doubt };
   };
   const out2 = [];
   const backing = [];
   for (const s of scenarios) {
     const sDoubt = scenarioDoubt(s);
     if (s === null) {
-      const text = !ev.runs.length ? "no test run visible" : !runs.length ? `no test run visible before the claim (${[...new Set(ev.runs.map((r) => code3(r.command)))].join(", ")} came after it)` : "no visible test run had finished when the claim was made";
-      out2.push([{ text, reason: "no_test_run", fatal: true, stale: false, doubt: sDoubt }]);
+      const text2 = !ev.runs.length ? "no test run visible" : !runs.length ? `no test run visible before the claim (${[...new Set(ev.runs.map((r) => code3(r.command)))].join(", ")} came after it)` : "no visible test run had finished when the claim was made";
+      out2.push([{ text: text2, reason: "no_test_run", fatal: true, stale: false, doubt: sDoubt }]);
       continue;
     }
     const l = s;
     const outcome = [];
-    const add = (text, reason, fatal) => {
-      outcome.push({ text, reason, fatal, stale: false, doubt: sDoubt });
+    const add = (text2, reason, fatal) => {
+      outcome.push({ text: text2, reason, fatal, stale: false, doubt: sDoubt });
     };
     const which = finished(l) ? "the last visible test run" : "the test run still running when the claim was made,";
     if (!placedRun(l)) {
@@ -225202,9 +225434,9 @@ function judge(ev, claim, model) {
   const facts = [];
   const maybe = [];
   for (const { p, n } of unique.values()) {
-    const text = n < ws.length && p.doubt?.text ? `${p.text} (not certain: ${p.doubt.text})` : p.text;
-    if (p.fatal && allFalse) facts.push({ text, reason: p.reason });
-    else maybe.push({ text, reason: p.fatal ? p.doubt?.reason ?? "overlapping_runs" : p.reason });
+    const text2 = n < ws.length && p.doubt?.text ? `${p.text} (not certain: ${p.doubt.text})` : p.text;
+    if (p.fatal && allFalse) facts.push({ text: text2, reason: p.reason });
+    else maybe.push({ text: text2, reason: p.fatal ? p.doubt?.reason ?? "overlapping_runs" : p.reason });
   }
   if (!ev.transcript.complete) maybe.push({ text: `the transcript has content saidvsdid cannot see into: ${ev.transcript.issues.slice(0, 2).join("; ")}`, reason: "incomplete_transcript" });
   const shown = [...facts, ...maybe];
@@ -225251,7 +225483,7 @@ var TG006 = {
 import { execFileSync as execFileSync2, spawnSync as spawnSync2 } from "node:child_process";
 import { existsSync, lstatSync, mkdirSync, mkdtempSync as mkdtempSync2, readdirSync, readFileSync as readFileSync2, rmdirSync, rmSync as rmSync2, symlinkSync, unlinkSync, writeFileSync as writeFileSync2 } from "node:fs";
 import { tmpdir as tmpdir2 } from "node:os";
-import { dirname as dirname3, join as join3 } from "node:path";
+import { dirname as dirname3, join as join4 } from "node:path";
 var key2 = (t) => `${t.file}\0${t.name}`;
 function runnerFor(file, headSource, pkg2) {
   if (file.endsWith(".py")) return "pytest";
@@ -225264,20 +225496,20 @@ function runnerFor(file, headSource, pkg2) {
   return `cannot tell whether ${file} runs with vitest or jest`;
 }
 function linkNodeModules(repoDir, worktree) {
-  const source = join3(repoDir, "node_modules");
-  const target2 = join3(worktree, "node_modules");
+  const source = join4(repoDir, "node_modules");
+  const target2 = join4(worktree, "node_modules");
   if (existsSync(target2)) return;
   mkdirSync(target2);
   for (const entry of readdirSync(source)) {
     if (entry.startsWith(".") && entry !== ".bin") continue;
-    symlinkSync(join3(source, entry), join3(target2, entry), "junction");
+    symlinkSync(join4(source, entry), join4(target2, entry), "junction");
   }
 }
 function unlinkNodeModules(worktree) {
-  const nm = join3(worktree, "node_modules");
+  const nm = join4(worktree, "node_modules");
   if (!existsSync(nm)) return;
   for (const entry of readdirSync(nm)) {
-    const p = join3(nm, entry);
+    const p = join4(nm, entry);
     if (!lstatSync(p).isSymbolicLink()) continue;
     try {
       unlinkSync(p);
@@ -225324,10 +225556,10 @@ function templatePattern(title) {
   return escapeRe(title).replace(/%[sdifjoOpc#]/g, ".*?").replace(/\\\$[\w.]+/g, ".*?");
 }
 function runPytest(worktree, targets, work, side, timeoutMs) {
-  const pluginDir = join3(work, "plugin");
+  const pluginDir = join4(work, "plugin");
   mkdirSync(pluginDir, { recursive: true });
-  writeFileSync2(join3(pluginDir, "saidvsdid_f2p.py"), PYTEST_PLUGIN);
-  const out2 = join3(work, `${side}.pytest.json`);
+  writeFileSync2(join4(pluginDir, "saidvsdid_f2p.py"), PYTEST_PLUGIN);
+  const out2 = join4(work, `${side}.pytest.json`);
   const python = process.env["SAIDVSDID_PYTHON"] || (process.platform === "win32" ? "python" : "python3");
   const ids = targets.map((t) => `${t.file}::${t.name}`);
   const r = spawnSync2(python, ["-m", "pytest", "-p", "saidvsdid_f2p", "-p", "no:cacheprovider", "-q", ...ids], {
@@ -225353,13 +225585,13 @@ function runPytest(worktree, targets, work, side, timeoutMs) {
   return { statuses, rows, problem: null };
 }
 function runJs(runner, worktree, targets, work, side, timeoutMs) {
-  const out2 = join3(work, `${side}.${runner}.json`);
+  const out2 = join4(work, `${side}.${runner}.json`);
   const files = [...new Set(targets.map((t) => t.file))];
   const namePattern = (t, sep) => t.table ? t.name.split(" > ").map(templatePattern).join(escapeRe(sep)) : escapeRe(t.name.split(" > ").join(sep));
   const pattern = `^(?:${targets.map((t) => namePattern(t, " ")).join("|")})$`;
-  const bin = runner === "vitest" ? join3(worktree, "node_modules", "vitest", "vitest.mjs") : join3(worktree, "node_modules", "jest", "bin", "jest.js");
+  const bin = runner === "vitest" ? join4(worktree, "node_modules", "vitest", "vitest.mjs") : join4(worktree, "node_modules", "jest", "bin", "jest.js");
   if (!existsSync(bin)) return { statuses: /* @__PURE__ */ new Map(), problem: `${runner} is not installed in the repository's node_modules` };
-  const args3 = runner === "vitest" ? [bin, "run", "--root", worktree, "--reporter=json", `--outputFile=${out2}`, "--allowOnly", "--passWithNoTests", "-t", pattern, ...files] : [bin, "--ci", "--json", `--outputFile=${out2}`, "--watchman=false", "--passWithNoTests", `--cacheDirectory=${join3(work, `${side}.jest-cache`)}`, "-t", pattern, ...files.map(escapeRe)];
+  const args3 = runner === "vitest" ? [bin, "run", "--root", worktree, "--reporter=json", `--outputFile=${out2}`, "--allowOnly", "--passWithNoTests", "-t", pattern, ...files] : [bin, "--ci", "--json", `--outputFile=${out2}`, "--watchman=false", "--passWithNoTests", `--cacheDirectory=${join4(work, `${side}.jest-cache`)}`, "-t", pattern, ...files.map(escapeRe)];
   const r = spawnSync2(process.execPath, args3, { cwd: worktree, encoding: "utf8", timeout: timeoutMs, env: { ...process.env, CI: "true", NO_COLOR: "1" } });
   if (r.signal) return { statuses: /* @__PURE__ */ new Map(), problem: `${runner} timed out after ${timeoutMs / 1e3}s on ${side}` };
   if (!existsSync(out2)) return { statuses: /* @__PURE__ */ new Map(), problem: `${runner} did not run on ${side} (exit ${r.status}): ${lastLine(r.stderr || r.stdout)}` };
@@ -225395,13 +225627,13 @@ function runJs(runner, worktree, targets, work, side, timeoutMs) {
   }
   return { statuses, rows, problem: null };
 }
-function lastLine(text) {
-  const lines = text.trim().split(/\r?\n/).filter((l) => l.trim());
+function lastLine(text2) {
+  const lines = text2.trim().split(/\r?\n/).filter((l) => l.trim());
   return (lines[lines.length - 1] ?? "").slice(0, 200);
 }
 function runF2p(repoDir, base, head, targets, timeoutMs) {
-  const work = mkdtempSync2(join3(tmpdir2(), "saidvsdid-f2p-"));
-  const trees = { base: join3(work, "base"), head: join3(work, "head") };
+  const work = mkdtempSync2(join4(tmpdir2(), "saidvsdid-f2p-"));
+  const trees = { base: join4(work, "base"), head: join4(work, "head") };
   const added = [];
   try {
     for (const side of ["base", "head"]) {
@@ -225411,8 +225643,8 @@ function runF2p(repoDir, base, head, targets, timeoutMs) {
     for (const file of new Set(targets.map((t) => t.file))) {
       const source = readBlob(repoDir, head, file);
       if (source === null) return { ok: false, reason: `${file} is not in head` };
-      mkdirSync(dirname3(join3(trees.base, file)), { recursive: true });
-      writeFileSync2(join3(trees.base, file), source);
+      mkdirSync(dirname3(join4(trees.base, file)), { recursive: true });
+      writeFileSync2(join4(trees.base, file), source);
     }
     const pkgText = readBlob(repoDir, head, "package.json");
     const pkg2 = pkgText ? JSON.parse(pkgText) : null;
@@ -225423,7 +225655,7 @@ function runF2p(repoDir, base, head, targets, timeoutMs) {
       groups.set(runner, [...groups.get(runner) ?? [], t]);
     }
     if (groups.has("vitest") || groups.has("jest")) {
-      if (!existsSync(join3(repoDir, "node_modules"))) return { ok: false, reason: "node_modules is missing: install the dependencies first" };
+      if (!existsSync(join4(repoDir, "node_modules"))) return { ok: false, reason: "node_modules is missing: install the dependencies first" };
       linkNodeModules(repoDir, trees.base);
       linkNodeModules(repoDir, trees.head);
     }
@@ -225513,7 +225745,7 @@ var TG007 = {
     return out2;
   }
 };
-var quoted = (text) => `"${text.length > 100 ? `${text.slice(0, 99)}…` : text}"`;
+var quoted = (text2) => `"${text2.length > 100 ? `${text2.slice(0, 99)}…` : text2}"`;
 function judge2(ctx, claim) {
   const said = `The agent said ${quoted(claim.text)}`;
   const at = (file, test) => ({
@@ -225620,8 +225852,8 @@ function causeOf(f) {
 }
 function groupMessage(cause, names) {
   const n = names.length;
-  const text = cause.replace(new RegExp(`\\bnew test ${HOLE}`, "g"), `${n} new tests`).replace(new RegExp(`\\b[Tt]est ${HOLE}`, "g"), `${n} tests`).split(HOLE).join(`${n} tests`).replace(/\bit may not have been the runner's test\b/g, "they may not have been the runner's tests").replace(/\bmay (skip|turn|make|focus) it\b/g, "may $1 them").replace(/\bthe local code this test used\b/g, "the local code these tests used");
-  return `${text.charAt(0).toUpperCase()}${text.slice(1)} (${listNames(names)})`;
+  const text2 = cause.replace(new RegExp(`\\bnew test ${HOLE}`, "g"), `${n} new tests`).replace(new RegExp(`\\b[Tt]est ${HOLE}`, "g"), `${n} tests`).split(HOLE).join(`${n} tests`).replace(/\bit may not have been the runner's test\b/g, "they may not have been the runner's tests").replace(/\bmay (skip|turn|make|focus) it\b/g, "may $1 them").replace(/\bthe local code this test used\b/g, "the local code these tests used");
+  return `${text2.charAt(0).toUpperCase()}${text2.slice(1)} (${listNames(names)})`;
 }
 function groupFindings(findings) {
   const groups = /* @__PURE__ */ new Map();
@@ -225668,15 +225900,24 @@ var SEVERITY_ORDER = { fail: 0, warn: 1, info: 2 };
 function compareFindings(a, b) {
   return SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity] || compareStr(a.rule, b.rule) || compareStr(a.file, b.file) || (a.line ?? 0) - (b.line ?? 0) || compareStr(a.test ?? "", b.test ?? "") || compareStr(a.message, b.message);
 }
-function parseOn(read, readBytes, reading, side, path2, source) {
+function jestGlobalsOf(change, read, list) {
+  const sides = ["base", "head"].flatMap((side) => {
+    const path2 = side === "base" ? change.basePath : change.headPath;
+    if (path2 === null || languageForPath(path2) === null || languageForPath(path2) === "python") return [];
+    const source = read(side, path2);
+    return source === null ? [] : [{ path: path2, source, read: (p) => read(side, p), files: list ? list(side) : null }];
+  });
+  return sides.length === 0 ? null : jestGlobalsOfChange(sides);
+}
+function parseOn(read, readBytes, reading, side, path2, source, jestGlobals = null) {
   const xfailStrict = path2.endsWith(".py") ? optionBool(pytestConfigFor(path2, (p) => read(side, p))?.options.get("xfail_strict")) === true : false;
   const bytes = languageForPath(path2) === "python" ? readBytes(side, path2) : null;
-  return parseTestFile(path2, source, { xfailStrict, ...bytes ? { bytes, pyFacts: reading(side, path2, bytes) } : {} });
+  return parseTestFile(path2, source, { xfailStrict, jestGlobals, ...bytes ? { bytes, pyFacts: reading(side, path2, bytes) } : {} });
 }
-async function load(read, readBytes, reading, side, path2) {
+async function load(read, readBytes, reading, side, path2, jestGlobals = null) {
   const source = read(side, path2);
   if (source === null) return null;
-  const file = await parseOn(read, readBytes, reading, side, path2, source);
+  const file = await parseOn(read, readBytes, reading, side, path2, source, jestGlobals);
   if (file.parseErrors || file.notAnalysed) return file;
   if (!isTestPath(path2) && file.tests.length === 0 && file.markerSites.length === 0) return null;
   return file;
@@ -225767,8 +226008,8 @@ async function analyze(input) {
   const readBytes = (side, path2) => {
     const key3 = `${side}\0${path2}`;
     if (!bytes.has(key3)) {
-      const text = input.readBytes ? null : read(side, path2);
-      bytes.set(key3, input.readBytes ? input.readBytes(side, path2) : text === null ? null : Buffer.from(text, "utf8"));
+      const text2 = input.readBytes ? null : read(side, path2);
+      bytes.set(key3, input.readBytes ? input.readBytes(side, path2) : text2 === null ? null : Buffer.from(text2, "utf8"));
     }
     return bytes.get(key3);
   };
@@ -225813,8 +226054,9 @@ async function analyze(input) {
   };
   const loaded = /* @__PURE__ */ new Map();
   for (const change of changes) {
-    const b = change.basePath && candidate(change.basePath) ? await load(read, readBytes, reading, "base", change.basePath) : null;
-    const h = change.headPath && candidate(change.headPath) ? await load(read, readBytes, reading, "head", change.headPath) : null;
+    const jestGlobals = jestGlobalsOf(change, read, input.list);
+    const b = change.basePath && candidate(change.basePath) ? await load(read, readBytes, reading, "base", change.basePath, jestGlobals) : null;
+    const h = change.headPath && candidate(change.headPath) ? await load(read, readBytes, reading, "head", change.headPath, jestGlobals) : null;
     if (b) loaded.set(`base\0${b.path}`, b);
     if (h) loaded.set(`head\0${h.path}`, h);
     for (const [file, side] of [[b, "base"], [h, "head"]]) {
@@ -226019,8 +226261,8 @@ function sanitize(s, full = false) {
   return shorten(s.replace(/`/g, "ˋ").replace(/[\r\n\t]/g, " "), full);
 }
 function literal2(s, full = false) {
-  const text = sanitize(s, full);
-  return text === "" ? "` `" : `\`${text}\``;
+  const text2 = sanitize(s, full);
+  return text2 === "" ? "` `" : `\`${text2}\``;
 }
 function htmlLiteral(s, full = false) {
   return `<code>${shorten(s.replace(LINE_ENDING, " "), full).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")}</code>`;

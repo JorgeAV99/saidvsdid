@@ -3,6 +3,7 @@ import { evidenceFromSession, type FromTranscriptOptions } from './evidence/from
 import { packageScripts, type Scripts } from './transcript/commands.js';
 import { parseTranscript, type AgentOption } from './transcript/index.js';
 import { optionBool, pytestConfigFor } from './config/pytest.js';
+import { jestGlobalsOfChange, type JestGlobals } from './config/jest-globals.js';
 import { changedFiles, compareStr, listFiles, listTree, readBlob, readBlobBytes, repoRoot, selectBase, treeOf, type FileChange } from './git/diff.js';
 import { analysePython, isLooseTestPath, isTestPath, languageForPath, parseTestFile, pythonFacts, pythonRuntimeIfStarted, type PyFacts, type TestFile } from './parse/index.js';
 import ts from 'typescript';
@@ -59,20 +60,31 @@ function compareFindings(a: Finding, b: Finding): number {
   );
 }
 
+/** The certification of Jest's globals for a changed JS/TS file, from the sides it has; null for a Python file. */
+function jestGlobalsOf(change: FileChange, read: SourceReader, list: ((side: 'base' | 'head') => string[]) | undefined): JestGlobals | null {
+  const sides = (['base', 'head'] as const).flatMap((side) => {
+    const path = side === 'base' ? change.basePath : change.headPath;
+    if (path === null || languageForPath(path) === null || languageForPath(path) === 'python') return [];
+    const source = read(side, path);
+    return source === null ? [] : [{ path, source, read: (p: string) => read(side, p), files: list ? list(side) : null }];
+  });
+  return sides.length === 0 ? null : jestGlobalsOfChange(sides);
+}
+
 /** Python's answer for a Python file of the analysis, taken once (see `analyze`): the parsing reads exactly it. */
 type PyReading = (side: 'base' | 'head', path: string, bytes: Uint8Array) => PyFacts;
 
 /** Parses a file with the settings that apply to it on that side (pytest's xfail_strict), and, for Python, its bytes and Python's answer. */
-function parseOn(read: SourceReader, readBytes: BytesReader, reading: PyReading, side: 'base' | 'head', path: string, source: string): Promise<TestFile> {
+function parseOn(read: SourceReader, readBytes: BytesReader, reading: PyReading, side: 'base' | 'head', path: string, source: string, jestGlobals: JestGlobals | null = null): Promise<TestFile> {
   const xfailStrict = path.endsWith('.py') ? optionBool(pytestConfigFor(path, (p) => read(side, p))?.options.get('xfail_strict')) === true : false;
   const bytes = languageForPath(path) === 'python' ? readBytes(side, path) : null;
-  return parseTestFile(path, source, { xfailStrict, ...(bytes ? { bytes, pyFacts: reading(side, path, bytes) } : {}) });
+  return parseTestFile(path, source, { xfailStrict, jestGlobals, ...(bytes ? { bytes, pyFacts: reading(side, path, bytes) } : {}) });
 }
 
-async function load(read: SourceReader, readBytes: BytesReader, reading: PyReading, side: 'base' | 'head', path: string): Promise<TestFile | null> {
+async function load(read: SourceReader, readBytes: BytesReader, reading: PyReading, side: 'base' | 'head', path: string, jestGlobals: JestGlobals | null = null): Promise<TestFile | null> {
   const source = read(side, path);
   if (source === null) return null;
-  const file = await parseOn(read, readBytes, reading, side, path, source);
+  const file = await parseOn(read, readBytes, reading, side, path, source, jestGlobals);
   // Parse errors first: a broken file may have lost exactly the tests that
   // would have made it a test file. Otherwise, files in a test/ directory with
   // neither tests nor skip/focus markers are plain helpers.
@@ -280,8 +292,10 @@ export async function analyze(input: AnalyzeInput): Promise<Report> {
   /** Each side the loop below loaded, for the coverage (src/coverage.ts). */
   const loaded = new Map<string, TestFile>();
   for (const change of changes) {
-    const b = change.basePath && candidate(change.basePath) ? await load(read, readBytes, reading, 'base', change.basePath) : null;
-    const h = change.headPath && candidate(change.headPath) ? await load(read, readBytes, reading, 'head', change.headPath) : null;
+    // Jest's globals are Jest's only when both sides of the file are certified alike (src/config/jest-globals.ts).
+    const jestGlobals = jestGlobalsOf(change, read, input.list);
+    const b = change.basePath && candidate(change.basePath) ? await load(read, readBytes, reading, 'base', change.basePath, jestGlobals) : null;
+    const h = change.headPath && candidate(change.headPath) ? await load(read, readBytes, reading, 'head', change.headPath, jestGlobals) : null;
     if (b) loaded.set(`base\0${b.path}`, b);
     if (h) loaded.set(`head\0${h.path}`, h);
     // A file that does not parse may hide or invent tests on either side: keep

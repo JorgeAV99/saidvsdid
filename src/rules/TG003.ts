@@ -21,6 +21,7 @@
 //
 // Messages describe the code, not its effect: "adds `it.skip` to test …",
 // "changes the condition of `it.skipIf(true)` on test …".
+import { runningAtBase } from './TG002.js';
 import type { Marker, MarkerCondition, MarkerKind } from '../parse/index.js';
 import { newMarkerSites, uncoveredSiteFindings } from './census.js';
 import type { TestId } from './ids.js';
@@ -60,6 +61,9 @@ export const TG003: Rule = {
     const groups = new SiteGroups();
     /** Sites whose tests were hidden at base only by markers that are not certainly the runner's. */
     const possiblyHiddenAtBase = new Map<string, string>();
+    // The tests the file's focus let run at base (TG002's model: a nested focus narrows its ancestor's). A test another
+    // focus left out at base may not have run: its new skip is a WARN, whatever the runner (the 0.2.0 audit's design review).
+    const ranAtBase = runningAtBase(ctx);
     for (const ht of headTests(ctx)) {
       const base = ht.base;
       // One effect per test (docs/rules.md, *Verdicts*, F6): any other marker on the test, whatever its form or
@@ -90,6 +94,8 @@ export const TG003: Rule = {
         // disabled test still has to be looked at: WARN, not FAIL.
         const why = !marker.form.canonical
           ? marker.form.why
+          : base !== null && !ranAtBase.has(base)
+            ? 'another test of the file is focused at base, so it may not have run'
           : ht.baseSameName > 1
             ? `the file declared ${ht.baseSameName} tests named ${JSON.stringify(base!.name)} at base, so which one the runner reported is not certain`
           : !marker.effect.known

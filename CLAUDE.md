@@ -194,7 +194,12 @@
   are. Class fields and members, enums, non-literal containers, values that
   enter or leave a function, a function declared with def/function, and a
   name built at run time are coverage. Globals without import
-  (jest, vitest globals, mocha) are always WARN "may be skipped", never FAIL. Any
+  (vitest globals, mocha) are always WARN "may be skipped", never FAIL; Jest's
+  are Jest's only inside the closed grammar of docs/rules.md *Jest's globals*
+  (src/config/jest-globals.ts: the package's test script exactly `[npx ]jest`
+  and closed flags, no pretest/posttest, a JSON configuration with an allowlist
+  of keys, both sides alike, no `@jest-environment` docblock), for TG002 and
+  TG003 only (TG001 keeps them WARN), with the real Jest's evidence. Any
   uncertain binding or recognised form that cannot be attributed is a WARN
   emitted by the rule itself ("may …"): a form of the vocabulary never ends in
   silence. A literal subscript (`ctx['skip']()`, `test['only']`, escapes

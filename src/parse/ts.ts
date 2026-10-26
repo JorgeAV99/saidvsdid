@@ -18,6 +18,7 @@
 // something that is not the test's context) is attached all the same, with the
 // reason: the rules warn on it themselves, never FAIL, never silence. A literal
 // subscript is a member access: `it['skip']` is `it.skip`, escapes decoded.
+import type { JestGlobals } from '../config/jest-globals.js';
 import type { Node } from 'web-tree-sitter';
 import { classifyGuards, normaliseBody, snippet, type Guard } from './conditions.js';
 import { tsAssertions, tsFileInfo, tsHelperCalls, type TsFileInfo } from './ts-assert.js';
@@ -26,7 +27,7 @@ import { JS_CONTEXT_MEMBERS, RUNNER_API, TsResolver, type RunnerPackage, type Ts
 import { markerEffect } from '../rules/effects.js';
 import { sameName, testOrdinals } from '../rules/ids.js';
 import { numberLiteral } from '../config/values.js';
-import { CANONICAL, CERTAIN, firstNotCanonical, notCanonical, oneEffect, uncertain, weakest, type Assertion, type MarkerForm, type Binding, type Knob, type Marker, type MarkerCondition, type MarkerKind, type MarkerSite, type ScopeReading, type TestCase } from './types.js';
+import { CANONICAL, CERTAIN, GLOBAL, firstNotCanonical, notCanonical, oneEffect, uncertain, weakest, type Assertion, type MarkerForm, type Binding, type Knob, type Marker, type MarkerCondition, type MarkerKind, type MarkerSite, type ScopeReading, type TestCase } from './types.js';
 import { nameTable } from '../util/names.js';
 import { JS_CONDITIONAL_SEGMENTS, JS_OPTION_MARKERS, JS_ROOT_MARKERS, JS_SEGMENT_MARKERS, JS_TEST_ROOTS } from './vocabulary.js';
 
@@ -240,10 +241,10 @@ interface ApiRoot {
   binding: Binding;
 }
 
-function exported(pkg: RunnerPackage, name: string): { pkg: RunnerPackage | null; binding: Binding } {
+function exported(pkg: RunnerPackage, name: string, via?: 'global'): { pkg: RunnerPackage | null; binding: Binding } {
   const api = RUNNER_API[pkg];
   return api.tests.has(name) || api.suites.has(name) || api.rootMarkers.has(name)
-    ? { pkg, binding: CERTAIN }
+    ? { pkg, binding: via === 'global' ? GLOBAL : CERTAIN }
     : { pkg: null, binding: uncertain(`${pkg} does not export \`${name}\``) };
 }
 
@@ -333,7 +334,7 @@ function apiRoot(segs: Segment[], resolver: TsResolver, followAlias = true): Api
     }
   }
   const b = resolver.root(first.node);
-  if (b.kind === 'import' && isApiName(b.imported)) return { name: b.imported, node: first.node, rest: segs.slice(1), ...exported(b.pkg, b.imported) };
+  if (b.kind === 'import' && isApiName(b.imported)) return { name: b.imported, node: first.node, rest: segs.slice(1), ...exported(b.pkg, b.imported, b.via) };
   if (b.kind === 'namespace' && second && isApiName(second.name)) return { name: second.name, node: second.node, rest: segs.slice(2), ...exported(b.pkg, second.name) };
   const why = b.kind === 'uncertain' ? b.why : b.kind === 'import' ? `\`${first.name}\` is ${b.pkg}'s \`${b.imported}\`` : `\`${first.name}\` is ${b.pkg}'s namespace`;
   if (b.kind !== 'namespace' && isApiName(first.name)) return { name: first.name, node: first.node, rest: segs.slice(1), pkg: null, binding: uncertain(why) };
@@ -1067,9 +1068,9 @@ export interface TsExtraction {
   scopes: ScopeReading;
 }
 
-export function extractTsTests(root: Node, source: string, path: string): TsExtraction {
+export function extractTsTests(root: Node, source: string, path: string, jestGlobals: JestGlobals | null = null): TsExtraction {
   const file: SuiteNode = { type: 'suite', name: null, binding: CERTAIN, markers: [], children: [], params: '', form: exitForm(root), inert: [] };
-  const info = tsFileInfo(root, source, path);
+  const info = tsFileInfo(root, source, path, jestGlobals);
   const extractor = new Extractor(info, info.resolver);
   extractor.visit(root, { suite: file, test: null, ctx: null, boundary: null, certain: true, path: '', binding: CERTAIN });
   const tests: TestCase[] = [];

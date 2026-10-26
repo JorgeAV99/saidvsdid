@@ -52,7 +52,7 @@ export function runningTests(tests: TestCase[], language: LanguageId): Set<TestC
   return running;
 }
 
-function runningAtBase(ctx: CheckContext): Set<TestCase> {
+export function runningAtBase(ctx: CheckContext): Set<TestCase> {
   const running = new Set<TestCase>();
   for (const file of ctx.base.files.values()) {
     for (const t of runningTests(file.tests, file.language)) running.add(t);

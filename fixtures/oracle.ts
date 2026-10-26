@@ -99,3 +99,24 @@ export function runnerKeys(runner: string, file: string, id: TestId, statuses: r
   if ([...same].some((k) => parseKey(k)![2] !== 1)) return [];
   return [...same].filter((k) => parseKey(k)![2] === ordinal);
 }
+
+/**
+ * What a FAIL's identities lack, each on its own (a correct loss never hides a false one), or [] when every one has
+ * its evidence: the FAIL names at least one; each identity maps to at least one of the runner's results (a parametrised
+ * test to each of its cases), to none another identity maps to, and each of those results shows the effect.
+ */
+export function identityProblems(effect: FailEffect, runner: string, file: string, ids: readonly TestId[], base: Statuses, head: Statuses): string[] {
+  if (ids.length === 0) return ['the FAIL names no test'];
+  const keysOf = ids.map((id) => runnerKeys(runner, file, id, [base, head]));
+  const out: string[] = [];
+  ids.forEach((id, i) => {
+    const keys = keysOf[i]!;
+    if (keys.length === 0) return void out.push(`${JSON.stringify(id)} is no test the runner reports`);
+    if (keys.some((k) => keysOf.some((other, j) => j !== i && other.includes(k)))) return void out.push(`${JSON.stringify(id)} cannot be told apart from another identity`);
+    for (const k of keys) {
+      const missing = missingEvidence(effect, base, head, [k]);
+      if (missing) out.push(`${JSON.stringify(id)} (${k}): ${missing}`);
+    }
+  });
+  return out;
+}

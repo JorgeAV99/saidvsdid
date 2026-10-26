@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { listCases, type ExpectedFinding, type RunnerStatus } from '../fixtures/build.js';
-import { lostTests, missingEvidence, RAN, runnerKeys } from '../fixtures/oracle.js';
+import { identityProblems, lostTests, missingEvidence, RAN, runnerKeys } from '../fixtures/oracle.js';
 import { RULE_FAIL_EFFECT, type FailEffect } from '../src/rules/effects.js';
 import type { RuleId } from '../src/rules/types.js';
 
@@ -113,10 +113,12 @@ describe('runner evidence', () => {
     if (c.oracleControl) expect(missingEvidence(c.oracleControl, base, head), `${c.id} must not be evidence of ${c.oracleControl}`).not.toBeNull();
     // Each FAIL's effect (src/rules/effects.ts) asks for its own evidence, in the status of the tests it names alone:
     // tests no longer run, or a new expected failure the runner reports as one.
+    // Every identity the FAIL names, each on its own (fixtures/oracle.ts, identityProblems): a correct loss never hides
+    // a false one.
     for (const f of failures) {
-      const tests = concerned(f);
-      expect(tests.length, `${f.rule} ${f.file}:${f.line ?? ''} names no test the runner reports`).toBeGreaterThan(0);
-      expect(missingEvidence(effectOf(f), base, head, tests), `${f.rule} ${f.file}:${f.line ?? ''}`).toBeNull();
+      const at = `${f.rule} ${f.file}:${f.line ?? ''}`;
+      expect(identityProblems(effectOf(f), c.runner!, f.file, f.ids ?? [], base, head), at).toEqual([]);
+      expect(missingEvidence(effectOf(f), base, head, concerned(f)), at).toBeNull();
     }
     // A fixture that says the change moves the selection: the runner ran a different set of tests.
     if (c.selectionChanges) {

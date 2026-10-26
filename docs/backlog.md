@@ -37,6 +37,19 @@ literally). Deliberately not in it:
   string, always qualified: a bundle built between releases may differ from npm's package. A build identity in the
   bundle (the commit it was built from) would remove the qualification.
 
+## Jest's and Mocha's globals: what is left
+
+From the PR that certified Jest's globals inside a closed grammar (src/config/jest-globals.ts) and its four rounds of
+Codex design review:
+
+- **Mocha.** Its globals stay a WARN: certifying them needs Mocha's whole configuration (rc files in JS and YAML,
+  `package.json`, `MOCHA_OPTIONS`, aliases, `extends`, merged), its suite assembled across files (`--file`, focus),
+  `this.skip()` and root hooks in the baseline, the modes that change `it.skip` (`forbid-pending`, `dry-run`, `grep`),
+  and a recorder that keys tests by their title path, not Mocha's flattened full title.
+- **Jest beyond the grammar.** `projects`, `preset`, a JavaScript configuration, a test script with launchers or
+  positional arguments, `pretest`: each is a WARN today. Widening it needs data from real pull requests.
+- **Vitest's `globals: true`.** The same question for Vitest, whose configuration is JavaScript.
+
 ## Python versions: what is left
 
 From the PR that read the versions python.org supports (3.11–3.15, no upper bound) and its Codex design review:

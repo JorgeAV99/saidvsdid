@@ -18,12 +18,21 @@ export type MarkerCondition = 'unconditional' | 'environment' | 'conditional';
  * that nothing in the module rebinds, `self.<method>` inherited from unittest.TestCase (Python). Anything
  * else is `uncertain`, with the reason the rules quote in their WARN ("may …"): never a FAIL.
  */
-export type Binding = { certain: true } | { certain: false; why: string };
+export type Binding = { certain: true; via?: 'global' } | { certain: false; why: string };
 
 export const CERTAIN: Binding = { certain: true };
+/**
+ * Certain through Jest's globals, which a certified invocation and configuration inject (src/config/jest-globals.ts):
+ * TG002 and TG003 accept it; TG001's escalation does not (docs/rules.md, *Jest's globals*).
+ */
+export const GLOBAL: Binding = { certain: true, via: 'global' };
 export const uncertain = (why: string): Binding => ({ certain: false, why });
-/** The less certain of two bindings (the first reason wins). */
-export const weakest = (a: Binding, b: Binding): Binding => (a.certain ? b : a);
+/** The less certain of two bindings (the first reason wins); of two certain ones, a global provenance from either side. */
+export const weakest = (a: Binding, b: Binding): Binding => {
+  if (!a.certain) return a;
+  if (!b.certain) return b;
+  return a.via === 'global' || b.via === 'global' ? GLOBAL : a;
+};
 
 import type { MarkerEffect } from '../rules/effects.js';
 

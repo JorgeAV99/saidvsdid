@@ -2,9 +2,24 @@
   "description": "The silence guarantee (docs/rules.md), jest, a direct form on a global with no import: head declares test 'adds' with `xit`. At least a WARN on the use, never silence.",
   "kind": "positive",
   "runner": "jest",
-  "expect": { "verdict": "WARN", "findings": [
-    { "rule": "TG003", "severity": "warn", "file": "a.test.js", "line": 7, "test": "adds" }
-  ] },
+  "expect": {
+    "verdict": "FAIL",
+    "findings": [
+      {
+        "rule": "TG003",
+        "severity": "fail",
+        "file": "a.test.js",
+        "line": 7,
+        "test": "adds",
+        "ids": [
+          [
+            "adds",
+            1
+          ]
+        ]
+      }
+    ]
+  },
   "runnerEvidence": {
     "tool": "jest 30.5.2",
     "base": {
