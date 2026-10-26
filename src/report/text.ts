@@ -13,6 +13,8 @@ export function renderText(report: Report): string {
   lines.push(`saidvsdid ${report.tool.version} — base ${base} → head ${report.repo.head.slice(0, 12)}`);
   lines.push(`rules: ${report.rules.map((r) => (EXPERIMENTAL.has(r) ? `${r} (experimental)` : r)).join(', ')} · test files analysed: ${report.files.length}`);
   for (const n of report.not_evaluated) lines.push(`not evaluated: ${n.rule}${EXPERIMENTAL.has(n.rule) ? ' (experimental)' : ''} — ${n.reason}`);
+  const scopes = report.tool.scopes;
+  if (scopes?.python_unavailable) lines.push(`python: test files not read — ${scopes.python_unavailable}${scopes.python_remedy ? `; ${scopes.python_remedy}` : ''}`);
   lines.push('');
   for (const u of report.unverifiable) {
     lines.push(`UNVERIFIABLE  ${u.file} (${u.side})`);

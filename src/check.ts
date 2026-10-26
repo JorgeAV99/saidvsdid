@@ -460,7 +460,7 @@ function scopeTools(): NonNullable<Report['tool']['scopes']> {
   return {
     typescript: ts.version,
     python: py === null ? null : py.known ? py.version : null,
-    ...(py !== null && !py.known ? { python_unavailable: py.why } : {}),
+    ...(py !== null && !py.known ? { python_unavailable: py.why, ...(py.remedy ? { python_remedy: py.remedy } : {}) } : {}),
     // Read as any other version (docs/rules.md, *Python*): recorded, never a change of verdict.
     ...(py !== null && py.known && !py.tested ? { python_untested: `Python ${py.version} is newer than the versions saidvsdid's CI tests; it reads the files as any other version, and anything it fails on is a WARN` } : {}),
   };

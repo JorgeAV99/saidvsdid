@@ -3,7 +3,7 @@
 
 **Tests removed or replaced**
 
-- ⚠️ **WARN** [`tests/test_parse.py:20` (removed)](https://github.com/octo/demo/blob/63ed3f001139150661d162eebb53ff283fb818da/tests/test_parse.py#L20) — `Removes test "test_empty_input"` <sub>TG001</sub>
+- ⚠️ **WARN** [`tests/test_parse.py:20` (base)](https://github.com/octo/demo/blob/63ed3f001139150661d162eebb53ff283fb818da/tests/test_parse.py#L20) — `Removes test "test_empty_input"` <sub>TG001</sub>
 
 **Tests skipped, focused or marked to fail**
 

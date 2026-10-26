@@ -3,8 +3,8 @@
 
 **Tests removed or replaced**
 
-- ❌ **FAIL** [`src/dˋˋˋoˋˋˋˋc.test.ts` (removed)](https://github.com/octo/demo/blob/f0a1b39341c6a0d996b760d9e994dd70f29f191c/src/d%60%60%60o%60%60%60%60c.test.ts) — `Deletes the test file, which declared 1 test: "kept too"` <sub>TG001</sub>
-- ❌ **FAIL** [`src/l)[o]ˋk.test.ts` (removed)](https://github.com/octo/demo/blob/f0a1b39341c6a0d996b760d9e994dd70f29f191c/src/l%29[o]%60k.test.ts) — `Deletes the test file, which declared 1 test: "kept"` <sub>TG001</sub>
+- ❌ **FAIL** [`src/dˋˋˋoˋˋˋˋc.test.ts` (base)](https://github.com/octo/demo/blob/f0a1b39341c6a0d996b760d9e994dd70f29f191c/src/d%60%60%60o%60%60%60%60c.test.ts) — `Deletes the test file, which declared 1 test: "kept too"` <sub>TG001</sub>
+- ❌ **FAIL** [`src/l)[o]ˋk.test.ts` (base)](https://github.com/octo/demo/blob/f0a1b39341c6a0d996b760d9e994dd70f29f191c/src/l%29[o]%60k.test.ts) — `Deletes the test file, which declared 1 test: "kept"` <sub>TG001</sub>
 
 **Tests skipped, focused or marked to fail**
 

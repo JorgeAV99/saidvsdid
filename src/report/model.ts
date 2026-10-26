@@ -53,7 +53,8 @@ export interface Report {
     name: 'saidvsdid';
     version: string;
     /** What read the files' names (docs/rules.md, *Attribution*): the TypeScript compiler's version, and the Python interpreter's when one read Python files (null: none did). */
-    scopes?: { typescript: string; python: string | null; python_unavailable?: string; python_untested?: string };
+    /** `python_remedy`: how to give saidvsdid a Python it reads, when the interpreter is the problem (none, or too old). */
+    scopes?: { typescript: string; python: string | null; python_unavailable?: string; python_remedy?: string; python_untested?: string };
   };
   /**
    * The commits compared. `base_ref`: the base as given and the commit it resolved to, present when `base` is their merge

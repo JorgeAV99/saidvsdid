@@ -77,7 +77,8 @@ function destination(url: string): string {
 }
 
 function location(f: Finding, link: LineLink | null): string {
-  const label = `${literal(f.line === null ? f.file : `${f.file}:${f.line}`)}${f.side === 'base' ? ' (removed)' : ''}`;
+  // `(base)`, as the CLI prints it: the finding is about the base side (a removed test, or a side that was not read).
+  const label = `${literal(f.line === null ? f.file : `${f.file}:${f.line}`)}${f.side === 'base' ? ' (base)' : ''}`;
   const url = link ? link(f.side, f.file, f.line) : null;
   return url ? `[${label}](${destination(url)})` : label;
 }
@@ -103,6 +104,9 @@ export function renderComment(report: Report, options: CommentOptions): string {
     const lines: string[] = [COMMENT_MARKER, '### saidvsdid: what this pull request does to the tests', ''];
     let left = shown;
     let hidden = 0;
+    // Once, before the findings: Python test files were not read, why, and how to fix it (the runner's interpreter).
+    const scopes = report.tool.scopes;
+    if (scopes?.python_unavailable) lines.push(`⚠️ **Python test files were not read:** ${literal(scopes.python_unavailable)}${scopes.python_remedy ? ` — ${literal(scopes.python_remedy)}` : ''}`, '');
     if (groups.length === 0) lines.push(report.unverifiable.length > 0 ? 'No findings in the files that could be analysed.' : 'No findings in what saidvsdid reads.', '');
     for (const g of groups) {
       lines.push(`**${g.title}**`, '');

@@ -23,6 +23,10 @@ export function renderMarkdown(report: Report): string {
     for (const n of report.not_evaluated) lines.push(`- **Not evaluated:** ${n.rule}${EXPERIMENTAL.has(n.rule) ? ' (experimental)' : ''} — ${cell(n.reason)}`);
     lines.push('');
   }
+  const scopes = report.tool.scopes;
+  if (scopes?.python_unavailable) {
+    lines.push(`- **Python test files were not read:** ${cell(scopes.python_unavailable)}${scopes.python_remedy ? ` — ${cell(scopes.python_remedy)}` : ''}`, '');
+  }
   if (report.unverifiable.length > 0) {
     lines.push('**Unverifiable** — the verdict cannot be OK:');
     lines.push('');

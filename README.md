@@ -34,7 +34,7 @@ location links to its line):
 >
 > **Tests removed or replaced**
 >
-> - ⚠️ **WARN** `src/cart.test.ts:18` (removed) — `Removes test "total > rounds to cents"` <sub>TG001</sub>
+> - ⚠️ **WARN** `src/cart.test.ts:18` (base) — `Removes test "total > rounds to cents"` <sub>TG001</sub>
 >
 > **Tests skipped, focused or marked to fail**
 >

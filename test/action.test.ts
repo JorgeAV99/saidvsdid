@@ -53,7 +53,7 @@ describe('the PR comment', () => {
   it('every location links to its line, on the side it is about: a removed test at base, the rest at head', () => {
     const body = renderComment(reports.demo, { link: LINK(repos.demo), failOn: 'none' });
     const { base, head } = repos.demo;
-    expect(body).toContain(`[\`src/cart.test.ts:18\` (removed)](https://github.com/octo/demo/blob/${base}/src/cart.test.ts#L18)`);
+    expect(body).toContain(`[\`src/cart.test.ts:18\` (base)](https://github.com/octo/demo/blob/${base}/src/cart.test.ts#L18)`);
     expect(body).toContain(`[\`src/cart.test.ts:13\`](https://github.com/octo/demo/blob/${head}/src/cart.test.ts#L13)`);
     expect(body).toContain(`[\`vitest.config.ts:6\`](https://github.com/octo/demo/blob/${head}/vitest.config.ts#L6)`);
   });
@@ -156,7 +156,7 @@ describe("the PR comment is inert to the pull request's text", () => {
       }
       if (n.type === 'link') {
         expect(n.destination).toMatch(new RegExp(`^${blob}[^()\\s<>]+$`));
-        for (let c = n.firstChild; c; c = c.next) expect(c.type === 'code' || (c.type === 'text' && c.literal === ' (removed)'), `${c.type} ${c.literal}`).toBe(true);
+        for (let c = n.firstChild; c; c = c.next) expect(c.type === 'code' || (c.type === 'text' && c.literal === ' (base)'), `${c.type} ${c.literal}`).toBe(true);
       }
       if (n.type === 'text') expect(n.literal ?? '').not.toMatch(PAYLOAD);
     }
@@ -178,7 +178,7 @@ describe("the PR comment is inert to the pull request's text", () => {
       expect(link, path).toBeDefined();
       expect(link!.firstChild?.type).toBe('code');
       expect(link!.firstChild?.literal).toBe(sanitize(path));
-      expect(link!.firstChild?.next?.literal).toBe(' (removed)');
+      expect(link!.firstChild?.next?.literal).toBe(' (base)');
       expect(link!.firstChild?.next?.next).toBeNull();
     }
   });

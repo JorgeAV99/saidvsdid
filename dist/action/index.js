@@ -218879,7 +218879,26 @@ function git(repo, args3) {
 }
 function resolveCommit(repo, ref) {
   if (ref.startsWith("-")) throw new GitError(`invalid ref ${JSON.stringify(ref)}`);
-  return git(repo, ["rev-parse", "--verify", "--quiet", "--end-of-options", `${ref}^{commit}`]).trim();
+  try {
+    return git(repo, ["rev-parse", "--verify", "--quiet", "--end-of-options", `${ref}^{commit}`]).trim();
+  } catch {
+    throw new GitError(`${JSON.stringify(ref)} is not a commit in this clone (git fetch it?)`);
+  }
+}
+function selectBase(repo, baseRef, headRef, exact = false) {
+  const given = resolveCommit(repo, baseRef);
+  const head = resolveCommit(repo, headRef);
+  if (exact) return { base: given, head, baseRef: null };
+  let base;
+  try {
+    base = git(repo, ["merge-base", given, head]).trim();
+  } catch {
+    const shallow = git(repo, ["rev-parse", "--is-shallow-repository"]).trim() === "true";
+    throw new GitError(
+      shallow ? `the history between ${baseRef} and ${headRef} is not all in this shallow clone: fetch it whole (git fetch --unshallow, or fetch-depth: 0 on GitHub Actions)` : `${baseRef} and ${headRef} have no common ancestor (--exact-base compares the two commits as they are)`
+    );
+  }
+  return { base, head, baseRef: base === given ? null : { ref: baseRef, sha: given } };
 }
 function treeOf(repo, commit) {
   return git(repo, ["rev-parse", "--verify", "--quiet", "--end-of-options", `${commit}^{tree}`]).trim();
@@ -220703,6 +220722,15 @@ var MIN_LIMIT_MS = 6e4;
 var LIMIT_MS_PER_MB = 6e4;
 var RETRY_LIMIT_MS = 3e5;
 var STDERR_TAIL = 4096;
+var MINIMUM = [3, 11];
+function pythonRemedy(env2) {
+  const override = env2 ? `change SAIDVSDID_PYTHON (now ${JSON.stringify(env2)}) to one` : "put one first on PATH or set SAIDVSDID_PYTHON to it";
+  return `on GitHub Actions, add actions/setup-python with python-version ${MINIMUM.join(".")} or later before saidvsdid; elsewhere, ${override}`;
+}
+function olderThanMinimum(version) {
+  const [major, minor] = version.split(".").map(Number);
+  return major < MINIMUM[0] || major === MINIMUM[0] && minor < MINIMUM[1];
+}
 var runtime;
 var cache2 = /* @__PURE__ */ new Map();
 var CACHE_LIMIT2 = 4096;
@@ -220887,10 +220915,13 @@ function pythonRuntime() {
       tried.push(`${command}: ${reply.error}`);
       continue;
     }
-    runtime = reply.supported ? { known: true, command, version: reply.python, tested: reply.tested } : { known: false, why: reply.why ?? `Python ${reply.python} is not supported`, version: reply.python };
+    if (reply.supported) runtime = { known: true, command, version: reply.python, tested: reply.tested };
+    else if (olderThanMinimum(reply.python)) {
+      runtime = { known: false, why: `Python ${reply.python} (${command}) is older than ${MINIMUM.join(".")}, the oldest saidvsdid reads`, version: reply.python, remedy: pythonRemedy(env2) };
+    } else runtime = { known: false, why: reply.why ?? `Python ${reply.python} is not supported`, version: reply.python };
     return runtime;
   }
-  runtime = { known: false, why: `no Python interpreter runs the scope reader (${tried.join("; ")}); set SAIDVSDID_PYTHON`, version: null };
+  runtime = { known: false, why: `no Python interpreter runs the scope reader (${tried.join("; ")})`, version: null, remedy: pythonRemedy(env2) };
   return runtime;
 }
 function pythonRuntimeIfStarted() {
@@ -225555,8 +225586,7 @@ async function load(read, readBytes, reading, side, path2) {
 }
 async function runCheck2(options) {
   const repo = repoRoot(options.repo);
-  const base = resolveCommit(repo, options.base);
-  const head = resolveCommit(repo, options.head);
+  const { base, head, baseRef } = selectBase(repo, options.base, options.head, options.exactBase ?? false);
   const listings = /* @__PURE__ */ new Map();
   const stored = /* @__PURE__ */ new Map();
   const blobBytes = (side, path2) => {
@@ -225595,7 +225625,8 @@ async function runCheck2(options) {
     model: context.model,
     ...options.transcript ? { evidenceLabel: options.transcript.label } : options.evidenceLabel ? { evidenceLabel: options.evidenceLabel } : {},
     repoDir: repo,
-    f2p: options.f2p ?? null
+    f2p: options.f2p ?? null,
+    baseRef
   });
 }
 function bindEvidence(ev, base, head, headTree) {
@@ -225825,7 +225856,7 @@ async function analyze(input) {
   return {
     schema: REPORT_SCHEMA_ID,
     tool: { name: "saidvsdid", version: VERSION, scopes: scopeTools() },
-    repo: { base, head },
+    repo: { base, head, ...input.baseRef ? { base_ref: input.baseRef } : {} },
     mode,
     rules: selected.map((r) => r.id).filter((id) => !notEvaluated.some((n) => n.rule === id)),
     not_evaluated: notEvaluated,
@@ -225842,7 +225873,7 @@ function scopeTools() {
   return {
     typescript: import_typescript4.default.version,
     python: py === null ? null : py.known ? py.version : null,
-    ...py !== null && !py.known ? { python_unavailable: py.why } : {},
+    ...py !== null && !py.known ? { python_unavailable: py.why, ...py.remedy ? { python_remedy: py.remedy } : {} } : {},
     // Read as any other version (docs/rules.md, *Python*): recorded, never a change of verdict.
     ...py !== null && py.known && !py.tested ? { python_untested: `Python ${py.version} is newer than the versions saidvsdid's CI tests; it reads the files as any other version, and anything it fails on is a WARN` } : {}
   };
@@ -225885,7 +225916,7 @@ function destination(url) {
   return url.replace(/[^A-Za-z0-9\-._~:/?#[\]@!$&'*+,;=%]/gu, (c) => [...bytes.encode(c)].map((b) => `%${b.toString(16).toUpperCase().padStart(2, "0")}`).join(""));
 }
 function location(f, link) {
-  const label = `${literal2(f.line === null ? f.file : `${f.file}:${f.line}`)}${f.side === "base" ? " (removed)" : ""}`;
+  const label = `${literal2(f.line === null ? f.file : `${f.file}:${f.line}`)}${f.side === "base" ? " (base)" : ""}`;
   const url = link ? link(f.side, f.file, f.line) : null;
   return url ? `[${label}](${destination(url)})` : label;
 }
@@ -225906,6 +225937,8 @@ function renderComment(report, options) {
     const lines = [COMMENT_MARKER, "### saidvsdid: what this pull request does to the tests", ""];
     let left = shown;
     let hidden = 0;
+    const scopes = report.tool.scopes;
+    if (scopes?.python_unavailable) lines.push(`⚠️ **Python test files were not read:** ${literal2(scopes.python_unavailable)}${scopes.python_remedy ? ` — ${literal2(scopes.python_remedy)}` : ""}`, "");
     if (groups.length === 0) lines.push(report.unverifiable.length > 0 ? "No findings in the files that could be analysed." : "No findings in what saidvsdid reads.", "");
     for (const g of groups) {
       lines.push(`**${g.title}**`, "");
@@ -226045,14 +226078,13 @@ async function upsertComment(api, pr, body2) {
 }
 async function analyse(env2, pr, failOn, exclude) {
   const workspace = env2["GITHUB_WORKSPACE"] || process.cwd();
-  let base;
   try {
-    base = git(workspace, ["merge-base", pr.baseSha, pr.headSha]).trim();
+    selectBase(workspace, pr.baseSha, pr.headSha);
   } catch {
     return { verdict: "ERROR", body: renderErrorComment(`the base and head commits are not both in the clone (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
   }
   try {
-    const report = await runCheck2({ repo: workspace, base, head: pr.headSha, exclude });
+    const report = await runCheck2({ repo: workspace, base: pr.baseSha, head: pr.headSha, exclude });
     const server2 = (env2["GITHUB_SERVER_URL"] || "https://github.com").replace(/\/+$/, "");
     const repoUrl = `${server2}/${encodeURIComponent(pr.owner)}/${encodeURIComponent(pr.repo)}`;
     const link = (side, file, line7) => `${repoUrl}/blob/${side === "base" ? report.repo.base : report.repo.head}/${encodePath(file)}${line7 === null ? "" : `#L${line7}`}`;
