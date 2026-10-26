@@ -24,4 +24,4 @@
 
 **Verdict: FAIL** · 7 fail · 1 warn · 0 info — this check does not block the merge, whatever the verdict (`fail-on` not set).
 
-<sub>saidvsdid 0.2.0 · base `f0a1b39341c6` → head `e57e4420edf3` · FAIL: a fact about the code, checkable by reading it · WARN: for a human to look at · `npx saidvsdid explain <RULE>` says what each rule catches and what it does not · TG006, TG007 (experimental, the agent's claims): not evaluated, the Action reads no transcript</sub>
+<sub>saidvsdid 0.3.0 · base `f0a1b39341c6` → head `e57e4420edf3` · FAIL: a fact about the code, checkable by reading it · WARN: for a human to look at · `npx saidvsdid explain <RULE>` says what each rule catches and what it does not · TG006, TG007 (experimental, the agent's claims): not evaluated, the Action reads no transcript</sub>
