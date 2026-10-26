@@ -226494,7 +226494,7 @@ async function analyse(env2, fetchImpl, pr, failOn, exclude) {
       const rest = upload.ok ? { kind: "artifact", url: upload.url } : { kind: "reproduce", why: upload.why, pr: pr.number, baseSha: pr.baseSha, mergeBase: report.repo.base, head: report.repo.head, exclude, version: VERSION };
       body2 = renderComment(report, { ...options, rest });
     }
-    const summary = new TextEncoder().encode(full).length <= SUMMARY_LIMIT ? full : body2;
+    const summary = commentFits(report, options) || new TextEncoder().encode(full).length > SUMMARY_LIMIT ? body2 : full;
     return { verdict: report.verdict, body: body2, detail: c ? coverageCounts(c) : "", qualified, summary };
   } catch (e) {
     if (e instanceof MissingHistoryError) {

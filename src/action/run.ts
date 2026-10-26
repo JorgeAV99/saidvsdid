@@ -186,7 +186,7 @@ interface Analysis {
   detail: string;
   /** An OK that does not cover everything the pull request changes (src/coverage.ts): a warning, not a notice. */
   qualified: boolean;
-  /** The job summary: the full report when it fits GitHub's limit for a step summary, else the comment's body. */
+  /** The job summary: the comment when it holds everything; else the full report when it fits GitHub's limit for a step summary; else the comment. */
   summary: string;
 }
 
@@ -228,7 +228,8 @@ async function analyse(env: Env, fetchImpl: typeof fetch, pr: PullRequest, failO
         : { kind: 'reproduce', why: upload.why, pr: pr.number, baseSha: pr.baseSha, mergeBase: report.repo.base, head: report.repo.head, exclude, version: VERSION };
       body = renderComment(report, { ...options, rest });
     }
-    const summary = new TextEncoder().encode(full).length <= SUMMARY_LIMIT ? full : body;
+    // The summary is the comment when it holds everything; else the full report, when GitHub's limit allows it.
+    const summary = commentFits(report, options) || new TextEncoder().encode(full).length > SUMMARY_LIMIT ? body : full;
     return { verdict: report.verdict, body, detail: c ? coverageCounts(c) : '', qualified, summary };
   } catch (e) {
     // A commit missing or the history cut: the checkout; any other reason (two histories with no common ancestor) as it is.
