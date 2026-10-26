@@ -409,6 +409,7 @@ describe('the bundle (dist/action/index.js), alone', () => {
       encoding: 'utf8',
       env: {
         ...process.env,
+        GITHUB_EVENT_NAME: 'pull_request',
         GITHUB_EVENT_PATH: join(dir, 'event.json'),
         GITHUB_REPOSITORY: 'octo/demo',
         GITHUB_WORKSPACE: r.repo,

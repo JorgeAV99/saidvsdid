@@ -153,6 +153,7 @@ async function commentOf(dir, c, api) {
   const env = Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith('GITHUB_') && !k.startsWith('INPUT_')));
   const result = await runBundle(repo, {
     ...env,
+    GITHUB_EVENT_NAME: 'pull_request',
     GITHUB_EVENT_PATH: join(dir, 'event.json'),
     GITHUB_REPOSITORY: REPOSITORY,
     GITHUB_WORKSPACE: repo,
