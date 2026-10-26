@@ -74,10 +74,10 @@ const OTHER_NAMES = [
   'x]y',
   'tab\there',
   LONG,
-];
+].map((n, i) => (n === LONG ? n : `o${i + 1} ${n}`)); // each its own tag (`o3 `): a payload is found by its identity, not inside another
 const FOLDED = [CODEX, LONG, ...RUN_NAMES.slice(77, 82), 'last'];
 const pathOf = (n) => `src/p${n}-${run(n)}<img src=x>@octocat #12${run(n)}.test.ts`;
-const OTHER_PATHS = ['src/a|b|c.test.ts', 'src/x)y.test.ts', 'src/x]y.test.ts', 'src/@octocat/#12.test.ts', 'src/javascript:alert(1).test.ts', 'src/![i](https:/evil.example/p.png).test.ts', `src/${run(80)}<details>${run(80)}.test.ts`];
+const OTHER_PATHS = ['src/a|b|c.test.ts', 'src/x)y.test.ts', 'src/x]y.test.ts', 'src/@octocat/#12.test.ts', 'src/javascript:alert(1).test.ts', 'src/![i](https:/evil.example/p.png).test.ts', `src/${run(80)}<details>${run(80)}.test.ts`].map((p, i) => p.replace('src/', `src/q${i + 1}-`));
 const COVERAGE_PATHS = Array.from({ length: 8 }, (_, i) => `pkg/c${i + 1}-${run(i * 11 + 1)}<img src=x>@octocat #12[l](https:evil.example)${run(i * 11 + 1)}_test.go`);
 const MANY = Array.from({ length: 700 }, (_, i) => `m${i + 1} <img src=x> @octocat #12 ${run((i % 100) + 1)} [l](https://evil.example/${i + 1}) ${'x'.repeat(40)}`);
 
@@ -223,15 +223,15 @@ function codeTexts(html) {
 }
 
 /**
- * Whether a payload is rendered inside code: its first 100 code points as the comment writes them — sanitised in a code
+ * Whether a payload is rendered inside code: its first 100 code points (`whole`: all of it, for the full report, which shortens nothing) as the comment writes them — sanitised in a code
  * span (backticks as ˋ), as they are inside a folded list's <code> (an HTML block: backticks stay), and either way with
  * its quotes escaped (`\"`) when a message quotes it as a test's name.
  */
-function inCode(html, payload) {
+function inCode(html, payload, whole = false) {
   const spaced = payload.replace(/[\r\n\t]/g, ' ');
   // A quoted name is written as a JSON string's body (`\"`, `\t`, `\\`).
   const quoted = JSON.stringify(payload).slice(1, -1);
-  const forms = [spaced, quoted].flatMap((s) => [s, s.replace(/`/g, 'ˋ')]).map((s) => [...s].slice(0, 100).join(''));
+  const forms = [spaced, quoted].flatMap((s) => [s, s.replace(/`/g, 'ˋ')]).map((s) => (whole ? s : [...s].slice(0, 100).join('')));
   const texts = codeTexts(html);
   return forms.some((f) => texts.some((t) => t.includes(f)));
 }
@@ -275,7 +275,7 @@ try {
       const full = render(dir, summary);
       writeFileSync(join(dir, 'summary.html'), full);
       bad.push(...offences(full, c.details).map((o) => `summary: ${o}`));
-      const missing = c.payloads.filter((p) => !inCode(full, p));
+      const missing = c.payloads.filter((p) => !inCode(full, p, true));
       if (missing.length > 0) bad.push(`summary: ${missing.length} payloads not rendered in code, the first ${JSON.stringify(missing[0].slice(0, 40))}`);
       if (/not shown here/.test(summary)) bad.push('summary: findings left out of the full report');
     }

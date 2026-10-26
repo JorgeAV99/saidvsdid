@@ -178,7 +178,8 @@ function compose(report: Report, options: CommentOptions, mode: Mode, shown: num
   let cut = false;
   // Once, before the findings: Python test files were not read, why, and how to fix it (the runner's interpreter).
   const scopes = report.tool.scopes;
-  if (scopes?.python_unavailable) lines.push(`⚠️ **Python test files were not read:** ${literal(scopes.python_unavailable)}${scopes.python_remedy ? ` — ${literal(scopes.python_remedy)}` : ''}`, '');
+  // Never shortened: the remedy is ours and must be read whole (the interpreter's path can be long); still escaped.
+  if (scopes?.python_unavailable) lines.push(`⚠️ **Python test files were not read:** ${literal(scopes.python_unavailable, true)}${scopes.python_remedy ? ` — ${literal(scopes.python_remedy, true)}` : ''}`, '');
   // What was read of the changed test files (src/coverage.ts), before any finding: an OK never covers what is listed.
   if (report.coverage) {
     const c = report.coverage;
@@ -230,17 +231,17 @@ function compose(report: Report, options: CommentOptions, mode: Mode, shown: num
   const hidden = total - Math.min(shown, total);
   if (hidden > 0) lines.push(`**${hidden} of ${total} findings are not shown here** (GitHub's size limit for a comment).`, '');
   cut ||= hidden > 0;
-  if (cut && mode === 'bounded' && options.rest) {
-    const rest = options.rest.kind === 'artifact' ? [`The full report, every finding (Markdown and JSON), is this job's artifact: [saidvsdid report](${options.rest.url}).`] : reproduction(options.rest);
-    lines.push(...fill(rest, BUDGETS.rest, () => 'The rest of the report could not be described here.').lines, '');
-  }
-
   if (report.unverifiable.length > 0) {
     lines.push('**Could not be analysed** — the verdict cannot be OK:', '');
     const rows = report.unverifiable.map((u) => `- ${literal(u.file, full)} (${u.side}): ${literal(u.reason, full)}`);
     const listed = mode === 'bounded' ? fill(rows, BUDGETS.unverifiable, (n) => `- and ${n} more`) : { lines: rows, cut: false };
     cut ||= listed.cut;
     lines.push(...listed.lines, '');
+  }
+  // Where the rest is, once every section has said whether it left something out.
+  if (cut && mode === 'bounded' && options.rest) {
+    const rest = options.rest.kind === 'artifact' ? [`The full report, every finding (Markdown and JSON), is this job's artifact: [saidvsdid report](${options.rest.url}).`] : reproduction(options.rest);
+    lines.push(...fill(rest, BUDGETS.rest, () => 'The rest of the report could not be described here.').lines, '');
   }
   // One line per reason: TG006 and TG007 without a transcript read as one; that one, which the Action always has, in the footer.
   const reasons = new Map<string, RuleId[]>();

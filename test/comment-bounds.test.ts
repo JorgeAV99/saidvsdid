@@ -148,3 +148,23 @@ describe('the full report', () => {
     expect(full).not.toContain('…');
   });
 });
+
+describe('Codex, round 1 of the code review', () => {
+  it('a comment where only the list of files that could not be analysed is capped still says where the rest is', () => {
+    const findings: Finding[] = Array.from({ length: 261 }, (_, i) => ({ rule: 'TG003', severity: 'fail', file: `src/f${i}.test.js`, side: 'head', line: 1, test: null, message: `Adds \`it.skip\` (skip, unconditional) to test "case ${i} ${'x'.repeat(120)}"` }));
+    const unverifiable = Array.from({ length: 50 }, (_, i) => ({ file: `src/broken_${i}_${'y'.repeat(150)}.test.js`, side: 'head' as const, reason: 'syntax errors; test extraction may be incomplete' }));
+    const r = report(findings, { unverifiable, verdict: 'UNVERIFIABLE', exit_code: 3 });
+    const body = renderComment(r, { link: null, failOn: 'none', rest: ARTIFACT });
+    expect(body.length).toBeLessThanOrEqual(65_000);
+    expect(body).toMatch(/- and \d+ more\n/);
+    expect(body).toContain("is this job's artifact: [saidvsdid report](https://github.com/octo/demo/actions/runs/42/artifacts/9001).");
+  });
+
+  it("the Python notice is never shortened, in the comment or in the full report: the remedy is read whole", () => {
+    const path = `/opt/${'very-long-directory-name/'.repeat(8)}bin/python3`;
+    const remedy = `on GitHub Actions, add actions/setup-python with python-version 3.11 or later before saidvsdid; elsewhere, change SAIDVSDID_PYTHON (now ${JSON.stringify(path)}) to one`;
+    expect(remedy.length).toBeGreaterThan(200);
+    const r = report([], { tool: { name: 'saidvsdid', version: '0.3.0', scopes: { typescript: '5.9.3', python: null, python_unavailable: `Python 3.10.12 (${path}) is older than 3.11, the oldest saidvsdid reads`, python_remedy: remedy } } });
+    for (const full of [false, true]) expect(renderComment(r, { link: null, failOn: 'none', full })).toContain(`\`${remedy}\``);
+  });
+});
