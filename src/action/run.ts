@@ -6,7 +6,9 @@
 import { appendFileSync, readFileSync } from 'node:fs';
 import { runCheck } from '../check.js';
 import { MissingHistoryError } from '../git/diff.js';
-import { COMMENT_MARKER, gateText, literal, renderComment, type FailOn, type LineLink } from '../report/comment.js';
+import { COMMENT_MARKER, commentFits, gateText, literal, renderComment, type CommentOptions, type FailOn, type LineLink, type RestOfReport } from '../report/comment.js';
+import { renderJson } from '../report/json.js';
+import { uploadArtifact } from './artifact.js';
 import { EXIT_CODES, type Verdict } from '../report/model.js';
 import { coverageCounts, incomplete } from '../coverage.js';
 import { ownRecord } from '../util/names.js';
@@ -184,13 +186,19 @@ interface Analysis {
   detail: string;
   /** An OK that does not cover everything the pull request changes (src/coverage.ts): a warning, not a notice. */
   qualified: boolean;
+  /** The job summary: the full report when it fits GitHub's limit for a step summary, else the comment's body. */
+  summary: string;
 }
+
+/** GitHub's limit for one step's summary is 1 MiB; the full report goes there when its UTF-8 bytes are at most this. */
+const SUMMARY_LIMIT = 1_000_000;
 
 function failure(reason: string, failOn: FailOn): Analysis {
-  return { verdict: 'ERROR', body: renderErrorComment(reason, failOn), detail: reason, qualified: false };
+  const body = renderErrorComment(reason, failOn);
+  return { verdict: 'ERROR', body, detail: reason, qualified: false, summary: body };
 }
 
-async function analyse(env: Env, pr: PullRequest, failOn: FailOn, exclude: string[]): Promise<Analysis> {
+async function analyse(env: Env, fetchImpl: typeof fetch, pr: PullRequest, failOn: FailOn, exclude: string[]): Promise<Analysis> {
   const workspace = env['GITHUB_WORKSPACE'] || process.cwd();
   try {
     // The pull request's own changes: from where it left its base branch, as GitHub's "Files changed" shows them — the
@@ -201,7 +209,27 @@ async function analyse(env: Env, pr: PullRequest, failOn: FailOn, exclude: strin
     const link: LineLink = (side, file, line) => `${repoUrl}/blob/${side === 'base' ? report.repo.base : report.repo.head}/${encodePath(file)}${line === null ? '' : `#L${line}`}`;
     const c = report.coverage;
     const qualified = report.verdict === 'OK' && c !== undefined && (incomplete(c) || c.analysed === 0);
-    return { verdict: report.verdict, body: renderComment(report, { link, failOn }), detail: c ? coverageCounts(c) : '', qualified };
+    const options: CommentOptions = { link, failOn };
+    const full = renderComment(report, { ...options, full: true });
+    let body = renderComment(report, options);
+    if (!commentFits(report, options)) {
+      // The comment cannot hold everything: the full report, Markdown and JSON from this same report, as the job's
+      // artifact; when it cannot be attached, what reproduces it. Neither changes the verdict or the gate.
+      const encode = (s: string): Uint8Array => new TextEncoder().encode(s);
+      const upload = await uploadArtifact(
+        [
+          { name: 'saidvsdid-report.md', bytes: encode(full.slice(COMMENT_MARKER.length + 1)) },
+          { name: 'saidvsdid-report.json', bytes: encode(renderJson(report)) },
+        ],
+        { env, fetch: fetchImpl },
+      );
+      const rest: RestOfReport = upload.ok
+        ? { kind: 'artifact', url: upload.url }
+        : { kind: 'reproduce', why: upload.why, pr: pr.number, baseSha: pr.baseSha, mergeBase: report.repo.base, head: report.repo.head, exclude, version: VERSION };
+      body = renderComment(report, { ...options, rest });
+    }
+    const summary = new TextEncoder().encode(full).length <= SUMMARY_LIMIT ? full : body;
+    return { verdict: report.verdict, body, detail: c ? coverageCounts(c) : '', qualified, summary };
   } catch (e) {
     // A commit missing or the history cut: the checkout; any other reason (two histories with no common ancestor) as it is.
     if (e instanceof MissingHistoryError) {
@@ -255,10 +283,10 @@ export async function runAction(deps: ActionDeps): Promise<ActionResult> {
     event = null;
   }
   const pr = eventName ? pullRequestOf(event, env['GITHUB_REPOSITORY']) : 'no GITHUB_EVENT_NAME: saidvsdid runs as a step of a GitHub Actions workflow';
-  const { verdict, body, detail, qualified } = typeof pr === 'string' ? failure(pr, failOn) : await analyse(env, pr, failOn, exclude);
+  const { verdict, body, detail, qualified, summary: summaryText } = typeof pr === 'string' ? failure(pr, failOn) : await analyse(env, deps.fetch, pr, failOn, exclude);
 
   const summary = env['GITHUB_STEP_SUMMARY'];
-  if (summary) appendFileSync(summary, body.slice(COMMENT_MARKER.length + 1));
+  if (summary) appendFileSync(summary, summaryText.slice(COMMENT_MARKER.length + 1));
 
   let commentUrl: string | null = null;
   if (comment && typeof pr !== 'string') {

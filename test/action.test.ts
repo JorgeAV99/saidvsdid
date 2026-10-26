@@ -119,7 +119,7 @@ describe('the PR comment', () => {
   it('a body past the size limit counts the findings it leaves out, and keeps the verdict', () => {
     const body = renderComment(reports.demo, { link: null, failOn: 'none', maxLength: 1200 });
     expect(body.length).toBeLessThanOrEqual(1200);
-    expect(body).toMatch(/_\d more findings? not shown/);
+    expect(body).toMatch(/\*\*\d+ of 4 findings are not shown here\*\*/);
     expect(body).toContain('**Verdict: FAIL**');
   });
 });

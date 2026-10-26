@@ -25,7 +25,7 @@ export interface NotEvaluated {
 }
 
 /** How a verdict reads: OK says what it means and what it does not. */
-export function verdictLabel(report: Pick<Report, 'verdict' | 'mode' | 'not_evaluated' | 'coverage'>): string {
+export function verdictLabel(report: Pick<Report, 'verdict' | 'mode' | 'not_evaluated' | 'coverage'>, options: { claims?: boolean } = {}): string {
   if (report.verdict !== 'OK') return report.verdict;
   // What the OK covers (src/coverage.ts): never "no issues found" when a changed test file was read in part or not at all,
   // or when none was detected.
@@ -37,7 +37,8 @@ export function verdictLabel(report: Pick<Report, 'verdict' | 'mode' | 'not_eval
     const n = c.partly_analysed + c.not_analysed;
     return `OK — no findings in what it read; ${n} test file${n === 1 ? '' : 's'} partly analysed or not analysed (${coverageCounts(c)})`;
   }
-  const notEvaluated = report.not_evaluated.map((n) => n.rule);
+  // `claims: false`: the caller says, elsewhere, which rules were not evaluated (the Action's comment, in its footer).
+  const notEvaluated = options.claims === false ? [] : report.not_evaluated.map((n) => n.rule);
   if (notEvaluated.length) return `OK — no issues found (${notEvaluated.join(', ')} not evaluated)`;
   return report.mode === 'diff' ? 'OK — no issues found' : 'OK — no issues found (claims not verified)';
 }
