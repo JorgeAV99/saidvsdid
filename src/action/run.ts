@@ -5,7 +5,7 @@
 // test/action.test.ts runs it on fixture repositories with a fake GitHub API.
 import { appendFileSync, readFileSync } from 'node:fs';
 import { runCheck } from '../check.js';
-import { selectBase } from '../git/diff.js';
+import { MissingHistoryError } from '../git/diff.js';
 import { COMMENT_MARKER, gateText, literal, renderComment, type FailOn, type LineLink } from '../report/comment.js';
 import { EXIT_CODES, type Verdict } from '../report/model.js';
 import { ownRecord } from '../util/names.js';
@@ -179,19 +179,18 @@ export async function upsertComment(api: Api, pr: PullRequest, body: string): Pr
 async function analyse(env: Env, pr: PullRequest, failOn: FailOn, exclude: string[]): Promise<{ verdict: Verdict; body: string }> {
   const workspace = env['GITHUB_WORKSPACE'] || process.cwd();
   try {
-    // The pull request's own changes: from where it left its base branch, as GitHub's "Files changed" shows them. The
-    // same selection as the CLI's `check --base` (src/git/diff.ts), so that both compare the same commits.
-    selectBase(workspace, pr.baseSha, pr.headSha);
-  } catch {
-    return { verdict: 'ERROR', body: renderErrorComment(`the base and head commits are not both in the clone (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
-  }
-  try {
-    const report = await runCheck({ repo: workspace, base: pr.baseSha, head: pr.headSha, exclude });
+    // The pull request's own changes: from where it left its base branch, as GitHub's "Files changed" shows them — the
+    // same selection as the CLI's `check --base` (src/git/diff.ts, selectBase), inside runCheck.
+    const report = await runCheck({ repo: workspace, base: pr.baseSha, head: pr.headSha, baseLabel: 'pull_request.base.sha', exclude });
     const server = (env['GITHUB_SERVER_URL'] || 'https://github.com').replace(/\/+$/, '');
     const repoUrl = `${server}/${encodeURIComponent(pr.owner)}/${encodeURIComponent(pr.repo)}`;
     const link: LineLink = (side, file, line) => `${repoUrl}/blob/${side === 'base' ? report.repo.base : report.repo.head}/${encodePath(file)}${line === null ? '' : `#L${line}`}`;
     return { verdict: report.verdict, body: renderComment(report, { link, failOn }) };
   } catch (e) {
+    // A commit missing or the history cut: the checkout; any other reason (two histories with no common ancestor) as it is.
+    if (e instanceof MissingHistoryError) {
+      return { verdict: 'ERROR', body: renderErrorComment(`the base and head commits are not both in the clone, with the history between them (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
+    }
     return { verdict: 'ERROR', body: renderErrorComment(e instanceof Error ? e.message : String(e), failOn) };
   }
 }

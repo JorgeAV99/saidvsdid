@@ -25,6 +25,8 @@ export interface CheckOptions {
   head: string;
   /** --exact-base: compare the base commit itself, not its merge base with the head (src/git/diff.ts, selectBase). */
   exactBase?: boolean;
+  /** How the report names the base when it records it (Report.repo.base_ref): the Action's `pull_request.base.sha`. Absent: `base` as given. */
+  baseLabel?: string;
   /** Restrict to these rules; defaults to every implemented rule. */
   rules?: RuleId[];
   /** Paths to ignore entirely (gitignore-style globs). */
@@ -81,7 +83,9 @@ async function load(read: SourceReader, readBytes: BytesReader, reading: PyReadi
 export async function runCheck(options: CheckOptions): Promise<Report> {
   const repo = repoRoot(options.repo);
   // The merge base, as a pull request's "Files changed" (and the Action) compares: every use below reads this one commit.
-  const { base, head, baseRef } = selectBase(repo, options.base, options.head, options.exactBase ?? false);
+  const selected = selectBase(repo, options.base, options.head, options.exactBase ?? false);
+  const { base, head } = selected;
+  const baseRef = selected.baseRef && options.baseLabel ? { ...selected.baseRef, ref: options.baseLabel } : selected.baseRef;
   const listings = new Map<'base' | 'head', string[]>();
   // Each blob is read once, as bytes: Python decodes its own (PEP 263), the rest reads UTF-8.
   const stored = new Map<string, Buffer | null>();

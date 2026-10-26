@@ -4,6 +4,11 @@ export class GitError extends Error {
   override name = 'GitError';
 }
 
+/** A commit the check needs is not in the clone, or the history between base and head is cut (a shallow clone). */
+export class MissingHistoryError extends GitError {
+  override name = 'MissingHistoryError';
+}
+
 export type ChangeStatus = 'A' | 'M' | 'D' | 'R' | 'C' | 'T';
 
 export interface FileChange {
@@ -38,7 +43,7 @@ export function resolveCommit(repo: string, ref: string): string {
   try {
     return git(repo, ['rev-parse', '--verify', '--quiet', '--end-of-options', `${ref}^{commit}`]).trim();
   } catch {
-    throw new GitError(`${JSON.stringify(ref)} is not a commit in this clone (git fetch it?)`);
+    throw new MissingHistoryError(`${JSON.stringify(ref)} is not a commit in this clone (git fetch it?)`);
   }
 }
 
@@ -64,11 +69,8 @@ export function selectBase(repo: string, baseRef: string, headRef: string, exact
     base = git(repo, ['merge-base', given, head]).trim();
   } catch {
     const shallow = git(repo, ['rev-parse', '--is-shallow-repository']).trim() === 'true';
-    throw new GitError(
-      shallow
-        ? `the history between ${baseRef} and ${headRef} is not all in this shallow clone: fetch it whole (git fetch --unshallow, or fetch-depth: 0 on GitHub Actions)`
-        : `${baseRef} and ${headRef} have no common ancestor (--exact-base compares the two commits as they are)`,
-    );
+    if (shallow) throw new MissingHistoryError(`the history between ${baseRef} and ${headRef} is not all in this shallow clone: fetch it whole (git fetch --unshallow, or fetch-depth: 0 on GitHub Actions)`);
+    throw new GitError(`${baseRef} and ${headRef} have no common ancestor (--exact-base compares the two commits as they are)`);
   }
   return { base, head, baseRef: base === given ? null : { ref: baseRef, sha: given } };
 }

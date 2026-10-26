@@ -90,3 +90,44 @@ describe('check --base: the merge base, as a pull request', () => {
     expect(report.repo.base_ref).toBeUndefined();
   });
 });
+
+describe('the Action compares what check --base compares', () => {
+  it('records the base by its source, pull_request.base.sha, when it compares the merge base', async () => {
+    const { runCheck } = await import('../src/check.js');
+    const report = await runCheck({ repo, base: commits.mainTip, head: commits.feature, baseLabel: 'pull_request.base.sha' });
+    expect(report.verdict).toBe('OK');
+    expect(report.repo).toEqual({ base: commits.forkPoint, head: commits.feature, base_ref: { ref: 'pull_request.base.sha', sha: commits.mainTip } });
+  });
+
+  it('two histories with no common ancestor are an ERROR that says so, not a fetch-depth problem', async () => {
+    const { runAction } = await import('../src/action/run.js');
+    git(repo, ['checkout', '-q', '--orphan', 'unrelated']);
+    write('other.txt', 'x\n');
+    const orphan = commit('a root of its own', '2026-01-04T00:00:00Z');
+    git(repo, ['checkout', '-q', 'feature']);
+    const dir = mkdtempSync(join(workdir, 'event-'));
+    writeFileSync(join(dir, 'event.json'), JSON.stringify({ pull_request: { number: 1, base: { sha: orphan }, head: { sha: commits.feature } } }));
+    writeFileSync(join(dir, 'summary.md'), '');
+    const result = await runAction({
+      env: { GITHUB_EVENT_NAME: 'pull_request', GITHUB_EVENT_PATH: join(dir, 'event.json'), GITHUB_REPOSITORY: 'octo/demo', GITHUB_WORKSPACE: repo, GITHUB_STEP_SUMMARY: join(dir, 'summary.md'), INPUT_COMMENT: 'false' },
+      fetch: (() => Promise.reject(new Error('no API call expected'))) as typeof fetch,
+      log: () => {},
+    });
+    expect(result.verdict).toBe('ERROR');
+    expect(result.body).toContain('have no common ancestor');
+    expect(result.body).not.toContain('fetch-depth');
+  });
+
+  it('a commit missing from the clone is the fetch-depth ERROR', async () => {
+    const { runAction } = await import('../src/action/run.js');
+    const dir = mkdtempSync(join(workdir, 'event-'));
+    writeFileSync(join(dir, 'event.json'), JSON.stringify({ pull_request: { number: 1, base: { sha: 'a'.repeat(40) }, head: { sha: commits.feature } } }));
+    const result = await runAction({
+      env: { GITHUB_EVENT_NAME: 'pull_request', GITHUB_EVENT_PATH: join(dir, 'event.json'), GITHUB_REPOSITORY: 'octo/demo', GITHUB_WORKSPACE: repo, INPUT_COMMENT: 'false' },
+      fetch: (() => Promise.reject(new Error('no API call expected'))) as typeof fetch,
+      log: () => {},
+    });
+    expect(result.verdict).toBe('ERROR');
+    expect(result.body).toContain('check out with ˋfetch-depth: 0ˋ');
+  });
+});

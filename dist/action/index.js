@@ -218860,6 +218860,9 @@ import { execFileSync } from "node:child_process";
 var GitError = class extends Error {
   name = "GitError";
 };
+var MissingHistoryError = class extends GitError {
+  name = "MissingHistoryError";
+};
 var MAX_BUFFER = 512 * 1024 * 1024;
 function git(repo, args3) {
   try {
@@ -218882,7 +218885,7 @@ function resolveCommit(repo, ref) {
   try {
     return git(repo, ["rev-parse", "--verify", "--quiet", "--end-of-options", `${ref}^{commit}`]).trim();
   } catch {
-    throw new GitError(`${JSON.stringify(ref)} is not a commit in this clone (git fetch it?)`);
+    throw new MissingHistoryError(`${JSON.stringify(ref)} is not a commit in this clone (git fetch it?)`);
   }
 }
 function selectBase(repo, baseRef, headRef, exact = false) {
@@ -218894,9 +218897,8 @@ function selectBase(repo, baseRef, headRef, exact = false) {
     base = git(repo, ["merge-base", given, head]).trim();
   } catch {
     const shallow = git(repo, ["rev-parse", "--is-shallow-repository"]).trim() === "true";
-    throw new GitError(
-      shallow ? `the history between ${baseRef} and ${headRef} is not all in this shallow clone: fetch it whole (git fetch --unshallow, or fetch-depth: 0 on GitHub Actions)` : `${baseRef} and ${headRef} have no common ancestor (--exact-base compares the two commits as they are)`
-    );
+    if (shallow) throw new MissingHistoryError(`the history between ${baseRef} and ${headRef} is not all in this shallow clone: fetch it whole (git fetch --unshallow, or fetch-depth: 0 on GitHub Actions)`);
+    throw new GitError(`${baseRef} and ${headRef} have no common ancestor (--exact-base compares the two commits as they are)`);
   }
   return { base, head, baseRef: base === given ? null : { ref: baseRef, sha: given } };
 }
@@ -225590,7 +225592,9 @@ async function load(read, readBytes, reading, side, path2) {
 }
 async function runCheck2(options) {
   const repo = repoRoot(options.repo);
-  const { base, head, baseRef } = selectBase(repo, options.base, options.head, options.exactBase ?? false);
+  const selected = selectBase(repo, options.base, options.head, options.exactBase ?? false);
+  const { base, head } = selected;
+  const baseRef = selected.baseRef && options.baseLabel ? { ...selected.baseRef, ref: options.baseLabel } : selected.baseRef;
   const listings = /* @__PURE__ */ new Map();
   const stored = /* @__PURE__ */ new Map();
   const blobBytes = (side, path2) => {
@@ -226084,17 +226088,15 @@ async function upsertComment(api, pr, body2) {
 async function analyse(env2, pr, failOn, exclude) {
   const workspace = env2["GITHUB_WORKSPACE"] || process.cwd();
   try {
-    selectBase(workspace, pr.baseSha, pr.headSha);
-  } catch {
-    return { verdict: "ERROR", body: renderErrorComment(`the base and head commits are not both in the clone (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
-  }
-  try {
-    const report = await runCheck2({ repo: workspace, base: pr.baseSha, head: pr.headSha, exclude });
+    const report = await runCheck2({ repo: workspace, base: pr.baseSha, head: pr.headSha, baseLabel: "pull_request.base.sha", exclude });
     const server2 = (env2["GITHUB_SERVER_URL"] || "https://github.com").replace(/\/+$/, "");
     const repoUrl = `${server2}/${encodeURIComponent(pr.owner)}/${encodeURIComponent(pr.repo)}`;
     const link = (side, file, line7) => `${repoUrl}/blob/${side === "base" ? report.repo.base : report.repo.head}/${encodePath(file)}${line7 === null ? "" : `#L${line7}`}`;
     return { verdict: report.verdict, body: renderComment(report, { link, failOn }) };
   } catch (e) {
+    if (e instanceof MissingHistoryError) {
+      return { verdict: "ERROR", body: renderErrorComment(`the base and head commits are not both in the clone, with the history between them (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
+    }
     return { verdict: "ERROR", body: renderErrorComment(e instanceof Error ? e.message : String(e), failOn) };
   }
 }
