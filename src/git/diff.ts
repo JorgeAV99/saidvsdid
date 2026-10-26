@@ -81,7 +81,11 @@ export function treeOf(repo: string, commit: string): string {
 }
 
 export function repoRoot(repo: string): string {
-  return git(repo, ['rev-parse', '--show-toplevel']).trim();
+  try {
+    return git(repo, ['rev-parse', '--show-toplevel']).trim();
+  } catch {
+    throw new GitError(`${repo} is not inside a git repository: run saidvsdid in a clone, or pass --repo <dir>`);
+  }
 }
 
 /** Files changed between two commits, with rename detection. */

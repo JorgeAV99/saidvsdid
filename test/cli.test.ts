@@ -71,6 +71,7 @@ describe('cli', () => {
   it.each([
     [['check'], /--base <ref> is required/],
     [['check', '--base', 'does-not-exist'], /"does-not-exist" is not a commit in this clone \(git fetch it\?\)/],
+    [['check', '--base', 'HEAD', '--repo', tmpdir()], /is not inside a git repository: run saidvsdid in a clone, or pass --repo <dir>/],
     [['check', '--base', 'HEAD~1', '--format', 'xml'], /--format must be text, json or md/],
     [['check', '--base', 'HEAD~1', '--rules', 'TG999'], /unknown rule "TG999"/],
     [['check', '--base', 'HEAD~1', '--bogus'], /Unknown option '--bogus'/],
