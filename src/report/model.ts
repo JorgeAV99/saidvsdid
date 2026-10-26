@@ -55,7 +55,11 @@ export interface Report {
     /** What read the files' names (docs/rules.md, *Attribution*): the TypeScript compiler's version, and the Python interpreter's when one read Python files (null: none did). */
     scopes?: { typescript: string; python: string | null; python_unavailable?: string; python_untested?: string };
   };
-  repo: { base: string; head: string };
+  /**
+   * The commits compared. `base_ref`: the base as given and the commit it resolved to, present when `base` is their merge
+   * base with the head and not that commit (a branch behind its base; `--exact-base` compares the commit itself).
+   */
+  repo: { base: string; head: string; base_ref?: { ref: string; sha: string } };
   mode: Mode;
   /** The rules evaluated (selected and with what they need). */
   rules: RuleId[];

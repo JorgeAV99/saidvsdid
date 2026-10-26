@@ -70,7 +70,7 @@ describe('cli', () => {
 
   it.each([
     [['check'], /--base <ref> is required/],
-    [['check', '--base', 'does-not-exist'], /git rev-parse .* failed/],
+    [['check', '--base', 'does-not-exist'], /"does-not-exist" is not a commit in this clone \(git fetch it\?\)/],
     [['check', '--base', 'HEAD~1', '--format', 'xml'], /--format must be text, json or md/],
     [['check', '--base', 'HEAD~1', '--rules', 'TG999'], /unknown rule "TG999"/],
     [['check', '--base', 'HEAD~1', '--bogus'], /Unknown option '--bogus'/],

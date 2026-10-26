@@ -9,7 +9,8 @@ function location(f: Finding): string {
 
 export function renderText(report: Report): string {
   const lines: string[] = [];
-  lines.push(`saidvsdid ${report.tool.version} — base ${report.repo.base.slice(0, 12)} → head ${report.repo.head.slice(0, 12)}`);
+  const base = report.repo.base_ref ? `${report.repo.base_ref.ref} (merge-base ${report.repo.base.slice(0, 12)})` : report.repo.base.slice(0, 12);
+  lines.push(`saidvsdid ${report.tool.version} — base ${base} → head ${report.repo.head.slice(0, 12)}`);
   lines.push(`rules: ${report.rules.map((r) => (EXPERIMENTAL.has(r) ? `${r} (experimental)` : r)).join(', ')} · test files analysed: ${report.files.length}`);
   for (const n of report.not_evaluated) lines.push(`not evaluated: ${n.rule}${EXPERIMENTAL.has(n.rule) ? ' (experimental)' : ''} — ${n.reason}`);
   lines.push('');

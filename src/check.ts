@@ -3,7 +3,7 @@ import { evidenceFromSession, type FromTranscriptOptions } from './evidence/from
 import { packageScripts, type Scripts } from './transcript/commands.js';
 import { parseTranscript, type AgentOption } from './transcript/index.js';
 import { optionBool, pytestConfigFor } from './config/pytest.js';
-import { changedFiles, compareStr, listFiles, listTree, readBlob, readBlobBytes, repoRoot, resolveCommit, treeOf, type FileChange } from './git/diff.js';
+import { changedFiles, compareStr, listFiles, listTree, readBlob, readBlobBytes, repoRoot, selectBase, treeOf, type FileChange } from './git/diff.js';
 import { analysePython, isLooseTestPath, isTestPath, languageForPath, parseTestFile, pythonFacts, pythonRuntimeIfStarted, type PyFacts, type TestFile } from './parse/index.js';
 import ts from 'typescript';
 import { EXIT_CODES, REPORT_SCHEMA_ID, verdictFor, type FileSummary, type Mode, type NotEvaluated, type Report, type Unverifiable } from './report/model.js';
@@ -23,6 +23,8 @@ export interface CheckOptions {
   repo: string;
   base: string;
   head: string;
+  /** --exact-base: compare the base commit itself, not its merge base with the head (src/git/diff.ts, selectBase). */
+  exactBase?: boolean;
   /** Restrict to these rules; defaults to every implemented rule. */
   rules?: RuleId[];
   /** Paths to ignore entirely (gitignore-style globs). */
@@ -78,8 +80,8 @@ async function load(read: SourceReader, readBytes: BytesReader, reading: PyReadi
 
 export async function runCheck(options: CheckOptions): Promise<Report> {
   const repo = repoRoot(options.repo);
-  const base = resolveCommit(repo, options.base);
-  const head = resolveCommit(repo, options.head);
+  // The merge base, as a pull request's "Files changed" (and the Action) compares: every use below reads this one commit.
+  const { base, head, baseRef } = selectBase(repo, options.base, options.head, options.exactBase ?? false);
   const listings = new Map<'base' | 'head', string[]>();
   // Each blob is read once, as bytes: Python decodes its own (PEP 263), the rest reads UTF-8.
   const stored = new Map<string, Buffer | null>();
@@ -123,6 +125,7 @@ export async function runCheck(options: CheckOptions): Promise<Report> {
     ...(options.transcript ? { evidenceLabel: options.transcript.label } : options.evidenceLabel ? { evidenceLabel: options.evidenceLabel } : {}),
     repoDir: repo,
     f2p: options.f2p ?? null,
+    baseRef,
   });
 }
 
@@ -191,6 +194,8 @@ export interface AnalyzeInput {
   model?: RepoModel;
   repoDir?: string | null;
   f2p?: F2pOptions | null;
+  /** The base as given, when the compared `base` is its merge base with the head and not that commit (Report.repo.base_ref). */
+  baseRef?: { ref: string; sha: string } | null;
 }
 
 /** The git-independent core of `check`: also used by tests to analyse in-memory sources. */
@@ -436,7 +441,7 @@ export async function analyze(input: AnalyzeInput): Promise<Report> {
   return {
     schema: REPORT_SCHEMA_ID,
     tool: { name: 'saidvsdid', version: VERSION, scopes: scopeTools() },
-    repo: { base, head },
+    repo: { base, head, ...(input.baseRef ? { base_ref: input.baseRef } : {}) },
     mode,
     rules: selected.map((r) => r.id).filter((id) => !notEvaluated.some((n) => n.rule === id)),
     not_evaluated: notEvaluated,
