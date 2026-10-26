@@ -36,6 +36,7 @@ import ts from 'typescript';
 import type { Node } from 'web-tree-sitter';
 import { jsMember, jsName, outerTs, tsKey, unwrap } from './normalise.js';
 import { tsProgram, type TsProgram } from './ts-program.js';
+import type { JestGlobals } from '../config/jest-globals.js';
 import { CERTAIN, uncertain, type Binding, type MarkerKind, type ScopeReading } from './types.js';
 import { JS_TOKENS } from './vocabulary.js';
 import { nameTable } from '../util/names.js';
@@ -143,7 +144,8 @@ const line = (n: Node): number => n.startPosition.row + 1;
 
 /** How a name is bound where it is used, before the test API reads it. */
 export type RootBinding =
-  | { kind: 'import'; pkg: RunnerPackage; imported: string }
+  /** `via: 'global'`: Jest's global of that name, in a file whose invocation and configuration are certified. */
+  | { kind: 'import'; pkg: RunnerPackage; imported: string; via?: 'global' }
   | { kind: 'namespace'; pkg: RunnerPackage }
   | { kind: 'uncertain'; why: string };
 
@@ -167,6 +169,15 @@ export type ContextRole =
   | { why: string };
 
 /** `Object.defineProperty(x, …)` and the like: calls that write on their first argument. */
+/** Jest's globals that are its test API (the same functions `@jest/globals` exports): tests, suites, markers, hooks. */
+const JEST_GLOBAL_NAMES: ReadonlySet<string> = (() => {
+  const api = RUNNER_API['@jest/globals'];
+  return new Set([...api.tests, ...api.suites, ...api.rootMarkers, ...api.hooks]);
+})();
+
+/** The global object's names: a member write on one writes a global. */
+const GLOBAL_OBJECTS: ReadonlySet<string> = new Set(['globalThis', 'global', 'window', 'self']);
+
 const WRITING_CALLS = new Set(['Object.defineProperty', 'Object.defineProperties', 'Object.assign', 'Object.setPrototypeOf', 'Reflect.set', 'Reflect.defineProperty', 'Reflect.deleteProperty', 'Reflect.setPrototypeOf']);
 
 /** The identifier at the root of `a.b['c'].d`, or null when the root is anything else. */
@@ -257,6 +268,19 @@ export { EXACT_ASSIGNMENTS };
 
 const kindName = (n: ts.Node): string => ts.SyntaxKind[n.kind];
 
+/** How a message names a declaration, in words a reader knows (never the compiler's kind names: `BindingElement`). */
+function declaredAs(n: ts.Node): string {
+  if (ts.isBindingElement(n)) return 'by destructuring';
+  if (ts.isVariableDeclaration(n)) return 'as a variable';
+  if (ts.isParameter(n)) return 'as a parameter';
+  if (ts.isFunctionDeclaration(n) || ts.isFunctionExpression(n)) return 'as a function';
+  if (ts.isClassDeclaration(n) || ts.isClassExpression(n)) return 'as a class';
+  if (ts.isImportEqualsDeclaration(n)) return 'by `import … = require(…)`';
+  if (ts.isEnumDeclaration(n)) return 'as an enum';
+  if (ts.isModuleDeclaration(n)) return 'as a namespace';
+  return `as a ${kindName(n).replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase()}`;
+}
+
 /** `++x`, `x--`: a write of x with no value an alias could hold. */
 const isIncrement = (n: ts.Node | undefined): boolean =>
   n !== undefined && (ts.isPrefixUnaryExpression(n) || ts.isPostfixUnaryExpression(n)) && (n.operator === ts.SyntaxKind.PlusPlusToken || n.operator === ts.SyntaxKind.MinusMinusToken);
@@ -297,14 +321,66 @@ export class TsResolver {
   /** The program's identifiers and what has been asked of them (shared by every parse of the same content). */
   private readonly index: ProgramIndex;
 
+  /** Names the file writes as globals (`it = …`, `globalThis.it = …`), or 'all' (`Object.assign(globalThis, …)`): courtesy. */
+  private readonly globalWrites = new Map<string, Node>();
+  private globalWritesAll: Node | null = null;
+
   constructor(
     private readonly tree: Node,
     source: string,
     path: string,
+    /** Whether Jest's globals are Jest's in this file (src/config/jest-globals.ts); null: never. */
+    private readonly jestGlobals: JestGlobals | null = null,
   ) {
     this.program = tsProgram(source, path);
     this.index = indexOf(this.program);
-    if (this.program.issue === null) this.findWrites();
+    if (this.program.issue === null) {
+      this.findWrites();
+      this.findGlobalWrites();
+    }
+  }
+
+  /**
+   * Writes to a global name the file makes itself (a courtesy, with no guarantee: anything else that redefines a global is
+   * mutation, outside the assumption): an assignment of any operator, an update or a destructuring whose target is a
+   * bare name the compiler binds to nothing; a member write, `delete` or by-name primitive on `globalThis`, `global`,
+   * `window` or `self` with that key; and any `Object.assign`/`defineProperties`-like call on those receivers (all names).
+   */
+  private findGlobalWrites(): void {
+    const unbound = (n: Node): boolean => n.type === 'identifier' && this.identifierAt(n) !== null && this.symbolAt(n) === undefined;
+    const add = (name: string, at: Node): void => {
+      if (!this.globalWrites.has(name)) this.globalWrites.set(name, at);
+    };
+    const patternNames = (p: Node, at: Node): void => {
+      for (const id of [p, ...p.descendantsOfType(['identifier', 'shorthand_property_identifier_pattern'])]) {
+        if (id.type === 'identifier' && unbound(id)) add(id.text, at);
+        if (id.type === 'shorthand_property_identifier_pattern') add(id.text, at);
+      }
+    };
+    for (const n of this.tree.descendantsOfType(['assignment_expression', 'augmented_assignment_expression', 'update_expression', 'unary_expression', 'call_expression'])) {
+      if (n.type === 'assignment_expression' || n.type === 'augmented_assignment_expression' || n.type === 'update_expression') {
+        const target = n.childForFieldName(n.type === 'update_expression' ? 'argument' : 'left');
+        if (!target) continue;
+        const t = unwrap(target);
+        if (t.type === 'object_pattern' || t.type === 'array_pattern') patternNames(t, n);
+        else if (unbound(t)) add(t.text, n);
+        else {
+          const m = jsMember(t);
+          if (m && m.object.type === 'identifier' && GLOBAL_OBJECTS.has(jsName(m.object))) add(m.name, n);
+        }
+      } else if (n.type === 'unary_expression') {
+        if (n.childForFieldName('operator')?.type !== 'delete') continue;
+        const arg = n.childForFieldName('argument');
+        const m = arg ? jsMember(unwrap(arg)) : null;
+        if (m && m.object.type === 'identifier' && GLOBAL_OBJECTS.has(jsName(m.object))) add(m.name, n);
+      } else {
+        const fn = n.childForFieldName('function');
+        const member = fn ? jsMember(unwrap(fn)) : null;
+        if (!member || member.object.type !== 'identifier' || !WRITING_CALLS.has(`${jsName(member.object)}.${member.name}`)) continue;
+        const first = n.childForFieldName('arguments')?.namedChildren.find((c) => c.type !== 'comment') ?? null;
+        if (first && unwrap(first).type === 'identifier' && GLOBAL_OBJECTS.has(jsName(unwrap(first)))) this.globalWritesAll ??= n;
+      }
+    }
   }
 
   /** Whether the compiler read the file's names. */
@@ -376,10 +452,10 @@ export class TsResolver {
       clause = d;
       imported = 'default';
     } else {
-      return { why: `\`${name}\` is declared at line ${at(d)} (${kindName(d)}), not imported from a runner` };
+      return { why: `\`${name}\` is declared at line ${at(d)} ${declaredAs(d)}, not imported from a runner` };
     }
     const decl = clause.parent;
-    if (!ts.isImportDeclaration(decl)) return { why: `\`${name}\` is imported by ${kindName(decl)}, not by a static import declaration` };
+    if (!ts.isImportDeclaration(decl)) return { why: `\`${name}\` is imported ${declaredAs(decl)}, not by a static import declaration` };
     if (!ts.isStringLiteral(decl.moduleSpecifier)) return { why: `\`${name}\` is imported from a computed module` };
     return { module: decl.moduleSpecifier.text, imported, typeOnly: typeOnly || clause.isTypeOnly, symbol };
   }
@@ -438,6 +514,8 @@ export class TsResolver {
   /** Where the identifier at the root of a callee comes from (see the header). */
   root(use: Node): RootBinding {
     const name = jsName(use);
+    const global = this.globalRoot(use, name);
+    if (global) return global;
     const imp = this.moduleImport(use);
     if ('why' in imp) return { kind: 'uncertain', why: imp.why };
     if (!isRunnerPackage(imp.module)) return { kind: 'uncertain', why: `\`${name}\` is imported from '${imp.module}', not from a runner` };
@@ -447,6 +525,22 @@ export class TsResolver {
     if (write) return { kind: 'uncertain', why: write };
     if (imp.imported === null) return { kind: 'namespace', pkg: imp.module };
     return { kind: 'import', pkg: imp.module, imported: imp.imported };
+  }
+
+  /**
+   * A name the compiler binds to nothing in the file, at an occurrence it reads (its health checked): Jest's global of
+   * that name when the file's invocation and configuration are certified (src/config/jest-globals.ts) and the file does
+   * not write that global itself; otherwise uncertain, saying which. Null when the name is bound in the file.
+   */
+  private globalRoot(use: Node, name: string): RootBinding | null {
+    if (this.program.issue !== null || use.type !== 'identifier' || !this.identifierAt(use) || this.symbolAt(use) !== undefined) return null;
+    const g = this.jestGlobals;
+    if (!g) return { kind: 'uncertain', why: `\`${name}\` is a global, and no Jest invocation saidvsdid can read runs this file` };
+    if (!g.certified) return { kind: 'uncertain', why: `\`${name}\` is a global, and ${g.why}` };
+    if (!JEST_GLOBAL_NAMES.has(name)) return { kind: 'uncertain', why: `\`${name}\` is a global, not one of Jest's` };
+    const write = this.globalWrites.get(name) ?? this.globalWritesAll;
+    if (write) return { kind: 'uncertain', why: `the file writes Jest's global \`${name}\` (line ${line(write)}): outside the assumption, it may not be Jest's` };
+    return { kind: 'import', pkg: '@jest/globals', imported: name, via: 'global' };
   }
 
   /** TG004: the root of an assertion (`expect` in `expect(x).toBe(1)`, `assert`, `sinon` in `sinon.assert.x`). */

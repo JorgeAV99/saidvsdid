@@ -1,5 +1,5 @@
 {
-  "description": "Marker-kind hardening: Playwright `test.fail()` → `test.fixme()` (`test` statically imported from @playwright/test: FAIL) and jest `test.failing` → `test.skip` (jest's global `test`: WARN, a global is never certain). Same level, weaker verification.",
+  "description": "Marker-kind hardening: Playwright `test.fail()` → `test.fixme()` (`test` statically imported from @playwright/test: FAIL) and jest `test.failing` → `test.skip` (Jest's global `test`, in a package with a `jest.config.js`, which saidvsdid never evaluates: the globals are not certified, WARN). Same level, weaker verification.",
   "kind": "positive",
   "expect": {
     "verdict": "FAIL",

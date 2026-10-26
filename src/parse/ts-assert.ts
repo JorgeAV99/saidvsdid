@@ -15,6 +15,7 @@
 // only when `expect`, `assert`, `sinon`… is a static import of a runner or an
 // assertion library that nothing closer declares again. A global `expect`
 // (jest's) or a local one is uncertain: TG004 never FAILs on it.
+import type { JestGlobals } from '../config/jest-globals.js';
 import type { Node } from 'web-tree-sitter';
 import { normaliseBody } from './conditions.js';
 import { unwrap } from './normalise.js';
@@ -200,7 +201,7 @@ function requireSpecifier(value: Node | null): string | null {
   return stringText(callArgs(value)[0] ?? null);
 }
 
-export function tsFileInfo(root: Node, source: string, path: string): TsFileInfo {
+export function tsFileInfo(root: Node, source: string, path: string, jestGlobals: JestGlobals | null = null): TsFileInfo {
   const locals = new Map<string, Node[]>();
   const imports = new Map<string, string>();
   const addLocal = (name: string, fn: Node): void => {
@@ -242,7 +243,7 @@ export function tsFileInfo(root: Node, source: string, path: string): TsFileInfo
     const name = fn.childForFieldName('name');
     if (name) addLocal(name.text, fn);
   }
-  return { locals, imports, memo: new Map(), resolver: new TsResolver(root, source, path) };
+  return { locals, imports, memo: new Map(), resolver: new TsResolver(root, source, path, jestGlobals) };
 }
 
 function isSupportModule(spec: string): boolean {

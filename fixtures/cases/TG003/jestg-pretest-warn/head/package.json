@@ -1,0 +1,8 @@
+{
+  "name": "app",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "pretest": "node -e 0"
+  }
+}

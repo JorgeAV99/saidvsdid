@@ -3,6 +3,7 @@ import { extractPyTests } from './py.js';
 import { pythonFacts, type PyFacts } from './py-scopes.js';
 import { extractTsTests } from './ts.js';
 import type { TestFile } from './types.js';
+import type { JestGlobals } from '../config/jest-globals.js';
 
 export type { Assertion, Binding, Knob, LanguageId, Marker, MarkerCondition, MarkerKind, MarkerSite, ScopeReading, TestCase, TestFile } from './types.js';
 export { analysePython, pythonFacts, pythonRuntime, pythonRuntimeIfStarted, type PyFacts } from './py-scopes.js';
@@ -30,6 +31,11 @@ export function isLooseTestPath(path: string): boolean {
 }
 
 export interface ParseOptions {
+  /**
+   * Whether Jest's globals are Jest's in this file (src/config/jest-globals.ts, both sides of the change certified).
+   * Absent or null: a global is never the runner's.
+   */
+  jestGlobals?: JestGlobals | null;
   /** pytest's `xfail_strict` for this file (see config/pytest.ts); a bare `xfail` inherits it. */
   xfailStrict?: boolean;
   /** The file's bytes (Python reads them itself, PEP 263); absent: `source` encoded as UTF-8. */
@@ -64,7 +70,7 @@ export async function parseTestFile(path: string, source: string, options: Parse
       const { tests, markerSites, knobs, scopes } = extractPyTests(tree.rootNode, source, options.pyFacts ?? pythonFacts(bytes), options.xfailStrict ?? false);
       return { path, language, tests, markerSites, knobs, playwright: false, nodeTest: false, parseErrors, scopes, notAnalysed: null };
     }
-    const { tests, markerSites, knobs, playwright, nodeTest, scopes } = extractTsTests(tree.rootNode, source, path);
+    const { tests, markerSites, knobs, playwright, nodeTest, scopes } = extractTsTests(tree.rootNode, source, path, options.jestGlobals ?? null);
     return { path, language, tests, markerSites, knobs, playwright, nodeTest, parseErrors, scopes, notAnalysed: null };
   } finally {
     tree.delete();

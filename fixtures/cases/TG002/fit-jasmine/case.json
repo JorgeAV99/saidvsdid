@@ -1,16 +1,19 @@
 {
-  "description": "Jest-style `fit()` from jest's globals (no import): a global is never certainly the runner's, so TG002 warns that it may focus the test, never FAIL (the real runner would focus it).",
+  "description": "Jest-style `fit()` from Jest's globals (no import), in a package whose test script is plain `jest` with Jest's defaults: certified (docs/rules.md, *Jest's globals*), so the new focus is a TG002 FAIL naming the test it leaves out, and the real runner focuses it.",
   "kind": "positive",
-  "expect": {
-    "verdict": "WARN",
-    "findings": [
-      {
-        "rule": "TG002",
-        "severity": "warn",
-        "file": "spec/cart.spec.js",
-        "line": 4,
-        "test": "cart > sums totals"
-      }
-    ]
+  "runner": "jest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG002", "severity": "fail", "file": "spec/cart.spec.js", "line": 4, "test": "cart > sums totals", "ids": [["cart > is empty by default",1]] }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"spec/cart.spec.js\",\"cart > is empty by default\",1]": "passed",
+      "[\"spec/cart.spec.js\",\"cart > sums totals\",1]": "passed"
+    },
+    "head": {
+      "[\"spec/cart.spec.js\",\"cart > is empty by default\",1]": "skipped",
+      "[\"spec/cart.spec.js\",\"cart > sums totals\",1]": "passed"
+    }
   }
 }

@@ -1,0 +1,19 @@
+{
+  "description": "Jest's globals (docs/rules.md, *Jest's globals*): another test of the file is focused at base (`test.only('other')`): `adds` did not run there, so its new skip is a WARN, not a FAIL.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": { "verdict": "WARN", "findings": [
+    { "rule": "TG003", "severity": "warn", "file": "a.test.js", "line": 5, "test": "adds" }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"adds\",1]": "skipped",
+      "[\"a.test.js\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"a.test.js\",\"adds\",1]": "skipped",
+      "[\"a.test.js\",\"other\",1]": "passed"
+    }
+  }
+}

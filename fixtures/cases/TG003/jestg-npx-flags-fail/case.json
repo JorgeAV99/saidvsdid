@@ -1,0 +1,19 @@
+{
+  "description": "Jest's globals (docs/rules.md, *Jest's globals*): `npx jest --ci --runInBand`: flags from the closed list, certified, a FAIL.",
+  "kind": "positive",
+  "runner": "jest",
+  "expect": { "verdict": "FAIL", "findings": [
+    { "rule": "TG003", "severity": "fail", "file": "a.test.js", "line": 5, "test": "adds", "ids": [["adds",1]] }
+  ] },
+  "runnerEvidence": {
+    "tool": "jest 30.5.2",
+    "base": {
+      "[\"a.test.js\",\"adds\",1]": "passed",
+      "[\"a.test.js\",\"other\",1]": "passed"
+    },
+    "head": {
+      "[\"a.test.js\",\"adds\",1]": "skipped",
+      "[\"a.test.js\",\"other\",1]": "passed"
+    }
+  }
+}

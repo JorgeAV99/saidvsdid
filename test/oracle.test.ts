@@ -2,7 +2,7 @@
 // never evidence of an expected failure (a test broken by the code fails too).
 import { describe, expect, it } from 'vitest';
 import { listCases } from '../fixtures/build.js';
-import { expectedFailures, lostTests, missingEvidence, runnerKeys, type Statuses } from '../fixtures/oracle.js';
+import { expectedFailures, identityProblems, lostTests, missingEvidence, runnerKeys, type Statuses } from '../fixtures/oracle.js';
 
 describe('the oracle of a FAIL', () => {
   it('not-run: a test that ran at base no longer runs at head', () => {
@@ -176,5 +176,39 @@ describe('the oracle of a FAIL', () => {
       expect(broken, c.id).not.toEqual([]);
       expect(missingEvidence('expected-failure', base, head), c.id).not.toBeNull();
     }
+  });
+});
+
+// The 0.3.0 design review of Jest's globals: every identity a FAIL names needs its own evidence.
+describe('the oracle reads every identity of a FAIL on its own', () => {
+  const key = (name: string, ordinal = 1): string => JSON.stringify(['a.test.js', name, ordinal]);
+  const base = { [key('a')]: 'passed', [key('b')]: 'passed', [key('p[1]')]: 'passed', [key('p[2]')]: 'passed' } as const;
+  const head = { [key('a')]: 'skipped', [key('b')]: 'passed', [key('p[1]')]: 'skipped', [key('p[2]')]: 'skipped' } as const;
+  const problems = (ids: [string, number][]): string[] => identityProblems('not-run', 'pytest', 'a.test.js', ids, base, head);
+
+  it('a lost identity alone passes; a parametrised one, with each of its cases, too', () => {
+    expect(problems([['a', 1]])).toEqual([]);
+    expect(problems([['p', 1]])).toEqual([]);
+  });
+
+  it('a parametrised identity with one case still running fails it', () => {
+    const still = { ...head, [key('p[2]')]: 'passed' as const };
+    expect(identityProblems('not-run', 'pytest', 'a.test.js', [['p', 1]], base, still)).toEqual([expect.stringContaining('p[2]')]);
+  });
+
+  it('a second identity that still runs fails the oracle, whatever the first shows', () => {
+    expect(problems([['a', 1], ['b', 1]])).toEqual([expect.stringContaining('["b",1]')]);
+  });
+
+  it('an identity the runner never reports fails it', () => {
+    expect(problems([['a', 1], ['missing', 1]])).toEqual(['["missing",1] is no test the runner reports']);
+  });
+
+  it('two identities that map to the same result fail it', () => {
+    expect(problems([['a', 1], ['a', 1]])).toEqual([expect.stringContaining('cannot be told apart'), expect.stringContaining('cannot be told apart')]);
+  });
+
+  it('a FAIL that names no test fails it', () => {
+    expect(problems([])).toEqual(['the FAIL names no test']);
   });
 });

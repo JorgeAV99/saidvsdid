@@ -24,7 +24,8 @@ function severityFor(test: TestCase, wholeFile: boolean): Severity {
   if (test.body === '' && disablingMarkers(test).some((m) => m.kind === 'todo')) return 'info';
   // Deleting a file of unconditionally hidden tests (skip, todo, non-strict
   // xfail) removes nothing that ran. A strict expected failure still ran.
-  return wholeFile && hiddenLevel(test) < 3 && test.binding.certain && test.declaration.canonical ? 'fail' : 'warn';
+  // A global's certainty (Jest's, certified) is TG002's and TG003's only: a deletion through globals stays a WARN.
+  return wholeFile && hiddenLevel(test) < 3 && test.binding.certain && test.binding.via !== 'global' && test.declaration.canonical ? 'fail' : 'warn';
 }
 
 /** A test that ran and is the runner's, but whose declaration is not canonical (F7, F3): why the deletion is not a FAIL. */

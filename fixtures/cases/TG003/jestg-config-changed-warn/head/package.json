@@ -1,0 +1,10 @@
+{
+  "name": "app",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "verbose": true
+  }
+}
