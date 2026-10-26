@@ -579,9 +579,9 @@ a context `skip()`, and the file never writes `ctx`.
 
 Uncertain, with the reason in the `WARN`:
 
-- **globals** — jest's, vitest's `globals: true`, mocha's: always `WARN` ("may
-  be skipped"), never `FAIL`, whatever the configuration says (a setup file may
-  install its own `it`; fixtures `TG003/global-it-control`,
+- **globals** — vitest's `globals: true`, mocha's, and Jest's outside the
+  closed grammar of *Jest's globals* (below): `WARN` ("may be skipped"), never
+  `FAIL` (a setup file may install its own `it`; fixtures
   `vitest-setupfiles-global`, `jest-preset`, `jest-config-uppercase`…);
 - **any other declaration** — a local `const it`, a parameter (`describe('s',
   (it) => …)`), a destructuring (`const { it } = v`), a `require` (`const v =
@@ -754,6 +754,70 @@ through anything else (`Scope.unittest.TestCase`:
 TG004; Python's `assert` statement is always certain. Python tests are collected
 by name and class (NFKC-normalised, as pytest and unittest see them), so their
 declarations are certain.
+
+### Jest's globals
+
+Jest injects its test API (`it`, `test`, `describe`, `fit`, `xit`, `xtest`,
+`fdescribe`, `xdescribe`, the hooks) into every test file it runs, unless
+`injectGlobals: false`: the same functions `@jest/globals` exports. A global
+`it.skip(…)` is therefore Jest's — when Jest is what runs the file, with its
+standard runner, runtime and environment. That is certain only inside a closed
+grammar read from the trees of the diff (src/config/jest-globals.ts); outside
+it, the `WARN` says which point failed:
+
+1. **The name is the global**: the compiler binds it to nothing at that
+   occurrence (its health checked as for any name). The file writing that
+   global itself (`it = …`, `globalThis.it = …`, `Object.assign(globalThis,
+   …)`, `delete`) is a courtesy `WARN`; anything else that redefines it is
+   mutation, outside the assumption.
+2. **The file names no environment of its own** (no `@jest-environment`
+   docblock).
+3. **One invocation**: the package of the file (the nearest directory above it
+   with a `package.json`; npm runs its scripts there) has a `test` script that
+   is exactly `[npx ]jest` followed only by flags from a closed list (`--ci`,
+   `--coverage`, `--runInBand`/`-i`, `--verbose`, `--silent`,
+   `--passWithNoTests`, `--detectOpenHandles`, `--forceExit`, `--colors`,
+   `--no-cache`, `--watchAll=false`) — no positional argument, environment,
+   launcher, operator or `npm run` — and no `pretest` or `posttest` script.
+4. **The configuration, read whole**: Jest's own resolution from that
+   directory — none (Jest's defaults), or exactly one of `jest.config.json` or
+   the `package.json` `jest` key; a `jest.config.{js,ts,mjs,cjs,cts,mts}` is
+   never evaluated; names compare without case; JSON with no duplicate key;
+   every key from an allowlist that cannot change which function `it` is
+   (`testMatch`, `testRegex`, `testPathIgnorePatterns`, `roots`, `rootDir`,
+   `testTimeout`, coverage settings, mocks' resets, `moduleFileExtensions`,
+   `moduleNameMapper`, …), with `injectGlobals` only `true`, `testEnvironment`
+   only `node`, `jsdom`, `jest-environment-node` or `jest-environment-jsdom`,
+   and `bail` only absent, `0` or `false` (a failure elsewhere could stop Jest
+   before the file). `runner`, `testRunner`, `runtime`, `preset`, `projects`,
+   `setupFiles`, `setupFilesAfterEnv`, `transform`, `globals`… are not in it.
+5. **Both sides alike**: points 2–4 hold at base and at head with the same
+   script and configuration (a pull request that changes them gets the
+   configuration net's `WARN` and no `FAIL` from the globals).
+
+Then the globals read as the `@jest/globals` API, with its members, effects
+and canonical forms, for **TG002 and TG003 only**: a deleted file or test
+declared through globals stays a TG001 `WARN` (the provenance travels with the
+binding, `via: 'global'`, through every enclosing suite). Assumptions, as for
+the imported API: nothing mutates the framework (a source transform — the
+default `babel-jest` with the project's Babel configuration — preserves
+bindings and marker semantics); the runner is invoked as the script says (no
+`JEST_JASMINE=1`, no `--config` from CI); focused registrations made by modules
+a test file imports are outside the contract (docs/known-limitations.md);
+which files Jest collects is not certified, as for an imported `it.skip`. The
+fixtures' recorder runs the same `jest` with the script's flags plus its own
+`--ci --runInBand --json --outputFile --watchman=false --cacheDirectory`
+(`--passWithNoTests` when needed, Node's ESM flag for an ES module package):
+equivalent for the effects measured — which tests run, are skipped or are
+expected failures. Fixtures: `contract-jest-global-*-direct` (each direct form,
+with the real Jest), `TG003/jestg-*` (each point of the grammar),
+`TG001/jestg-mixed-deleted-warn`.
+
+**Mocha** stays a `WARN`: its configuration merges rc files (JS and YAML
+first), `package.json`, `MOCHA_OPTIONS`, aliases and `extends`; its focus
+applies to the suite assembled across files; `this.skip()` and root hooks
+change a test's baseline at run time; `forbid-pending`, `dry-run` and `grep`
+change what `it.skip` does. Modelling that is backlog.
 
 ### Aliases
 
@@ -1050,7 +1114,7 @@ Two things block a merge, and nothing else:
     - Jest (`const { it, describe, fit, … } = require('@jest/globals')`) — on the test root: `it.skip(…)`, `it.only(…)`, `it.todo(…)`, `it.failing(…)`; on the suite root: `describe.skip(…)`, `describe.only(…)`; roots that are a marker: `fit(…)`, `fdescribe(…)`, `xit(…)`, `xtest(…)`, `xdescribe(…)`
     - Playwright (`import { test } from '@playwright/test'`; the context, the test callback's second parameter `testInfo`) — on the test root: `test.skip(…)`, `test.only(…)`, `test.fixme(…)`, `test.fail(…)`; on the suite root: `test.describe.skip(…)`, `test.describe.only(…)`, `test.describe.fixme(…)`; annotations in a test's body: `test.skip()`, `test.fixme()`, `test.fail()`; the test context: `testInfo.skip()`, `testInfo.fixme()`, `testInfo.fail()`
     - node:test (`import { test, describe } from 'node:test'`; the context, the test callback's first parameter `t`) — on the test root: `test.skip(…)`, `test.only(…)`, `test.todo(…)`; on the suite root: `describe.skip(…)`, `describe.only(…)`, `describe.todo(…)`; options of a test: `{ skip: true }`, `{ only: true }`, `{ todo: true }`; the test context: `t.skip()`, `t.todo()`, `t.runOnly()`
-    - Jest's globals, with no import (at least a `WARN`, never a `FAIL`: *Attribution*) — on the test root: `test.skip(…)`, `test.only(…)`, `test.todo(…)`, `test.failing(…)`, `it.skip(…)`, `it.only(…)`, `it.todo(…)`, `it.failing(…)`; on the suite root: `describe.skip(…)`, `describe.only(…)`; roots that are a marker: `fit(…)`, `fdescribe(…)`, `xit(…)`, `xtest(…)`, `xdescribe(…)`
+    - Jest's globals, with no import (at least a `WARN`; a `FAIL` only where the package's invocation and configuration are certified: *Jest's globals*) — on the test root: `test.skip(…)`, `test.only(…)`, `test.todo(…)`, `test.failing(…)`, `it.skip(…)`, `it.only(…)`, `it.todo(…)`, `it.failing(…)`; on the suite root: `describe.skip(…)`, `describe.only(…)`; roots that are a marker: `fit(…)`, `fdescribe(…)`, `xit(…)`, `xtest(…)`, `xdescribe(…)`
     - pytest (`import pytest`) — marks: `@pytest.mark.skip`, `@pytest.mark.skipif`, `@pytest.mark.xfail`, `@pytest.mark.only`, `@pytest.mark.focus`; functions: `pytest.skip(…)`, `pytest.xfail(…)`, `pytest.importorskip(…)`
     - unittest (`import unittest`, `from unittest import skip`; the context, `self` in a `unittest.TestCase` method) — decorators: `@unittest.skip`, `@unittest.skipIf`, `@unittest.skipUnless`, `@unittest.expectedFailure`; decorators imported by name (`from unittest import skip`): `@skip`, `@skipIf`, `@skipUnless`, `@expectedFailure`; the exception: `raise unittest.SkipTest`; the `TestCase` method: `self.skipTest(…)`
   - **a simple alias in the same file**: a name bound once, by a plain declaration or assignment, to one of those members — the member itself, not a call of it — and used as the member would be (`const later = test.skip; later('x', …)`, `later = pytest.mark.skip` then `@later`, `stop = unittest.SkipTest` then `raise stop("x")`, `omit = self.skipTest; omit("x")`); for every form above but an option and a decorator imported by name.
@@ -1093,7 +1157,7 @@ broken guarantee, and widening it is backlog. Listed in
   - an identifier (`box.omit`, `box['omit']`, `d["k"]`, `Reflect.get(box, 'omit')`)
   - `this` (JS/TS) or `self` (Python) (`this.omit`, `this['omit']`, `self.omit`, `self["omit"]`, `getattr(self, "omit")`)
   - a chain on either, every step a member access however written (`a.b.omit`, `this.a['b']`, `a['b'].c`, `getattr(this.a, 'k')`, `Reflect.get(a['b'], 'k')`, `self.a["b"].c`)
-- **Runner globals** with no import (Jest's, Vitest's globals, Mocha's): a form of the vocabulary on them is always a `WARN` "may be skipped", never a `FAIL`.
+- **Runner globals** with no import (Vitest's globals, Mocha's, and Jest's outside a certified invocation and configuration, *Jest's globals*): a form of the vocabulary on them is a `WARN` "may be skipped", never a `FAIL`.
 - **Outside the matrix** — read by the net best effort, with no test against regressions:
   - class fields and members, static or not, with a computed name or not (`static ['omit'] = it.skip`, `static 'omit' = ctx.skip`, `static [field] = ctx.skip`)
   - a member written through a call (`setattr(R, "omit", V)`, `Reflect.set(R, 'omit', V)`, `Object.defineProperty`, `Object.assign`): only an assignment to a dot or a literal subscript binds
@@ -1525,7 +1589,8 @@ Each attributed marker is classified by its condition:
 | Condition | Example | Severity |
 |---|---|---|
 | unconditional and certainly the runner's, on a test that ran at base (certainly declared) | `it.skip(...)` with `import { it } from 'vitest'`, `@pytest.mark.skip` with `import pytest` | `fail` |
-| unconditional, not certainly the runner's | jest's global `it.skip(...)`, `pytest.skip()` with `pytest` rebound in the module | `warn` (*may skip*) |
+| unconditional, not certainly the runner's | a global `it.skip(...)` outside *Jest's globals*, `pytest.skip()` with `pytest` rebound in the module | `warn` (*may skip*) |
+| unconditional, certainly the runner's, on a test another focus left out at base | `test.skip('b')` with `test.only('a')` in the file at base | `warn` (*may not have run*) |
 | unconditional, on a new test | `it.todo('handles emoji')` | `warn` |
 | opaque condition | `it.skipIf(legacyMode)` | `warn` |
 | platform / runtime / environment | `skipIf(process.platform === 'win32')`, `skipif(sys.platform == "win32")`, `importorskip` | `warn` (usually legitimate, never `fail`) |

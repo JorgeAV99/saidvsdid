@@ -343,7 +343,7 @@ export function renderGuarantee(): string {
     '- **No silence for the direct forms** — a new use of one of these, at head, is at least a `WARN` naming its test:',
     '  - **a member of the vocabulary used directly from its root**, a runner import or the test context:',
     ...js,
-    `    - Jest\'s globals, with no import (at least a \`WARN\`, never a \`FAIL\`: *Attribution*) — ${directForms('jest', 'global')}`,
+    `    - Jest\'s globals, with no import (at least a \`WARN\`; a \`FAIL\` only where the package\'s invocation and configuration are certified: *Jest\'s globals*) — ${directForms('jest', 'global')}`,
     `    - pytest (${code('import pytest')}) — ${directForms('pytest')}`,
     `    - unittest (${code('import unittest')}, ${code('from unittest import skip')}; the context, \`self\` in a \`unittest.TestCase\` method) — ${directForms('unittest')}`,
     '  - **a simple alias in the same file**: a name bound once, by a plain declaration or assignment, to one of those members — the member itself, not a call of it — and used as the member would be (`const later = test.skip; later(\'x\', …)`, `later = pytest.mark.skip` then `@later`, `stop = unittest.SkipTest` then `raise stop("x")`, `omit = self.skipTest; omit("x")`); for every form above but an option and a decorator imported by name.',
@@ -370,7 +370,7 @@ export function renderBestEffort(): string {
     list(BEST_EFFORT_BINDINGS),
     '- **Receivers** of a member target and of the member a use reads:',
     list(BEST_EFFORT_RECEIVERS),
-    '- **Runner globals** with no import (Jest\'s, Vitest\'s globals, Mocha\'s): a form of the vocabulary on them is always a `WARN` "may be skipped", never a `FAIL`.',
+    '- **Runner globals** with no import (Vitest\'s globals, Mocha\'s, and Jest\'s outside a certified invocation and configuration, *Jest\'s globals*): a form of the vocabulary on them is a `WARN` "may be skipped", never a `FAIL`.',
     '- **Outside the matrix** — read by the net best effort, with no test against regressions:',
     list(OUTSIDE_THE_MATRIX),
   ].join('\n');

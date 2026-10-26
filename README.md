@@ -16,8 +16,10 @@ happened, with a link to each line, before you read the rest of the change.
 - Reads the code, does not run it: the syntax tree of each test file and the
   runner's configuration, at the base and at the head of the pull request.
 - JavaScript/TypeScript (Vitest, Jest, Playwright, node:test, mocha-style) and
-  Python (pytest, unittest). A `FAIL` needs the runner's API imported from it;
-  with Jest's or Mocha's globals (`it.skip` with no import) a skip is a `WARN`.
+  Python (pytest, unittest). A `FAIL` needs the runner's API imported from it,
+  or Jest's globals in a package whose `test` script is plain `jest` and whose
+  configuration is JSON ([the exact rule](docs/rules.md#jests-globals));
+  Mocha's globals give a `WARN`.
   Every report says how many of the changed test files it read, in part or
   not at all (a Go test, a runner it does not know): an `OK` covers only them.
 - Deterministic and offline: no network, no telemetry, no LLM. The Action uses

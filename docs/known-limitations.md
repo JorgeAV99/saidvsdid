@@ -145,6 +145,12 @@ declares an encoding other than UTF-8, turns a head's certain skip from a `FAIL`
 valid and was read. This is outside the documented scope of what Python's reading makes certain: the file gets one
 `WARN` `scope_unavailable` naming the side Python did not read, never silence, and never a `FAIL` beside it.
 
+## Jest's globals: registrations from imported modules
+
+| Example | Fixture | Runner | Verdict |
+|---|---|---|---|
+| a test file `require`s `shared.cjs`, which calls `test.only('shared', …)`; the pull request adds `test.only('A')`, and `B` was already focused away at base | none (constructed) | Jest skips `B` on both sides | TG002 `FAIL` naming `B` — for Jest's certified globals and for an imported `test` alike: focused registrations made by imported modules are outside the contract (docs/rules.md, *Jest's globals*) |
+
 ## Coverage: what "analysed" does not see
 
 The coverage states (docs/rules.md, *Coverage*) describe the declarations saidvsdid recognised:
