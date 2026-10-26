@@ -160,11 +160,33 @@ describe('Codex, round 1 of the code review', () => {
     expect(body).toContain("is this job's artifact: [saidvsdid report](https://github.com/octo/demo/actions/runs/42/artifacts/9001).");
   });
 
-  it("the Python notice is never shortened, in the comment or in the full report: the remedy is read whole", () => {
+  // The independent review of the fix: in the case above the size limit also hides findings, which already marked the
+  // comment as cut before the list, so the old order printed the pointer too. Here every finding is shown and the list
+  // of files that could not be analysed is the only thing capped.
+  it('every finding shown, only the list of files that could not be analysed capped: the pointer is still there', () => {
+    const findings: Finding[] = Array.from({ length: 3 }, (_, i) => ({ rule: 'TG003', severity: 'fail', file: `src/f${i}.test.js`, side: 'head', line: 1, test: null, message: `Adds \`it.skip\` (skip, unconditional) to test "case ${i}"` }));
+    const unverifiable = Array.from({ length: 400 }, (_, i) => ({ file: `src/broken_${i}_${'y'.repeat(180)}.test.js`, side: 'head' as const, reason: 'syntax errors; test extraction may be incomplete' }));
+    const r = report(findings, { unverifiable, verdict: 'UNVERIFIABLE', exit_code: 3 });
+    expect(commentFits(r, { link: null, failOn: 'none' })).toBe(false);
+    const body = renderComment(r, { link: null, failOn: 'none', rest: ARTIFACT });
+    expect(body.length).toBeLessThanOrEqual(65_000);
+    expect(shownItems(body)).toBe(3);
+    expect(body).not.toContain('not shown here');
+    expect(body).toMatch(/- and \d+ more\n/);
+    expect(body).toContain("is this job's artifact: [saidvsdid report](https://github.com/octo/demo/actions/runs/42/artifacts/9001).");
+  });
+
+  it("the Python notice is never shortened, in the comment or in the full report: the diagnostic and the remedy are read whole", () => {
     const path = `/opt/${'very-long-directory-name/'.repeat(8)}bin/python3`;
+    const unavailable = `Python 3.10.12 (${path}) is older than 3.11, the oldest saidvsdid reads`;
     const remedy = `on GitHub Actions, add actions/setup-python with python-version 3.11 or later before saidvsdid; elsewhere, change SAIDVSDID_PYTHON (now ${JSON.stringify(path)}) to one`;
+    expect(unavailable.length).toBeGreaterThan(200);
     expect(remedy.length).toBeGreaterThan(200);
-    const r = report([], { tool: { name: 'saidvsdid', version: '0.3.0', scopes: { typescript: '5.9.3', python: null, python_unavailable: `Python 3.10.12 (${path}) is older than 3.11, the oldest saidvsdid reads`, python_remedy: remedy } } });
-    for (const full of [false, true]) expect(renderComment(r, { link: null, failOn: 'none', full })).toContain(`\`${remedy}\``);
+    const r = report([], { tool: { name: 'saidvsdid', version: '0.3.0', scopes: { typescript: '5.9.3', python: null, python_unavailable: unavailable, python_remedy: remedy } } });
+    for (const full of [false, true]) {
+      const body = renderComment(r, { link: null, failOn: 'none', full });
+      expect(body).toContain(`⚠️ **Python test files were not read:** \`${unavailable}\``);
+      expect(body).toContain(`\`${remedy}\``);
+    }
   });
 });

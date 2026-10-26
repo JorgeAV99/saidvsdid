@@ -26,6 +26,13 @@ literally). Deliberately not in it:
   (CLAUDE.md, *Before anything else*). The read-only token's warning was checked on a pull request of the repository.
 - **The artifact on GitHub Enterprise Server.** Not attempted there (no v4 artifacts): the comment gives the
   reproduction. A client for GHES's own artifact service would need its own round trip.
+- **The GFM oracle in CI.** `scripts/check-gfm-render.mjs` is run by hand. Running it in the public repository's CI,
+  with the job's `GITHUB_TOKEN` for GitHub's `POST /markdown`, and failing the job when the API does not answer (never a
+  green run that rendered nothing), would make it a check of every pull request that touches the comment (from the
+  independent review of this PR).
+- **Three payloads of the GFM oracle without a tag.** In `FOLDED`, `CODEX`, `LONG` and `last` carry no identity tag of
+  their own (every other payload does): `CODEX` and `LONG` are unique as written and `last` is short, but tagging them
+  too would make every payload's identity explicit (from the independent review of this PR).
 - **The Action's version between releases.** The reproduction names `npx saidvsdid@<version>`, the Action's version
   string, always qualified: a bundle built between releases may differ from npm's package. A build identity in the
   bundle (the commit it was built from) would remove the qualification.
