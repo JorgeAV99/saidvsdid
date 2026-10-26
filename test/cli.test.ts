@@ -58,7 +58,7 @@ describe('cli', () => {
   it('--exclude drops matching paths', async () => {
     const r = await run('check', '--base', 'HEAD~1', '--exclude', 'tests/**');
     expect(r.code).toBe(0);
-    expect(r.out).toContain('test files analysed: 0');
+    expect(r.out).toContain('0 test files analysed · 1 changed path excluded');
   });
 
   it('--output writes the report to a file', async () => {

@@ -8,6 +8,7 @@ import { runCheck } from '../check.js';
 import { MissingHistoryError } from '../git/diff.js';
 import { COMMENT_MARKER, gateText, literal, renderComment, type FailOn, type LineLink } from '../report/comment.js';
 import { EXIT_CODES, type Verdict } from '../report/model.js';
+import { coverageCounts, incomplete } from '../coverage.js';
 import { ownRecord } from '../util/names.js';
 import { VERSION } from '../version.js';
 
@@ -176,7 +177,20 @@ export async function upsertComment(api: Api, pr: PullRequest, body: string): Pr
   return isRecord(res) && typeof res['html_url'] === 'string' ? res['html_url'] : null;
 }
 
-async function analyse(env: Env, pr: PullRequest, failOn: FailOn, exclude: string[]): Promise<{ verdict: Verdict; body: string }> {
+/** What a run found: the verdict, the comment's body, a line for the log (coverage counts, or the ERROR's reason), and whether an OK is qualified. */
+interface Analysis {
+  verdict: Verdict;
+  body: string;
+  detail: string;
+  /** An OK that does not cover everything the pull request changes (src/coverage.ts): a warning, not a notice. */
+  qualified: boolean;
+}
+
+function failure(reason: string, failOn: FailOn): Analysis {
+  return { verdict: 'ERROR', body: renderErrorComment(reason, failOn), detail: reason, qualified: false };
+}
+
+async function analyse(env: Env, pr: PullRequest, failOn: FailOn, exclude: string[]): Promise<Analysis> {
   const workspace = env['GITHUB_WORKSPACE'] || process.cwd();
   try {
     // The pull request's own changes: from where it left its base branch, as GitHub's "Files changed" shows them — the
@@ -185,13 +199,15 @@ async function analyse(env: Env, pr: PullRequest, failOn: FailOn, exclude: strin
     const server = (env['GITHUB_SERVER_URL'] || 'https://github.com').replace(/\/+$/, '');
     const repoUrl = `${server}/${encodeURIComponent(pr.owner)}/${encodeURIComponent(pr.repo)}`;
     const link: LineLink = (side, file, line) => `${repoUrl}/blob/${side === 'base' ? report.repo.base : report.repo.head}/${encodePath(file)}${line === null ? '' : `#L${line}`}`;
-    return { verdict: report.verdict, body: renderComment(report, { link, failOn }) };
+    const c = report.coverage;
+    const qualified = report.verdict === 'OK' && c !== undefined && (incomplete(c) || c.analysed === 0);
+    return { verdict: report.verdict, body: renderComment(report, { link, failOn }), detail: c ? coverageCounts(c) : '', qualified };
   } catch (e) {
     // A commit missing or the history cut: the checkout; any other reason (two histories with no common ancestor) as it is.
     if (e instanceof MissingHistoryError) {
-      return { verdict: 'ERROR', body: renderErrorComment(`the base and head commits are not both in the clone, with the history between them (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
+      return failure(`the base and head commits are not both in the clone, with the history between them (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn);
     }
-    return { verdict: 'ERROR', body: renderErrorComment(e instanceof Error ? e.message : String(e), failOn) };
+    return failure(e instanceof Error ? e.message : String(e), failOn);
   }
 }
 
@@ -239,7 +255,7 @@ export async function runAction(deps: ActionDeps): Promise<ActionResult> {
     event = null;
   }
   const pr = eventName ? pullRequestOf(event, env['GITHUB_REPOSITORY']) : 'no GITHUB_EVENT_NAME: saidvsdid runs as a step of a GitHub Actions workflow';
-  const { verdict, body } = typeof pr === 'string' ? { verdict: 'ERROR' as const, body: renderErrorComment(pr, failOn) } : await analyse(env, pr, failOn, exclude);
+  const { verdict, body, detail, qualified } = typeof pr === 'string' ? failure(pr, failOn) : await analyse(env, pr, failOn, exclude);
 
   const summary = env['GITHUB_STEP_SUMMARY'];
   if (summary) appendFileSync(summary, body.slice(COMMENT_MARKER.length + 1));
@@ -258,7 +274,8 @@ export async function runAction(deps: ActionDeps): Promise<ActionResult> {
   if (output) appendFileSync(output, `verdict=${verdict}\nexit-code=${EXIT_CODES[verdict]}\ncomment-url=${commentUrl ?? ''}\n`);
 
   const fails = blocks(verdict, failOn);
-  const level = verdict === 'OK' ? 'notice' : fails ? 'error' : 'warning';
-  log(`::${level}::saidvsdid: ${verdict}${fails ? ` (fail-on: ${failOn})` : failOn === 'none' ? ' (not blocking: fail-on is not set)' : ` (not blocking: fail-on: ${failOn})`}${commentUrl ? ` — ${commentUrl}` : ''}`);
+  const level = verdict === 'OK' && !qualified ? 'notice' : fails ? 'error' : 'warning';
+  // The verdict, then what it covers or why it could not run: the log says as much as the comment's first lines.
+  log(`::${level}::saidvsdid: ${verdict}${detail ? ` — ${detail}` : ''}${fails ? ` (fail-on: ${failOn})` : failOn === 'none' ? ' (not blocking: fail-on is not set)' : ` (not blocking: fail-on: ${failOn})`}${commentUrl ? ` — ${commentUrl}` : ''}`);
   return { verdict, exitCode: fails ? 1 : 0, body, commentUrl };
 }

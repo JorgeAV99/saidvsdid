@@ -79808,8 +79808,8 @@ ${lanes.join("\n")}
         function getTypeFromFlowType(flowType) {
           return flowType.flags === 0 ? flowType.type : flowType;
         }
-        function createFlowType(type, incomplete) {
-          return incomplete ? { flags: 0, type: type.flags & 131072 ? silentNeverType : type } : type;
+        function createFlowType(type, incomplete2) {
+          return incomplete2 ? { flags: 0, type: type.flags & 131072 ? silentNeverType : type } : type;
         }
         function createEvolvingArrayType(elementType) {
           const result = createObjectType(
@@ -221779,11 +221779,97 @@ async function parseTestFile(path2, source, options = {}) {
 // src/check.ts
 var import_typescript4 = __toESM(require_typescript(), 1);
 
+// src/coverage.ts
+var FOREIGN_TESTS = [
+  { language: "Go", pattern: /(?:^|\/)[^/]+_test\.go$/i },
+  { language: "Ruby", pattern: /(?:^|\/)[^/]+_(?:spec|test)\.rb$/i },
+  { language: "Rust", pattern: /(?:^|\/)tests\/(?:[^/]+\/)*[^/]+\.rs$/i },
+  { language: "Java", pattern: /(?:^|\/)[^/]*Tests?\.java$/ },
+  { language: "Kotlin", pattern: /(?:^|\/)[^/]*Tests?\.kt$/ },
+  { language: "C#", pattern: /(?:^|\/)[^/]*Tests?\.cs$/ },
+  { language: "PHP", pattern: /(?:^|\/)[^/]*Test\.php$/ },
+  { language: "Elixir", pattern: /(?:^|\/)[^/]+_test\.exs$/i },
+  { language: "Swift", pattern: /(?:^|\/)[^/]*Tests\.swift$/ },
+  { language: "Dart", pattern: /(?:^|\/)[^/]+_test\.dart$/i },
+  { language: "C/C++", pattern: /(?:^|\/)[^/]+_test\.(?:cc|cpp)$/i },
+  { language: "Bats", pattern: /\.bats$/i }
+];
+function foreignTestLanguage(path2) {
+  const p = path2.replace(/\\/g, "/");
+  return FOREIGN_TESTS.find((f) => f.pattern.test(p))?.language ?? null;
+}
+var UNREAD_TEST_LIBRARIES = ["ava", "tap", "tape", "uvu", "zora", "bun:test", "mocha", "jasmine", "@japa/runner"];
+var LIBRARY_IMPORT = new RegExp(
+  `(?:\\bfrom\\s*|\\brequire\\s*\\(\\s*|\\bimport\\s*\\(\\s*|\\bimport\\s+)(['"])(${UNREAD_TEST_LIBRARIES.map((m) => m.replace(/[.*+?^${}()|[\]\\/]/g, "\\$&")).join("|")})(?:\\/[^'"]*)?\\1`
+);
+function unreadLibraryOf(source) {
+  return LIBRARY_IMPORT.exec(source)?.[2] ?? null;
+}
+var RANK = { analysed: 0, "partly-analysed": 1, "not-analysed": 2 };
+function sideState(r) {
+  if (r.kind === "absent" || r.kind === "excluded" || r.kind === "other") return null;
+  if (r.kind === "foreign") return { state: "not-analysed", reason: `${r.language}, a language saidvsdid does not read` };
+  const f = r.file;
+  if (f.parseErrors) return { state: "not-analysed", reason: `syntax errors` };
+  if (f.notAnalysed) return { state: "not-analysed", reason: `${f.notAnalysed.why}` };
+  if (!f.scopes.known) return { state: "not-analysed", reason: `its names were not read (${f.scopes.why})` };
+  const library = r.source === null ? null : unreadLibraryOf(r.source);
+  if (library) return { state: "partly-analysed", reason: `it imports ${library}, a test library saidvsdid does not read` };
+  if (f.tests.length === 0) return r.named ? { state: "partly-analysed", reason: `no test recognised` } : null;
+  const uncertain3 = f.tests.find((t) => !t.binding.certain);
+  if (uncertain3 && !uncertain3.binding.certain) return { state: "partly-analysed", reason: `a runner saidvsdid is not certain of (${uncertain3.binding.why})` };
+  return { state: "analysed", reason: null };
+}
+function coverageOf(entries) {
+  const files = [];
+  let excluded = 0;
+  for (const { change, base, head } of entries) {
+    const present = [base, head].filter((r) => r.kind !== "absent");
+    if (present.length > 0 && present.every((r) => r.kind === "excluded")) {
+      excluded++;
+      continue;
+    }
+    const sides = ["base", "head"].flatMap((side) => {
+      const s = sideState(side === "base" ? base : head);
+      return s === null ? [] : [{ side, ...s }];
+    });
+    if (sides.length === 0) continue;
+    const state = sides.reduce((w, s) => RANK[s.state] > RANK[w] ? s.state : w, "analysed");
+    const why = sides.flatMap((s) => s.reason === null ? [] : [{ side: s.side, reason: s.reason }]);
+    const reasons = why.length === 2 && why[0].reason === why[1].reason ? [`base and head: ${why[0].reason}`] : why.map((w) => `${w.side}: ${w.reason}`);
+    files.push({
+      path: change.headPath ?? change.basePath,
+      base_path: change.basePath,
+      state,
+      reasons
+    });
+  }
+  files.sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+  const count = (s) => files.filter((f) => f.state === s).length;
+  return { analysed: count("analysed"), partly_analysed: count("partly-analysed"), not_analysed: count("not-analysed"), excluded, files };
+}
+function coverageCounts(c) {
+  const parts2 = [`${c.analysed} test file${c.analysed === 1 ? "" : "s"} analysed`];
+  if (c.partly_analysed > 0) parts2.push(`${c.partly_analysed} partly analysed`);
+  if (c.not_analysed > 0) parts2.push(`${c.not_analysed} not analysed`);
+  if (c.excluded > 0) parts2.push(`${c.excluded} changed path${c.excluded === 1 ? "" : "s"} excluded`);
+  return parts2.join(" · ");
+}
+var incomplete = (c) => c.partly_analysed + c.not_analysed > 0;
+
 // src/report/model.ts
 var REPORT_SCHEMA_ID = "saidvsdid/report/v1";
 var EXIT_CODES = { OK: 0, WARN: 1, FAIL: 2, UNVERIFIABLE: 3, ERROR: 3 };
 function verdictLabel(report) {
   if (report.verdict !== "OK") return report.verdict;
+  const c = report.coverage;
+  if (c && c.analysed + c.partly_analysed + c.not_analysed === 0) {
+    return `OK — no test files detected in the selected scope${c.excluded > 0 ? ` (${c.excluded} changed path${c.excluded === 1 ? "" : "s"} excluded)` : ""}`;
+  }
+  if (c && incomplete(c)) {
+    const n = c.partly_analysed + c.not_analysed;
+    return `OK — no findings in what it read; ${n} test file${n === 1 ? "" : "s"} partly analysed or not analysed (${coverageCounts(c)})`;
+  }
   const notEvaluated = report.not_evaluated.map((n) => n.rule);
   if (notEvaluated.length) return `OK — no issues found (${notEvaluated.join(", ")} not evaluated)`;
   return report.mode === "diff" ? "OK — no issues found" : "OK — no issues found (claims not verified)";
@@ -225720,9 +225806,12 @@ async function analyze(input) {
     if (facts === void 0) readings.set(key3, facts = pythonFacts(bytes2));
     return facts;
   };
+  const loaded = /* @__PURE__ */ new Map();
   for (const change of changes) {
     const b = change.basePath && candidate(change.basePath) ? await load(read, readBytes, reading, "base", change.basePath) : null;
     const h = change.headPath && candidate(change.headPath) ? await load(read, readBytes, reading, "head", change.headPath) : null;
+    if (b) loaded.set(`base\0${b.path}`, b);
+    if (h) loaded.set(`head\0${h.path}`, h);
     for (const [file, side] of [[b, "base"], [h, "head"]]) {
       if (file?.parseErrors) {
         unverifiable.push({ file: file.path, side, reason: "syntax errors; test extraction may be incomplete" });
@@ -225754,6 +225843,16 @@ async function analyze(input) {
       });
     }
   }
+  const sideReading = (side, p) => {
+    if (p === null) return { kind: "absent" };
+    if (matchesAny(p, exclude)) return { kind: "excluded" };
+    const language = foreignTestLanguage(p);
+    if (language) return { kind: "foreign", language };
+    const file = loaded.get(`${side}\0${p}`);
+    if (!file) return { kind: "other" };
+    return { kind: "parsed", file, source: file.language === "python" ? null : read(side, p), named: isTestPath(p) };
+  };
+  const coverage = coverageOf(input.changes.map((change) => ({ change, base: sideReading("base", change.basePath), head: sideReading("head", change.headPath) })));
   const allChanges = input.changes.filter((c) => [c.basePath, c.headPath].some((p) => p !== null && !matchesAny(p, exclude)));
   const parsed = /* @__PURE__ */ new Map();
   const ctx = {
@@ -225873,6 +225972,7 @@ async function analyze(input) {
     counts: counts2,
     unverifiable,
     files: summaries.sort((a, b) => compareStr(a.path, b.path)),
+    coverage,
     findings: findings.map(({ tampering: _, ...f }) => f)
   };
 }
@@ -225896,6 +225996,7 @@ function addClaimContext(findings, evidence) {
 // src/report/comment.ts
 var COMMENT_MARKER = "<!-- saidvsdid:pr-comment -->";
 var ICON = { fail: "❌", warn: "⚠️", info: "ℹ️" };
+var MAX_COVERAGE_FILES = 10;
 var GROUPS = [
   { title: "Tests removed or replaced", rules: ["TG001"] },
   { title: "Tests skipped, focused or marked to fail", rules: ["TG002", "TG003"] },
@@ -225947,6 +226048,14 @@ function renderComment(report, options) {
     let hidden = 0;
     const scopes = report.tool.scopes;
     if (scopes?.python_unavailable) lines.push(`⚠️ **Python test files were not read:** ${literal2(scopes.python_unavailable)}${scopes.python_remedy ? ` — ${literal2(scopes.python_remedy)}` : ""}`, "");
+    if (report.coverage) {
+      const c = report.coverage;
+      lines.push(`${incomplete(c) ? "⚠️ " : ""}**Coverage:** ${coverageCounts(c)}`, "");
+      const partial = c.files.filter((f) => f.state !== "analysed");
+      for (const f of partial.slice(0, MAX_COVERAGE_FILES)) lines.push(`- ${literal2(f.path)} — ${f.state === "partly-analysed" ? "partly analysed" : "not analysed"}: ${literal2(f.reasons.join("; "))}`);
+      if (partial.length > MAX_COVERAGE_FILES) lines.push(`- and ${partial.length - MAX_COVERAGE_FILES} more`);
+      if (partial.length > 0) lines.push("");
+    }
     if (groups.length === 0) lines.push(report.unverifiable.length > 0 ? "No findings in the files that could be analysed." : "No findings in what saidvsdid reads.", "");
     for (const g of groups) {
       lines.push(`**${g.title}**`, "");
@@ -226085,6 +226194,9 @@ async function upsertComment(api, pr, body2) {
   const res = existing === null ? await call(api, "POST", `${issue}/${pr.number}/comments`, { body: body2 }) : await call(api, "PATCH", `${issue}/comments/${existing}`, { body: body2 });
   return isRecord(res) && typeof res["html_url"] === "string" ? res["html_url"] : null;
 }
+function failure(reason, failOn) {
+  return { verdict: "ERROR", body: renderErrorComment(reason, failOn), detail: reason, qualified: false };
+}
 async function analyse(env2, pr, failOn, exclude) {
   const workspace = env2["GITHUB_WORKSPACE"] || process.cwd();
   try {
@@ -226092,12 +226204,14 @@ async function analyse(env2, pr, failOn, exclude) {
     const server2 = (env2["GITHUB_SERVER_URL"] || "https://github.com").replace(/\/+$/, "");
     const repoUrl = `${server2}/${encodeURIComponent(pr.owner)}/${encodeURIComponent(pr.repo)}`;
     const link = (side, file, line7) => `${repoUrl}/blob/${side === "base" ? report.repo.base : report.repo.head}/${encodePath(file)}${line7 === null ? "" : `#L${line7}`}`;
-    return { verdict: report.verdict, body: renderComment(report, { link, failOn }) };
+    const c = report.coverage;
+    const qualified = report.verdict === "OK" && c !== void 0 && (incomplete(c) || c.analysed === 0);
+    return { verdict: report.verdict, body: renderComment(report, { link, failOn }), detail: c ? coverageCounts(c) : "", qualified };
   } catch (e) {
     if (e instanceof MissingHistoryError) {
-      return { verdict: "ERROR", body: renderErrorComment(`the base and head commits are not both in the clone, with the history between them (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn) };
+      return failure(`the base and head commits are not both in the clone, with the history between them (${pr.baseSha.slice(0, 12)}, ${pr.headSha.slice(0, 12)}): check out with \`fetch-depth: 0\``, failOn);
     }
-    return { verdict: "ERROR", body: renderErrorComment(e instanceof Error ? e.message : String(e), failOn) };
+    return failure(e instanceof Error ? e.message : String(e), failOn);
   }
 }
 function commandData(s) {
@@ -226138,7 +226252,7 @@ async function runAction(deps) {
     event = null;
   }
   const pr = eventName ? pullRequestOf(event, env2["GITHUB_REPOSITORY"]) : "no GITHUB_EVENT_NAME: saidvsdid runs as a step of a GitHub Actions workflow";
-  const { verdict, body: body2 } = typeof pr === "string" ? { verdict: "ERROR", body: renderErrorComment(pr, failOn) } : await analyse(env2, pr, failOn, exclude);
+  const { verdict, body: body2, detail, qualified } = typeof pr === "string" ? failure(pr, failOn) : await analyse(env2, pr, failOn, exclude);
   const summary = env2["GITHUB_STEP_SUMMARY"];
   if (summary) appendFileSync(summary, body2.slice(COMMENT_MARKER.length + 1));
   let commentUrl = null;
@@ -226155,8 +226269,8 @@ exit-code=${EXIT_CODES[verdict]}
 comment-url=${commentUrl ?? ""}
 `);
   const fails = blocks(verdict, failOn);
-  const level = verdict === "OK" ? "notice" : fails ? "error" : "warning";
-  log(`::${level}::saidvsdid: ${verdict}${fails ? ` (fail-on: ${failOn})` : failOn === "none" ? " (not blocking: fail-on is not set)" : ` (not blocking: fail-on: ${failOn})`}${commentUrl ? ` — ${commentUrl}` : ""}`);
+  const level = verdict === "OK" && !qualified ? "notice" : fails ? "error" : "warning";
+  log(`::${level}::saidvsdid: ${verdict}${detail ? ` — ${detail}` : ""}${fails ? ` (fail-on: ${failOn})` : failOn === "none" ? " (not blocking: fail-on is not set)" : ` (not blocking: fail-on: ${failOn})`}${commentUrl ? ` — ${commentUrl}` : ""}`);
   return { verdict, exitCode: fails ? 1 : 0, body: body2, commentUrl };
 }
 

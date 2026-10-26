@@ -1,3 +1,4 @@
+import { coverageCounts, incomplete } from '../coverage.js';
 import { EXPERIMENTAL, type Finding, type RuleId } from '../rules/index.js';
 import { verdictLabel, type Report } from './model.js';
 
@@ -18,6 +19,9 @@ export interface CommentOptions {
 }
 
 const ICON = { fail: '❌', warn: '⚠️', info: 'ℹ️' } as const;
+
+/** The changed test files the coverage notice lists by name; the rest are counted. */
+const MAX_COVERAGE_FILES = 10;
 
 /** What happened to the tests, in the order a reviewer reads it. Each rule belongs to exactly one group. */
 export const GROUPS: readonly { title: string; rules: readonly RuleId[] }[] = [
@@ -107,6 +111,15 @@ export function renderComment(report: Report, options: CommentOptions): string {
     // Once, before the findings: Python test files were not read, why, and how to fix it (the runner's interpreter).
     const scopes = report.tool.scopes;
     if (scopes?.python_unavailable) lines.push(`⚠️ **Python test files were not read:** ${literal(scopes.python_unavailable)}${scopes.python_remedy ? ` — ${literal(scopes.python_remedy)}` : ''}`, '');
+    // What was read of the changed test files (src/coverage.ts), before any finding: an OK never covers what is listed.
+    if (report.coverage) {
+      const c = report.coverage;
+      lines.push(`${incomplete(c) ? '⚠️ ' : ''}**Coverage:** ${coverageCounts(c)}`, '');
+      const partial = c.files.filter((f) => f.state !== 'analysed');
+      for (const f of partial.slice(0, MAX_COVERAGE_FILES)) lines.push(`- ${literal(f.path)} — ${f.state === 'partly-analysed' ? 'partly analysed' : 'not analysed'}: ${literal(f.reasons.join('; '))}`);
+      if (partial.length > MAX_COVERAGE_FILES) lines.push(`- and ${partial.length - MAX_COVERAGE_FILES} more`);
+      if (partial.length > 0) lines.push('');
+    }
     if (groups.length === 0) lines.push(report.unverifiable.length > 0 ? 'No findings in the files that could be analysed.' : 'No findings in what saidvsdid reads.', '');
     for (const g of groups) {
       lines.push(`**${g.title}**`, '');

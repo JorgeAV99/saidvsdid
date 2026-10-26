@@ -1,3 +1,4 @@
+import { coverageCounts, incomplete, type Coverage } from '../coverage.js';
 import type { Finding, RuleId, Severity } from '../rules/index.js';
 
 export const REPORT_SCHEMA_ID = 'saidvsdid/report/v1';
@@ -24,8 +25,18 @@ export interface NotEvaluated {
 }
 
 /** How a verdict reads: OK says what it means and what it does not. */
-export function verdictLabel(report: Pick<Report, 'verdict' | 'mode' | 'not_evaluated'>): string {
+export function verdictLabel(report: Pick<Report, 'verdict' | 'mode' | 'not_evaluated' | 'coverage'>): string {
   if (report.verdict !== 'OK') return report.verdict;
+  // What the OK covers (src/coverage.ts): never "no issues found" when a changed test file was read in part or not at all,
+  // or when none was detected.
+  const c = report.coverage;
+  if (c && c.analysed + c.partly_analysed + c.not_analysed === 0) {
+    return `OK — no test files detected in the selected scope${c.excluded > 0 ? ` (${c.excluded} changed path${c.excluded === 1 ? '' : 's'} excluded)` : ''}`;
+  }
+  if (c && incomplete(c)) {
+    const n = c.partly_analysed + c.not_analysed;
+    return `OK — no findings in what it read; ${n} test file${n === 1 ? '' : 's'} partly analysed or not analysed (${coverageCounts(c)})`;
+  }
   const notEvaluated = report.not_evaluated.map((n) => n.rule);
   if (notEvaluated.length) return `OK — no issues found (${notEvaluated.join(', ')} not evaluated)`;
   return report.mode === 'diff' ? 'OK — no issues found' : 'OK — no issues found (claims not verified)';
@@ -71,6 +82,8 @@ export interface Report {
   counts: Record<Severity, number>;
   unverifiable: Unverifiable[];
   files: FileSummary[];
+  /** What was read of the changed test files (src/coverage.ts); absent from reports that do not compute it (`baseline`). */
+  coverage?: Coverage;
   findings: Finding[];
 }
 

@@ -32,6 +32,8 @@ location links to its line):
 <!-- example:comment -->
 > ### saidvsdid: what this pull request does to the tests
 >
+> **Coverage:** 1 test file analysed
+>
 > **Tests removed or replaced**
 >
 > - ⚠️ **WARN** `src/cart.test.ts:18` (base) — `Removes test "total > rounds to cents"` <sub>TG001</sub>
@@ -62,7 +64,7 @@ The same pull request from the command line:
 <!-- example:cli -->
 ```text
 saidvsdid 0.2.0 — base d2025824aa4f → head 5b530048dd1f
-rules: TG001, TG002, TG003, TG004, TG005 · test files analysed: 1
+rules: TG001, TG002, TG003, TG004, TG005 · 1 test file analysed
 not evaluated: TG006 (experimental) — no transcript or evidence (--transcript, --evidence)
 not evaluated: TG007 (experimental) — no transcript or evidence (--transcript, --evidence)
 

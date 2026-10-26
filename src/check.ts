@@ -18,6 +18,7 @@ import { VERSION } from './version.js';
 import { RULE_FAIL_EFFECT } from './rules/effects.js';
 import { NEW_TEST } from './rules/util.js';
 import { groupFindings } from './rules/group.js';
+import { coverageOf, foreignTestLanguage, type SideReading } from './coverage.js';
 
 export interface CheckOptions {
   repo: string;
@@ -276,9 +277,13 @@ export async function analyze(input: AnalyzeInput): Promise<Report> {
     return facts;
   };
 
+  /** Each side the loop below loaded, for the coverage (src/coverage.ts). */
+  const loaded = new Map<string, TestFile>();
   for (const change of changes) {
     const b = change.basePath && candidate(change.basePath) ? await load(read, readBytes, reading, 'base', change.basePath) : null;
     const h = change.headPath && candidate(change.headPath) ? await load(read, readBytes, reading, 'head', change.headPath) : null;
+    if (b) loaded.set(`base\0${b.path}`, b);
+    if (h) loaded.set(`head\0${h.path}`, h);
     // A file that does not parse may hide or invent tests on either side: keep
     // both sides out of the comparison and make the verdict UNVERIFIABLE.
     for (const [file, side] of [[b, 'base'], [h, 'head']] as const) {
@@ -314,6 +319,18 @@ export async function analyze(input: AnalyzeInput): Promise<Report> {
       });
     }
   }
+
+  // What was read of every changed test file, before the rules: it qualifies an OK, never a verdict.
+  const sideReading = (side: 'base' | 'head', p: string | null): SideReading => {
+    if (p === null) return { kind: 'absent' };
+    if (matchesAny(p, exclude)) return { kind: 'excluded' };
+    const language = foreignTestLanguage(p);
+    if (language) return { kind: 'foreign', language };
+    const file = loaded.get(`${side}\0${p}`);
+    if (!file) return { kind: 'other' };
+    return { kind: 'parsed', file, source: file.language === 'python' ? null : read(side, p), named: isTestPath(p) };
+  };
+  const coverage = coverageOf(input.changes.map((change) => ({ change, base: sideReading('base', change.basePath), head: sideReading('head', change.headPath) })));
 
   const allChanges = input.changes.filter((c) => [c.basePath, c.headPath].some((p) => p !== null && !matchesAny(p, exclude)));
   const parsed = new Map<string, Promise<TestFile | null>>();
@@ -454,6 +471,7 @@ export async function analyze(input: AnalyzeInput): Promise<Report> {
     counts,
     unverifiable,
     files: summaries.sort((a, b) => compareStr(a.path, b.path)),
+    coverage,
     findings: findings.map(({ tampering: _, ...f }) => f),
   };
 }

@@ -1,6 +1,10 @@
 <!-- saidvsdid:pr-comment -->
 ### saidvsdid: what this pull request does to the tests
 
+⚠️ **Coverage:** 3 test files analysed · 1 partly analysed
+
+- `src/globals.test.js` — partly analysed: `base and head: a runner saidvsdid is not certain of (ˋitˋ is a global, not imported from a runner)`
+
 **Tests removed or replaced**
 
 - ❌ **FAIL** [`src/dˋˋˋoˋˋˋˋc.test.ts` (base)](https://github.com/octo/demo/blob/f0a1b39341c6a0d996b760d9e994dd70f29f191c/src/d%60%60%60o%60%60%60%60c.test.ts) — `Deletes the test file, which declared 1 test: "kept too"` <sub>TG001</sub>

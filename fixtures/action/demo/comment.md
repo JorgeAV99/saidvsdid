@@ -1,6 +1,8 @@
 <!-- saidvsdid:pr-comment -->
 ### saidvsdid: what this pull request does to the tests
 
+**Coverage:** 1 test file analysed
+
 **Tests removed or replaced**
 
 - ⚠️ **WARN** [`src/cart.test.ts:18` (base)](https://github.com/octo/demo/blob/d2025824aa4fe47be52e79308067c3a27f40f412/src/cart.test.ts#L18) — `Removes test "total > rounds to cents"` <sub>TG001</sub>
