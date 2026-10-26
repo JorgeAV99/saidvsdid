@@ -160,7 +160,11 @@ async function request(deps: ArtifactDeps, step: string, url: string, init: Requ
 async function twirp(deps: ArtifactDeps, origin: string, token: string, method: string, body: unknown): Promise<{ status: number; json: Record<string, unknown> | null }> {
   const res = await request(deps, method, `${origin}/${SERVICE}/${method}`, {
     method: 'POST',
-    headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json', accept: 'application/json' },
+    headers: new Headers([
+      ['authorization', `Bearer ${token}`],
+      ['content-type', 'application/json'],
+      ['accept', 'application/json'],
+    ]),
     body: JSON.stringify(body),
   });
   let json: unknown = null;
@@ -214,7 +218,7 @@ export async function uploadArtifact(files: readonly ArtifactFile[], deps: Artif
       }
       if (blobUrl.protocol !== 'https:') throw new UploadError('CreateArtifact: the upload URL is not https');
       // The signed URL carries its own authorisation: no Authorization header goes to the storage.
-      const put = await request(deps, 'upload', blobUrl.href, { method: 'PUT', headers: { 'x-ms-blob-type': 'BlockBlob', 'content-type': 'application/zip' }, body });
+      const put = await request(deps, 'upload', blobUrl.href, { method: 'PUT', headers: new Headers([['x-ms-blob-type', 'BlockBlob'], ['content-type', 'application/zip']]), body });
       if (put.status !== 201 && put.status !== 200) throw new UploadError(`upload: HTTP ${put.status}`);
       const finalized = await twirp(deps, origin, token, 'FinalizeArtifact', { ...ref, size: String(body.length), hash: `sha256:${sha256}` });
       const id = finalized.json?.['artifact_id'];

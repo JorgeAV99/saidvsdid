@@ -226308,7 +226308,11 @@ async function request(deps, step, url, init2) {
 async function twirp(deps, origin, token, method, body2) {
   const res = await request(deps, method, `${origin}/${SERVICE}/${method}`, {
     method: "POST",
-    headers: { authorization: `Bearer ${token}`, "content-type": "application/json", accept: "application/json" },
+    headers: new Headers([
+      ["authorization", `Bearer ${token}`],
+      ["content-type", "application/json"],
+      ["accept", "application/json"]
+    ]),
     body: JSON.stringify(body2)
   });
   let json = null;
@@ -226356,7 +226360,7 @@ async function uploadArtifact(files, deps) {
         throw new UploadError("CreateArtifact: the upload URL is not a URL");
       }
       if (blobUrl.protocol !== "https:") throw new UploadError("CreateArtifact: the upload URL is not https");
-      const put = await request(deps, "upload", blobUrl.href, { method: "PUT", headers: { "x-ms-blob-type": "BlockBlob", "content-type": "application/zip" }, body: body2 });
+      const put = await request(deps, "upload", blobUrl.href, { method: "PUT", headers: new Headers([["x-ms-blob-type", "BlockBlob"], ["content-type", "application/zip"]]), body: body2 });
       if (put.status !== 201 && put.status !== 200) throw new UploadError(`upload: HTTP ${put.status}`);
       const finalized = await twirp(deps, origin, token, "FinalizeArtifact", { ...ref, size: String(body2.length), hash: `sha256:${sha2562}` });
       const id = finalized.json?.["artifact_id"];
